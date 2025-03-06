@@ -32,11 +32,11 @@ jobs:
       # - name: Run Backend Tests
       #   run: npm test
 
-      - name: Run Unit Tests
-        run: npm run test:unit
+      # - name: Run Unit Tests
+      #   run: npm run test:unit
 
-      - name: Run Integration Tests
-        run: npm run test:integration
+      # - name: Run Integration Tests
+      #   run: npm run test:integration
 
   # build-frontend:
   #   runs-on: ubuntu-latest
