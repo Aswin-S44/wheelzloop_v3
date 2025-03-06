@@ -6,8 +6,8 @@
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server",
     "test": "jest --coverage",
-    "test:unit": "jest --testPathPattern=./src/tests/unit",
-    "test:integration": "jest --testPathPattern=./src/tests/integration"
+    "test:unit": "jest --testPathPattern=/tests/unit",
+    "test:integration": "jest --testPathPattern=/tests/integration"
   },
   "author": "",
   "license": "ISC",
