@@ -32,8 +32,11 @@ jobs:
       # - name: Run Backend Tests
       #   run: npm test
 
-      - name: Start Backend Server
-        run: npm run dev
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+      - name: Run Integration Tests
+        run: npm run test:integration
 
   # build-frontend:
   #   runs-on: ubuntu-latest
