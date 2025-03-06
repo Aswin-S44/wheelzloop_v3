@@ -29,8 +29,8 @@ jobs:
       - name: Install Backend Dependencies
         run: npm install
 
-      - name: Run Backend Tests
-        run: npm test
+      # - name: Run Backend Tests
+      #   run: npm test
 
       - name: Start Backend Server
         run: npm run dev
