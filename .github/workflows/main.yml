@@ -38,23 +38,23 @@ jobs:
       # - name: Run Integration Tests
       #   run: npm run test:integration
 
-  # build-frontend:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: frontend
+  build-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
 
-  #     - name: Install Frontend Dependencies
-  #       run: npm install
+      - name: Install Frontend Dependencies
+        run: npm install
 
-  #     - name: Build Frontend
-  #       run: npm run build
+      - name: Build Frontend
+        run: npm run build
