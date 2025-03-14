@@ -4,7 +4,7 @@ const User = require("../models/users/userSchema");
 module.exports.userVerification = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.json({ status: false });
+    return res.json({ status: 403, message: "Forebidden" });
   }
 
   jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
@@ -13,10 +13,9 @@ module.exports.userVerification = (req, res, next) => {
     } else {
       const user = await User.findById(data.id);
       if (user) {
-        // Attach user data to req object
         req.user = user;
         req.userId = user._id;
-        next(); // Proceed to the next middleware or route handler
+        next();
       } else {
         return res.json({ status: false });
       }

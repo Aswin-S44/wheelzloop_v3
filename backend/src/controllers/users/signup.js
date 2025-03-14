@@ -8,9 +8,9 @@ const bcrypt = require("bcryptjs");
 
 module.exports.Signup = async (req, res, next) => {
   try {
-    const { email, phone_number, password } = req.body;
+    const { email, phone, password } = req.body;
     const existingUser = await User.findOne({
-      $or: [{ email }, { phone_number }],
+      $or: [{ email }, { phone }],
     });
     if (existingUser) {
       res.status(409).send(conflictResponse());
