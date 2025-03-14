@@ -93,20 +93,20 @@
 
 .news-text {
   font-size: 1rem;
-  color: #666;
+  color: #444;
   margin-bottom: 20px;
 }
 
 .news-link {
   display: inline-block;
-  color: #ff6600;
+  color: #cc5200;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .news-link:hover {
-  color: #e65c00;
+  color: #b34700; 
 }
 
 @media (max-width: 768px) {

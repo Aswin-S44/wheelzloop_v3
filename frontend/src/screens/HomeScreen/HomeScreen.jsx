@@ -32,7 +32,11 @@ function HomeScreen() {
         <div className="mt-4">
           <TitleHeader title1={"Latest"} title2={"Cars"} option={"View all"} />
           <div className="slider-container">
-            <IconButton className="arrow-button left" onClick={scrollLeft}>
+            <IconButton
+              className="arrow-button left"
+              onClick={scrollLeft}
+              aria-label="left-scroll-btn"
+            >
               <ChevronLeft />
             </IconButton>
             <div className="card-slider" ref={sliderRef}>
@@ -45,36 +49,13 @@ function HomeScreen() {
                 <Card />
               </div>
             </div>
-            <IconButton className="arrow-button right" onClick={scrollRight}>
+            <IconButton
+              className="arrow-button right"
+              onClick={scrollRight}
+              aria-label="right-scroll-btn"
+            >
               <ChevronRight />
             </IconButton>
-          </div>
-        </div>
-        <div className="mt-4">
-          <div className="mt-4">
-            <TitleHeader
-              title1={"Latest"}
-              title2={"Cars"}
-              option={"View all"}
-            />
-            <div className="slider-container">
-              <IconButton className="arrow-button left" onClick={scrollLeft}>
-                <ChevronLeft />
-              </IconButton>
-              <div className="card-slider" ref={sliderRef}>
-                <div className="card-container">
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                </div>
-              </div>
-              <IconButton className="arrow-button right" onClick={scrollRight}>
-                <ChevronRight />
-              </IconButton>
-            </div>
           </div>
         </div>
       </div>

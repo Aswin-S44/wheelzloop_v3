@@ -89,6 +89,7 @@ function Footer() {
                 href="https://www.facebook.com/profile.php?id=61565890412918"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook page"
               >
                 <Facebook fontSize="large" />
               </a>
@@ -96,6 +97,7 @@ function Footer() {
                 href="https://x.com/WheelzLoop"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="X page"
               >
                 <XIcon fontSize="large" />
               </a>
@@ -103,6 +105,7 @@ function Footer() {
                 href="https://www.instagram.com/wheelz_loop/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram page"
               >
                 <Instagram fontSize="large" />
               </a>
@@ -110,6 +113,7 @@ function Footer() {
                 href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Linkedin page"
               >
                 <LinkedIn fontSize="large" />
               </a>

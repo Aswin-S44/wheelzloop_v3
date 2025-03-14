@@ -29,7 +29,7 @@ function Header() {
         <div className="logo">WheelzLoop</div>
         <div className={`search ${showSearch ? "mobile-search" : ""}`}>
           <input type="text" placeholder="Search for cars, mobiles, etc." />
-          <button>
+          <button aria-label="search-button">
             <Search />
           </button>
         </div>

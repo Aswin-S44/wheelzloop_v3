@@ -11,9 +11,11 @@
     position: relative;
     display: flex;
     align-items: center;
+    min-height: 300px; 
   }
   
   .card-slider {
+    min-height: 300px;
     overflow-x: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -21,6 +23,8 @@
     padding: 10px 0;
     flex: 1;
   }
+
+  
   
   .card-slider::-webkit-scrollbar {
     display: none; /* Chrome, Safari, and Opera */
