@@ -1,0 +1,143 @@
+.footer {
+  background-color: #f4f6f6;
+  padding: 50px 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  position: relative;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin: 20px;
+}
+
+.footer-logo h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.footer-logo p {
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-links ul,
+.footer-resources ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li,
+.footer-resources li {
+  margin-bottom: 5px;
+}
+
+.footer-links a,
+.footer-resources a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover,
+.footer-resources a:hover {
+  color: #007bff;
+}
+
+.footer-contact p {
+  margin: 5px 0;
+}
+
+.footer-social .social-icons a {
+  margin-right: 10px;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.footer-social .social-icons a:hover {
+  color: #007bff;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-extra-box {
+  background-color: #222;
+  color: white;
+  width: 90%;
+  margin: 30px auto 0;
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer-extra-box h3 {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+}
+
+.footer-extra-box p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.signup-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.signup-btn:hover {
+  background-color: #0056b3;
+}
+
+.newsletter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.newsletter-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 60%;
+  max-width: 400px;
+}
+
+.newsletter-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.newsletter-btn:hover {
+  background-color: #0056b3;
+}

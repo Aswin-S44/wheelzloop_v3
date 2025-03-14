@@ -1,0 +1,176 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    background: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+    position: relative;
+  }
+  
+  .logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+  .search {
+    display: flex;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 10px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+  }
+  
+  .search input {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+  }
+  
+  .search button {
+    background:var(--primary-color);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: #002f34;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.3s;
+  }
+  
+  .nav a:hover {
+    color: #ff6600;
+  }
+  
+  .login-btn {
+    background: none;
+    border: 2px solid var(--primary-color);
+    color: #002f34;
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.3s;
+  }
+  
+  .login-btn:hover {
+    background: #002f34;
+    color: white;
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .sell-btn {
+    background: var(--primary-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .menu-icon {
+    font-size: 28px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 1024px) {
+    .search {
+      max-width: 400px;
+    }
+  
+    .nav {
+      gap: 10px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-search {
+      display: none;
+    }
+  
+    .icons {
+      gap: 10px;
+    }
+  
+    .nav {
+      display: none;
+    }
+  
+    .nav.show {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      gap: 10px;
+    }
+  
+    .mobile-search {
+      display: flex;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      padding: 5px;
+      width: 100%;
+    }
+  
+    .menu-icon {
+      display: block;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header {
+      padding: 10px;
+    }
+  
+    .logo {
+      font-size: 20px;
+    }
+  
+    .sell-btn {
+      padding: 6px 12px;
+    }
+  
+    .search input {
+      padding: 6px;
+    }
+  }
+  

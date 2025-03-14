@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.counter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 60px 20px;
+  background: linear-gradient(180deg, #ffffff, #f4f6f6);
+  font-family: 'Inter', sans-serif;
+  flex-wrap: wrap;
+}
+
+.counter-item {
+  text-align: center;
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  flex: 1 1 30%;
+  max-width: 300px;
+  min-width: 180px;
+}
+
+.counter-item:hover {
+  transform: scale(1.15);
+  /* box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); */
+}
+
+.counter-circle {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6f61, #f9a825);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  animation: glow 2s infinite;
+}
+
+.counter-circle h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.counter-item p {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #444;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.8), 0 0 30px rgba(255, 166, 37, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(255, 111, 97, 1), 0 0 40px rgba(255, 166, 37, 1);
+  }
+}
+
+@media (max-width: 768px) {
+  .counter-container {
+    gap: 30px;
+    padding: 40px 10px;
+  }
+
+  .counter-item {
+    flex: 1 1 45%;
+    max-width: 250px;
+  }
+
+  .counter-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .counter-circle h2 {
+    font-size: 30px;
+  }
+
+  .counter-item p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .counter-container {
+    gap: 20px;
+    padding: 30px 10px;
+  }
+
+  .counter-item {
+    flex: 1 1 100%;
+    max-width: 200px;
+  }
+
+  .counter-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .counter-circle h2 {
+    font-size: 25px;
+  }
+
+  .counter-item p {
+    font-size: 14px;
+  }
+}
