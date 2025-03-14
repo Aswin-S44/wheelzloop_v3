@@ -8,6 +8,7 @@ import HowItWorks from "../../sections/HowItWorks/HowItWorks";
 import NewsAndResources from "../../sections/NewsAndResources/NewsAndResources";
 import FAQSection from "../../sections/FAQ/FAQ";
 import Counter from "../../components/Counter/Counter";
+import FeaturesSection from "../../sections/FeaturesSection/FeaturesSection";
 
 function HomeScreen() {
   const sliderRef = useRef(null);
@@ -27,6 +28,7 @@ function HomeScreen() {
   return (
     <div className="screens">
       <div className="container">
+        <FeaturesSection />
         <div className="mt-4">
           <TitleHeader title1={"Latest"} title2={"Cars"} option={"View all"} />
           <div className="slider-container">

@@ -11,6 +11,7 @@ function Card() {
         />
         <div className="overlay"></div>
         <span className="price">$12,000</span>
+        <span className="badge">Featured</span>
       </div>
       <div className="card-content">
         <h3>Used Car Name</h3>
@@ -23,6 +24,7 @@ function Card() {
           <i className="fas fa-eye"></i>
           <span>1.2k Visitors</span>
         </div>
+        {/* <button className="contact-btn">Contact Seller</button> */}
       </div>
     </div>
   );

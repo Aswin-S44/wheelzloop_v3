@@ -21,12 +21,13 @@ const images = [
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <>
       <header className="header">
         <div className="logo">WheelzLoop</div>
-        <div className="search">
+        <div className={`search ${showSearch ? "mobile-search" : ""}`}>
           <input type="text" placeholder="Search for cars, mobiles, etc." />
           <button>
             <Search />
@@ -47,6 +48,10 @@ function Header() {
           <button className="sell-btn">
             <AddBox /> Sell
           </button>
+          <Search
+            className="search-icon"
+            onClick={() => setShowSearch(!showSearch)}
+          />
           <Menu className="menu-icon" onClick={() => setShowNav(!showNav)} />
         </div>
       </header>

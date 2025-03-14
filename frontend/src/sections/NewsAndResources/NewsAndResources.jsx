@@ -50,11 +50,12 @@ const NewsAndResources = () => {
       }
     }, 0);
   };
+
   return (
-    <div className="container mt-5">
+    <div className="news-container">
       <div className="news-header">
-        <h2 className="font-md text-center">NEWS AND RESOURCES</h2>
-        <p className="font-text-grey">
+        <h2>NEWS AND RESOURCES</h2>
+        <p>
           Discover the latest tips, guides, and insights to make smarter car
           decisions.
         </p>
@@ -66,16 +67,19 @@ const NewsAndResources = () => {
             className="news-card"
             onClick={() => handleCardClick(article.link)}
           >
-            <img
-              src={article.image}
-              alt={article.title}
-              className="news-image"
-              loading="lazy"
-            />
+            <div className="news-image-container">
+              <img
+                src={article.image}
+                alt={article.title}
+                className="news-image"
+                loading="lazy"
+              />
+              <div className="news-overlay"></div>
+              <span className="news-category">{article.category}</span>
+            </div>
             <div className="news-content">
               <h2 className="news-card-title">{article.title}</h2>
-              <p className="news-category">{article.category}</p>
-              <p className="font-text-grey">{article.description}</p>
+              <p className="news-text">{article.description}</p>
               <a
                 href="#"
                 onClick={() => handleCardClick(article.link)}
