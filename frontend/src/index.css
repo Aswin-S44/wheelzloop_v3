@@ -10,7 +10,7 @@ body {
 }
 
 :root {
-  --primary-color: #ea0b4f;
+  --primary-color: #ff6600;
   --secondary-color: #ff6600;
   --border-radius: 20px;
 }
@@ -47,3 +47,23 @@ body {
   color: var(--primary-color);
 }
 
+button.medium {
+  padding: 10px;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  outline: none;
+  border-radius: 19px;
+}
+
+.button-transparent {
+  padding: 9px;
+  width: auto;
+  color: #111;
+  font-size: 15px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid gray;
+  cursor: pointer;
+  border-radius: 19px;
+}

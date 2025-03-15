@@ -1,0 +1,238 @@
+/* MobileFilter.css */
+
+/* Overlay for the filter */
+.mobile-filter-overlay {
+    position: fixed;
+    top: 60px; /* Default height, will be overridden by JavaScript */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 85px); /* Adjust height to account for header */
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000;
+  }
+  
+  /* Filter container */
+  .mobile-filter-container {
+    width: 90%;
+    max-width: 400px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    animation: slideIn 0.3s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @keyframes slideIn {
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  /* Header */
+  .mobile-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+   background-color: #0ea8b7;
+    color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .mobile-filter-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .mobile-filter-header button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  .mobile-filter-header button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Filter content */
+  .mobile-filter-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #f8f9fa;
+  }
+  
+  /* Search box */
+  .search-box {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    background: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .search-box:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Filter sections */
+  .mobile-filter-section {
+    margin-bottom: 24px;
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-filter-section h4 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  /* Checkbox and radio button styles */
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  
+  .checkbox-container:hover {
+    background: #f1f1f1;
+  }
+  
+  .checkbox-container input[type="checkbox"],
+  .checkbox-container input[type="radio"] {
+    margin-right: 8px;
+    accent-color: #007bff;
+    cursor: pointer;
+  }
+  
+  .checkbox-container label {
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  /* Accordion styles */
+  .accordion {
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  
+  .accordion-header:hover {
+    background: #e9ecef;
+  }
+  
+  .accordion-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .accordion-body {
+    padding: 12px;
+    /* margin-top: 8px; */
+    background: #f8f9fa;
+    border-radius: 0 0 8px 8px;
+  }
+  
+  /* Footer with buttons */
+  .mobile-filter-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: -10px;
+  }
+  
+  .mobile-filter-footer button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .mobile-filter-footer button:active {
+    transform: scale(0.98);
+  }
+  
+  .clear-filter-btn {
+    background: #e9ecef;
+    color: #333;
+  }
+  
+  .clear-filter-btn:hover {
+    background: #dee2e6;
+  }
+  
+  .apply-filter-btn {
+    background-color: #0ea8b7;
+    color: #fff;
+  }
+  
+  .apply-filter-btn:hover {
+   background-color: #0ea8b7;
+  }
+  
+  /* Toggle button for mobile filter */
+  .mobile-filter-toggle {
+    position: relative;
+    bottom: 10px;
+    right: 20px;
+    padding: 12px 24px;
+   background-color: #0ea8b7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .mobile-filter-toggle:hover {
+    background: linear-gradient(135deg, #0056b3, #004080);
+  }
+  
+  .mobile-filter-toggle:active {
+    transform: scale(0.98);
+  }

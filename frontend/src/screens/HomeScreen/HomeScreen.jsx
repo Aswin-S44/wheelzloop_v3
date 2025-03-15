@@ -9,7 +9,11 @@ import NewsAndResources from "../../sections/NewsAndResources/NewsAndResources";
 import FAQSection from "../../sections/FAQ/FAQ";
 import Counter from "../../components/Counter/Counter";
 import FeaturesSection from "../../sections/FeaturesSection/FeaturesSection";
-
+import Carousel from "../../components/Carousel/Carousel";
+const images = [
+  "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
+  "https://i.pinimg.com/736x/be/83/60/be83607be6a98648c47b8563b8b7edca.jpg",
+];
 function HomeScreen() {
   const sliderRef = useRef(null);
 
@@ -27,6 +31,9 @@ function HomeScreen() {
 
   return (
     <div className="screens">
+      <div className="mt-4">
+        <Carousel images={images} />
+      </div>
       <div className="container">
         <FeaturesSection />
         <div className="mt-4">

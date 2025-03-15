@@ -1,0 +1,79 @@
+.filter-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid rgb(226, 220, 220);
+}
+
+.search-box {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.accordion {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.accordion-header {
+  background-color: #fff;
+  color: #222;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-body {
+  background-color: #fff;
+  padding: 15px;
+}
+
+.checkbox-container {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container input {
+  margin-right: 10px;
+}
+
+.checkbox-container label {
+  font-size: 14px;
+}
+
+.scrollable-brands {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.scrollable-brands .accordion {
+  border-top: none;
+}
+
+.scrollable-brands .accordion-header {
+  color: #222;
+}
+
+.scrollable-div {
+  max-height: 100vh;
+  overflow-y: auto;
+}

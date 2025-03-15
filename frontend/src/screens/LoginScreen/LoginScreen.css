@@ -1,0 +1,31 @@
+.login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 5%;
+  flex-direction: column;
+}
+
+.highlighted-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #30bfa1;
+  color: #fff;
+  font-size: 18px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .login-screen {
+    flex-direction: row;
+  }
+
+  .highlighted-btn {
+    font-size: 20px;
+    max-width: 250px;
+  }
+}
