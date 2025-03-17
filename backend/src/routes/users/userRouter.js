@@ -3,6 +3,7 @@ const { SignIn } = require("../../controllers/users/signin");
 const { Signup } = require("../../controllers/users/signup");
 const { getProfile } = require("../../controllers/users/getProfile");
 const { userVerification } = require("../../../middlewares/AuthMiddleware");
+const { getCars } = require("../../controllers/users/getCars");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -12,5 +13,6 @@ router.get("/", (req, res) => {
 router.post("/signin", SignIn);
 router.post("/signup", Signup);
 router.get("/profile", getProfile);
+router.get("/cars", getCars);
 
 module.exports = router;

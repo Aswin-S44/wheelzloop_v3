@@ -4,7 +4,7 @@ const User = require("../../../models/users/userSchema");
 
 module.exports.SignIn = async (req, res, next) => {
   try {
-    const { email, password } = req.body.values;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return res.json({ message: "All fields are required" });

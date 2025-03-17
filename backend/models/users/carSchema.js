@@ -1,7 +1,7 @@
-const mongose = require("mongoose");
+const mongoose = require("mongoose");
 
-const CarSchema = new Schema({
-  dealer_id: { type: ObjectId, ref: "User", required: true },
+const CarSchema = new mongoose.Schema({
+  dealer_id: { type: mongoose.ObjectId, ref: "User", required: true },
   title: { type: String, required: true }, // Example: "2018 Toyota Corolla LE"
   make: { type: String, required: true }, // Example: "Toyota"
   model: { type: String, required: true }, // Example: "Corolla"
@@ -53,5 +53,5 @@ const CarSchema = new Schema({
   updated_at: { type: Date, default: Date.now },
 });
 
-const Cars = mongose.model("Cars", CarSchema);
+const Cars = mongoose.model("Cars", CarSchema);
 module.exports = Cars;

@@ -10,9 +10,11 @@ body {
 }
 
 :root {
-  --primary-color: #ff6600;
+  /* --primary-color: #ff6600; */
+  --primary-color: #30bfa1;
   --secondary-color: #ff6600;
   --border-radius: 20px;
+  --main-bg-color: #30bfa1
 }
 
 .mt-4 {

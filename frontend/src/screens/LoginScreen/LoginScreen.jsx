@@ -4,8 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import { InputBase } from "@mui/material";
-// import { login } from "../../services/apis";
 import "./LoginScreen.css";
+import axios from "axios";
+import { SIGN_IN_URL } from "../../config/api";
 
 function LoginScreen() {
   const navigate = useNavigate();
@@ -23,24 +24,22 @@ function LoginScreen() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      // setLoading(true);
-      // const response = await login(values);
-      // setLoading(false);
-      // if (response.success) {
-      //   localStorage.setItem("user", JSON.stringify(response.user));
-      //   Swal.fire({
-      //     title: "Good job!",
-      //     text: "Successfully logged in",
-      //     icon: "success",
-      //   });
-      //   setTimeout(() => navigate("/"), 1000);
-      // } else {
-      //   Swal.fire({
-      //     title: "Error",
-      //     text: response.message || "Invalid credentials",
-      //     icon: "error",
-      //   });
-      // }
+      const loginData = {
+        email: values.emailOrPhone,
+        password: values.password,
+      };
+      console.log("loginData---------", loginData);
+      const res = await axios.post(SIGN_IN_URL, loginData, {
+        withCredentials: true,
+      });
+      if (res && res.data.success) {
+        Swal.fire({
+          title: "Success!",
+          text: "LoggedIn successfully",
+          icon: "success",
+        });
+      }
+      console.log("LOGNI RES----------", res ? res : "no res");
     } catch (error) {
       setLoading(false);
       Swal.fire({ title: "Error", text: "Invalid credentials", icon: "error" });
@@ -54,7 +53,7 @@ function LoginScreen() {
         <div className="row">
           <div className="col-md-6">
             <img
-              src="https://img.freepik.com/free-vector/features-overview-concept-illustration_114360-1481.jpg"
+              src="/images/login-im.avif"
               className="w-100"
               loading="lazy"
               alt="Login"
