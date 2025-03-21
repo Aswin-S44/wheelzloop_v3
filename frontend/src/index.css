@@ -69,3 +69,16 @@ button.medium {
   cursor: pointer;
   border-radius: 19px;
 }
+
+
+.input__error input {
+  border-color: red;
+}
+.error__feedback {
+  color: red;
+}
+
+.additional-image{
+  width: 200px;
+  height: auto;
+}

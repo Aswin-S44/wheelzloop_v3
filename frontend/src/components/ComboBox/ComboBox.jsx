@@ -2,7 +2,7 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-export default function ComboBox({ options, value, onChange }) {
+export default function ComboBox({ label = "", options, value, onChange }) {
   return (
     <Autocomplete
       disablePortal
@@ -15,7 +15,7 @@ export default function ComboBox({ options, value, onChange }) {
           fontSize: "2.2rem",
         },
       }}
-      renderInput={(params) => <TextField {...params} label="Location" />}
+      renderInput={(params) => <TextField {...params} label={label} />}
     />
   );
 }

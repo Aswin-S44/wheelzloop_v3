@@ -1,0 +1,158 @@
+import React, { useContext, useState } from "react";
+import MultiStepFormContext from "./MultiStepFormContext";
+import { Button, Col, Row, Card } from "antd";
+import axios from "axios";
+import { ADD_CAR_URL } from "../../config/api";
+import Swal from "sweetalert2";
+import { AnimatePresence } from "framer-motion";
+import Overlay from "../../components/Overlay/Overlay";
+
+function Review() {
+  const [loading, setLoading] = useState(false);
+  const {
+    basicDetails,
+    specificationDetails,
+    additionalInformations,
+    next,
+    prev,
+  } = useContext(MultiStepFormContext);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const body = {
+      ...basicDetails,
+      ...specificationDetails,
+      ...additionalInformations,
+    };
+
+    const res = await axios.post(ADD_CAR_URL, body, {
+      withCredentials: true,
+    });
+    setLoading(false);
+    if (res && res.status == 200) {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: false,
+      });
+      swalWithBootstrapButtons
+        .fire({
+          title: "Successfully added your car!",
+          text: "Do you want to add another car ?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          cancelButtonText: "Go to profile",
+          reverseButtons: true,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/car/add";
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            window.location.href = "/profile";
+          }
+        });
+    }
+  };
+
+  return (
+    <div className="details__wrapper">
+      <AnimatePresence>
+        {loading && <Overlay isOpen={loading}>Overlay Content</Overlay>}
+      </AnimatePresence>
+      <h2>Review Your Details</h2>
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <Card title="Basic Details">
+            <p>
+              <strong>Name:</strong> {basicDetails.car_name}
+            </p>
+            <p>
+              <strong>Brand:</strong> {basicDetails.brand}
+            </p>
+            <p>
+              <strong>Model:</strong> {basicDetails.model}
+            </p>
+            <p>
+              <strong>Year:</strong> {basicDetails.year}
+            </p>
+            <p>
+              <strong>Price:</strong> {basicDetails.price}
+            </p>
+            <p>
+              <strong>Condition:</strong> {basicDetails.condition}
+            </p>
+            <p>
+              <strong>Mileage:</strong> {basicDetails.mileage}
+            </p>
+          </Card>
+        </Col>
+        <Col span={24}>
+          <Card title="Specifications">
+            <p>
+              <strong>Fuel Type:</strong> {specificationDetails.fuel_type}
+            </p>
+            <p>
+              <strong>Transmission:</strong> {specificationDetails.transmission}
+            </p>
+            <p>
+              <strong>Body Type:</strong> {specificationDetails.body_type}
+            </p>
+            <p>
+              <strong>Engine Size:</strong> {specificationDetails.engine_size}
+            </p>
+            <p>
+              <strong>Seats:</strong> {specificationDetails.seats}
+            </p>
+            <p>
+              <strong>Color:</strong> {specificationDetails.color || "N/A"}
+            </p>
+            <p>
+              <strong>Price Negotiable:</strong>{" "}
+              {specificationDetails.price_negotiable}
+            </p>
+          </Card>
+        </Col>
+        <Col span={24}>
+          <Card title="Additional Information">
+            <p>
+              <strong>Description:</strong> {additionalInformations.description}
+            </p>
+            <p>
+              <strong>Location:</strong> {additionalInformations.location}
+            </p>
+            {additionalInformations.features &&
+              additionalInformations.features.length > 0 && (
+                <>
+                  <strong>Features:</strong>
+                  <ul>
+                    {additionalInformations.features.map((feature, index) => (
+                      <li key={index}>{feature}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+          </Card>
+        </Col>
+      </Row>
+      <div className="form__item button__items d-flex justify-content-between mt-4">
+        <button className="button-transparent w-25" onClick={prev}>
+          Back
+        </button>
+        <button
+          type="submit"
+          className="medium mb-4 w-25"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? <>Pleasw wait....</> : <>Confirm</>}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default Review;

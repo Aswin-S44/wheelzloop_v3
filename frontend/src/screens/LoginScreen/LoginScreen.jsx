@@ -7,11 +7,15 @@ import { InputBase } from "@mui/material";
 import "./LoginScreen.css";
 import axios from "axios";
 import { SIGN_IN_URL } from "../../config/api";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../../actions/userActions";
 
 function LoginScreen() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-
+  // const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo, loading, error } = userSignin;
   const initialValues = {
     emailOrPhone: "",
     password: "",
@@ -28,20 +32,27 @@ function LoginScreen() {
         email: values.emailOrPhone,
         password: values.password,
       };
-      console.log("loginData---------", loginData);
+
       const res = await axios.post(SIGN_IN_URL, loginData, {
         withCredentials: true,
       });
-      if (res && res.data.success) {
+
+      if (res && res.status == 201) {
         Swal.fire({
           title: "Success!",
-          text: "LoggedIn successfully",
+          text: "Logged in successfully",
           icon: "success",
+        }).then(() => {
+          navigate("/");
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Invalid Credentials",
+          icon: "error",
         });
       }
-      console.log("LOGNI RES----------", res ? res : "no res");
     } catch (error) {
-      setLoading(false);
       Swal.fire({ title: "Error", text: "Invalid credentials", icon: "error" });
     }
     setSubmitting(false);
