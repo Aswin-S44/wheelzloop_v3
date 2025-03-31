@@ -75,7 +75,9 @@ function ProfileScreen() {
                 ) : cars.length == 0 ? (
                   <>No cars available</>
                 ) : (
-                  cars?.map((car, index) => <Card car={car} editable={true} />)
+                  cars?.map((car, index) => (
+                    <Card car={car} editable={true} category={"Latest"} />
+                  ))
                 )}
               </div>
             </TabPanel>

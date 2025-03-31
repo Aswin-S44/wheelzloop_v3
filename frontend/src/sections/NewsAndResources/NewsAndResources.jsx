@@ -52,7 +52,7 @@ const NewsAndResources = () => {
   };
 
   return (
-    <div className="news-container">
+    <section className="news-container">
       <div className="news-header">
         <h2>NEWS AND RESOURCES</h2>
         <p>
@@ -62,7 +62,7 @@ const NewsAndResources = () => {
       </div>
       <div className="news-grid">
         {articles.map((article) => (
-          <div
+          <article
             key={article.id}
             className="news-card"
             onClick={() => handleCardClick(article.link)}
@@ -78,20 +78,28 @@ const NewsAndResources = () => {
               <span className="news-category">{article.category}</span>
             </div>
             <div className="news-content">
-              <h2 className="news-card-title">{article.title}</h2>
+              <h3 className="news-card-title">{article.title}</h3>
               <p className="news-text">{article.description}</p>
-              <a
-                href="#"
-                onClick={() => handleCardClick(article.link)}
+              <button
                 className="news-link"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCardClick(article.link);
+                }}
               >
                 Read More
-              </a>
+                <svg className="arrow-icon" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
-          </div>
+          </article>
         ))}
       </div>
-    </div>
+      <div className="view-all-container">
+        <button className="view-all-button">View All Articles</button>
+      </div>
+    </section>
   );
 };
 

@@ -2,23 +2,29 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
+  padding: 15px 20px;
   background: #f8f9fa;
   border-bottom: 2px solid #ddd;
   position: relative;
+  z-index: 100;
 }
 
 .logo {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
-  color: var(--primary-color);
+  color: #30bfa1;
+}
+
+.logo a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .search {
   display: flex;
   flex: 1;
   max-width: 500px;
-  margin: 0 10px;
+  margin: 0 20px;
   background: white;
   border-radius: 20px;
   border: 1px solid #ccc;
@@ -33,7 +39,7 @@
 }
 
 .search button {
-  background: var(--primary-color);
+  background: #30bfa1;
   color: white;
   padding: 8px 12px;
   border: none;
@@ -52,9 +58,6 @@
   text-decoration: none;
   color: #002f34;
   font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
   transition: 0.3s;
 }
 
@@ -64,7 +67,7 @@
 
 .login-btn {
   background: none;
-  border: 2px solid var(--primary-color);
+  border: 2px solid #30bfa1;
   color: #002f34;
   padding: 5px 12px;
   cursor: pointer;
@@ -87,7 +90,7 @@
 }
 
 .sell-btn {
-  background: var(--primary-color);
+  background: #30bfa1;
   border: none;
   padding: 8px 15px;
   border-radius: 20px;
@@ -106,15 +109,20 @@
   display: none;
 }
 
-/* RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .search {
-    max-width: 400px;
-  }
+.close-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
 
-  .nav {
-    gap: 10px;
-  }
+.brand-img{
+  width: "220px";
+  height: "70px"; 
 }
 
 @media (max-width: 768px) {
@@ -128,36 +136,36 @@
     top: 70px;
     left: 20px;
     right: 20px;
-    z-index: 10;
-  }
-
-  .icons {
-    gap: 10px;
+    z-index: 101;
   }
 
   .nav {
-    display: none;
-  }
-
-  div.log a{
-    color: #ff6600;
-  }
-
-  div.logo a:hover{
-    color: #ff6600;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 20px 20px;
+    transition: 0.3s;
+    z-index: 100;
   }
 
   .nav.show {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
     left: 0;
+  }
+
+  .nav a {
     width: 100%;
-    background: white;
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .close-btn {
+    display: block;
   }
 
   .menu-icon,
@@ -168,7 +176,7 @@
 
 @media (max-width: 480px) {
   .header {
-    padding: 10px;
+    padding: 10px 15px;
   }
 
   .logo {
@@ -177,9 +185,6 @@
 
   .sell-btn {
     padding: 6px 12px;
-  }
-
-  .search input {
-    padding: 6px;
+    font-size: 14px;
   }
 }

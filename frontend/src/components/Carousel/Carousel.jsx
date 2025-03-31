@@ -26,6 +26,7 @@ function Carousel() {
               src="https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg"
               className="d-block w-100"
               alt="..."
+              loading="lazy"
             />
           </div>
           <div className="carousel-item">
@@ -33,6 +34,7 @@ function Carousel() {
               src="https://i.pinimg.com/736x/be/83/60/be83607be6a98648c47b8563b8b7edca.jpg"
               className="d-block w-100"
               alt="..."
+              loading="lazy"
             />
           </div>
           <div className="carousel-item"></div>

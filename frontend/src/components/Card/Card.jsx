@@ -2,7 +2,7 @@ import React from "react";
 import "./Card.css";
 import ActionMenu from "../ActionMenu/ActionMenu";
 
-function Card({ car, editable = false }) {
+function Card({ car, editable = false, category }) {
   return (
     <div className="card">
       {editable && (
@@ -20,7 +20,7 @@ function Card({ car, editable = false }) {
         />
         <div className="overlay"></div>
         <span className="price">{car?.price ?? "_"}</span>
-        <span className="badge">Featured</span>
+        <span className="badge">{category}</span>
       </div>
 
       <div className="card-content">

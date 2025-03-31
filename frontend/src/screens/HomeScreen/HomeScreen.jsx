@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./HomeScreen.css";
 import TitleHeader from "../../components/TitleHeader/TitleHeader";
 import Card from "../../components/Card/Card";
@@ -10,12 +10,19 @@ import FAQSection from "../../sections/FAQ/FAQ";
 import Counter from "../../components/Counter/Counter";
 import FeaturesSection from "../../sections/FeaturesSection/FeaturesSection";
 import Carousel from "../../components/Carousel/Carousel";
+import axios from "axios";
+import { GET_ALL_CARS } from "../../config/api";
+import Loader from "../../components/Loader/Loader";
+import EmptyState from "../../components/EmptyState/EmptyState";
+import Banner from "../../components/Banner/Banner";
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
   "https://i.pinimg.com/736x/be/83/60/be83607be6a98648c47b8563b8b7edca.jpg",
 ];
 function HomeScreen() {
   const sliderRef = useRef(null);
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -29,13 +36,35 @@ function HomeScreen() {
     }
   };
 
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${GET_ALL_CARS}`);
+        if (res && res.data?.data?.length > 0) {
+          setCars(res.data.data);
+        }
+        console.log("all cars---------", res ? res : "no res");
+      } catch (error) {
+        console.log("Error while fetching cars : ", error);
+        return error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCars();
+  }, []);
+
   return (
     <div className="screens">
-      <div className="mt-4">
-        <Carousel images={images} />
+      <div className="">
+        {/* <Carousel images={images} /> */}
+        <Banner />
       </div>
       <div className="container">
         <FeaturesSection />
+      </div>
+      <div className="container">
         <div className="mt-4">
           <TitleHeader title1={"Latest"} title2={"Cars"} option={"View all"} />
           <div className="slider-container">
@@ -48,12 +77,20 @@ function HomeScreen() {
             </IconButton>
             <div className="card-slider" ref={sliderRef}>
               <div className="card-container">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {loading ? (
+                  <Loader />
+                ) : cars.length == 0 ? (
+                  <EmptyState />
+                ) : (
+                  cars?.map((car, index) => (
+                    <Card
+                      car={car}
+                      editable={false}
+                      key={index}
+                      category={"Latest"}
+                    />
+                  ))
+                )}
               </div>
             </div>
             <IconButton
@@ -66,15 +103,15 @@ function HomeScreen() {
           </div>
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-0">
         <HowItWorks />
-        <div className="mt-4">
+        <div className="mt-0">
           <NewsAndResources />
         </div>
-        <div className="mt-4">
+        <div className="mt-0">
           <Counter />
         </div>
-        <div className="mt-5">
+        <div className="mt-0">
           <FAQSection />
         </div>
       </div>

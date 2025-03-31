@@ -6,3 +6,4 @@ export const ADD_CAR_URL = `${BACKEND_URL}/api/v1/user/car`;
 export const GET_DEALER_CAR_URL = `${BACKEND_URL}/api/v1/user/cars/me`;
 export const CAR_DETAILS_API = `${BACKEND_URL}/api/v1/user/car`;
 export const UPDATE_PROFILE_URL = `${BACKEND_URL}/api/v1/user/profile`;
+export const GET_ALL_CARS = `${BACKEND_URL}/api/v1/user/cars`;

@@ -13,6 +13,8 @@ import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import AddCarScreen from "./screens/AddCarScreen/AddCarScreen";
 import EditProfileScreen from "./screens/EditProfileScreen/EditProfileScreen";
 import { UserProvider } from "./hooks/UserContext";
+import AboutUsScreen from "./screens/AboutUsScreen/AboutUsScreen";
+import ReviewScreen from "./screens/ReviewScreen/ReviewScreen";
 
 function Layout() {
   const location = useLocation();
@@ -35,6 +37,8 @@ function Layout() {
           <Route path="/car/:id" element={<DetailsScreen />} />
           <Route path="/car/edit/:id" element={<AddCarScreen />} />
           <Route path="/profile/edit" element={<EditProfileScreen />} />
+          <Route path="/about-us" element={<AboutUsScreen />} />
+          <Route path="/reviews" element={<ReviewScreen />} />
         </Routes>
         {!hideHeaderFooter && <Footer />}
       </div>

@@ -6,7 +6,7 @@ import {
   LocalShipping,
   SupportAgent,
 } from "@mui/icons-material";
-
+ 
 function FeaturesSection() {
   return (
     <div className="features-section">

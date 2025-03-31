@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Counter.css";
-// import { getStatCount } from "../../services/apis";
 
 function Counter() {
   const [counts, setCounts] = useState({
@@ -9,70 +8,66 @@ function Counter() {
     brands: 0,
   });
 
-  const [targetCounts, setTargetCounts] = useState({
-    cars: 0,
-    customers: 0,
-    brands: 0,
+  const [targetCounts] = useState({
+    cars: 1250,
+    customers: 850,
+    brands: 35,
   });
-
-  // useEffect(() => {
-  //   const fetchStatCount = async () => {
-  //     const res = await getStatCount();
-  //     if (res) {
-  //       setTargetCounts(res);
-  //     }
-  //   };
-  //   fetchStatCount();
-  // }, []);
 
   useEffect(() => {
     const updateCounts = (key, step, limit) => {
       return setInterval(() => {
         setCounts((prev) => ({
           ...prev,
-          [key]:
-            prev[key] < targetCounts[key]
-              ? prev[key] + step
-              : targetCounts[key],
+          [key]: prev[key] < limit ? Math.min(prev[key] + step, limit) : limit,
         }));
-      }, 50);
+      }, 20);
     };
 
-    if (targetCounts.cars || targetCounts.customers || targetCounts.brands) {
-      const intervals = [
-        updateCounts("cars", 5, targetCounts.cars),
-        updateCounts("customers", 2, targetCounts.customers),
-        updateCounts("brands", 1, targetCounts.brands),
-      ];
+    const intervals = [
+      updateCounts("cars", 25, targetCounts.cars),
+      updateCounts("customers", 15, targetCounts.customers),
+      updateCounts("brands", 2, targetCounts.brands),
+    ];
 
-      return () => intervals.forEach(clearInterval);
-    }
+    return () => intervals.forEach(clearInterval);
   }, [targetCounts]);
 
   return (
-    <div className="mt-4">
-      <h2 className="font-md text-center">OUR ACHIEVEMENTS</h2>
-      <div className="counter-container">
-        <div className="counter-item">
-          <div className="counter-circle">
-            <h2>{counts.cars}+</h2>
-          </div>
-          <p>Cars Available</p>
-        </div>
-        <div className="counter-item">
-          <div className="counter-circle">
-            <h2>{counts.customers}+</h2>
-          </div>
-          <p>Happy Customers</p>
-        </div>
-        <div className="counter-item">
-          <div className="counter-circle">
-            <h2>{counts.brands}+</h2>
-          </div>
-          <p>Top Brands</p>
-        </div>
+    <section className="counter-section">
+      <div className="counter-header">
+        <h2 className="counter-title">Our Achievements</h2>
+        <p className="counter-subtitle">Driving excellence in every number</p>
       </div>
-    </div>
+      <div className="counter-container">
+        {Object.entries(counts).map(([key, value]) => (
+          <div key={key} className="counter-item">
+            <div className="counter-circle">
+              <div className="counter-value">
+                {value}
+                <span className="counter-plus">+</span>
+              </div>
+              <svg className="counter-circle-bg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  style={{
+                    strokeDashoffset: 283 - 283 * (value / targetCounts[key]),
+                  }}
+                />
+              </svg>
+            </div>
+            <p className="counter-label">
+              {key === "cars" && "Cars Available"}
+              {key === "customers" && "Happy Customers"}
+              {key === "brands" && "Top Brands"}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

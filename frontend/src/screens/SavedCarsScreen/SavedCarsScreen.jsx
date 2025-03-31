@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SavedCarsScreen.css";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
 
 const savedCars = [
   {
@@ -33,31 +35,53 @@ const savedCars = [
 ];
 
 function SavedCarsScreen() {
+  const [cars, setCars] = useState(savedCars);
+
   const handleDelete = (id) => {
-    console.log(`Deleted car with id: ${id}`);
+    setCars(cars.filter((car) => car.id !== id));
   };
 
   return (
     <div className="saved-cars-container">
-      <h1 className="saved-cars-title">Saved Cars</h1>
+      <h1 className="saved-cars-title">Your Saved Vehicles</h1>
       <div className="saved-cars-list">
-        {savedCars.map((car) => (
-          <div key={car.id} className="saved-car-item">
-            <img src={car.image} alt={car.title} className="car-image" />
-            <div className="car-info">
-              <h2 className="car-title">{car.title}</h2>
-              <p className="car-price">${car.price.toLocaleString()}</p>
-              <p className="car-mileage">
-                {car.mileage.toLocaleString()} miles
-              </p>
-              <p className="car-location">{car.location}</p>
+        {cars.map((car) => (
+          <div
+            key={car.id}
+            className={`saved-car-item ${car.featured ? "featured" : ""}`}
+          >
+            {car.featured && <div className="featured-badge">Featured</div>}
+            <div className="car-image-container">
+              <div className="car-image-placeholder">
+                <img src={car?.image} className="w-100" />
+              </div>
             </div>
-            <button
-              className="delete-button"
-              onClick={() => handleDelete(car.id)}
-            >
-              <DeleteIcon />
-            </button>
+            <div className="car-content">
+              <div className="car-info">
+                <h2 className="car-title">{car.title}</h2>
+                <p className="car-price">${car.price.toLocaleString()}</p>
+                <div className="car-details">
+                  <span className="car-mileage">
+                    <img src="/mileage-icon.svg" alt="" />{" "}
+                    {car.mileage.toLocaleString()} mi
+                  </span>
+                  <span className="car-location">
+                    <img src="/location-icon.svg" alt="" /> {car.location}
+                  </span>
+                </div>
+              </div>
+              <div className="car-actions">
+                <button className="action-button share-button">
+                  <ShareIcon />
+                </button>
+                <button
+                  className="action-button delete-button"
+                  onClick={() => handleDelete(car.id)}
+                >
+                  <DeleteIcon />
+                </button>
+              </div>
+            </div>
           </div>
         ))}
       </div>

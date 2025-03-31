@@ -1,49 +1,60 @@
-import React, { useState } from "react";
-import {
-  Search,
-  Menu,
-  Person,
-  AddBox,
-  Chat,
-  Favorite,
-  Home,
-  RateReview,
-  DirectionsCar,
-  Article,
-} from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { Search, Menu, Person, AddBox, Close } from "@mui/icons-material";
 import "./Header.css";
-import Carousel from "../Carousel/Carousel";
 import { useNavigate } from "react-router-dom";
-
-const images = [
-  "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
-  "https://i.pinimg.com/736x/be/83/60/be83607be6a98648c47b8563b8b7edca.jpg",
-];
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
+  const [logoSize, setLogoSize] = useState({ width: "220px", height: "70px" });
+
+  useEffect(() => {
+    const updateLogoSize = () => {
+      if (window.innerWidth < 768) {
+        setLogoSize({ width: "150px", height: "50px" });
+      } else {
+        setLogoSize({ width: "220px", height: "70px" });
+      }
+    };
+
+    updateLogoSize(); // Call on mount
+    window.addEventListener("resize", updateLogoSize);
+
+    return () => window.removeEventListener("resize", updateLogoSize);
+  }, []);
 
   const navigateToLogin = () => {
     navigate("/signin");
+  };
+
+  const toggleNav = () => {
+    setShowNav(!showNav);
+  };
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
   };
 
   return (
     <>
       <header className="header">
         <div className="logo">
-          <a href="/" style={{ color: "#ff6600" }}>
-            WheelzLoop
-          </a>
+          {/* <a href="/">WheelzLoop</a> */}
+          <img src="/images/logo.png" className="brand-name" style={logoSize} />
         </div>
+
         <div className={`search ${showSearch ? "mobile-search" : ""}`}>
           <input type="text" placeholder="Search for cars, mobiles, etc." />
           <button aria-label="search-button">
             <Search />
           </button>
         </div>
+
         <nav className={`nav ${showNav ? "show" : ""}`}>
+          <button className="close-btn" onClick={toggleNav}>
+            <Close />
+          </button>
           <a href="/">Home</a>
           <a href="/used-cars">Find Cars</a>
           <a href="/favourites">Favourites</a>
@@ -55,16 +66,16 @@ function Header() {
             <Person /> Login
           </button>
         </nav>
+
         <div className="icons">
           <button className="sell-btn">
             <AddBox /> Sell
           </button>
-          <Search
-            className="search-icon"
-            onClick={() => setShowSearch(!showSearch)}
-          />
-          <Menu className="menu-icon" onClick={() => setShowNav(!showNav)} />
+          <Search className="search-icon" onClick={toggleSearch} />
+          <Menu className="menu-icon" onClick={toggleNav} />
         </div>
+
+        {showNav && <div className="-1" onClick={toggleNav}></div>}
       </header>
     </>
   );
