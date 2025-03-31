@@ -31,6 +31,7 @@ function BasicInformation() {
 
       <Formik
         initialValues={basicDetails}
+        enableReinitialize={true}
         onSubmit={(values) => {
           setBasicDetails(values);
           next();

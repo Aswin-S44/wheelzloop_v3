@@ -6,9 +6,11 @@ import { ADD_CAR_URL } from "../../config/api";
 import Swal from "sweetalert2";
 import { AnimatePresence } from "framer-motion";
 import Overlay from "../../components/Overlay/Overlay";
+import { useParams } from "react-router-dom";
 
 function Review() {
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   const {
     basicDetails,
     specificationDetails,
@@ -25,10 +27,19 @@ function Review() {
       ...specificationDetails,
       ...additionalInformations,
     };
+    let res = null;
+    if (id) {
+      // Edit car
+      console.log("Edit car api called");
+      res = await axios.patch(`${ADD_CAR_URL}/${id}`, body, {
+        withCredentials: true,
+      });
+    } else {
+      res = await axios.post(ADD_CAR_URL, body, {
+        withCredentials: true,
+      });
+    }
 
-    const res = await axios.post(ADD_CAR_URL, body, {
-      withCredentials: true,
-    });
     setLoading(false);
     if (res && res.status == 200) {
       const swalWithBootstrapButtons = Swal.mixin({

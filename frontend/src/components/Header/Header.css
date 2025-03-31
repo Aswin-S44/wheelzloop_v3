@@ -139,6 +139,14 @@
     display: none;
   }
 
+  div.log a{
+    color: #ff6600;
+  }
+
+  div.logo a:hover{
+    color: #ff6600;
+  }
+
   .nav.show {
     display: flex;
     flex-direction: column;

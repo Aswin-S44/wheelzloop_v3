@@ -17,6 +17,10 @@ body {
   --main-bg-color: #30bfa1
 }
 
+a{
+  text-decoration: none;
+}
+
 .mt-4 {
   margin-top: 10px;
 }

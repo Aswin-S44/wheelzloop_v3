@@ -6,3 +6,11 @@ module.exports.createSecretToken = (id) => {
     expiresIn: 3 * 24 * 60 * 60,
   });
 };
+
+module.exports.verifyToken = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET || "something secret");
+  } catch (error) {
+    return null;
+  }
+};

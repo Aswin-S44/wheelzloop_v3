@@ -1,0 +1,67 @@
+/* Tab container */
+.react-tabs {
+    font-family: "Arial", sans-serif;
+    /* max-width: 800px; */
+    margin: auto;
+  }
+  
+  /* Tab list container */
+  .react-tabs__tab-list {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  /* Individual tab */
+  .react-tabs__tab {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    background: #f8f8f8;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Active tab */
+  .react-tabs__tab--selected {
+    background:red;
+    color: white;
+    border-bottom: 3px solid #ff9800;
+  }
+
+  .eact-tabs__tab--selected{
+    background-color: red;
+  }
+  
+  /* Hover effect */
+  .react-tabs__tab:hover {
+    /* background: #e0f2f1; */
+    color: #333;
+  }
+  
+  /* Tab panel (content area) */
+  .react-tabs__tab-panel {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

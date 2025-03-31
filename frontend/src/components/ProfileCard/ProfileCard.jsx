@@ -1,20 +1,36 @@
 import React from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import ShareIcon from "@mui/icons-material/Share";
 import "./ProfileCard.css";
 import { DEFAULT_AVATAR } from "../../constants/urls";
+import { formatDate } from "../../utils/utils";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
-function ProfileCard() {
+function ProfileCard({ user }) {
+  const handleEditProfile = () => {
+    window.location.href = "/profile/edit";
+  };
   return (
     <div className="profile-card">
       <div className="avatar-container">
-        <img src={DEFAULT_AVATAR} alt="User Avatar" className="avatar" />
+        <img
+          src={user?.profile_picture || DEFAULT_AVATAR}
+          alt="User Avatar"
+          className="avatar"
+        />
       </div>
-      <div className="name">John Doe</div>
-      <div className="date">Joined: January 1, 2023</div>
-      <div className="location">New York, USA</div>
+      <div className="name">{user?.first_name + " " + user?.last_name}</div>
+      <div className="date">
+        <CalendarMonthIcon />
+        Joined: {formatDate(user?.created_at, "MMMM dd, yyyy")}
+      </div>
+      <div className="location">
+        <LocationOnIcon />
+        {user?.location ?? "_"}
+      </div>
       <div className="button-container">
-        <button className="button-transparent">Edit profile</button>
+        <button className="button-transparent" onClick={handleEditProfile}>
+          Edit profile
+        </button>
         <button className="medium">Share Profile</button>
       </div>
     </div>

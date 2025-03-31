@@ -11,27 +11,34 @@ import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen/SignUpScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import AddCarScreen from "./screens/AddCarScreen/AddCarScreen";
+import EditProfileScreen from "./screens/EditProfileScreen/EditProfileScreen";
+import { UserProvider } from "./hooks/UserContext";
 
 function Layout() {
   const location = useLocation();
   const hideHeaderFooter = ["/signin", "/signup"].includes(location.pathname);
 
   return (
-    <div>
-      {!hideHeaderFooter && <Header />}
-      <Routes>
-        <Route path="/signin" element={<LoginScreen />} />
-        <Route path="/signup" element={<SignUpScreen />} />
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/car" element={<DetailsScreen />} />
-        <Route path="/favourites" element={<SavedCarsScreen />} />
-        <Route path="/blogs" element={<BlogsScreen />} />
-        <Route path="/used-cars" element={<ExploreCarsScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/car/add" element={<AddCarScreen />} />
-      </Routes>
-      {!hideHeaderFooter && <Footer />}
-    </div>
+    <UserProvider>
+      <div>
+        {!hideHeaderFooter && <Header />}
+        <Routes>
+          <Route path="/signin" element={<LoginScreen />} />
+          <Route path="/signup" element={<SignUpScreen />} />
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/car" element={<DetailsScreen />} />
+          <Route path="/favourites" element={<SavedCarsScreen />} />
+          <Route path="/blogs" element={<BlogsScreen />} />
+          <Route path="/used-cars" element={<ExploreCarsScreen />} />
+          <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/car/add" element={<AddCarScreen />} />
+          <Route path="/car/:id" element={<DetailsScreen />} />
+          <Route path="/car/edit/:id" element={<AddCarScreen />} />
+          <Route path="/profile/edit" element={<EditProfileScreen />} />
+        </Routes>
+        {!hideHeaderFooter && <Footer />}
+      </div>
+    </UserProvider>
   );
 }
 

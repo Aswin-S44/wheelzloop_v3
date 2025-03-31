@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BasicInformation from "./BasicInformation";
 import Specifications from "./Specifications";
 import AdditionalInformation from "./AdditionalInformation";
 import { Provider } from "./MultiStepFormContext";
 import { Steps } from "antd";
 import Review from "./Review";
+import { useParams } from "react-router-dom";
+import { CAR_DETAILS_API } from "../../config/api";
+import axios from "axios";
 const { Step } = Steps;
 
 const basicInformationState = {
@@ -50,6 +53,9 @@ const renderStep = (step) => {
 };
 
 function MultiStepForm() {
+  const { id } = useParams();
+  const [loading, setLoading] = useState(false);
+  console.log("ID------------", id ? id : "no id");
   const [basicDetails, setBasicDetails] = useState(basicInformationState);
   const [specificationDetails, setSpecificationDetails] =
     useState(specificationState);
@@ -57,6 +63,45 @@ function MultiStepForm() {
     additionalInformationState
   );
   const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    if (id) {
+      const fetchCar = async () => {
+        const url = `${CAR_DETAILS_API}/${id}`;
+
+        const res = await axios.get(url);
+        setLoading(false);
+        if (res && res.data) {
+          const data = res.data.data;
+          setBasicDetails({
+            car_name: data.car_name || "",
+            brand: data.brand || "",
+            model: data.model || "",
+            year: data.year || "",
+            price: data.price || "",
+            mileage: data.mileage || "",
+            condition: data.condition || "",
+          });
+          setSpecificationDetails({
+            fuel_type: data.fuel_type || "",
+            transmission: data.transmission || "",
+            body_type: data.body_type || "",
+            color: data.color || "",
+            engine_size: data.engine_size || "",
+            seats: data.seats || "",
+            is_negotiable: data.is_negotiable || false,
+          });
+          setAdditionalInformations({
+            features: data.features || [],
+            description: data.description || "",
+            place: data.place || "",
+            images: data.images || [],
+          });
+        }
+      };
+      fetchCar();
+    }
+  }, [id]);
 
   const next = () => {
     if (currentStep === 3) {
@@ -69,7 +114,7 @@ function MultiStepForm() {
     setCurrentStep(currentStep + 1);
   };
   const prev = () => setCurrentStep(currentStep - 1);
-
+  console.log("basicDetails-------", basicDetails);
   return (
     <div className="mt-5">
       <Provider
