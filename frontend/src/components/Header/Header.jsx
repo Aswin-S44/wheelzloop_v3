@@ -40,8 +40,13 @@ function Header() {
     <>
       <header className="header">
         <div className="logo">
-          {/* <a href="/">WheelzLoop</a> */}
-          <img src="/images/logo.png" className="brand-name" style={logoSize} />
+          <a href="/">
+            <img
+              src="/images/logo.png"
+              className="brand-name"
+              style={logoSize}
+            />
+          </a>
         </div>
 
         <div className={`search ${showSearch ? "mobile-search" : ""}`}>

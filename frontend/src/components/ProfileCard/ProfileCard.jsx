@@ -15,7 +15,7 @@ function ProfileCard({ user }) {
         <img
           src={user?.profile_picture || DEFAULT_AVATAR}
           alt="User Avatar"
-          className="avatar"
+          className="avatar-2"
         />
       </div>
       <div className="name">{user?.first_name + " " + user?.last_name}</div>

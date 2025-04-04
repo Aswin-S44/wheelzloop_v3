@@ -9,6 +9,7 @@ import { carFeatures } from "../../dummyData/carFeatures";
 import { carBodyTypes } from "../../dummyData/bodyTypes";
 import { transmissionTypes } from "../../dummyData/transmissionTypes";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import SearchIcon from "@mui/icons-material/Search";
 
 function Filter({ onFilterChange }) {
   const [search, setSearch] = useState("");
@@ -23,9 +24,7 @@ function Filter({ onFilterChange }) {
   );
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  const handleSearch = (e) => setSearch(e.target.value);
 
   const handleCheckboxChange = (selectedArray, setSelectedArray, value) => {
     if (selectedArray.includes(value)) {
@@ -41,22 +40,19 @@ function Filter({ onFilterChange }) {
 
   const applyFilters = () => {
     const filters = {
-      brands: selectedCars.map((item) => item.brand), // Array of brand names
-      year: selectedYear ? `${selectedYear} & ${selectedYear}` : null, // Year range
-      fuelTypes: selectedFuelTypes.length > 0 ? selectedFuelTypes : null, // Array of fuel types
-      ownership: selectedOwnership.length > 0 ? selectedOwnership : null, // Array of ownership types
-      bodyTypes: selectedBodyTypes.length > 0 ? selectedBodyTypes : null, // Array of body types
+      brands: selectedCars.map((item) => item.brand),
+      year: selectedYear ? `${selectedYear} & ${selectedYear}` : null,
+      fuelTypes: selectedFuelTypes.length > 0 ? selectedFuelTypes : null,
+      ownership: selectedOwnership.length > 0 ? selectedOwnership : null,
+      bodyTypes: selectedBodyTypes.length > 0 ? selectedBodyTypes : null,
       transmissionTypes:
-        selectedTransmissionTypes.length > 0 ? selectedTransmissionTypes : null, // Array of transmission types
+        selectedTransmissionTypes.length > 0 ? selectedTransmissionTypes : null,
     };
 
-    // Remove null or invalid filters
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(([_, value]) => value !== null)
     );
-
-    console.log("Applied Filters:", validFilters); // Debugging
-    onFilterChange(validFilters); // Pass valid filters to parent component
+    onFilterChange(validFilters);
   };
 
   const clearFilters = () => {
@@ -78,204 +74,189 @@ function Filter({ onFilterChange }) {
   });
 
   return (
-    <div className="filter-container scrollable-div">
-      <h2 className="font-sm">Apply Filters</h2>
+    <div className="filter-container">
+      <div className="filter-header">
+        <h2>Filters</h2>
+        <div className="filter-actions">
+          <button className="clear-btn" onClick={clearFilters}>
+            Clear All
+          </button>
+          <button className="apply-btn" onClick={applyFilters}>
+            Apply
+          </button>
+        </div>
+      </div>
 
-      <button
-        className="apply-filter-btn medium"
-        onClick={applyFilters}
-        aria-label="Search for used cars"
-      >
-        Apply Filters
-      </button>
-      <button
-        className="clear-filter-btn button-transparent m-2"
-        onClick={clearFilters}
-        aria-label="Search for used cars"
-      >
-        Clear Filters
-      </button>
+      <div className="search-section">
+        <div className="search-input-container">
+          {/* <SearchIcon className="search-icon" /> */}
+          <input
+            type="text"
+            placeholder="Search brand or car..."
+            value={search}
+            onChange={handleSearch}
+            className="search-input"
+          />
+        </div>
+      </div>
 
-      <div className="mt-4">
-        <input
-          type="text"
-          placeholder="Search brand or car"
-          value={search}
-          onChange={handleSearch}
-          className="search-box"
-        />
-        <h4 className="font-sm" style={{ color: "#4e4949" }}>
-          Top brands
-        </h4>
-        <div className="scrollable-brands mt-4">
-          {filteredBrands.map((brandItem, index) => (
-            <div key={index} className="accordion">
-              <div
-                className="accordion-header"
-                onClick={() => handleAccordionToggle(index)}
-              >
-                <h3 style={{ color: "#161638" }} className="font-sm-sm">
-                  {brandItem.brand}
-                </h3>
-                <span>
+      <div className="filter-sections">
+        <div className="filter-section">
+          <h3 className="section-title">Top Brands</h3>
+          <div className="brands-list">
+            {filteredBrands.map((brandItem, index) => (
+              <div key={index} className="brand-accordion ">
+                <div
+                  className="brand-header"
+                  onClick={() => handleAccordionToggle(index)}
+                >
+                  <span>{brandItem.brand}</span>
                   {activeIndex === index ? (
-                    <RemoveCircleOutlineIcon style={{ fontSize: "28px" }} />
+                    <RemoveCircleOutlineIcon className="accordion-icon" />
                   ) : (
-                    <KeyboardArrowDownIcon style={{ fontSize: "28px" }} />
+                    <KeyboardArrowDownIcon className="accordion-icon" />
                   )}
-                </span>
-              </div>
-              <hr />
-              {activeIndex === index && (
-                <div className="accordion-body">
-                  {brandItem.cars.map((car, idx) => (
-                    <div key={idx} className="checkbox-container">
-                      <input
-                        type="checkbox"
-                        id={`${brandItem.brand}-${car}`}
-                        checked={selectedCars.some(
-                          (item) =>
-                            item.brand === brandItem.brand && item.car === car
-                        )}
-                        onChange={() =>
-                          handleCheckboxChange(selectedCars, setSelectedCars, {
-                            brand: brandItem.brand,
-                            car,
-                          })
-                        }
-                      />
-                      <label
-                        htmlFor={`${brandItem.brand}-${car}`}
-                        className="font-sm-sm"
-                      >
+                </div>
+                {activeIndex === index && (
+                  <div className="brand-models">
+                    {brandItem.cars.map((car, idx) => (
+                      <label key={idx} className="model-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedCars.some(
+                            (item) =>
+                              item.brand === brandItem.brand && item.car === car
+                          )}
+                          onChange={() =>
+                            handleCheckboxChange(
+                              selectedCars,
+                              setSelectedCars,
+                              {
+                                brand: brandItem.brand,
+                                car,
+                              }
+                            )
+                          }
+                        />
+                        <span className="checkmark"></span>
                         {car}
                       </label>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <hr />
-        <div className="scrollable-brands">
-          <h4 className="font-sm" style={{ color: "#4e4949" }}>
-            Years
-          </h4>
-          {years.map((year, index) => (
-            <div key={index} style={{ padding: "10px" }}>
-              <input
-                type="radio"
-                name="year"
-                checked={selectedYear === year.text}
-                onChange={() => setSelectedYear(year.text)}
-              />
-              <span style={{ marginLeft: "6px" }} className="font-sm-sm">
+        <div className="filter-section">
+          <h3 className="section-title">Year</h3>
+          <div className="options-grid">
+            {years.map((year, index) => (
+              <label key={index} className="radio-option">
+                <input
+                  type="radio"
+                  name="year"
+                  checked={selectedYear === year.text}
+                  onChange={() => setSelectedYear(year.text)}
+                />
+                <span className="radiomark"></span>
                 {year.text}
-              </span>
-            </div>
-          ))}
+              </label>
+            ))}
+          </div>
         </div>
 
-        <hr />
-        <div>
-          <h4 className="font-sm" style={{ color: "#4e4949" }}>
-            Fuel Types
-          </h4>
-          {fuelTypes.map((fuel, index) => (
-            <div key={index} style={{ padding: "10px" }}>
-              <input
-                type="checkbox"
-                checked={selectedFuelTypes.includes(fuel.text)}
-                onChange={() =>
-                  handleCheckboxChange(
-                    selectedFuelTypes,
-                    setSelectedFuelTypes,
-                    fuel.text
-                  )
-                }
-              />
-              <span style={{ marginLeft: "6px" }} className="font-sm-sm">
+        <div className="filter-section">
+          <h3 className="section-title">Fuel Type</h3>
+          <div className="options-grid">
+            {fuelTypes.map((fuel, index) => (
+              <label key={index} className="checkbox-option">
+                <input
+                  type="checkbox"
+                  checked={selectedFuelTypes.includes(fuel.text)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      selectedFuelTypes,
+                      setSelectedFuelTypes,
+                      fuel.text
+                    )
+                  }
+                />
+                <span className="checkmark"></span>
                 {fuel.text}
-              </span>
-            </div>
-          ))}
+              </label>
+            ))}
+          </div>
         </div>
 
-        <hr />
-        <div>
-          <h4 className="font-sm" style={{ color: "#4e4949" }}>
-            Ownership
-          </h4>
-          {ownerShip.map((ownership, index) => (
-            <div key={index} style={{ padding: "10px" }}>
-              <input
-                type="checkbox"
-                checked={selectedOwnership.includes(ownership.text)}
-                onChange={() =>
-                  handleCheckboxChange(
-                    selectedOwnership,
-                    setSelectedOwnership,
-                    ownership.text
-                  )
-                }
-              />
-              <span style={{ marginLeft: "6px" }} className="font-sm-sm">
+        <div className="filter-section">
+          <h3 className="section-title">Ownership</h3>
+          <div className="options-grid">
+            {ownerShip.map((ownership, index) => (
+              <label key={index} className="checkbox-option">
+                <input
+                  type="checkbox"
+                  checked={selectedOwnership.includes(ownership.text)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      selectedOwnership,
+                      setSelectedOwnership,
+                      ownership.text
+                    )
+                  }
+                />
+                <span className="checkmark"></span>
                 {ownership.text}
-              </span>
-            </div>
-          ))}
+              </label>
+            ))}
+          </div>
         </div>
 
-        <hr />
-        <div className="scrollable-brands">
-          <h4 className="font-sm" style={{ color: "#4e4949" }}>
-            Features
-          </h4>
-          {carFeatures.map((feature, index) => (
-            <div key={index} style={{ padding: "10px" }}>
-              <input
-                type="checkbox"
-                checked={selectedFeatures.includes(feature.text)}
-                onChange={() =>
-                  handleCheckboxChange(
-                    selectedFeatures,
-                    setSelectedFeatures,
-                    feature.text
-                  )
-                }
-              />
-              <span style={{ marginLeft: "6px" }} className="font-sm-sm">
+        <div className="filter-section">
+          <h3 className="section-title">Features</h3>
+          <div className="options-grid scrollable-div">
+            {carFeatures.map((feature, index) => (
+              <label key={index} className="checkbox-option">
+                <input
+                  type="checkbox"
+                  checked={selectedFeatures.includes(feature.text)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      selectedFeatures,
+                      setSelectedFeatures,
+                      feature.text
+                    )
+                  }
+                />
+                <span className="checkmark"></span>
                 {feature.text}
-              </span>
-            </div>
-          ))}
+              </label>
+            ))}
+          </div>
         </div>
 
-        <hr />
-        <div className="scrollable-brands">
-          <h4 className="font-sm" style={{ color: "#4e4949" }}>
-            Body Types
-          </h4>
-          {carBodyTypes.map((bodyType, index) => (
-            <div key={index} style={{ padding: "10px" }}>
-              <input
-                type="checkbox"
-                checked={selectedBodyTypes.includes(bodyType.text)}
-                onChange={() =>
-                  handleCheckboxChange(
-                    selectedBodyTypes,
-                    setSelectedBodyTypes,
-                    bodyType.text
-                  )
-                }
-              />
-              <span style={{ marginLeft: "6px" }} className="font-sm-sm">
+        <div className="filter-section">
+          <h3 className="section-title">Body Type</h3>
+          <div className="options-grid">
+            {carBodyTypes.map((bodyType, index) => (
+              <label key={index} className="checkbox-option">
+                <input
+                  type="checkbox"
+                  checked={selectedBodyTypes.includes(bodyType.text)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      selectedBodyTypes,
+                      setSelectedBodyTypes,
+                      bodyType.text
+                    )
+                  }
+                />
+                <span className="checkmark"></span>
                 {bodyType.text}
-              </span>
-            </div>
-          ))}
+              </label>
+            ))}
+          </div>
         </div>
       </div>
     </div>

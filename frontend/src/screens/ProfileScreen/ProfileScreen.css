@@ -1,67 +1,112 @@
-/* Tab container */
-.react-tabs {
-    font-family: "Arial", sans-serif;
-    /* max-width: 800px; */
-    margin: auto;
-  }
-  
-  /* Tab list container */
-  .react-tabs__tab-list {
-    display: flex;
-    justify-content: left;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 2px solid #ddd;
-  }
-  
-  /* Individual tab */
-  .react-tabs__tab {
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #555;
-    cursor: pointer;
-    background: #f8f8f8;
-    border-radius: 8px 8px 0 0;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* Active tab */
-  .react-tabs__tab--selected {
-    background:red;
-    color: white;
-    border-bottom: 3px solid #ff9800;
-  }
+.profile-screen-container {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
 
-  .eact-tabs__tab--selected{
-    background-color: red;
+.profile-layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.profile-sidebar {
+  flex: 0 0 350px;
+}
+
+.profile-content {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #e0e0e0;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.react-tabs__tab {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  margin-right: 8px;
+  transition: all 0.2s ease;
+}
+
+.react-tabs__tab--selected {
+  color: #30bfa1;
+  border-bottom: 3px solid #30bfa1;
+}
+
+.react-tabs__tab:hover {
+  color: #30bfa1;
+}
+
+.react-tabs__tab-panel {
+  padding: 0;
+}
+
+.cars-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cars-header h2 {
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.add-car-btn {
+  background-color: #30bfa1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-car-btn:hover {
+  background-color: #259c83;
+  transform: translateY(-2px);
+}
+
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.no-cars {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.2rem;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 992px) {
+  .profile-layout {
+    flex-direction: column;
   }
   
-  /* Hover effect */
-  .react-tabs__tab:hover {
-    /* background: #e0f2f1; */
-    color: #333;
+  .profile-sidebar {
+    flex: 1;
+    width: 100%;
   }
-  
-  /* Tab panel (content area) */
-  .react-tabs__tab-panel {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 0 0 8px 8px;
-    background: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  /* Fade-in animation */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+}

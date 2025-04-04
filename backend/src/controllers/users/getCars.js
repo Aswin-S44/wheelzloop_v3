@@ -17,6 +17,7 @@ module.exports.getCars = async (req, res) => {
       transmission,
       body_type,
       status,
+      brands,
     } = req.query;
 
     const pageNum = parseInt(page);
@@ -41,6 +42,11 @@ module.exports.getCars = async (req, res) => {
     if (transmission) filter.transmission = transmission;
     if (body_type) filter.body_type = body_type;
     if (status) filter.status = status;
+
+    if (brands) {
+      const brandsArray = Array.isArray(brands) ? brands : [brands]; // Ensure it's an array
+      filter.brand = { $in: brandsArray };
+    }
 
     const cars = await Cars.find(filter)
       .sort({ [sortBy]: order === "desc" ? -1 : 1 })

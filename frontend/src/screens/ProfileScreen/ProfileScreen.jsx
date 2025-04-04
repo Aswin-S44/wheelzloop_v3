@@ -11,12 +11,13 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import { UserContext } from "../../hooks/UserContext";
+
 function ProfileScreen() {
-  const { navigation } = useNavigate();
+  const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
-  console.log("user---------", user);
+
   useEffect(() => {
     const fetchCar = async () => {
       try {
@@ -36,15 +37,16 @@ function ProfileScreen() {
   }, []);
 
   const handleAddCar = () => {
-    window.location.href = "/car/add";
+    navigate("/car/add");
   };
+
   return (
-    <div className="container-fluid">
-      <div className="row mt-5">
-        <div className="col-md-4">
+    <div className="profile-screen-container">
+      <div className="profile-layout">
+        <div className="profile-sidebar">
           <ProfileCard user={user} />
         </div>
-        <div className="col-md-8">
+        <div className="profile-content">
           <Tabs>
             <TabList>
               <Tab>Dashboard</Tab>
@@ -55,28 +57,26 @@ function ProfileScreen() {
               <Dashboard />
             </TabPanel>
             <TabPanel>
-              <div
-                style={{ display: "flex", justifyContent: "space-between" }}
-                className="mt-3"
-              >
-                {" "}
-                <h2>Profile</h2>
-                <button className="medium" onClick={handleAddCar}>
+              <div className="cars-header">
+                <h2>My Vehicles</h2>
+                <button className="add-car-btn" onClick={handleAddCar}>
                   <ControlPointIcon />
                   Add Car
                 </button>
               </div>
-              <hr />
-              <div className="row mb-4 mt-4">
+              <div className="cars-grid">
                 {loading ? (
-                  <>
-                    <Loader />
-                  </>
-                ) : cars.length == 0 ? (
-                  <>No cars available</>
+                  <Loader />
+                ) : cars.length === 0 ? (
+                  <div className="no-cars">No cars available</div>
                 ) : (
                   cars?.map((car, index) => (
-                    <Card car={car} editable={true} category={"Latest"} />
+                    <Card
+                      key={index}
+                      car={car}
+                      editable={true}
+                      category={"Latest"}
+                    />
                   ))
                 )}
               </div>
