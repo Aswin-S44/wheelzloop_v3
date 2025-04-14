@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./AboutUsScreen.css";
 import { FaCar, FaShieldAlt, FaHandshake, FaChartLine } from "react-icons/fa";
+import axios from "axios";
+import { STATS_COUNT } from "../../config/api";
 
 const AboutUsScreen = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${STATS_COUNT}`);
+        console.log("stat count ; ", res ? res : "no res");
+        if (res && res.data) {
+          setData(res.data);
+        }
+      } catch (error) {
+        console.log("Error while returning stat count : ", error);
+        return error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="about-container">
       <div className="hero-section">
@@ -27,12 +50,12 @@ const AboutUsScreen = () => {
         <div className="stats-grid">
           <div className="stat-card">
             <FaCar className="stat-icon" />
-            <h3>10,000+</h3>
+            <h3>{data?.cars ?? 0}+</h3>
             <p>Quality Vehicles Listed</p>
           </div>
           <div className="stat-card">
             <FaHandshake className="stat-icon" />
-            <h3>8,500+</h3>
+            <h3>{data?.customers ?? 0}+</h3>
             <p>Satisfied Customers</p>
           </div>
           <div className="stat-card">
@@ -42,7 +65,7 @@ const AboutUsScreen = () => {
           </div>
           <div className="stat-card">
             <FaChartLine className="stat-icon" />
-            <h3>200+</h3>
+            <h3>{data?.customers ?? 0}+</h3>
             <p>Dealer Partners</p>
           </div>
         </div>

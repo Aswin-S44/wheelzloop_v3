@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./DetailsScreen.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { CAR_DETAILS_API } from "../../config/api";
+import { CAR_DETAILS_API, GET_ALL_CARS } from "../../config/api";
+import { ToastContainer, toast } from "react-toastify";
+
 import Loader from "../../components/Loader/Loader";
 import {
   FaCar,
@@ -28,6 +30,10 @@ function DetailsScreen() {
   const [mainImage, setMainImage] = useState("");
   const [activeTab, setActiveTab] = useState("details");
   const [saved, setSaved] = useState(false);
+  const [similarCars, setSimilarCars] = useState([]);
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const notify = () => toast.success("Link copied");
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -35,6 +41,12 @@ function DetailsScreen() {
         const res = await axios.get(`${CAR_DETAILS_API}/${id}`);
         if (res?.data?.data) {
           setCar(res.data.data);
+          let favCars = JSON.parse(localStorage.getItem("fav-cars")) || [];
+          if (favCars && favCars.length > 0) {
+            if (favCars.includes(id)) {
+              setIsFavourite(true);
+            }
+          }
           setMainImage(res.data.data.images[0]);
         }
       } catch (error) {
@@ -46,8 +58,56 @@ function DetailsScreen() {
     fetchCar();
   }, [id]);
 
+  useEffect(() => {
+    const fetchSimilarCars = async () => {
+      if (car) {
+        const similar_cars = await axios.get(
+          `${GET_ALL_CARS}?brand=${car?.brand}&dealer_id=${car?.dealer_id?._id}`
+        );
+        if (similar_cars) {
+          setSimilarCars(similar_cars.data.data);
+        }
+        console.log(
+          "similar_cars----------",
+          similar_cars ? similar_cars : "mpsimilar_cars"
+        );
+      }
+    };
+    fetchSimilarCars();
+  }, [car]);
+
   if (loading) return <Loader />;
   if (!car) return <div className="error-message">Car not found</div>;
+
+  const handleShareClick = () => {
+    const currentUrl = window.location.href;
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        notify();
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
+  const addToFav = async () => {
+    setSaved(!saved);
+    let favCars = JSON.parse(localStorage.getItem("fav-cars")) || [];
+
+    if (!favCars.includes(id)) {
+      favCars.push(id);
+      localStorage.setItem("fav-cars", JSON.stringify(favCars));
+      toast.success("Added to favourites");
+      setIsFavourite(true);
+    } else {
+      favCars = favCars.filter((favId) => favId !== id);
+
+      localStorage.setItem("fav-cars", JSON.stringify(favCars));
+      toast.error("Removed from favourites");
+      setIsFavourite(false);
+    }
+  };
 
   return (
     <div className="details-container">
@@ -69,10 +129,10 @@ function DetailsScreen() {
               }
             />
             <div className="image-actions">
-              <button className="save-btn" onClick={() => setSaved(!saved)}>
-                <FaHeart className={saved ? "saved" : ""} />
+              <button className="save-btn" onClick={addToFav}>
+                <FaHeart className={isFavourite ? "saved" : ""} />
               </button>
-              <button className="share-btn">
+              <button className="share-btn" onClick={handleShareClick}>
                 <FaShareAlt />
               </button>
             </div>
@@ -140,21 +200,43 @@ function DetailsScreen() {
           </div>
 
           <div className="action-buttons">
-            <button className="contact-btn">
-              <FaPhone /> Contact Seller
+            <a href={`tel: ${car?.dealer_id?.phone}`}>
+              <button className="contact-btn">
+                <FaPhone /> Contact Seller
+              </button>
+            </a>
+            <button
+              className="finance-btn"
+              style={{ border: "1px solid grey" }}
+            >
+              Chat with dealer
             </button>
-            <button className="finance-btn">Get Financing</button>
           </div>
 
           <div className="seller-info">
             <h3>Seller Information</h3>
             <div className="seller-details">
-              <div className="seller-avatar">D</div>
+              <div className="seller-avatar">
+                <img
+                  src={car?.dealer_id?.profile_picture}
+                  alt="no dealer image"
+                  className="avatar"
+                />
+              </div>
               <div>
-                <p className="seller-name">Dealer Name</p>
-                <p className="seller-rating">★★★★☆ (24 reviews)</p>
+                <p className="seller-name">{car?.dealer_id?.first_name}</p>
+                {/* <p className="seller-rating">★★★★☆ (24 reviews)</p> */}
+                <p className="seller-rating">{car?.dealer_id?.location}</p>
               </div>
             </div>
+            <button
+              className="contact-btn"
+              onClick={() =>
+                (window.location.href = `/profile/${car?.dealer_id._id}`)
+              }
+            >
+              Visit Profile
+            </button>
           </div>
         </div>
       </div>
@@ -185,8 +267,16 @@ function DetailsScreen() {
           <div className="overview-section">
             <h2>Vehicle Description</h2>
             <p>{car.description || "No description available."}</p>
+            <h3
+              style={{
+                fontSize: "20px",
+                color: car?.status === "Available" ? "green" : "red",
+              }}
+            >
+              {car?.status}
+            </h3>
 
-            <div className="history-section">
+            {/* <div className="history-section">
               <h3>Vehicle History</h3>
               <div className="history-item">
                 <FaCalendarAlt />
@@ -196,7 +286,7 @@ function DetailsScreen() {
                 <FaCalendarAlt />
                 <span>Clean title</span>
               </div>
-            </div>
+            </div> */}
           </div>
         )}
 
@@ -218,7 +308,7 @@ function DetailsScreen() {
                   <GiCarWheel /> Mechanical
                 </h3>
                 <SpecItem label="Engine" value={car.engine_size} />
-                <SpecItem label="Drivetrain" value={car.drivetrain} />
+                {/* <SpecItem label="Drivetrain" value={car.drivetrain} /> */}
                 <SpecItem label="Transmission" value={car.transmission} />
                 <SpecItem label="Fuel Type" value={car.fuel_type} />
               </div>
@@ -263,25 +353,35 @@ function DetailsScreen() {
 
       <div className="similar-section">
         <h2>Similar Vehicles</h2>
+        {console.log("similarCars===========", similarCars)}
         <div className="similar-cars">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="similar-card">
-              <div className="similar-image"></div>
+          {similarCars?.map((item) => (
+            <div
+              key={item}
+              className="similar-card"
+              onClick={() => {
+                window.location.href = `/car/${car?._id}`;
+              }}
+            >
+              <div className="similar-image">
+                <img src={item?.images?.[0]} alt="no-image" />
+              </div>
               <div className="similar-info">
                 <h4>
-                  2022 {car.make} {car.model}
+                  {item?.year ?? ""} {item?.car_name ?? ""} {item?.model ?? ""}
                 </h4>
-                <p>${(car.price - 5000).toLocaleString()}</p>
+                <p>${(item?.price ?? "").toLocaleString()}</p>
                 <div className="similar-specs">
-                  <span>{car.mileage - 5000} mi</span>
-                  <span>{car.fuel_type}</span>
-                  <span>{car.transmission}</span>
+                  <span>{item?.mileage ?? ""} mi</span>
+                  <span>{item?.fuel_type ?? ""}</span>
+                  <span>{item?.transmission ?? ""}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

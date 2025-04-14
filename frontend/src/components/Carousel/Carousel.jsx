@@ -20,10 +20,10 @@ function Carousel() {
             aria-label="Slide 2"
           ></button>
         </div>
-        <div className="carousel-inner" style={{ maxHeight: "400px" }}>
+        <div className="carousel-inner" style={{ maxHeight: "250px" }}>
           <div className="carousel-item active">
             <img
-              src="https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpgvkO0ciGGG2YCytVZdRb8fSD38Bghof99A&s"
               className="d-block w-100"
               alt="..."
               loading="lazy"
@@ -31,7 +31,7 @@ function Carousel() {
           </div>
           <div className="carousel-item">
             <img
-              src="https://i.pinimg.com/736x/be/83/60/be83607be6a98648c47b8563b8b7edca.jpg"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIjQ1a8WZuA-PbGVbOsk0saLqT54THvCRwVg&s"
               className="d-block w-100"
               alt="..."
               loading="lazy"

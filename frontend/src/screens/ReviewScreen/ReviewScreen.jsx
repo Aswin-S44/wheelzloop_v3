@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Star as StarIcon,
   StarBorder as StarBorderIcon,
@@ -16,73 +16,65 @@ import {
   Share,
 } from "@mui/icons-material";
 import "./ReviewScreen.css";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Rating, TextField } from "@mui/material";
+import { UserContext } from "../../hooks/UserContext";
+import axios from "axios";
+import { ADD_REVIEWS_URL, GET_REVIEWS_URL } from "../../config/api";
+import Swal from "sweetalert2";
+import Ratings from "../../components/Rating/Rating";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const ReviewScreen = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [currentReview, setCurrentReview] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [avg, setAvg] = useState(0);
+  const [statCounts, setStatsCount] = useState({
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+  });
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Alex Johnson",
-      rating: 5,
-      date: "2023-10-15",
-      comment:
-        "Found my dream car at WheelzLoop! The process was smooth and transparent. The team went above and beyond to help me find exactly what I wanted. Highly recommend this service to anyone looking for quality used vehicles!",
-      verified: true,
-      car: "2020 Tesla Model 3",
-      likes: 24,
-      replies: 5,
-    },
-    {
-      id: 2,
-      name: "Sarah Miller",
-      rating: 4,
-      date: "2023-09-28",
-      comment:
-        "Great selection of vehicles. The team was helpful throughout the buying process. The only reason I'm not giving 5 stars is because the financing options could be better. Overall very satisfied with my purchase!",
-      verified: true,
-      car: "2018 Honda Accord",
-      likes: 18,
-      replies: 3,
-    },
-    {
-      id: 3,
-      name: "David Chen",
-      rating: 5,
-      date: "2023-09-10",
-      comment:
-        "Sold my car quickly and got a fair price. Excellent service! The online valuation tool was accurate and the whole process took less than a week. Will definitely use WheelzLoop again when I'm ready for my next car.",
-      verified: false,
-      car: "2016 Ford Mustang",
-      likes: 32,
-      replies: 7,
-    },
-    {
-      id: 4,
-      name: "Maria Garcia",
-      rating: 5,
-      date: "2023-08-22",
-      comment:
-        "The inspection reports were thorough and accurate. Made buying used feel safe. I appreciated the 360-degree view of each vehicle and the complete service history. The delivery was right on time too!",
-      verified: true,
-      car: "2019 Toyota RAV4",
-      likes: 29,
-      replies: 4,
-    },
-    {
-      id: 5,
-      name: "James Wilson",
-      rating: 3,
-      date: "2023-08-15",
-      comment:
-        "Good experience overall, but delivery took longer than expected. The car itself is in great condition, but communication about the delay could have been better. Still, I got a good deal on a quality vehicle.",
-      verified: true,
-      car: "2017 BMW 3 Series",
-      likes: 8,
-      replies: 2,
-    },
-  ];
+  useEffect(() => {
+    const fetchReviews = async () => {
+      let url = GET_REVIEWS_URL;
+      if (currentReview !== null) {
+        url += `?rating=${currentReview}`;
+      }
+      const res = await axios.get(url);
+      if (res && res.data && res.data.ratings) {
+        setReviews(res.data.ratings);
+        setStatsCount(res.data.stats);
+        setAvg(res.data.avg);
+      }
+    };
+    fetchReviews();
+  }, [currentReview]);
 
   const filteredReviews =
     activeTab === "all"
@@ -113,6 +105,28 @@ const ReviewScreen = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    if (user) {
+      setLoading(true);
+      e.preventDefault();
+      let userRating = {
+        userId: user._id,
+        rating,
+        reviewText,
+      };
+      const res = await axios.post(ADD_REVIEWS_URL, userRating);
+      setLoading(false);
+      if (res && res.status == 200) {
+        handleClose();
+        Swal.fire("Thank you for your Rating!");
+      }
+
+      // onSubmit({ rating, reviewText });
+      setRating(0);
+      setReviewText("");
+    }
+  };
+
   return (
     <div className="review-screen">
       <div className="review-header">
@@ -125,7 +139,7 @@ const ReviewScreen = () => {
       <div className="review-stats-container">
         <div className="average-rating-card glow-effect">
           <div className="rating-display">
-            <span className="rating-value">4.6</span>
+            <span className="rating-value">{avg}</span>
             <div className="stars">
               {/* <Rating
                 value={4.6}
@@ -160,6 +174,102 @@ const ReviewScreen = () => {
       </div>
 
       <div className="review-filter-tabs">
+        <button className="sell-btn" onClick={handleOpen}>
+          Add Review
+        </button>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <>
+              {!user ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "16px",
+                    padding: "24px",
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "8px",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                    maxWidth: "400px",
+                    margin: "0 auto",
+                    textAlign: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      color: "#333",
+                    }}
+                  >
+                    You need to create account to add review
+                  </span>
+                  <button
+                    style={{
+                      padding: "8px 16px",
+                      backgroundColor: "#30bfa1",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      transition: "background-color 0.2s",
+                      ":hover": {
+                        backgroundColor: "#30bfa1",
+                      },
+                    }}
+                    onClick={() => (window.location.href = "/signin")}
+                  >
+                    Go to login
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    Add Your Review
+                  </Typography>
+                  <form onSubmit={handleSubmit}>
+                    <Box mb={2}>
+                      <Rating
+                        name="review-rating"
+                        value={rating}
+                        onChange={(e, newValue) => setRating(newValue)}
+                        size="large"
+                      />
+                    </Box>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={4}
+                      variant="outlined"
+                      placeholder="Write your review here..."
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                      sx={{ mb: 2 }}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      fullWidth
+                      disabled={!rating || !reviewText || loading}
+                      style={{ backgroundColor: "#30bfa1" }}
+                    >
+                      {loading ? <>Please wait....</> : <>Submit Review</>}
+                    </Button>
+                  </form>
+                </>
+              )}
+            </>
+          </Box>
+        </Modal>
         <button
           className={`filter-tab ${activeTab === "all" ? "active" : ""}`}
           onClick={() => {
@@ -217,32 +327,12 @@ const ReviewScreen = () => {
               <div className="rating-display">
                 {getSentimentIcon(review.rating)}
                 <div className="stars">
-                  {/* <Rating
-                    value={review.rating}
-                    readOnly
-                    icon={<StarIcon className="star-icon filled" />}
-                    emptyIcon={<StarBorderIcon className="star-icon" />}
-                  /> */}
+                  <Ratings rating={review.rating} />
                 </div>
                 <span className="car-model">{review.car}</span>
               </div>
 
-              <p className="review-text">{review.comment}</p>
-
-              <div className="review-actions">
-                <button className="action-button">
-                  <ThumbUp className="action-icon" />
-                  <span>{review.likes}</span>
-                </button>
-                <button className="action-button">
-                  <Comment className="action-icon" />
-                  <span>{review.replies}</span>
-                </button>
-                <button className="action-button">
-                  <Share className="action-icon" />
-                  Share
-                </button>
-              </div>
+              <p className="review-text">{review.reviewText}</p>
             </div>
           </div>
         ))}

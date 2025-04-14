@@ -6,7 +6,7 @@ import {
   LocalShipping,
   SupportAgent,
 } from "@mui/icons-material";
- 
+
 function FeaturesSection() {
   return (
     <div className="features-section">
@@ -21,15 +21,17 @@ function FeaturesSection() {
         <div className="feature-icon-container">
           <Payment className="feature-icon" />
         </div>
-        <h3>Secure Payments</h3>
-        <p>100% secure payment options for hassle-free transactions.</p>
+        <h3>Veriety of cars</h3>
+        <p>
+          You can surf through veriety of cars added by our verified dealers .
+        </p>
       </div>
       <div className="feature-card">
         <div className="feature-icon-container">
           <LocalShipping className="feature-icon" />
         </div>
-        <h3>Fast Delivery</h3>
-        <p>Quick and reliable delivery services across the country.</p>
+        <h3>Easy to add your car</h3>
+        <p>You can easily post your cars and find potential buyers</p>
       </div>
       <div className="feature-card">
         <div className="feature-icon-container">

@@ -15,14 +15,28 @@ import { GET_ALL_CARS } from "../../config/api";
 import Loader from "../../components/Loader/Loader";
 import EmptyState from "../../components/EmptyState/EmptyState";
 import Banner from "../../components/Banner/Banner";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import { carBodyTypes } from "../../dummyData/bodyTypes";
+import CategoryCars from "../../components/CategoryCars/CategoryCars";
+
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
   "https://i.pinimg.com/736x/be/83/60/be83607be6a98648c47b8563b8b7edca.jpg",
 ];
+
+const tabs = {
+  SEDAN: "sedan",
+  SUV: "suv",
+  HATCHBACK: "hatchback",
+};
+
 function HomeScreen() {
   const sliderRef = useRef(null);
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
+  const currentTab = carBodyTypes.find((tab) => tab.index == 2);
+  const [selectedTab, setSelectedTab] = useState(currentTab);
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -62,11 +76,18 @@ function HomeScreen() {
         <Banner />
       </div>
       <div className="container">
+        <TitleHeader title1={"Why Choose"} title2={"Us"} option={"View all"} />
         <FeaturesSection />
       </div>
-      <div className="container">
+
+      <div className="container-fluid mw-90">
         <div className="mt-4">
-          <TitleHeader title1={"Latest"} title2={"Cars"} option={"View all"} />
+          <TitleHeader
+            title1={"Latest"}
+            title2={"Cars"}
+            option={"View all"}
+            optionLink={`/used-cars?.category=latest`}
+          />
           <div className="slider-container">
             <IconButton
               className="arrow-button left"
@@ -101,6 +122,32 @@ function HomeScreen() {
               <ChevronRight />
             </IconButton>
           </div>
+        </div>
+      </div>
+      <div className="container-fluid mw-90 mt-5">
+        <div className="profile-content">
+          <TitleHeader
+            title1={"Cars by "}
+            title2={"Category"}
+            option={"View all"}
+            optionLink={`/used-cars?.category=sedan`}
+          />
+
+          <Tabs>
+            <div>
+              <TabList>
+                {carBodyTypes?.slice(0, 4).map((type, index) => (
+                  <Tab key={index}>{type.text}</Tab>
+                ))}
+              </TabList>
+            </div>
+
+            {carBodyTypes?.slice(0, 4).map((type, index) => (
+              <TabPanel key={index}>
+                <CategoryCars category={type.value} />
+              </TabPanel>
+            ))}
+          </Tabs>
         </div>
       </div>
       <div className="mt-0">

@@ -44,7 +44,7 @@ function ProfileScreen() {
     <div className="profile-screen-container">
       <div className="profile-layout">
         <div className="profile-sidebar">
-          <ProfileCard user={user} />
+          <ProfileCard user={user} editable={true} />
         </div>
         <div className="profile-content">
           <Tabs>

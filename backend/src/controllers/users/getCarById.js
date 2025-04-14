@@ -7,7 +7,7 @@ const {
 module.exports.getCarById = async (req, res) => {
   try {
     const carId = req.params.id;
-    const car = await Cars.findOne({ _id: carId });
+    const car = await Cars.findOne({ _id: carId }).populate("dealer_id");
     if (!car) {
       res.send(notFoundResponse);
     }

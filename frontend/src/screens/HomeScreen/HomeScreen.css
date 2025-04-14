@@ -2,11 +2,7 @@
     padding: 0px;
   }
   
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
+
   .slider-container {
     position: relative;
     display: flex;
@@ -68,4 +64,45 @@
     .card-container > * {
       width: 150px;
     }
+  }
+
+  .tab-scroll-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .tab-scroll-wrapper {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex: 1;
+  }
+  
+  .tab-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .tab-list {
+    display: flex;
+    white-space: nowrap;
+  }
+  
+  .scroll-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1;
+  }
+  
+  .scroll-button svg {
+    font-size: 24px;
+    color: #666;
+  }
+  
+  .scroll-button:hover svg {
+    color: #333;
   }

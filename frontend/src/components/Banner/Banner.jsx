@@ -23,13 +23,13 @@ function Banner() {
             >
               Explore Inventory
             </Button>
-            <Button
+            {/* <Button
               variant="outlined"
               className="secondary-btn"
               onClick={() => navigate("/sell-car")}
             >
               Get Instant Valuation
-            </Button>
+            </Button> */}
           </div>
           <div className="banner-features">
             <div className="feature-item">

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Counter.css";
+import axios from "axios";
+import { STATS_COUNT } from "../../config/api";
 
 function Counter() {
   const [counts, setCounts] = useState({
@@ -8,7 +10,32 @@ function Counter() {
     brands: 0,
   });
 
-  const [targetCounts] = useState({
+  const [data, setData] = useState({});
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${STATS_COUNT}`);
+        console.log("stat count ; ", res ? res : "no res");
+        if (res && res.data) {
+          setData(res.data);
+          // setCounts(res.data);
+          setTargetCounts(res.data);
+        }
+      } catch (error) {
+        console.log("Error while returning stat count : ", error);
+        return error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [targetCounts, setTargetCounts] = useState({
     cars: 1250,
     customers: 850,
     brands: 35,

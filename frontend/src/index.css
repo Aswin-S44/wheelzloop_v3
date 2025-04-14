@@ -3,3 +3,16 @@
     max-height: 100vh;
     overflow-y: auto;
   }
+
+.pt-70{
+  padding-top: 80px;
+}
+
+.scroll-container {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.mw-90{
+  max-width: 90%;
+}

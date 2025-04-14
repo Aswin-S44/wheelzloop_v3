@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SavedCarsScreen.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
+import { GET_SAVED_CARS_URL } from "../../config/api";
+import axios from "axios";
+import Loader from "../../components/Loader/Loader";
 
 const savedCars = [
   {
@@ -35,55 +38,104 @@ const savedCars = [
 ];
 
 function SavedCarsScreen() {
-  const [cars, setCars] = useState(savedCars);
+  const [savedCars, setSavedCars] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const removeFromFavorites = (id) => {
+    const updatedCars = savedCars.filter((car) => car._id !== id);
+    setSavedCars(updatedCars);
+    localStorage.setItem(
+      "fav-cars",
+      JSON.stringify(updatedCars.map((car) => car._id))
+    );
+  };
+
+  useEffect(() => {
+    const fetchSavedCars = async () => {
+      try {
+        setLoading(true);
+        let favCars = JSON.parse(localStorage.getItem("fav-cars")) || [];
+        let { data } = await axios.post(`${GET_SAVED_CARS_URL}`, {
+          savedIds: favCars,
+        });
+
+        if (data && data.cars && data.cars.length > 0) {
+          setLoading(false);
+          setSavedCars(data.cars);
+        }
+      } catch (error) {
+        console.log("Error while fetching saved cars : ", error);
+        setLoading(false);
+      }
+    };
+    fetchSavedCars();
+  }, []);
 
   const handleDelete = (id) => {
-    setCars(cars.filter((car) => car.id !== id));
+    // setSavedCars(cars.filter((car) => car.id !== id));
   };
 
   return (
     <div className="saved-cars-container">
       <h1 className="saved-cars-title">Your Saved Vehicles</h1>
       <div className="saved-cars-list">
-        {cars.map((car) => (
-          <div
-            key={car.id}
-            className={`saved-car-item ${car.featured ? "featured" : ""}`}
-          >
-            {car.featured && <div className="featured-badge">Featured</div>}
-            <div className="car-image-container">
-              <div className="car-image-placeholder">
-                <img src={car?.image} className="w-100" />
-              </div>
-            </div>
-            <div className="car-content">
-              <div className="car-info">
-                <h2 className="car-title">{car.title}</h2>
-                <p className="car-price">${car.price.toLocaleString()}</p>
-                <div className="car-details">
-                  <span className="car-mileage">
-                    <img src="/mileage-icon.svg" alt="" />{" "}
-                    {car.mileage.toLocaleString()} mi
-                  </span>
-                  <span className="car-location">
-                    <img src="/location-icon.svg" alt="" /> {car.location}
-                  </span>
+        {loading ? (
+          <Loader />
+        ) : savedCars?.length == 0 ? (
+          <>No cars available</>
+        ) : (
+          <>
+            {" "}
+            {savedCars.map((car) => (
+              <div
+                key={car.id}
+                className={`saved-car-item ${car.featured ? "featured" : ""}`}
+              >
+                {car.featured && <div className="featured-badge">Featured</div>}
+                <div className="car-image-container">
+                  <div className="car-image-placeholder">
+                    <img
+                      src={car?.images[0]}
+                      className="w-100"
+                      onClick={() => {
+                        window.location.href = `/car/${car._id}`;
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="car-content">
+                  <div className="car-info">
+                    <h2 className="car-title">{car?.car_name ?? "_"}</h2>
+                    <p className="car-price">${car.price.toLocaleString()}</p>
+                    <div className="car-details">
+                      <span className="car-mileage">
+                        <img src="/mileage-icon.svg" alt="" />{" "}
+                        {car.mileage.toLocaleString()} Mileage
+                      </span>
+                      <span className="car-location">
+                        <img src="/location-icon.svg" alt="" />{" "}
+                        {car?.place ?? ""}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="car-actions">
+                    <button className="action-button share-button">
+                      <ShareIcon />
+                    </button>
+                    <button
+                      className="action-button delete-button"
+                      onClick={() => {
+                        removeFromFavorites(car?._id);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="car-actions">
-                <button className="action-button share-button">
-                  <ShareIcon />
-                </button>
-                <button
-                  className="action-button delete-button"
-                  onClick={() => handleDelete(car.id)}
-                >
-                  <DeleteIcon />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

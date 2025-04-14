@@ -17,6 +17,7 @@ import MobileFilter from "../../components/Filter/MobileFilter";
 import EmptyState from "../../components/EmptyState/EmptyState";
 import axios from "axios";
 import { GET_ALL_CARS } from "../../config/api";
+import Carousel from "../../components/Carousel/Carousel";
 
 function ExploreCarsScreen() {
   const [order, setOrder] = useState("asc");
@@ -97,13 +98,26 @@ function ExploreCarsScreen() {
               ) : (
                 <Filter onFilterChange={applyFilters} />
               )}
+              {/* <Filter onFilterChange={applyFilters} /> */}
             </div>
           </div>
           <div className="col-md-9">
-            <div className="content-wrapper">
-              <div className="cars-section">
-                <div className="sort-bar">
-                  <FormControl>
+            <Carousel />
+            <div className="content-wrapper" style={{ padding: "20px" }}>
+              <div
+                className="cars-section"
+                style={{ maxWidth: "1400px", margin: "0 auto" }}
+              >
+                <div
+                  className="sort-bar"
+                  style={{
+                    marginBottom: "20px",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    padding: "0 15px",
+                  }}
+                >
+                  <FormControl style={{ minWidth: "200px" }}>
                     <InputLabel>Sort by</InputLabel>
                     <Select value={order} onChange={handleSortChange}>
                       <MenuItem value="asc">Price: Low to High</MenuItem>
@@ -113,18 +127,56 @@ function ExploreCarsScreen() {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="cards-container">
+
+                <div
+                  className="cards-container"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fill, minmax(280px, 1fr))",
+                    gap: "20px",
+                    padding: "0 15px",
+                  }}
+                >
                   {loading ? (
-                    <Loader />
+                    <div
+                      style={{
+                        gridColumn: "1 / -1",
+                        display: "flex",
+                        justifyContent: "center",
+                        padding: "40px 0",
+                      }}
+                    >
+                      <Loader />
+                    </div>
                   ) : error ? (
-                    <div className="error">{error}</div>
+                    <div
+                      className="error"
+                      style={{
+                        gridColumn: "1 / -1",
+                        textAlign: "center",
+                        padding: "40px 0",
+                        color: "red",
+                      }}
+                    >
+                      {error}
+                    </div>
                   ) : filteredCars.length === 0 ? (
-                    <EmptyState />
+                    <div style={{ gridColumn: "1 / -1" }}>
+                      <EmptyState />
+                    </div>
                   ) : (
                     filteredCars.map((car) => (
                       <div
                         key={car.id}
                         className="car-card"
+                        style={{
+                          transition: "transform 0.2s",
+                          cursor: "pointer",
+                          "&:hover": {
+                            transform: "scale(1.02)",
+                          },
+                        }}
                         onClick={() =>
                           (window.location.href = `/car/${car._id}`)
                         }

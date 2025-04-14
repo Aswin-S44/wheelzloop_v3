@@ -49,23 +49,12 @@ function FAQSection() {
             >
               <div className="faq-question-container">
                 <div className="faq-icon">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      className="faq-icon-minus"
-                      d="M8 12H16"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      className="faq-icon-plus"
-                      d="M12 16V8M8 12H16"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                  >
+                    <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z" />
                   </svg>
                 </div>
                 <h3 className="faq-question">{faq.question}</h3>

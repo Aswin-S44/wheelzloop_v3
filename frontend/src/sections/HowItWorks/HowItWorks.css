@@ -6,7 +6,7 @@
 }
 
 .container {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -174,4 +174,92 @@
   .step-title {
     font-size: 1.3rem;
   }
+}
+
+.car-selling-steps-modal {
+  max-width: 600px;
+}
+
+.car-steps-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.car-steps-title {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.8rem;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.car-steps-body {
+  padding: 1.5rem 2rem;
+}
+
+.car-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.car-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.car-step-icon {
+  background-color: #30bfa1;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.car-step-icon .material-icons {
+  font-size: 1.2rem;
+}
+
+.car-step-details h3 {
+  margin: 0 0 0.3rem 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.car-step-details p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.car-steps-footer {
+  border-top: none;
+  justify-content: center;
+  padding-top: 0;
+}
+
+.car-steps-close-btn,
+.car-steps-primary-btn {
+  padding: 0.5rem 2rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.car-steps-primary-btn {
+  background-color: #30bfa1;
+  border-color: #30bfa1;
+  color: white;
+}
+
+.car-steps-primary-btn:hover {
+  background-color: #28a98c;
+  border-color: #28a98c;
 }

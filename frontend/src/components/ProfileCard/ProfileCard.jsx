@@ -5,7 +5,7 @@ import { formatDate } from "../../utils/utils";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
-function ProfileCard({ user }) {
+function ProfileCard({ user, editable = false }) {
   const handleEditProfile = () => {
     window.location.href = "/profile/edit";
   };
@@ -28,9 +28,11 @@ function ProfileCard({ user }) {
         {user?.location ?? "_"}
       </div>
       <div className="button-container">
-        <button className="button-transparent" onClick={handleEditProfile}>
-          Edit profile
-        </button>
+        {editable && (
+          <button className="button-transparent" onClick={handleEditProfile}>
+            Edit profile
+          </button>
+        )}
         <button className="medium">Share Profile</button>
       </div>
     </div>

@@ -27,6 +27,8 @@ function Filter({ onFilterChange }) {
   const handleSearch = (e) => setSearch(e.target.value);
 
   const handleCheckboxChange = (selectedArray, setSelectedArray, value) => {
+    console.log("value========", value);
+    console.log("selectedArray--------", selectedArray);
     if (selectedArray.includes(value)) {
       setSelectedArray(selectedArray.filter((item) => item !== value));
     } else {
@@ -39,8 +41,10 @@ function Filter({ onFilterChange }) {
   };
 
   const applyFilters = () => {
+    console.log("selected cars-------", selectedCars);
     const filters = {
       brands: selectedCars.map((item) => item.brand),
+      car_name: selectedCars.map((item) => item.car),
       year: selectedYear ? `${selectedYear} & ${selectedYear}` : null,
       fuelTypes: selectedFuelTypes.length > 0 ? selectedFuelTypes : null,
       ownership: selectedOwnership.length > 0 ? selectedOwnership : null,
@@ -157,8 +161,8 @@ function Filter({ onFilterChange }) {
                 <input
                   type="radio"
                   name="year"
-                  checked={selectedYear === year.text}
-                  onChange={() => setSelectedYear(year.text)}
+                  checked={selectedYear === year.value}
+                  onChange={() => setSelectedYear(year.value)}
                 />
                 <span className="radiomark"></span>
                 {year.text}
@@ -171,9 +175,10 @@ function Filter({ onFilterChange }) {
           <h3 className="section-title">Fuel Type</h3>
           <div className="options-grid">
             {fuelTypes.map((fuel, index) => (
-              <label key={index} className="checkbox-option">
+              <label key={index}>
                 <input
                   type="checkbox"
+                  className="checkbox"
                   checked={selectedFuelTypes.includes(fuel.text)}
                   onChange={() =>
                     handleCheckboxChange(
@@ -184,7 +189,16 @@ function Filter({ onFilterChange }) {
                   }
                 />
                 <span className="checkmark"></span>
-                {fuel.text}
+                <span
+                  style={{
+                    marginLeft: "10px",
+                    color: "#555",
+                    fontSize: "14px",
+                  }}
+                >
+                  {" "}
+                  {fuel.text}
+                </span>
               </label>
             ))}
           </div>
@@ -194,9 +208,10 @@ function Filter({ onFilterChange }) {
           <h3 className="section-title">Ownership</h3>
           <div className="options-grid">
             {ownerShip.map((ownership, index) => (
-              <label key={index} className="checkbox-option">
+              <label key={index}>
                 <input
                   type="checkbox"
+                  className="checkbox"
                   checked={selectedOwnership.includes(ownership.text)}
                   onChange={() =>
                     handleCheckboxChange(
@@ -207,18 +222,28 @@ function Filter({ onFilterChange }) {
                   }
                 />
                 <span className="checkmark"></span>
-                {ownership.text}
+                <span
+                  style={{
+                    marginLeft: "10px",
+                    color: "#555",
+                    fontSize: "14px",
+                  }}
+                >
+                  {" "}
+                  {ownership.text}
+                </span>
               </label>
             ))}
           </div>
         </div>
 
         <div className="filter-section">
-          <h3 className="section-title">Features</h3>
-          <div className="options-grid scrollable-div">
+          <h3 className="section-title">Features2323</h3>
+          <div className="options-grid scrollable-div scroll-container">
             {carFeatures.map((feature, index) => (
-              <label key={index} className="checkbox-option">
+              <label key={index} className="">
                 <input
+                  className="checkbox"
                   type="checkbox"
                   checked={selectedFeatures.includes(feature.text)}
                   onChange={() =>
@@ -229,8 +254,17 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span className="checkmark"></span>
-                {feature.text}
+                {/* <span className="checkmark"></span> */}
+                <span
+                  style={{
+                    marginLeft: "10px",
+                    color: "#555",
+                    fontSize: "14px",
+                  }}
+                >
+                  {" "}
+                  {feature.text}
+                </span>
               </label>
             ))}
           </div>
@@ -240,9 +274,10 @@ function Filter({ onFilterChange }) {
           <h3 className="section-title">Body Type</h3>
           <div className="options-grid">
             {carBodyTypes.map((bodyType, index) => (
-              <label key={index} className="checkbox-option">
+              <label key={index}>
                 <input
                   type="checkbox"
+                  className="checkbox"
                   checked={selectedBodyTypes.includes(bodyType.text)}
                   onChange={() =>
                     handleCheckboxChange(
@@ -253,7 +288,17 @@ function Filter({ onFilterChange }) {
                   }
                 />
                 <span className="checkmark"></span>
-                {bodyType.text}
+
+                <span
+                  style={{
+                    marginLeft: "10px",
+                    color: "#555",
+                    fontSize: "14px",
+                  }}
+                >
+                  {" "}
+                  {bodyType.text}
+                </span>
               </label>
             ))}
           </div>

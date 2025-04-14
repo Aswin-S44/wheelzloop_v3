@@ -44,16 +44,28 @@ function Footer() {
             <h3>Quick Links</h3>
             <ul>
               <li>
+                <a href="/used-cars">Find cars</a>
+              </li>
+              <li>
+                <a href="/favourites">Favourites</a>
+              </li>
+              <li>
+                <a href="/chats">Chats</a>
+              </li>
+              <li>
                 <a href="/about-us">About Us</a>
+              </li>
+              <li>
+                <a href="/reviews">Reviews</a>
               </li>
               <li>
                 <a href="/blogs">Blogs</a>
               </li>
               <li>
-                <a href="/contact-us">Contact Us</a>
+                <a href="/signin">Login to account?</a>
               </li>
               <li>
-                <a href="#faq">FAQ</a>
+                <a href="/signup">Create new account?</a>
               </li>
             </ul>
           </div>

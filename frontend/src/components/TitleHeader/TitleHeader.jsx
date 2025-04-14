@@ -2,7 +2,7 @@ import React from "react";
 import "./TitleHeader.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function TitleHeader({ title1, title2, option = null }) {
+function TitleHeader({ title1, title2, option = null, optionLink = null }) {
   return (
     <div>
       <div className="space-btn">
@@ -11,7 +11,12 @@ function TitleHeader({ title1, title2, option = null }) {
         </h2>
         {option && (
           <span className="font-sm">
-            {option}
+            <a
+              href={optionLink}
+              style={{ textDecoration: "none", color: "#111" }}
+            >
+              {option}
+            </a>
             <ArrowForwardIosIcon style={{ fontSize: "18px" }} />
           </span>
         )}

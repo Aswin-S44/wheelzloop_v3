@@ -15,6 +15,8 @@ import EditProfileScreen from "./screens/EditProfileScreen/EditProfileScreen";
 import { UserProvider } from "./hooks/UserContext";
 import AboutUsScreen from "./screens/AboutUsScreen/AboutUsScreen";
 import ReviewScreen from "./screens/ReviewScreen/ReviewScreen";
+import BackToTop from "./components/BackToTop/BackToTop";
+import DealerProfileScreen from "./screens/DealerProfileScreen/DealerProfileScreen";
 
 function Layout() {
   const location = useLocation();
@@ -24,23 +26,27 @@ function Layout() {
     <UserProvider>
       <div>
         {!hideHeaderFooter && <Header />}
-        <Routes>
-          <Route path="/signin" element={<LoginScreen />} />
-          <Route path="/signup" element={<SignUpScreen />} />
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/car" element={<DetailsScreen />} />
-          <Route path="/favourites" element={<SavedCarsScreen />} />
-          <Route path="/blogs" element={<BlogsScreen />} />
-          <Route path="/used-cars" element={<ExploreCarsScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="/car/add" element={<AddCarScreen />} />
-          <Route path="/car/:id" element={<DetailsScreen />} />
-          <Route path="/car/edit/:id" element={<AddCarScreen />} />
-          <Route path="/profile/edit" element={<EditProfileScreen />} />
-          <Route path="/about-us" element={<AboutUsScreen />} />
-          <Route path="/reviews" element={<ReviewScreen />} />
-        </Routes>
-        {!hideHeaderFooter && <Footer />}
+        <main className="pt-70">
+          <Routes>
+            <Route path="/signin" element={<LoginScreen />} />
+            <Route path="/signup" element={<SignUpScreen />} />
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/car" element={<DetailsScreen />} />
+            <Route path="/favourites" element={<SavedCarsScreen />} />
+            <Route path="/blogs" element={<BlogsScreen />} />
+            <Route path="/used-cars" element={<ExploreCarsScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/car/add" element={<AddCarScreen />} />
+            <Route path="/car/:id" element={<DetailsScreen />} />
+            <Route path="/car/edit/:id" element={<AddCarScreen />} />
+            <Route path="/profile/edit" element={<EditProfileScreen />} />
+            <Route path="/about-us" element={<AboutUsScreen />} />
+            <Route path="/reviews" element={<ReviewScreen />} />
+            <Route path="/profile/:id" element={<DealerProfileScreen />} />
+          </Routes>
+          {!hideHeaderFooter && <Footer />}
+          <BackToTop />
+        </main>
       </div>
     </UserProvider>
   );

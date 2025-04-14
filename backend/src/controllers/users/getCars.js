@@ -18,6 +18,8 @@ module.exports.getCars = async (req, res) => {
       body_type,
       status,
       brands,
+      car_name,
+      dealer_id,
     } = req.query;
 
     const pageNum = parseInt(page);
@@ -32,22 +34,44 @@ module.exports.getCars = async (req, res) => {
       ];
     if (make) filter.make = make;
     if (model) filter.model = model;
-    if (year) filter.year = parseInt(year);
-    if (priceMin || priceMax)
-      filter.price = {
-        ...(priceMin && { $gte: parseInt(priceMin) }),
-        ...(priceMax && { $lte: parseInt(priceMax) }),
-      };
-    if (fuel_type) filter.fuel_type = fuel_type;
-    if (transmission) filter.transmission = transmission;
-    if (body_type) filter.body_type = body_type;
-    if (status) filter.status = status;
+
+    console.log("YEAR----------", year);
+    if (year) {
+      // Handle year range (comma-separated values)
+      const years = year.split(",").map((y) => parseInt(y.trim()));
+
+      if (years.length === 1) {
+        // Single year - exact match
+        filter.year = years[0];
+      } else if (years.length === 2) {
+        // Two years - range between them
+        const [startYear, endYear] = years.sort((a, b) => a - b);
+        filter.year = { $gte: startYear, $lte: endYear };
+      }
+      // If more than 2 years are provided, you might want to handle differently
+    }
 
     if (brands) {
       const brandsArray = Array.isArray(brands) ? brands : [brands]; // Ensure it's an array
       filter.brand = { $in: brandsArray };
     }
 
+    if (priceMin || priceMax)
+      filter.price = {
+        ...(priceMin && { $gte: parseInt(priceMin) }),
+        ...(priceMax && { $lte: parseInt(priceMax) }),
+      };
+    if (fuel_type) filter.fuel_type = fuel_type;
+    if (dealer_id && dealer_id != "undefined") filter.dealer_id = dealer_id;
+    if (car_name) {
+      filter.car_name = { $regex: new RegExp(`^${car_name}$`, "i") };
+    }
+    if (transmission) filter.transmission = transmission;
+    if (body_type)
+      filter.body_type = { $regex: new RegExp(`^${body_type}$`, "i") };
+    if (status) filter.status = status;
+
+    console.log("FILTERS------------", filter);
     const cars = await Cars.find(filter)
       .sort({ [sortBy]: order === "desc" ? -1 : 1 })
       .skip(skip)

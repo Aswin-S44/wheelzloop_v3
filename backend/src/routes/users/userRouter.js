@@ -13,6 +13,13 @@ const { getMe } = require("../../controllers/users/getMe");
 const { updateCar } = require("../../controllers/users/updateCar");
 const { deleteCarById } = require("../../controllers/users/deleteCarById");
 const { updateProfile } = require("../../controllers/users/updateProfile");
+const { searchCar } = require("../../controllers/users/searchCar");
+const { getStatusCount } = require("../../controllers/users/getStatusCount");
+const { getSavedCars } = require("../../controllers/users/getSavedCars");
+const { addReview } = require("../../controllers/users/addReview");
+const { getReviews } = require("../../controllers/users/getReviews");
+const { NewsLetter } = require("../../controllers/users/NewsLetter");
+const { getSubscribers } = require("../../controllers/users/getSubscribers");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -25,7 +32,7 @@ router.get("/me", getMe);
 router.post("/signin", SignIn);
 router.post("/signup", Signup);
 router.get("/profile", getProfile);
-router.patch('/profile/:id',updateProfile)
+router.patch("/profile/:id", updateProfile);
 router.get("/cars", getCars);
 router.post("/car", userVerification, addCar);
 router.patch("/car/:id", updateCar);
@@ -35,8 +42,25 @@ router.get("/cars/me", userVerification, async (req, res) => {
   res.send(cars);
 });
 
+router.get("/car/search", searchCar);
+
 router.delete("/car/:id", deleteCarById);
 
+router.get("/car/stats-count", getStatusCount);
+
 router.get("/car/:id", getCarById);
+
+router.get("/cars/dealer/:id", async (req, res) => {
+  const dealerId = req.params.id;
+  const cars = await getCarByDealerId(dealerId);
+  res.send(cars);
+});
+
+router.post("/car/saved", getSavedCars);
+
+router.post("/reviews", addReview);
+router.get("/reviews", getReviews);
+router.post("/subscribe", NewsLetter);
+router.get("/subscribers", getSubscribers);
 
 module.exports = router;
