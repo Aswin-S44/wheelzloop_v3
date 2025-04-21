@@ -12,7 +12,7 @@ const MessageInput = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (!file.type.startsWith("image/")) {
+    if (!file?.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
@@ -38,8 +38,6 @@ const MessageInput = () => {
         text: text.trim(),
         image: imagePreview,
       });
-
-      // Clear form
       setText("");
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -52,47 +50,56 @@ const MessageInput = () => {
     <div className="message-input-container">
       {imagePreview && (
         <div className="image-preview">
-          <div className="relative">
+          <div className="preview-container">
             <img src={imagePreview} alt="Preview" />
-            <button onClick={removeImage} type="button">
-              <X size={12} />
+            <button
+              onClick={removeImage}
+              type="button"
+              className="preview-close"
+            >
+              <X size={16} />
             </button>
           </div>
         </div>
       )}
 
       <form onSubmit={handleSendMessage} className="message-form">
-        <div className="message-input-wrapper">
+        <div className="input-wrapper">
+          <button
+            type="button"
+            className="upload-button"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Image size={20} />
+          </button>
+
           <input
             type="text"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
+            className="message-input"
           />
+
           <input
             type="file"
             accept="image/*"
-            className="hidden"
+            className="file-input"
             ref={fileInputRef}
             onChange={handleImageChange}
           />
-          <button
-            type="button"
-            className="upload-btn"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Image size={20} />
-          </button>
         </div>
+
         <button
           type="submit"
-          className="send-btn"
+          className="send-button"
           disabled={!text.trim() && !imagePreview}
         >
-          <Send size={22} />
+          <Send size={20} />
         </button>
       </form>
     </div>
   );
 };
+
 export default MessageInput;

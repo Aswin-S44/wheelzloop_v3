@@ -3,7 +3,8 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Users } from "lucide-react";
 import { useChatStore } from "../../store/useChatStore";
 import { useAuthStore } from "../../store/useAuthStore";
-import './Sidebar.css'
+import "./Sidebar.css";
+import { DEFAULT_AVATAR } from "../../constants/urls";
 
 const Sidebar = ({ onClose }) => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
@@ -25,8 +26,10 @@ const Sidebar = ({ onClose }) => {
     <aside className="sidebar">
       <div className="sidebar-header">
         <div className="header-content">
-          <Users className="icon" />
-          <span className="title">Contacts</span>
+          <div className="header-title">
+            <Users className="icon" style={{ color: "#30bfa1" }} />
+            <span className="title">Contacts</span>
+          </div>
           <button onClick={onClose} className="mobile-close-btn">
             ✕
           </button>
@@ -39,10 +42,10 @@ const Sidebar = ({ onClose }) => {
               onChange={(e) => setShowOnlineOnly(e.target.checked)}
               className="filter-checkbox"
             />
-            <span>Show online only</span>
+            <span className="filter-text">Show online only</span>
           </label>
           <span className="online-count">
-            ({onlineUsers.length - 1} online)
+            {onlineUsers.length - 1 < 0 ? 0 : onlineUsers.length - 1} online
           </span>
         </div>
       </div>
@@ -56,18 +59,20 @@ const Sidebar = ({ onClose }) => {
               selectedUser?._id === user._id ? "active" : ""
             }`}
           >
+            {console.log("user--------", user)}
             <div className="avatar-container">
               <img
-                src={user.profileImage || "/avatar.png"}
+                src={user.profileImage || `${DEFAULT_AVATAR}`}
                 alt={user.name}
                 className="avatar"
               />
+
               {onlineUsers.includes(user._id) && (
                 <span className="online-badge" />
               )}
             </div>
             <div className="user-info">
-              <div className="user-name">{user.fullName}</div>
+              <div className="user-name">{user.username}</div>
               <div className="user-status">
                 {onlineUsers.includes(user._id) ? "Online" : "Offline"}
               </div>
@@ -76,7 +81,7 @@ const Sidebar = ({ onClose }) => {
         ))}
 
         {filteredUsers.length === 0 && (
-          <div className="empty-state">No online users</div>
+          <div className="empty-state">No contacts found</div>
         )}
       </div>
     </aside>

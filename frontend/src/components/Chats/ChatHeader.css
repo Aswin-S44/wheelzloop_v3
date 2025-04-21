@@ -1,10 +1,13 @@
 .chat-header {
-    padding: 10px 16px;
-    border-bottom: 1px solid #ddd;
-    background-color: #f0f0f0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 16px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f2f5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 10;
   }
   
   .chat-header-left {
@@ -14,16 +17,33 @@
   }
   
   .chat-header-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
+    position: relative;
+    width: 48px;
+    height: 48px;
   }
   
   .chat-header-avatar img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #e5e7eb;
+    transition: border-color 0.2s ease;
+  }
+  
+  .chat-header:hover .chat-header-avatar img {
+    border-color: #d1d5db;
+  }
+  
+  .online-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #10b981;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
   }
   
   .chat-header-info {
@@ -31,41 +51,80 @@
     flex-direction: column;
   }
   
-  .chat-header-info h3 {
-    margin: 0;
+  .user-name {
     font-size: 16px;
-    font-weight: 500;
-    color: #111;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    line-height: 1.4;
   }
   
-  .chat-header-info p {
-    margin: 0;
+  .user-status {
     font-size: 13px;
-    color: #666;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .user-status::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  
+  .online {
+    color: #10b981;
+  }
+  
+  .online::before {
+    background-color: #10b981;
+  }
+  
+  .offline {
+    color: #6b7280;
+  }
+  
+  .offline::before {
+    background-color: #6b7280;
   }
   
   .chat-header-close {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #333;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    transition: all 0.2s ease;
+  }
+  
+  .chat-header-close:hover {
+    background: #f3f4f6;
+    color: #ef4444;
   }
   
   @media (max-width: 768px) {
     .chat-header {
-      padding: 8px 12px;
+      padding: 12px 16px;
     }
-  
-    .chat-header-info h3 {
+    
+    .chat-header-avatar {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .user-name {
       font-size: 15px;
     }
-  
-    .chat-header-info p {
+    
+    .user-status {
       font-size: 12px;
     }
   }
-  
