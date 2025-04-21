@@ -374,12 +374,12 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem;
-  background: var(--light-gray);
+  background: #fff;
   border-radius: 5px;
 }
 
 .feature-item span {
-  color: var(--primary);
+  color: var(--primary-dark);
   font-weight: bold;
 }
 

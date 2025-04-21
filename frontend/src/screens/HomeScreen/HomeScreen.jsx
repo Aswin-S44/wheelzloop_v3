@@ -58,9 +58,7 @@ function HomeScreen() {
         if (res && res.data?.data?.length > 0) {
           setCars(res.data.data);
         }
-        console.log("all cars---------", res ? res : "no res");
       } catch (error) {
-        console.log("Error while fetching cars : ", error);
         return error;
       } finally {
         setLoading(false);
@@ -76,7 +74,12 @@ function HomeScreen() {
         <Banner />
       </div>
       <div className="container">
-        <TitleHeader title1={"Why Choose"} title2={"Us"} option={"View all"} />
+        <TitleHeader
+          title1={"Why Choose"}
+          title2={"Us"}
+          showOption={true}
+          option={null}
+        />
         <FeaturesSection />
       </div>
 

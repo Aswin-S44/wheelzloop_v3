@@ -2,7 +2,13 @@ import React from "react";
 import "./TitleHeader.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function TitleHeader({ title1, title2, option = null, optionLink = null }) {
+function TitleHeader({
+  title1,
+  title2,
+  option = null,
+  optionLink = null,
+  showOption,
+}) {
   return (
     <div>
       <div className="space-btn">

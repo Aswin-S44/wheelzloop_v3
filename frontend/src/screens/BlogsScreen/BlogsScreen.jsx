@@ -41,7 +41,7 @@ function BlogsScreen() {
         setEmail("");
       }
     } catch (error) {
-      console.log("Error while adding subscrition");
+      return error;
     }
   };
 

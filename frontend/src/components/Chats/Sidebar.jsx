@@ -59,7 +59,6 @@ const Sidebar = ({ onClose }) => {
               selectedUser?._id === user._id ? "active" : ""
             }`}
           >
-            {console.log("user--------", user)}
             <div className="avatar-container">
               <img
                 src={user.profileImage || `${DEFAULT_AVATAR}`}

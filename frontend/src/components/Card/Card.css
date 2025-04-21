@@ -46,7 +46,7 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
-  background: linear-gradient(135deg, #30bfa1, #148a84);
+  background: linear-gradient(135deg, var(--primary-color), #148a84);
   color: #fff;
   padding: 5px 10px;
   border-radius: 5px;

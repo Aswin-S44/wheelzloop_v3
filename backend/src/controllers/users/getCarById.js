@@ -13,7 +13,6 @@ module.exports.getCarById = async (req, res) => {
     }
     res.status(200).json(successResponse(car));
   } catch (error) {
-    console.log("Error while fetcing car details : ", error);
     return error;
   }
 };

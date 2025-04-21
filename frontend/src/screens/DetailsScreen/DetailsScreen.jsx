@@ -50,7 +50,7 @@ function DetailsScreen() {
           setMainImage(res.data.data.images[0]);
         }
       } catch (error) {
-        console.error("Error fetching car details:", error);
+        return error;
       } finally {
         setLoading(false);
       }
@@ -67,10 +67,6 @@ function DetailsScreen() {
         if (similar_cars) {
           setSimilarCars(similar_cars.data.data);
         }
-        console.log(
-          "similar_cars----------",
-          similar_cars ? similar_cars : "mpsimilar_cars"
-        );
       }
     };
     fetchSimilarCars();
@@ -87,7 +83,7 @@ function DetailsScreen() {
         notify();
       })
       .catch((err) => {
-        console.error("Failed to copy: ", err);
+        return err;
       });
   };
 
@@ -353,7 +349,7 @@ function DetailsScreen() {
 
       <div className="similar-section">
         <h2>Similar Vehicles</h2>
-        {console.log("similarCars===========", similarCars)}
+
         <div className="similar-cars">
           {similarCars?.map((item) => (
             <div

@@ -15,7 +15,6 @@ module.exports.updateProfile = async (req, res) => {
     await User.updateOne({ _id: userId }, { $set: req.body });
     res.json({ success: true });
   } catch (error) {
-    console.log("Error while updating profile : ", error);
     return error;
   }
 };

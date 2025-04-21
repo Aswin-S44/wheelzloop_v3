@@ -6,7 +6,6 @@ module.exports.getCarByDealerId = async (dealerId) => {
 
     return cars;
   } catch (error) {
-    console.log("Error while fetching car : ", error);
     return error;
   }
 };

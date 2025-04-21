@@ -12,12 +12,11 @@ const AboutUsScreen = () => {
       try {
         setLoading(true);
         const res = await axios.get(`${STATS_COUNT}`);
-        console.log("stat count ; ", res ? res : "no res");
+
         if (res && res.data) {
           setData(res.data);
         }
       } catch (error) {
-        console.log("Error while returning stat count : ", error);
         return error;
       } finally {
         setLoading(false);

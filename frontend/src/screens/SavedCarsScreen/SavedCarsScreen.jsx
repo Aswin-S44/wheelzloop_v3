@@ -64,7 +64,7 @@ function SavedCarsScreen() {
           setSavedCars(data.cars);
         }
       } catch (error) {
-        console.log("Error while fetching saved cars : ", error);
+        return error;
         setLoading(false);
       }
     };

@@ -27,6 +27,6 @@ module.exports.SignIn = async (req, res, next) => {
       .json({ message: "User logged in successfully", success: true, user });
     next();
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Search, Menu, Person, AddBox, Close } from "@mui/icons-material";
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SEARCH_URL } from "../../config/api";
+import { UserContext } from "../../hooks/UserContext";
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/material";
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
@@ -14,6 +17,31 @@ function Header() {
   const [searchResults, setSearchResults] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showResults, setShowResults] = useState(false);
+  const { user } = useContext(UserContext);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleSellCar = () => {
+    if (!user) {
+      handleOpen();
+    } else {
+      window.location.href = "/car/add";
+    }
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const searchCar = async (name) => {
     if (name.length > 0) {
@@ -143,16 +171,18 @@ function Header() {
           <a href="/about-us">About-Us</a>
           <a href="/reviews">Reviews</a>
           <a href="/blogs">Blogs</a>
-          <button className="login-btn" onClick={navigateToLogin}>
-            <Person /> Login
-          </button>
+          {!user && (
+            <button className="login-btn" onClick={navigateToLogin}>
+              <Person /> Login
+            </button>
+          )}
         </nav>
 
         <div className="icons">
-          <button className="sell-btn">
+          <button className="sell-btn" onClick={handleSellCar}>
             <AddBox /> Sell
           </button>
-          {console.log("isMobile==========", isMobile)}
+
           {isMobile && (
             <>
               <Search className="search-icon" onClick={toggleSearch} />
@@ -164,6 +194,61 @@ function Header() {
 
         {showNav && <div className="" onClick={toggleNav}></div>}
       </header>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "16px",
+                padding: "24px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                maxWidth: "400px",
+                margin: "0 auto",
+                textAlign: "center",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "16px",
+                  color: "#333",
+                }}
+              >
+                You need to create account to add review
+              </span>
+              <button
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#30bfa1",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  transition: "background-color 0.2s",
+                  ":hover": {
+                    backgroundColor: "#30bfa1",
+                  },
+                }}
+                onClick={() => (window.location.href = "/signin")}
+              >
+                Go to login
+              </button>
+            </div>
+          </>
+        </Box>
+      </Modal>
     </>
   );
 }

@@ -116,7 +116,7 @@ function EditProfileScreen() {
         });
       }
     } catch (error) {
-      console.log("Error while updating profile : ", error);
+      return error;
     } finally {
       setLoading(false);
     }

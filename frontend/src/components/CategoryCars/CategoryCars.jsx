@@ -19,7 +19,7 @@ function CategoryCars({ category }) {
           setCars(res.data.data);
         }
       } catch (error) {
-        console.log("Eror while fetching cars : ", error);
+        return error;
       } finally {
         setLoading(false);
       }

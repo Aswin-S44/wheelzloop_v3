@@ -33,7 +33,6 @@ const ActionMenu = ({ id }) => {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log("Delete");
         const res = await axios.delete(`${ADD_CAR_URL}/${id}`, {
           withCredentials: true,
         });

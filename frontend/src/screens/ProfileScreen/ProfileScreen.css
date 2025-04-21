@@ -42,8 +42,8 @@
 }
 
 .react-tabs__tab--selected {
-  color: #30bfa1;
-  border-bottom: 3px solid #30bfa1;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
 }
 
 .react-tabs__tab:hover {

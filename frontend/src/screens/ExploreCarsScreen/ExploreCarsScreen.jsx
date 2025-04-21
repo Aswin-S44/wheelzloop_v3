@@ -40,7 +40,6 @@ function ExploreCarsScreen() {
 
   const fetchCars = async (filters = {}) => {
     try {
-      console.log("filters---------", filters);
       setLoading(true);
       // const res = await axios.get(`${GET_ALL_CARS}`);
       const queryParams = new URLSearchParams(filters).toString();

@@ -23,34 +23,28 @@ function Banner() {
             >
               Explore Inventory
             </Button>
-            {/* <Button
-              variant="outlined"
-              className="secondary-btn"
-              onClick={() => navigate("/sell-car")}
-            >
-              Get Instant Valuation
-            </Button> */}
           </div>
           <div className="banner-features">
             <div className="feature-item">
               <i className="fas fa-shield-alt"></i>
-              <span>1-Year Warranty</span>
+              <span style={{ color: "#00796b" }}>1-Year Warranty</span>
             </div>
             <div className="feature-item">
               <i className="fas fa-car"></i>
-              <span>200+ Point Check</span>
+              <span style={{ color: "#00796b" }}>200+ Point Check</span>
             </div>
             <div className="feature-item">
               <i className="fas fa-hand-holding-usd"></i>
-              <span>Best Price Guarantee</span>
+              <span style={{ color: "#00796b" }}>Best Price Guarantee</span>
             </div>
           </div>
         </div>
         <div className="banner-image">
           <img
-            src="https://img.freepik.com/free-photo/young-handsome-man-choosing-car-car-showroom_1303-15121.jpg"
+            src="/images/banner.jpg"
             alt="Happy family at car dealership"
             loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

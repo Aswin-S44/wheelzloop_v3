@@ -88,7 +88,6 @@ module.exports.getCars = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("Error while fetching cars:", error);
     res.status(500).json({ success: false, message: "Server Error", error });
   }
 };

@@ -11,7 +11,6 @@ module.exports.deleteCarById = async (req, res) => {
     await Cars.deleteOne({ _id: carId });
     res.json({ success: true });
   } catch (error) {
-    console.log("Error while deleting car : ", error);
     return error;
   }
 };

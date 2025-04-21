@@ -27,8 +27,6 @@ function Filter({ onFilterChange }) {
   const handleSearch = (e) => setSearch(e.target.value);
 
   const handleCheckboxChange = (selectedArray, setSelectedArray, value) => {
-    console.log("value========", value);
-    console.log("selectedArray--------", selectedArray);
     if (selectedArray.includes(value)) {
       setSelectedArray(selectedArray.filter((item) => item !== value));
     } else {
@@ -41,7 +39,6 @@ function Filter({ onFilterChange }) {
   };
 
   const applyFilters = () => {
-    console.log("selected cars-------", selectedCars);
     const filters = {
       brands: selectedCars.map((item) => item.brand),
       car_name: selectedCars.map((item) => item.car),

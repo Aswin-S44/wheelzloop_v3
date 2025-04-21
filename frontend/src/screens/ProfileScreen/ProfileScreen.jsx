@@ -30,7 +30,7 @@ function ProfileScreen() {
           setCars(res.data);
         }
       } catch (error) {
-        console.log("Error while fetching car : ", error);
+        return error;
       }
     };
     fetchCar();

@@ -32,7 +32,6 @@ function HowItWorks() {
   };
   const handleClose = () => setOpen(false);
 
-  console.log("USER-------------", user ? user : "no user");
   return (
     <div className="how-it-works-section">
       <div className="container">
@@ -96,7 +95,6 @@ function HowItWorks() {
         >
           Get Started Now
         </button>
-        {console.log("OPEN-----------", open ? open : "no open")}
       </div>
       <div
         class="modal fade"
