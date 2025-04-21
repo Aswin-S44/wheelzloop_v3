@@ -6,7 +6,9 @@ const userRouter = require("./routes/users/userRouter");
 const db = require("../config/db");
 const { rateLimiter } = require("../middlewares/rateLimiter");
 const rateLimit = require("express-rate-limit");
-const app = express();
+// const app = express();
+
+const { app, server } = require("../libs/socket");
 
 const port = process.env.PORT || 5000;
 
@@ -55,6 +57,6 @@ process.on("unhandledRejection", (err) => {
   process.exit(1);
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running at the port ${port}`);
 });

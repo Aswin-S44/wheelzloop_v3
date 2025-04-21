@@ -20,6 +20,12 @@ const { addReview } = require("../../controllers/users/addReview");
 const { getReviews } = require("../../controllers/users/getReviews");
 const { NewsLetter } = require("../../controllers/users/NewsLetter");
 const { getSubscribers } = require("../../controllers/users/getSubscribers");
+const {
+  getUsersForSidebar,
+  getMessages,
+  sendMessage,
+} = require("../../controllers/messages/messageController");
+
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -62,5 +68,11 @@ router.post("/reviews", addReview);
 router.get("/reviews", getReviews);
 router.post("/subscribe", NewsLetter);
 router.get("/subscribers", getSubscribers);
+
+// Chat related routes
+router.get("/message/users", userVerification, getUsersForSidebar);
+router.get("/message/:id", userVerification, getMessages);
+
+router.post("/message/send/:id", userVerification, sendMessage);
 
 module.exports = router;

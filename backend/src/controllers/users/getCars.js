@@ -35,7 +35,6 @@ module.exports.getCars = async (req, res) => {
     if (make) filter.make = make;
     if (model) filter.model = model;
 
-    console.log("YEAR----------", year);
     if (year) {
       // Handle year range (comma-separated values)
       const years = year.split(",").map((y) => parseInt(y.trim()));
@@ -71,7 +70,6 @@ module.exports.getCars = async (req, res) => {
       filter.body_type = { $regex: new RegExp(`^${body_type}$`, "i") };
     if (status) filter.status = status;
 
-    console.log("FILTERS------------", filter);
     const cars = await Cars.find(filter)
       .sort({ [sortBy]: order === "desc" ? -1 : 1 })
       .skip(skip)
