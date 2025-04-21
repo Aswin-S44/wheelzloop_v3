@@ -3,20 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
-import { InputBase } from "@mui/material";
+import { InputBase, InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import "./LoginScreen.css";
-import axios from "axios";
-import { SIGN_IN_URL } from "../../config/api";
-import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../../actions/userActions";
 import { useAuthStore } from "../../store/useAuthStore";
 
 function LoginScreen() {
   const navigate = useNavigate();
-  // const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo, loading, error } = userSignin;
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const initialValues = {
     emailOrPhone: "",
     password: "",
@@ -27,7 +23,7 @@ function LoginScreen() {
     password: Yup.string().required("Password is required"),
   });
 
-  const { login, isLoggingIn } = useAuthStore();
+  const { login } = useAuthStore();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
@@ -36,11 +32,10 @@ function LoginScreen() {
         password: values.password,
       };
 
-      // const res = await axios.post(SIGN_IN_URL, loginData, {
-      //   withCredentials: true,
-      // });
-
+      setLoading(true);
       const res = await login(loginData);
+      setLoading(false);
+
       if (res) {
         Swal.fire({
           title: "Success!",
@@ -56,11 +51,14 @@ function LoginScreen() {
           icon: "error",
         });
       }
-      // .log("res=========", res ? res : "no res");
     } catch (error) {
       Swal.fire({ title: "Error", text: "Invalid credentials", icon: "error" });
     }
     setSubmitting(false);
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -69,14 +67,14 @@ function LoginScreen() {
         <div className="row">
           <div className="col-md-6">
             <img
-              src="/images/login-im.avif"
+              src="/images/intro.png"
               className="w-100"
-              loading="lazy"
+              // loading="lazy"
               alt="Login"
             />
           </div>
           <div className="col-md-6">
-            <h1 className="font-lg ">
+            <h1 className="font-lg">
               Sign-In to <span className="highlighted">WheeelzLoop</span>
             </h1>
             <p className="font-sm-2">
@@ -96,7 +94,7 @@ function LoginScreen() {
                       as={InputBase}
                       name="emailOrPhone"
                       placeholder="Email or Phone Number"
-                      className="search-input"
+                      className="search-input-2"
                       style={{ border: "1px solid grey", width: "100%" }}
                     />
                     <ErrorMessage
@@ -105,19 +103,32 @@ function LoginScreen() {
                       className="error-text"
                     />
                   </div>
-                  <div className="mt-5">
+                  <div className="mt-3">
                     <p className="font-sm">Password</p>
                     <Field
                       as={InputBase}
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       placeholder="Password"
-                      className="search-input"
+                      className="search-input-2"
                       style={{
                         border: "1px solid grey",
                         padding: "15px",
                         width: "100%",
                       }}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                            aria-label={
+                              showPassword ? "Hide password" : "Show password"
+                            }
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
                     />
                     <ErrorMessage
                       name="password"

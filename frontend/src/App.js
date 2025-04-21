@@ -43,7 +43,7 @@ function Layout() {
     <UserProvider>
       <div>
         {!hideHeaderFooter && <Header />}
-        <main className="pt-70">
+        <main>
           <Routes>
             <Route path="/signin" element={<LoginScreen />} />
             <Route path="/signup" element={<SignUpScreen />} />
