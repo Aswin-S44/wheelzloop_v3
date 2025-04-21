@@ -9,6 +9,7 @@ import axios from "axios";
 import { SIGN_IN_URL } from "../../config/api";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../actions/userActions";
+import { useAuthStore } from "../../store/useAuthStore";
 
 function LoginScreen() {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ function LoginScreen() {
     password: Yup.string().required("Password is required"),
   });
 
+  const { login, isLoggingIn } = useAuthStore();
+
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const loginData = {
@@ -33,11 +36,12 @@ function LoginScreen() {
         password: values.password,
       };
 
-      const res = await axios.post(SIGN_IN_URL, loginData, {
-        withCredentials: true,
-      });
+      // const res = await axios.post(SIGN_IN_URL, loginData, {
+      //   withCredentials: true,
+      // });
 
-      if (res && res.status == 201) {
+      const res = await login(loginData);
+      if (res) {
         Swal.fire({
           title: "Success!",
           text: "Logged in successfully",
@@ -52,6 +56,7 @@ function LoginScreen() {
           icon: "error",
         });
       }
+      // .log("res=========", res ? res : "no res");
     } catch (error) {
       Swal.fire({ title: "Error", text: "Invalid credentials", icon: "error" });
     }

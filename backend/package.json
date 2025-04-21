@@ -27,6 +27,7 @@
     "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.7",
     "express-rate-limit": "^7.5.0",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "socket.io": "^4.8.1"
   }
 }
