@@ -26,6 +26,8 @@ const UserSchema = new mongoose.Schema(
     deactivated: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now },
     last_active: { type: Date, default: Date.now },
+    resetToken: { type: String },
+    resetTokenExpiry: { type: Date },
   },
   {
     timestamps: true,

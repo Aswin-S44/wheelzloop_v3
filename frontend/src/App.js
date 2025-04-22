@@ -25,6 +25,8 @@ import BackToTop from "./components/BackToTop/BackToTop";
 import DealerProfileScreen from "./screens/DealerProfileScreen/DealerProfileScreen";
 import ChatScreen from "./screens/ChatScreen/ChatScreen";
 import { useAuthStore } from "./store/useAuthStore";
+import ForegotPasswordScreen from "./screens/ForegotPasswordScreen/ForegotPasswordScreen";
+import ResetPassswordScreen from "./screens/ResetPassswordScreen/ResetPassswordScreen";
 
 function Layout() {
   const location = useLocation();
@@ -60,13 +62,17 @@ function Layout() {
             <Route path="/about-us" element={<AboutUsScreen />} />
             <Route path="/reviews" element={<ReviewScreen />} />
             <Route path="/profile/:id" element={<DealerProfileScreen />} />
-            {/* <Route
-              path="/chats"
-              element={authUser ? <ChatScreen /> : <Navigate to="/signin" />}
-            /> */}
             <Route
               path="/chats"
               element={authUser ? <ChatScreen /> : <ChatScreen />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<ForegotPasswordScreen />}
+            />
+            <Route
+              path="/reset-password/:id"
+              element={<ResetPassswordScreen />}
             />
           </Routes>
           {!hideHeaderFooter && <Footer />}

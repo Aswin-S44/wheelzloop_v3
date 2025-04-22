@@ -1,6 +1,6 @@
 const express = require("express");
 const { SignIn } = require("../../controllers/users/signin");
-const { Signup } = require("../../controllers/users/signup");
+const { Signup } = require("../../controllers/users/signupbkp");
 const { getProfile } = require("../../controllers/users/getProfile");
 const { userVerification } = require("../../../middlewares/AuthMiddleware");
 const { getCars } = require("../../controllers/users/getCars");
@@ -25,6 +25,12 @@ const {
   getMessages,
   sendMessage,
 } = require("../../controllers/messages/messageController");
+const { forgotPassword } = require("../../controllers/users/forgotPassword");
+const { resetPassword } = require("../../controllers/users/resetPassword");
+const {
+  sendSignupOTP,
+  verifySignupOTP,
+} = require("../../controllers/users/signup");
 
 const router = express.Router();
 
@@ -35,10 +41,16 @@ router.get("/", (req, res) => {
 
 router.get("/me", getMe);
 
+// Auth related routes
 router.post("/signin", SignIn);
+router.post("/otp/send", sendSignupOTP);
+router.post("/otp/verify", verifySignupOTP);
 router.post("/signup", Signup);
 router.get("/profile", getProfile);
 router.patch("/profile/:id", updateProfile);
+router.post("/reset-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
+
 router.get("/cars", getCars);
 router.post("/car", userVerification, addCar);
 router.patch("/car/:id", updateCar);
