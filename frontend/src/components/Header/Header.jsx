@@ -7,6 +7,8 @@ import { SEARCH_URL } from "../../config/api";
 import { UserContext } from "../../hooks/UserContext";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/material";
+import AccountDropdown from "../AccountDropdown/AccountMenu";
+import AccountMenu from "../AccountDropdown/AccountMenu";
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
@@ -182,14 +184,21 @@ function Header() {
           <button className="sell-btn" onClick={handleSellCar}>
             <AddBox /> Sell
           </button>
-
+          {isMobile && (
+            <Search
+              className="search-icon"
+              style={{ float: "right", position: "relative" }}
+              onClick={toggleSearch}
+            />
+          )}
+          <AccountMenu />
           {isMobile && (
             <>
-              <Search className="search-icon" onClick={toggleSearch} />
               <Menu className="menu-icon" onClick={toggleNav} />
+              {/* <Search className="search-icon" onClick={toggleSearch} /> */}
+              {/* <Menu className="menu-icon" onClick={toggleNav} /> */}
             </>
           )}
-          <Menu className="menu-icon" onClick={toggleNav} />
         </div>
 
         {showNav && <div className="" onClick={toggleNav}></div>}
