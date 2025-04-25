@@ -10,35 +10,27 @@ import {
 function FeaturesSection() {
   return (
     <div className="features-section">
-      <div className="feature-card">
-        <div className="feature-icon-container">
+      <div className="features-container">
+        <div className="feature-card">
           <VerifiedUser className="feature-icon" />
+          <h3>Verified Dealers</h3>
+          <p>Trusted and verified sellers for a safe buying experience.</p>
         </div>
-        <h3>Verified Dealers</h3>
-        <p>Trusted and verified sellers for a safe buying experience.</p>
-      </div>
-      <div className="feature-card">
-        <div className="feature-icon-container">
+        <div className="feature-card">
           <Payment className="feature-icon" />
+          <h3>Variety of Cars</h3>
+          <p>Browse through diverse car options from our verified dealers.</p>
         </div>
-        <h3>Veriety of cars</h3>
-        <p>
-          You can surf through veriety of cars added by our verified dealers .
-        </p>
-      </div>
-      <div className="feature-card">
-        <div className="feature-icon-container">
+        <div className="feature-card">
           <LocalShipping className="feature-icon" />
+          <h3>Easy Listing</h3>
+          <p>Quickly post your cars and connect with potential buyers.</p>
         </div>
-        <h3>Easy to add your car</h3>
-        <p>You can easily post your cars and find potential buyers</p>
-      </div>
-      <div className="feature-card">
-        <div className="feature-icon-container">
+        <div className="feature-card">
           <SupportAgent className="feature-icon" />
+          <h3>24/7 Support</h3>
+          <p>Round-the-clock customer support for all your queries.</p>
         </div>
-        <h3>24/7 Support</h3>
-        <p>Round-the-clock customer support for all your queries.</p>
       </div>
     </div>
   );

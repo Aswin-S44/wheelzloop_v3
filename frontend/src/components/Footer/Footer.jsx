@@ -24,7 +24,9 @@ function Footer() {
           </div>
         </div> */}
         <div className="footer-extra-box">
-          <h3>STAY UPTODATE WITH OUR LATEST UPDATES</h3>
+          <h3 style={{ fontWeight: "bold" }}>
+            STAY UPTODATE WITH OUR LATEST UPDATES
+          </h3>
           <p>Follow us on social media</p>
           {/* <div className="newsletter">
             <input
@@ -37,7 +39,7 @@ function Footer() {
         </div>
         <div className="footer-container">
           <div className="footer-section footer-logo">
-            <h2>WheelzLoop</h2>
+            <h2 style={{ color: "#28c694", fontWeight: "bold" }}>WheelzLoop</h2>
             <p>Your trusted partner for buying and selling used cars.</p>
           </div>
           <div className="footer-section footer-links">
@@ -90,7 +92,7 @@ function Footer() {
             <h3>Contact Us</h3>
             {/* <p>123 Auto Lane, CarCity, Country</p> */}
             <p>
-              <EmailIcon /> wheelzloop@gmail.com
+              <EmailIcon style={{ color: "#28c694" }} /> wheelzloop@gmail.com
             </p>
             {/* <p>Phone: +1 (555) 123-4567</p> */}
           </div>
@@ -103,7 +105,7 @@ function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Facebook page"
               >
-                <Facebook fontSize="large" />
+                <Facebook style={{ color: "#28c694" }} fontSize="large" />
               </a>
               <a
                 href="https://x.com/WheelzLoop"
@@ -111,7 +113,7 @@ function Footer() {
                 rel="noopener noreferrer"
                 aria-label="X page"
               >
-                <XIcon fontSize="large" />
+                <XIcon style={{ color: "#28c694" }} fontSize="large" />
               </a>
               <a
                 href="https://www.instagram.com/wheelz_loop/"
@@ -119,7 +121,7 @@ function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Instagram page"
               >
-                <Instagram fontSize="large" />
+                <Instagram style={{ color: "#28c694" }} fontSize="large" />
               </a>
               <a
                 href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/"
@@ -127,7 +129,7 @@ function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Linkedin page"
               >
-                <LinkedIn fontSize="large" />
+                <LinkedIn style={{ color: "#28c694" }} fontSize="large" />
               </a>
             </div>
           </div>

@@ -53,8 +53,25 @@ const NewsAndResources = () => {
 
   return (
     <section className="news-container">
+      <h2 className="text-center fw-bold">
+        <span className="quality-text">
+          NEWS AND RESOURCES
+          <svg
+            width="120"
+            height="12"
+            viewBox="0 0 120 12"
+            className="curved-line"
+          >
+            <path
+              d="M0,6 Q60,12 120,6"
+              stroke="#FFD700"
+              strokeWidth="2"
+              fill="none"
+            />
+          </svg>
+        </span>{" "}
+      </h2>
       <div className="news-header">
-        <h2>NEWS AND RESOURCES</h2>
         <p>
           Discover the latest tips, guides, and insights to make smarter car
           decisions.

@@ -5,7 +5,8 @@
   padding: 15px 20px;
   background: #f8f9fa;
   border-bottom: 2px solid #ddd;
-  position: fixed;
+  /* position: fixed; */
+  position: relative;
   z-index: 100;
   top: 0;
   width: 100%;

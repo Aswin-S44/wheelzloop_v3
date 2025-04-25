@@ -6,11 +6,12 @@
 }
 
 body {
-  font-family: Inter, sans-serif
+  font-family: Inter, sans-serif;
+  background: #f8fafc;
 }
 
 :root {
-  --primary-color:#00796b;
+  --primary-color:#28c694;
   --secondary-color: #f60;
   --border-radius: 20px;
   --main-bg-color: #30bfa1

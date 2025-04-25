@@ -19,6 +19,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { carBodyTypes } from "../../dummyData/bodyTypes";
 import CategoryCars from "../../components/CategoryCars/CategoryCars";
+import Banner2 from "../../components/Banner2/Banner2";
+import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -71,61 +73,68 @@ function HomeScreen() {
     <div className="screens">
       <div className="">
         {/* <Carousel images={images} /> */}
-        <Banner />
+        {/* <Banner /> */}
+        <Banner2 />
+      </div>
+      <div>
+        <CarCategoriesSection />
       </div>
       <div className="container">
-        <TitleHeader
+        {/* <TitleHeader
           title1={"Why Choose"}
           title2={"Us"}
           showOption={true}
           option={null}
-        />
+        /> */}
         <FeaturesSection />
       </div>
 
-      <div className="container-fluid mw-90">
+      <div>
         <div className="mt-4">
-          <TitleHeader
-            title1={"Latest"}
-            title2={"Cars"}
-            option={"View all"}
-            optionLink={`/used-cars?.category=latest`}
-          />
-          <div className="slider-container">
-            <IconButton
-              className="arrow-button left"
-              onClick={scrollLeft}
-              aria-label="left-scroll-btn"
-            >
-              <ChevronLeft />
-            </IconButton>
-            <div className="card-slider" ref={sliderRef}>
-              <div className="card-container">
+          <div>
+            <div className="container">
+              <h2 className="text-center fw-bold">
+                <span className="quality-text">
+                  Latest Cars
+                  <svg
+                    width="120"
+                    height="12"
+                    viewBox="0 0 120 12"
+                    className="curved-line"
+                  >
+                    <path
+                      d="M0,6 Q60,12 120,6"
+                      stroke="#FFD700"
+                      strokeWidth="2"
+                      fill="none"
+                    />
+                  </svg>
+                </span>{" "}
+              </h2>
+              <div className="cards-container mt-4">
                 {loading ? (
                   <Loader />
-                ) : cars.length == 0 ? (
+                ) : cars.length === 0 ? (
                   <EmptyState />
                 ) : (
-                  cars?.map((car, index) => (
-                    <Card
-                      car={car}
-                      editable={false}
-                      key={index}
-                      category={"Latest"}
-                    />
-                  ))
+                  <div className="cards-grid">
+                    {cars?.slice(0, 8).map((car, index) => (
+                      <Card
+                        car={car}
+                        editable={false}
+                        key={index}
+                        category={"Latest"}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
-            <IconButton
-              className="arrow-button right"
-              onClick={scrollRight}
-              aria-label="right-scroll-btn"
-            >
-              <ChevronRight />
-            </IconButton>
           </div>
         </div>
+      </div>
+      <div className="mt-4">
+        <img src="/images/ad1.png" className="w-100" />
       </div>
       <div className="container-fluid mw-90 mt-5">
         <div className="profile-content">
