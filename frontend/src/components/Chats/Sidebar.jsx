@@ -64,6 +64,7 @@ const Sidebar = ({ onClose }) => {
                 src={user.profileImage || `${DEFAULT_AVATAR}`}
                 alt={user.name}
                 className="avatar"
+                title="user-sidebar-img"
               />
 
               {onlineUsers.includes(user._id) && (

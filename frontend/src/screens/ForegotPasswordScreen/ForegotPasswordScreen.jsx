@@ -49,6 +49,7 @@ function ForegotPasswordScreen() {
                 className="w-100"
                 // loading="lazy"
                 alt="Login"
+                title="forgot password page image"
               />
             </div>
             <div className="col-md-6">

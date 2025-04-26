@@ -53,7 +53,7 @@ const NewsAndResources = () => {
 
   return (
     <section className="news-container">
-      <h2 className="text-center fw-bold">
+      <h3 className="text-center fw-bold">
         <span className="quality-text">
           NEWS AND RESOURCES
           <svg
@@ -70,7 +70,7 @@ const NewsAndResources = () => {
             />
           </svg>
         </span>{" "}
-      </h2>
+      </h3>
       <div className="news-header">
         <p>
           Discover the latest tips, guides, and insights to make smarter car
@@ -90,6 +90,7 @@ const NewsAndResources = () => {
                 alt={article.title}
                 className="news-image"
                 loading="lazy"
+                title="blogs image"
               />
               <div className="news-overlay"></div>
               <span className="news-category">{article.category}</span>

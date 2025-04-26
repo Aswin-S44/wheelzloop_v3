@@ -39,35 +39,51 @@ function Footer() {
         </div>
         <div className="footer-container">
           <div className="footer-section footer-logo">
-            <h2 style={{ color: "#28c694", fontWeight: "bold" }}>WheelzLoop</h2>
+            <h3 style={{ color: "#28c694", fontWeight: "bold" }}>WheelzLoop</h3>
             <p>Your trusted partner for buying and selling used cars.</p>
           </div>
           <div className="footer-section footer-links">
             <h3>Quick Links</h3>
             <ul>
               <li>
-                <a href="/used-cars">Find cars</a>
+                <a href="/used-cars" title="Find used cars">
+                  Find cars
+                </a>
               </li>
               <li>
-                <a href="/favourites">Favourites</a>
+                <a href="/favourites" title="View saved cars">
+                  Favourites
+                </a>
               </li>
               <li>
-                <a href="/chats">Chats</a>
+                <a href="/chats" title="my chats">
+                  Chats
+                </a>
               </li>
               <li>
-                <a href="/about-us">About Us</a>
+                <a href="/about-us" title="about us">
+                  About Us
+                </a>
               </li>
               <li>
-                <a href="/reviews">Reviews</a>
+                <a href="/reviews" title="reviews">
+                  Reviews
+                </a>
               </li>
               <li>
-                <a href="/blogs">Blogs</a>
+                <a href="/blogs" title="blogs">
+                  Blogs
+                </a>
               </li>
               <li>
-                <a href="/signin">Login to account?</a>
+                <a href="/signin" title="login">
+                  Login to account?
+                </a>
               </li>
               <li>
-                <a href="/signup">Create new account?</a>
+                <a href="/signup" title="signup">
+                  Create new account?
+                </a>
               </li>
             </ul>
           </div>
@@ -75,16 +91,24 @@ function Footer() {
             <h3>Resources</h3>
             <ul>
               <li>
-                <a href="/blogs">Blog</a>
+                <a href="/blogs" title="blogs">
+                  Blog
+                </a>
               </li>
               <li>
-                <a href="#guides">Guides</a>
+                <a href="#guides" title="guides">
+                  Guides
+                </a>
               </li>
               <li>
-                <a href="#support">Support</a>
+                <a href="#support" title="support">
+                  Support
+                </a>
               </li>
               <li>
-                <a href="#terms">Terms & Conditions</a>
+                <a href="#terms" title="terms and conditions">
+                  Terms & Conditions
+                </a>
               </li>
             </ul>
           </div>
@@ -104,6 +128,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook page"
+                title="facebook page"
               >
                 <Facebook style={{ color: "#28c694" }} fontSize="large" />
               </a>
@@ -112,6 +137,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X page"
+                title="x page"
               >
                 <XIcon style={{ color: "#28c694" }} fontSize="large" />
               </a>
@@ -120,6 +146,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram page"
+                title="instagram"
               >
                 <Instagram style={{ color: "#28c694" }} fontSize="large" />
               </a>
@@ -128,6 +155,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Linkedin page"
+                title="linkedin"
               >
                 <LinkedIn style={{ color: "#28c694" }} fontSize="large" />
               </a>

@@ -100,6 +100,8 @@ function SavedCarsScreen() {
                       onClick={() => {
                         window.location.href = `/car/${car._id}`;
                       }}
+                      alt="saved car image"
+                      title="saved car image"
                     />
                   </div>
                 </div>
@@ -109,11 +111,19 @@ function SavedCarsScreen() {
                     <p className="car-price">${car.price.toLocaleString()}</p>
                     <div className="car-details">
                       <span className="car-mileage">
-                        <img src="/mileage-icon.svg" alt="" />{" "}
+                        <img
+                          src="/mileage-icon.svg"
+                          alt="car image"
+                          title="car image"
+                        />{" "}
                         {car.mileage.toLocaleString()} Mileage
                       </span>
                       <span className="car-location">
-                        <img src="/location-icon.svg" alt="" />{" "}
+                        <img
+                          src="/location-icon.svg"
+                          alt="car image"
+                          title="car image"
+                        />{" "}
                         {car?.place ?? ""}
                       </span>
                     </div>

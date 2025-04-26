@@ -8,42 +8,46 @@ function CarCategoriesSection() {
         <div className="category-card">
           <div className="circle">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0QkWLR_bCAFBLCfF0qRyJzFbf_w3MBrZnlA&s"
+              src="/images/sedan.jpeg"
               alt="Sedan"
               className="category-image"
+              title="sedan-car"
             />
           </div>
-          <h3 className="category-title">Sedan</h3>
+          <p className="category-title">Sedan</p>
         </div>
         <div className="category-card">
           <div className="circle">
             <img
-              src="https://www.freeiconspng.com/thumbs/car-png/land-rover-range-rover-car-png-25.png"
+              src="/images/suv.png"
               alt="SUV"
               className="category-image"
+              title="suv-car"
             />
           </div>
-          <h3 className="category-title">SUV</h3>
+          <p className="category-title">SUV</p>
         </div>
         <div className="category-card">
           <div className="circle">
             <img
-              src="https://www.freeiconspng.com/uploads/yellow-car-png-26.png"
+              src="/images/hatchback.png"
               alt="Hatchback"
               className="category-image"
+              title="hatchback-car"
             />
           </div>
-          <h3 className="category-title">Hatchback</h3>
+          <p className="category-title">Hatchback</p>
         </div>
         <div className="category-card">
           <div className="circle">
             <img
-              src="https://pngdownload.io/wp-content/uploads/2024/06/Nissan-Altima-Stylish-Sedan-768x427.jpg"
+              src="/images/sports.jpeg"
               alt="Sports"
               className="category-image"
+              title="sports-car"
             />
           </div>
-          <h3 className="category-title">Sports</h3>
+          <p className="category-title">Sports</p>
         </div>
       </div>
     </div>

@@ -131,7 +131,12 @@ function BlogsScreen() {
           </div>
 
           <div className="article-image">
-            <img src="/images/blog1.webp" alt="Used car" loading="lazy" />
+            <img
+              src="/images/blog1.webp"
+              alt="Used car"
+              loading="lazy"
+              title="car buying guide"
+            />
           </div>
 
           <div className="article-body mt-4">
@@ -258,7 +263,12 @@ function BlogsScreen() {
           </div>
 
           <div className="article-image">
-            <img src="/images/blog1.webp" alt="Used car" loading="lazy" />
+            <img
+              src="/images/blog1.webp"
+              alt="Used car"
+              loading="lazy"
+              title="how go get best price when buying a used car"
+            />
           </div>
 
           <div className="article-body mt-4">
@@ -376,7 +386,12 @@ function BlogsScreen() {
           </div>
 
           <div className="article-image">
-            <img src="/images/blog1.webp" alt="Used car" loading="lazy" />
+            <img
+              src="/images/blog1.webp"
+              alt="Used car"
+              loading="lazy"
+              title="Top tips for car maintainance"
+            />
           </div>
 
           <div className="article-body mt-4">
@@ -508,7 +523,12 @@ function BlogsScreen() {
           </div>
 
           <div className="article-image">
-            <img src="/images/blog1.webp" alt="Used car" loading="lazy" />
+            <img
+              src="/images/blog1.webp"
+              alt="Used car"
+              loading="lazy"
+              title="Latest Trends in the Used Car Market"
+            />
           </div>
 
           <div className="article-body mt-4">
@@ -643,7 +663,11 @@ function BlogsScreen() {
         <h3>More Helpful Guides</h3>
         <div className="article-grid">
           <div className="related-card">
-            <img src="/images/blog2.webp" alt="Related article" />
+            <img
+              src="/images/blog2.webp"
+              alt="Related article"
+              title="How to Get the Best Price for Your Car"
+            />
             <div className="card-content">
               <span className="card-category">Selling Guide</span>
               <h4>How to Get the Best Price for Your Car</h4>
@@ -653,7 +677,11 @@ function BlogsScreen() {
           </div>
 
           <div className="related-card">
-            <img src="/images/blog4.jpg" alt="Related article" />
+            <img
+              src="/images/blog4.jpg"
+              alt="Related article"
+              title="Essential maintenance tasks to keep your car running smoothly"
+            />
             <div className="card-content">
               <span className="card-category">Maintenance</span>
               <h4>Car Maintenance Checklist</h4>
@@ -665,7 +693,11 @@ function BlogsScreen() {
           </div>
 
           <div className="related-card">
-            <img src="/images/blog3.jpg" alt="Related article" />
+            <img
+              src="/images/blog3.jpg"
+              alt="Related article"
+              title="Latest Trends in the Used Car Market"
+            />
             <div className="card-content">
               <span className="card-category">Market Trends</span>
               <h4>Latest Trends in the Used Car Market</h4>

@@ -71,6 +71,7 @@ function LoginScreen() {
               className="w-100"
               // loading="lazy"
               alt="Login"
+              title="login page image"
             />
           </div>
           <div className="col-md-6">

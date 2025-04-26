@@ -178,7 +178,7 @@
 }
 
 .view-all-button {
-  background: linear-gradient(135deg, #30bfa1, #148a84);
+  background: linear-gradient(135deg, #30bfa1, var(--primary-color));
   color: white;
   border: none;
   padding: 12px 32px;

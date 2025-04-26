@@ -151,6 +151,7 @@ function SignUpScreen() {
               alt="Sign Up"
               className="w-100 mt-5"
               loading="lazy"
+              title="signup page image"
             />
           </div>
           <div className="col-lg-6">

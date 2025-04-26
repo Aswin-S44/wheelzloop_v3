@@ -36,6 +36,7 @@ function EditProfile() {
             src={formData.profile_picture}
             alt="Profile"
             className="profile-image"
+            title="edit-profile-img"
           />
           <button className="change-photo-btn">Change Photo</button>
         </div>

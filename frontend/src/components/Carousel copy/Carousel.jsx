@@ -25,6 +25,7 @@ function Carousel() {
               alt="..."
               style={{ height: "240px" }}
               loading="lazy"
+              title="carousel-im"
             />
           </div>
           <div class="carousel-item">
@@ -34,6 +35,7 @@ function Carousel() {
               alt="..."
               style={{ height: "240px" }}
               loading="lazy"
+              title="carousel-im"
             />
           </div>
           <div class="carousel-item">
@@ -43,6 +45,7 @@ function Carousel() {
               alt="..."
               style={{ height: "240px" }}
               loading="lazy"
+              title="carousel-im"
             />
           </div>
         </div>

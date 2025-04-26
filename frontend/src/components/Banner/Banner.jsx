@@ -45,6 +45,7 @@ function Banner() {
             alt="Happy family at car dealership"
             loading="lazy"
             decoding="async"
+            title="banner-im"
           />
         </div>
       </div>

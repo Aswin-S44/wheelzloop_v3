@@ -109,12 +109,13 @@ function Header() {
     <>
       <header className="header">
         <div className="logo">
-          <a href="/">
+          <a href="/" title="logo">
             <img
               src="/images/logo.png"
               className="brand-name"
               style={logoSize}
               alt="Logo"
+              title="brand-logo"
             />
           </a>
         </div>
@@ -140,9 +141,14 @@ function Header() {
                     key={index}
                     className="search-card"
                     onClick={handleResultClick}
+                    title="seach result"
                   >
                     <div className="search-card-image">
-                      <img src={result.images[0]} alt={result.car_name} />
+                      <img
+                        src={result.images[0]}
+                        alt={result.car_name}
+                        title="search-result-car-img"
+                      />
                     </div>
                     <div className="search-card-content">
                       <h3>{result.car_name}</h3>
@@ -168,13 +174,27 @@ function Header() {
           <button className="close-btn" onClick={toggleNav}>
             <Close />
           </button>
-          <a href="/">Home</a>
-          <a href="/used-cars">Find Cars</a>
-          <a href="/favourites">Favourites</a>
-          <a href="/chats">Chats</a>
-          <a href="/about-us">About-Us</a>
-          <a href="/reviews">Reviews</a>
-          <a href="/blogs">Blogs</a>
+          <a href="/" title="home">
+            Home
+          </a>
+          <a href="/used-cars" title="find used cars">
+            Find Cars
+          </a>
+          <a href="/favourites" title="saved cars">
+            Favourites
+          </a>
+          <a href="/chats" title="chats">
+            Chats
+          </a>
+          <a href="/about-us" title="about us">
+            About-Us
+          </a>
+          <a href="/reviews" title="reviews">
+            Reviews
+          </a>
+          <a href="/blogs" title="blogs">
+            Blogs
+          </a>
           {!user && (
             <button className="login-btn" onClick={navigateToLogin}>
               <Person /> Login
@@ -193,7 +213,7 @@ function Header() {
               onClick={toggleSearch}
             />
           )}
-          <AccountMenu />
+          {user && <AccountMenu />}
           {isMobile && (
             <>
               <Menu className="menu-icon" onClick={toggleNav} />

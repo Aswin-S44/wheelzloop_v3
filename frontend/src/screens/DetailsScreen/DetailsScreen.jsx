@@ -123,6 +123,7 @@ function DetailsScreen() {
                 (e.target.src =
                   "https://via.placeholder.com/800x600?text=Image+Not+Available")
               }
+              title="car details image"
             />
             <div className="image-actions">
               <button className="save-btn" onClick={addToFav}>
@@ -150,6 +151,7 @@ function DetailsScreen() {
                     (e.target.src =
                       "https://via.placeholder.com/100x75?text=Image+Not+Available")
                   }
+                  title="car more images"
                 />
               </div>
             ))}
@@ -217,6 +219,7 @@ function DetailsScreen() {
                   src={car?.dealer_id?.profile_picture}
                   alt="no dealer image"
                   className="avatar"
+                  title="car dealer image"
                 />
               </div>
               <div>
@@ -360,7 +363,11 @@ function DetailsScreen() {
               }}
             >
               <div className="similar-image">
-                <img src={item?.images?.[0]} alt="no-image" />
+                <img
+                  src={item?.images?.[0]}
+                  alt="no-image"
+                  title="similar car images"
+                />
               </div>
               <div className="similar-info">
                 <h4>

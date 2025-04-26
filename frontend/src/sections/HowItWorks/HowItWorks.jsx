@@ -35,7 +35,7 @@ function HowItWorks() {
   return (
     <div className="how-it-works-section">
       <div className="container">
-        <h2 className="text-center fw-bold">
+        <h3 className="text-center fw-bold">
           <span className="quality-text">
             HOW WHEELZLOOP WORKS
             <svg
@@ -52,7 +52,7 @@ function HowItWorks() {
               />
             </svg>
           </span>{" "}
-        </h2>
+        </h3>
         <div className="section-header mt-4">
           <div className="news-header">
             <p>Sell your car in just 3 simple steps</p>
@@ -121,13 +121,15 @@ function HowItWorks() {
         <div class="modal-dialog modal-dialog-centered car-selling-steps-modal">
           <div class="modal-content">
             <div class="modal-header car-steps-header">
-              <h1 class="modal-title car-steps-title">How to Sell Your Car</h1>
+              <h4 class="modal-title car-steps-title">How to Sell Your Car</h4>
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              >
+                dsdsd
+              </button>
             </div>
             <div class="modal-body car-steps-body">
               <div class="car-steps-container">

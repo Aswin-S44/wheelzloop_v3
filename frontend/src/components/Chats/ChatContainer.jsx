@@ -66,6 +66,7 @@ const ChatContainer = ({ onMenuClick }) => {
                   src={message.image}
                   alt="Attachment"
                   className="message-image"
+                  title="chat-user-avatar"
                 />
               )}
               {message.text && (
@@ -86,6 +87,7 @@ const ChatContainer = ({ onMenuClick }) => {
               }
               alt="profile"
               className="message-avatar"
+              title="chat-user-message-avatar"
             />
           </div>
         ))}

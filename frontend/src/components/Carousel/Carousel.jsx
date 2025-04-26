@@ -27,6 +27,7 @@ function Carousel() {
               className="d-block w-100"
               alt="..."
               loading="lazy"
+              title="carousel-im"
             />
           </div>
           <div className="carousel-item">
@@ -35,6 +36,7 @@ function Carousel() {
               className="d-block w-100"
               alt="..."
               loading="lazy"
+              title="carousel-im"
             />
           </div>
           <div className="carousel-item"></div>

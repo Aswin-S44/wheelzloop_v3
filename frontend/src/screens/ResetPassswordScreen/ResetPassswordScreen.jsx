@@ -65,7 +65,12 @@ function ResetPassswordScreen() {
         <div className="container p-4">
           <div className="row">
             <div className="col-md-6">
-              <img src="/images/intro.png" className="w-100" alt="Login" />
+              <img
+                src="/images/intro.png"
+                className="w-100"
+                alt="Login"
+                title="reset password image"
+              />
             </div>
             <div className="col-md-6">
               <h1 className="font-lg">

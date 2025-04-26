@@ -138,6 +138,7 @@ function EditProfileScreen() {
                 src={userData.profile_picture}
                 alt="Profile"
                 className="avatar"
+                title="dealer profile image"
               />
               <div className="avatar-actions">
                 <label>Upload Images</label>

@@ -21,6 +21,7 @@ import { carBodyTypes } from "../../dummyData/bodyTypes";
 import CategoryCars from "../../components/CategoryCars/CategoryCars";
 import Banner2 from "../../components/Banner2/Banner2";
 import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
+import AdvSection from "../../sections/AdvSection/AdvSection";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -93,7 +94,7 @@ function HomeScreen() {
         <div className="mt-4">
           <div>
             <div className="container">
-              <h2 className="text-center fw-bold">
+              <h3 className="text-center fw-bold">
                 <span className="quality-text">
                   Latest Cars
                   <svg
@@ -110,7 +111,7 @@ function HomeScreen() {
                     />
                   </svg>
                 </span>{" "}
-              </h2>
+              </h3>
               <div className="cards-container mt-4">
                 {loading ? (
                   <Loader />
@@ -133,9 +134,7 @@ function HomeScreen() {
           </div>
         </div>
       </div>
-      <div className="mt-4">
-        <img src="/images/ad1.png" className="w-100" />
-      </div>
+      <div className="mt-4">{/* <AdvSection /> */}</div>
       <div className="container-fluid mw-90 mt-5">
         <div className="profile-content">
           <TitleHeader

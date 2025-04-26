@@ -7,7 +7,12 @@ function Card({ car, editable = false, category }) {
     <div className="card">
       {editable && <ActionMenu id={car._id} />}
       <div className="card-image-container">
-        <img src={car?.images[0]} alt="Car" className="card-image" />
+        <img
+          src={car?.images[0]}
+          alt="Car"
+          className="card-image"
+          title="car-img-card"
+        />
         <span className="category-badge">{category}</span>
       </div>
       <div className="card-details">

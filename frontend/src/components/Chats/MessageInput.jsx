@@ -51,7 +51,7 @@ const MessageInput = () => {
       {imagePreview && (
         <div className="image-preview">
           <div className="preview-container">
-            <img src={imagePreview} alt="Preview" />
+            <img src={imagePreview} alt="Preview" title="message-img" />
             <button
               onClick={removeImage}
               type="button"

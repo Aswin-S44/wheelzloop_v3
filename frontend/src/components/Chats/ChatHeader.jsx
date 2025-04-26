@@ -15,6 +15,7 @@ const ChatHeader = () => {
           <img
             src={selectedUser.profilePic || `${DEFAULT_AVATAR}`}
             alt={selectedUser.username}
+            title="chat-user-header-im"
           />
           {onlineUsers.includes(selectedUser._id) && (
             <span className="online-indicator" />

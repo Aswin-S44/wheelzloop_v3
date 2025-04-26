@@ -61,9 +61,29 @@ function Counter() {
 
   return (
     <section className="counter-section">
-      <div className="counter-header">
-        <h2 className="counter-title">Our Achievements</h2>
-        <p className="counter-subtitle">Driving excellence in every number</p>
+      <div className="">
+        <h3 className="text-center fw-bold">
+          <span className="quality-text">
+            Our Achievements
+            <svg
+              width="120"
+              height="12"
+              viewBox="0 0 120 12"
+              className="curved-line"
+            >
+              <path
+                d="M0,6 Q60,12 120,6"
+                stroke="#FFD700"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+          </span>{" "}
+        </h3>
+
+        <p className="counter-subtitle text-center">
+          Driving excellence in every number
+        </p>
       </div>
       <div className="counter-container">
         {Object.entries(counts).map(([key, value]) => (

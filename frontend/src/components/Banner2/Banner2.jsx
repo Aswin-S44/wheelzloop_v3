@@ -10,7 +10,7 @@ function Banner2() {
           <h1 className="display-4 fw-bold mb-3 banner-title">
             The Best used Cars Collection
           </h1>
-          <p
+          <h2
             className="fs-5 mb-4 banner-subtitle"
             style={{ fontSize: "40px", fontWeight: 400 }}
           >
@@ -32,16 +32,17 @@ function Banner2() {
               </svg>
             </span>{" "}
             used cars collections.
-          </p>
+          </h2>
           <button className="btn btn-dark px-4 py-3 banner-button">
             Explore Now <ArrowRightAltIcon />
           </button>
         </div>
         <div className="col-md-6 order-md-2 order-1 p-0">
           <img
-            src="https://www.transparentpng.com/download/car-png/car-free-transparent-png-8.png"
+            src="/images/banner-2.png"
             className="w-100"
             alt="Luxury Car"
+            title="banner-im"
           />
         </div>
       </div>
