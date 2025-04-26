@@ -108,7 +108,9 @@ function DetailsScreen() {
   return (
     <div className="details-container">
       <div className="breadcrumb">
-        <span>Home</span> &gt; <span>{car.make}</span> &gt;{" "}
+        <a href="/">Home</a>
+        <span className="separator">/</span>
+
         <span>{car.model}</span>
       </div>
 
@@ -158,12 +160,13 @@ function DetailsScreen() {
           </div>
         </div>
 
-        <div className="info-section">
-          <div className="header-section">
-            <h1>
+        <div className="car-info-section">
+          <div className="car-header">
+            <h1 className="car-title">
               {car.year} {car.make} {car.model}
             </h1>
-            <div className="price-section">
+
+            <div className="price-container">
               <span className="current-price">
                 ${car.price?.toLocaleString()}
               </span>
@@ -173,68 +176,78 @@ function DetailsScreen() {
                 </span>
               )}
             </div>
-            <div className="location">
-              <FaMapMarkerAlt /> {car.location || "Location not specified"}
+
+            <div className="location-badge">
+              <FaMapMarkerAlt className="location-icon" />
+              <span>{car.location || "Location not specified"}</span>
             </div>
           </div>
 
-          <div className="quick-specs">
-            <div className="spec-item">
-              <FaTachometerAlt />
-              <span>{car.mileage?.toLocaleString()} mi</span>
+          <div className="specs-grid">
+            <div className="spec-card">
+              <FaTachometerAlt className="spec-icon" />
+              <div>
+                <p className="spec-label">Mileage</p>
+                <p className="spec-value">{car.mileage?.toLocaleString()} mi</p>
+              </div>
             </div>
-            <div className="spec-item">
-              <FaGasPump />
-              <span>{car.fuel_type}</span>
+            <div className="spec-card">
+              <FaGasPump className="spec-icon" />
+              <div>
+                <p className="spec-label">Fuel</p>
+                <p className="spec-value">{car.fuel_type}</p>
+              </div>
             </div>
-            <div className="spec-item">
-              <BsFillGearFill />
-              <span>{car.transmission}</span>
+            <div className="spec-card">
+              <BsFillGearFill className="spec-icon" />
+              <div>
+                <p className="spec-label">Transmission</p>
+                <p className="spec-value">{car.transmission}</p>
+              </div>
             </div>
-            <div className="spec-item">
-              <GiCarWheel />
-              <span>{car.drivetrain}</span>
+            <div className="spec-card">
+              <GiCarWheel className="spec-icon" />
+              <div>
+                <p className="spec-label">Drivetrain</p>
+                <p className="spec-value">{car.drivetrain}</p>
+              </div>
             </div>
           </div>
 
           <div className="action-buttons">
-            <a href={`tel: ${car?.dealer_id?.phone}`}>
-              <button className="contact-btn">
-                <FaPhone /> Contact Seller
-              </button>
-            </a>
-            <button
-              className="finance-btn"
-              style={{ border: "1px solid grey" }}
+            <a
+              href={`tel:${car?.dealer_id?.phone}`}
+              className="contact-seller-btn"
             >
-              Chat with dealer
-            </button>
+              <FaPhone /> Contact Seller
+            </a>
+            <button className="btn-secondary">Chat with Dealer</button>
           </div>
 
-          <div className="seller-info">
-            <h3>Seller Information</h3>
-            <div className="seller-details">
-              <div className="seller-avatar">
-                <img
-                  src={car?.dealer_id?.profile_picture}
-                  alt="no dealer image"
-                  className="avatar"
-                  title="car dealer image"
-                />
-              </div>
-              <div>
-                <p className="seller-name">{car?.dealer_id?.first_name}</p>
-                {/* <p className="seller-rating">★★★★☆ (24 reviews)</p> */}
-                <p className="seller-rating">{car?.dealer_id?.location}</p>
+          <div className="seller-card">
+            <h3 className="seller-title">Seller Information</h3>
+            <div className="seller-profile">
+              <img
+                src={car?.dealer_id?.profile_picture || "/default-avatar.jpg"}
+                alt="Dealer"
+                className="seller-avatar"
+              />
+              <div className="seller-info">
+                <p className="seller-name">
+                  {car?.dealer_id?.first_name || "Dealer"}
+                </p>
+                <p className="seller-location">
+                  {car?.dealer_id?.location || "Location not specified"}
+                </p>
               </div>
             </div>
             <button
-              className="contact-btn"
+              className="btn-outline"
               onClick={() =>
                 (window.location.href = `/profile/${car?.dealer_id._id}`)
               }
             >
-              Visit Profile
+              View Full Profile
             </button>
           </div>
         </div>
@@ -274,18 +287,6 @@ function DetailsScreen() {
             >
               {car?.status}
             </h3>
-
-            {/* <div className="history-section">
-              <h3>Vehicle History</h3>
-              <div className="history-item">
-                <FaCalendarAlt />
-                <span>Last serviced: 3 months ago</span>
-              </div>
-              <div className="history-item">
-                <FaCalendarAlt />
-                <span>Clean title</span>
-              </div>
-            </div> */}
           </div>
         )}
 

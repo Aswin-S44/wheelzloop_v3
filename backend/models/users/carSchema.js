@@ -48,7 +48,7 @@ const CarSchema = new mongoose.Schema({
   features: [{ type: String }], // Example: ["Sunroof", "Bluetooth", "Backup Camera"]
   seats: { type: Number, required: true }, // Example: 5
   engine_size: { type: String }, // Example: "2.0L 4-cylinder"
-  vin: { type: String, unique: true }, // Vehicle Identification Number (optional)
+  vin: { type: String, required: false, default: null }, // Vehicle Identification Number (optional)
   status: {
     type: String,
     enum: ["Available", "Sold", "Pending"],

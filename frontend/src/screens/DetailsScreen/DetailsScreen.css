@@ -19,11 +19,33 @@
 }
 
 .breadcrumb {
-  font-size: 0.9rem;
-  color: var(--gray);
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  padding: 12px 0;
+  color: #555;
+}
+
+.breadcrumb a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: #004499;
+  text-decoration: underline;
+}
+
+.breadcrumb .separator {
+  margin: 0 8px;
+  color: #999;
+}
+
+.breadcrumb span:last-child {
+  color: #333;
+  font-weight: 500;
 }
 
 .details-content {
@@ -43,7 +65,7 @@
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: var(--shadow);
+
 }
 
 .main-image {
@@ -132,6 +154,185 @@
   gap: 1.5rem;
 }
 
+.car-info-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  /* max-width: 600px; */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.car-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 16px;
+}
+
+.car-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.current-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2a7fff;
+}
+
+.original-price {
+  font-size: 18px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.location-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+  font-size: 14px;
+}
+
+.location-icon {
+  color: #ff4757;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.spec-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.spec-icon {
+  font-size: 20px;
+  color: #2a7fff;
+}
+
+.spec-label {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.spec-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.contact-seller-btn{
+
+}
+
+.btn-primary, .btn-secondary, .btn-outline, .contact-seller-btn {
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.contact-seller-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #1a5fcc;
+}
+
+.btn-secondary {
+  background: white;
+  color: #2a7fff;
+  border: 1px solid #2a7fff;
+}
+
+.btn-secondary:hover {
+  background: #f0f7ff;
+}
+
+.seller-card {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.seller-title {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.seller-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.seller-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+}
+
+.seller-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.seller-location {
+  font-size: 14px;
+  color: #777;
+}
+
+.btn-outline {
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.btn-outline:hover {
+  background: #f9f9f9;
+  border-color: #ccc;
+}
+
 .header-section h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -213,6 +414,10 @@
 .contact-btn {
   background: var(--primary);
   color: white;
+  padding: 8px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
 }
 
 .contact-btn:hover {

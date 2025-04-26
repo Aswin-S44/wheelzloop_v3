@@ -121,7 +121,7 @@ function SignUpScreen() {
           text: "Successfully created  account",
           icon: "success",
         }).then(() => {
-          navigate("/");
+          navigate("/signin");
         });
       } else {
         Swal.fire({

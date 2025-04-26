@@ -135,7 +135,7 @@ function HomeScreen() {
         </div>
       </div>
       <div className="mt-4">{/* <AdvSection /> */}</div>
-      <div className="container-fluid mw-90 mt-5">
+      <div className="container mt-5">
         <div className="profile-content">
           <TitleHeader
             title1={"Cars by "}
