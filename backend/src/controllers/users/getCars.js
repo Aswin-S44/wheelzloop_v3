@@ -36,22 +36,17 @@ module.exports.getCars = async (req, res) => {
     if (model) filter.model = model;
 
     if (year) {
-      // Handle year range (comma-separated values)
       const years = year.split(",").map((y) => parseInt(y.trim()));
-
       if (years.length === 1) {
-        // Single year - exact match
         filter.year = years[0];
       } else if (years.length === 2) {
-        // Two years - range between them
         const [startYear, endYear] = years.sort((a, b) => a - b);
         filter.year = { $gte: startYear, $lte: endYear };
       }
-      // If more than 2 years are provided, you might want to handle differently
     }
 
     if (brands) {
-      const brandsArray = Array.isArray(brands) ? brands : [brands]; // Ensure it's an array
+      const brandsArray = Array.isArray(brands) ? brands : [brands];
       filter.brand = { $in: brandsArray };
     }
 
