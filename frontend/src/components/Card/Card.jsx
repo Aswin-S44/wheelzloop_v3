@@ -11,7 +11,7 @@ function Card({ car, editable = false, category }) {
           src={car?.images[0]}
           alt="Car"
           className="card-image"
-          title="car-img-card"
+          title={car?.car_name || "car image"}
         />
         <span className="category-badge">{category}</span>
       </div>

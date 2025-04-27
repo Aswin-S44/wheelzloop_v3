@@ -106,3 +106,7 @@ button.medium {
 .mw-90 {
   max-width: 90%;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

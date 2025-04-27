@@ -29,7 +29,8 @@
   .banner-content {
     flex: 1;
     padding-right: 40px;
-    color: white;
+    /* color: ; */
+    color: #16494d;
   }
   
   .banner-content h1 {

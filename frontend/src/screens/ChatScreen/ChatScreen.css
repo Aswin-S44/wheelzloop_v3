@@ -25,6 +25,7 @@
 @media (max-width: 768px) {
   .chat-screen {
     flex-direction: column;
+    /* position: relative; */
   }
 
   .sidebar {

@@ -4,15 +4,55 @@ const User = require("../../../models/users/userSchema");
 
 const Message = require("../../../models/messages/messageSchema");
 const { getReceiverSocketId } = require("../../../libs/socket");
+const ChatUsers = require("../../../models/messages/chatUserSchema");
+
+// module.exports.getUsersForSidebar = async (req, res) => {
+//   try {
+//     const loggedInUserId = req.user._id;
+//     const filteredUsers = await User.find({
+//       _id: { $ne: loggedInUserId },
+//     }).select("-password");
+
+//     res.status(200).json(filteredUsers);
+//   } catch (error) {
+//     console.error("Error in getUsersForSidebar: ", error.message);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+module.exports.addChatUser = async (req, res) => {
+  try {
+    const senderId = req.user._id;
+
+    const receiverId = req.body.receiverId;
+    const isChatExist = await ChatUsers.findOne({ senderId, receiverId });
+    if (!isChatExist) {
+      await ChatUsers.create({ senderId, receiverId });
+    }
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports.getUsersForSidebar = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
-    const filteredUsers = await User.find({
-      _id: { $ne: loggedInUserId },
+    const chatUsers = await ChatUsers.find({
+      $or: [{ senderId: loggedInUserId }, { receiverId: loggedInUserId }],
+    });
+
+    const userIds = chatUsers.map((chat) =>
+      chat.senderId.toString() === loggedInUserId.toString()
+        ? chat.receiverId
+        : chat.senderId
+    );
+
+    const users = await User.find({
+      _id: { $in: userIds },
     }).select("-password");
 
-    res.status(200).json(filteredUsers);
+    res.status(200).json(users);
   } catch (error) {
     console.error("Error in getUsersForSidebar: ", error.message);
     res.status(500).json({ error: "Internal server error" });

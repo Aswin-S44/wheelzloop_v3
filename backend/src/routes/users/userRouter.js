@@ -24,6 +24,7 @@ const {
   getUsersForSidebar,
   getMessages,
   sendMessage,
+  addChatUser,
 } = require("../../controllers/messages/messageController");
 const { forgotPassword } = require("../../controllers/users/forgotPassword");
 const { resetPassword } = require("../../controllers/users/resetPassword");
@@ -82,6 +83,8 @@ router.post("/subscribe", NewsLetter);
 router.get("/subscribers", getSubscribers);
 
 // Chat related routes
+// router.get("/message/users", userVerification, getUsersForSidebar);
+router.post("/message/user/add", userVerification, addChatUser);
 router.get("/message/users", userVerification, getUsersForSidebar);
 router.get("/message/:id", userVerification, getMessages);
 

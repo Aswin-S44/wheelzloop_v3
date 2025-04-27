@@ -1,70 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "./Carousel.css";
 
 function Carousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const slides = [
+    {
+      title: "FIND QUALITY USED CARS IN KERALA, KOCHI",
+      subtitle: "USED CARS",
+      tagline: "@WHEELZLOOP",
+      bgColor: "rgb(203 237 211)",
+      textColor: "#1111",
+      image: "/images/hatchback.webp",
+    },
+    {
+      title: "FIND YOUR PERFECT CAR AT WHEELZLOOP",
+      subtitle: "IN KERALA",
+      tagline: "@WHEELZLOOP",
+      bgColor: "rgb(203 237 211)",
+      textColor: "#1111",
+      image: "/images/suv.webp",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
   return (
-    <div className="container-fluid">
-      <div id="carouselExampleIndicators" className="carousel slide">
-        <div className="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            className="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-        </div>
-        <div className="carousel-inner" style={{ maxHeight: "250px" }}>
-          <div className="carousel-item active">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpgvkO0ciGGG2YCytVZdRb8fSD38Bghof99A&s"
-              className="d-block w-100"
-              alt="..."
-              loading="lazy"
-              title="carousel-im"
-            />
+    <div className="carousel">
+      <div
+        className="slides"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className="slide"
+            style={{
+              backgroundColor: slide.bgColor,
+              color: slide.textColor,
+            }}
+          >
+            <div className="banner-content">
+              <h1 className="banner-title">{slide.title}</h1>
+              <h2 className="banner-subtitle">{slide.subtitle}</h2>
+              <p className="banner-tagline">{slide.tagline}</p>
+            </div>
+            <img src={slide.image} className="w-50" />
           </div>
-          <div className="carousel-item">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIjQ1a8WZuA-PbGVbOsk0saLqT54THvCRwVg&s"
-              className="d-block w-100"
-              alt="..."
-              loading="lazy"
-              title="carousel-im"
-            />
-          </div>
-          <div className="carousel-item"></div>
-        </div>
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+        ))}
+      </div>
+      <div className="dots">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            className={`dot ${index === currentIndex ? "active" : ""}`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
       </div>
     </div>
   );

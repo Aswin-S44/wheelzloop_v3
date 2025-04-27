@@ -31,6 +31,7 @@
   color: #0066cc;
   text-decoration: none;
   transition: color 0.2s;
+  font-size: 18px;
 }
 
 .breadcrumb a:hover {
@@ -46,6 +47,7 @@
 .breadcrumb span:last-child {
   color: #333;
   font-weight: 500;
+  font-size: 18px;
 }
 
 .details-content {
@@ -226,7 +228,7 @@
 
 .spec-icon {
   font-size: 20px;
-  color: #2a7fff;
+  color: var(--primary-color);
 }
 
 .spec-label {

@@ -8,7 +8,7 @@ function Banner2() {
       <div className="row align-items-center">
         <div className="col-md-6 order-md-1 order-2 p-md-5 p-4">
           <h1 className="display-4 fw-bold mb-3 banner-title">
-            The Best used Cars Collection
+            The Best used Cars Collection in Kochi, Kerala
           </h1>
           <h2
             className="fs-5 mb-4 banner-subtitle"
@@ -33,16 +33,19 @@ function Banner2() {
             </span>{" "}
             used cars collections.
           </h2>
-          <button className="btn btn-dark px-4 py-3 banner-button">
+          <button
+            className="btn btn-dark px-4 py-3 banner-button"
+            onClick={() => (window.location.href = "/used-cars")}
+          >
             Explore Now <ArrowRightAltIcon />
           </button>
         </div>
         <div className="col-md-6 order-md-2 order-1 p-0">
           <img
-            src="/images/banner-2.png"
+            src="/images/wheelzloop-main-img.webp"
             className="w-100"
             alt="Luxury Car"
-            title="banner-im"
+            title="Wheelzloop banner image"
           />
         </div>
       </div>

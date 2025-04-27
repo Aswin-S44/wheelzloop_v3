@@ -7,14 +7,29 @@ import ChatContainer from "../../components/Chats/ChatContainer";
 
 function ChatScreen() {
   const { selectedUser } = useChatStore();
+  const [showSidebar, setShowSidebar] = React.useState(true);
+
+  const handleCloseSidebar = () => {
+    setShowSidebar(false);
+  };
+
+  const handleMenuClick = () => {
+    setShowSidebar(true);
+  };
 
   return (
-    <div className="chat-screen mt-3">
-      <div className="sidebar">
-        <Sidebar />
-      </div>
+    <div className="chat-screen">
+      {(!selectedUser || showSidebar) && (
+        <div className="sidebar">
+          <Sidebar onClose={handleCloseSidebar} />
+        </div>
+      )}
       <div className="chat-content">
-        {!selectedUser ? <NoChatSelected /> : <ChatContainer />}
+        {!selectedUser ? (
+          <NoChatSelected />
+        ) : (
+          <ChatContainer onMenuClick={handleMenuClick} />
+        )}
       </div>
     </div>
   );
