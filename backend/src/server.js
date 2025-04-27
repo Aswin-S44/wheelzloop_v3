@@ -23,7 +23,7 @@ const limiter = rateLimit({
 
 var corsOptions = {
   // origin: "http://localhost:3000", // For dev
-  origin: "https://wheelzloop.com", // For production
+  origin: "https://wheelzloop.com",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
