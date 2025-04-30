@@ -203,6 +203,9 @@ function Header() {
           <a href="/blogs" title="blogs">
             Blogs
           </a>
+          <a href="/contact-us" title="contact us">
+            Contact-Us
+          </a>
           {!user && (
             <button className="login-btn" onClick={navigateToLogin}>
               <Person /> Login
