@@ -43,7 +43,7 @@ function Banner2() {
         <div className="col-md-6 order-md-2 order-1 p-0">
           <img
             src="/images/wheelzloop-main-img.webp"
-            className="w-100"
+            className="w-100 banner-image"
             alt="Luxury Car"
             title="Wheelzloop banner image"
           />

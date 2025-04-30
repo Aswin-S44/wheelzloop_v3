@@ -35,6 +35,14 @@ function Header() {
     }
   };
 
+  const handleNavigateToChat = async () => {
+    if (!user) {
+      handleOpen();
+    } else {
+      window.location.href = "/chats";
+    }
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -123,7 +131,7 @@ function Header() {
         <div className={`search ${showSearch ? "mobile-search" : ""}`}>
           <input
             type="text"
-            placeholder="Search for cars, mobiles, etc."
+            placeholder="Search for cars"
             onChange={handleSearch}
             value={searchKey}
           />
@@ -183,7 +191,7 @@ function Header() {
           <a href="/favourites" title="saved cars">
             Favourites
           </a>
-          <a href="/chats" title="chats">
+          <a onClick={handleNavigateToChat} title="chats">
             Chats
           </a>
           <a href="/about-us" title="about us">

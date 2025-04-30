@@ -152,6 +152,11 @@
   transition: all 0.2s;
 }
 
+.filter-title{
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .brand-header:hover {
   color: #30bfa1;
 }

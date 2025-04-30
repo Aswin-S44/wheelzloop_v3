@@ -49,22 +49,22 @@ const AboutUsScreen = () => {
         <div className="stats-grid">
           <div className="stat-card">
             <FaCar className="stat-icon" />
-            <h3>{data?.cars ?? 0}+</h3>
+            <p>{data?.cars ?? 0}+</p>
             <p>Quality Vehicles Listed</p>
           </div>
           <div className="stat-card">
             <FaHandshake className="stat-icon" />
-            <h3>{data?.customers ?? 0}+</h3>
+            <p>{data?.customers ?? 0}+</p>
             <p>Satisfied Customers</p>
           </div>
           <div className="stat-card">
             <FaShieldAlt className="stat-icon" />
-            <h3>100%</h3>
+            <p>100%</p>
             <p>Verified Listings</p>
           </div>
           <div className="stat-card">
             <FaChartLine className="stat-icon" />
-            <h3>{data?.customers ?? 0}+</h3>
+            <p>{data?.customers ?? 0}+</p>
             <p>Dealer Partners</p>
           </div>
         </div>
@@ -83,7 +83,7 @@ const AboutUsScreen = () => {
         </div>
       </div>
 
-      <div className="team-section">
+      {/* <div className="team-section">
         <h2>Meet The Team</h2>
         <div className="team-grid">
           <div className="team-card">
@@ -107,7 +107,7 @@ const AboutUsScreen = () => {
             <p>Customer Experience Lead</p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="cta-section">
         <h2>Ready to Find Your Perfect Ride?</h2>

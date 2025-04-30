@@ -1,10 +1,17 @@
 import React from "react";
 import "./Card.css";
 import ActionMenu from "../ActionMenu/ActionMenu";
+import axios from "axios";
+import { ADD_CAR_VIEWS_COUNT } from "../../config/api";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 function Card({ car, editable = false, category }) {
+  const handleNavigateToCar = async () => {
+    window.location.href = `/car/${car._id}`;
+    await axios.post(`${ADD_CAR_VIEWS_COUNT}/${car._id}`);
+  };
   return (
-    <div className="card">
+    <div className="card" onClick={handleNavigateToCar}>
       {editable && <ActionMenu id={car._id} />}
       <div className="card-image-container">
         <img
@@ -25,7 +32,9 @@ function Card({ car, editable = false, category }) {
         </div>
         <p className="location">📍 {car?.place ?? "_"}</p>
         <div className="visitors">
-          <span>{car?.views ?? 0} Visitors</span>
+          <span>
+            {car?.views ?? 0} <RemoveRedEyeIcon style={{ fontSize: "15px" }} />
+          </span>
         </div>
       </div>
     </div>

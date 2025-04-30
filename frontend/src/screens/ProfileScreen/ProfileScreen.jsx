@@ -49,13 +49,13 @@ function ProfileScreen() {
         <div className="profile-content">
           <Tabs>
             <TabList>
-              <Tab>Dashboard</Tab>
+              {/* <Tab>Dashboard</Tab> */}
               <Tab>My Cars</Tab>
             </TabList>
 
-            <TabPanel>
+            {/* <TabPanel>
               <Dashboard />
-            </TabPanel>
+            </TabPanel> */}
             <TabPanel>
               <div className="cars-header">
                 <h2>My Vehicles</h2>

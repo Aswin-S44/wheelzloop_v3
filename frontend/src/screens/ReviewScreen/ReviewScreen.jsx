@@ -290,7 +290,7 @@ const ReviewScreen = () => {
                     {review.name.charAt(0)}
                   </div>
                   <div className="reviewer-details">
-                    <h3>{review.name}</h3>
+                    <h2>{review.name}</h2>
                     <p>{new Date(review.date).toLocaleDateString()}</p>
                   </div>
                 </div>

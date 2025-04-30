@@ -20,7 +20,7 @@ function ChatScreen() {
   return (
     <div className="chat-screen">
       {(!selectedUser || showSidebar) && (
-        <div className="sidebar">
+        <div className={`sidebar ${selectedUser ? "mobile-hidden" : ""}`}>
           <Sidebar onClose={handleCloseSidebar} />
         </div>
       )}

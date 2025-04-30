@@ -80,6 +80,10 @@
     .p-md-5 {
         padding: 2rem !important;
     }
+
+    .banner-image{
+        margin-top: 0 !important;
+    }
 }
 
 @media (max-width: 576px) {

@@ -3,6 +3,7 @@ import { useChatStore } from "../../store/useChatStore";
 import { useAuthStore } from "../../store/useAuthStore";
 import "./ChatHeader.css";
 import { DEFAULT_AVATAR } from "../../constants/urls";
+import WestIcon from "@mui/icons-material/West";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
@@ -11,6 +12,7 @@ const ChatHeader = () => {
   return (
     <div className="chat-header">
       <div className="chat-header-left">
+        <WestIcon onClick={() => setSelectedUser(null)} />
         <div className="chat-header-avatar">
           <img
             src={selectedUser.profilePic || `${DEFAULT_AVATAR}`}
@@ -32,13 +34,6 @@ const ChatHeader = () => {
           </p>
         </div>
       </div>
-      <button
-        className="chat-header-close"
-        onClick={() => setSelectedUser(null)}
-        aria-label="Close chat"
-      >
-        <X size={20} />
-      </button>
     </div>
   );
 };

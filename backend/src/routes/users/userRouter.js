@@ -32,6 +32,7 @@ const {
   sendSignupOTP,
   verifySignupOTP,
 } = require("../../controllers/users/signup");
+const { addViewsCount } = require("../../controllers/users/addViewsCount");
 
 const router = express.Router();
 
@@ -89,5 +90,7 @@ router.get("/message/users", userVerification, getUsersForSidebar);
 router.get("/message/:id", userVerification, getMessages);
 
 router.post("/message/send/:id", userVerification, sendMessage);
+
+router.post("/add-views-count/:id", addViewsCount);
 
 module.exports = router;

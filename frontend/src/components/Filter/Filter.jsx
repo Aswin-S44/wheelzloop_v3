@@ -77,7 +77,7 @@ function Filter({ onFilterChange }) {
   return (
     <div className="filter-container">
       <div className="filter-header">
-        <h2>Filters</h2>
+        <p className="filter-title">Filters</p>
         <div className="filter-actions">
           <button className="clear-btn" onClick={clearFilters}>
             Clear All
@@ -103,7 +103,7 @@ function Filter({ onFilterChange }) {
 
       <div className="filter-sections">
         <div className="filter-section">
-          <h3 className="section-title">Top Brands</h3>
+          <p className="section-title">Top Brands</p>
           <div className="brands-list">
             {filteredBrands.map((brandItem, index) => (
               <div key={index} className="brand-accordion ">
@@ -151,7 +151,7 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
-          <h3 className="section-title">Year</h3>
+          <p className="section-title">Year</p>
           <div className="options-grid">
             {years.map((year, index) => (
               <label key={index} className="radio-option">
@@ -169,7 +169,7 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
-          <h3 className="section-title">Fuel Type</h3>
+          <p className="section-title">Fuel Type</p>
           <div className="options-grid">
             {fuelTypes.map((fuel, index) => (
               <label key={index}>
@@ -202,7 +202,7 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
-          <h3 className="section-title">Ownership</h3>
+          <p className="section-title">Ownership</p>
           <div className="options-grid">
             {ownerShip.map((ownership, index) => (
               <label key={index}>
@@ -235,7 +235,7 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
-          <h3 className="section-title">Features2323</h3>
+          <p className="section-title">Features2323</p>
           <div className="options-grid scrollable-div scroll-container">
             {carFeatures.map((feature, index) => (
               <label key={index} className="">
@@ -268,7 +268,7 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
-          <h3 className="section-title">Body Type</h3>
+          <p className="section-title">Body Type</p>
           <div className="options-grid">
             {carBodyTypes.map((bodyType, index) => (
               <label key={index}>

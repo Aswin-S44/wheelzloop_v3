@@ -34,10 +34,11 @@
 }
 
 .title {
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 18px;
-  display: none;
+  font-weight: 500;
+  color: var(--primary-color);
+  font-size: 15px;
+  /* display: none; */
+ 
 }
 
 .online-filter {
@@ -110,6 +111,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s;
+  border-bottom: 1px solid #eee7e7;
 }
 
 .user-item:hover {
@@ -154,7 +156,7 @@
 }
 
 .user-info {
-  display: none;
+  /* display: none; */
   flex-direction: column;
   overflow: hidden;
   text-align: left;
@@ -214,6 +216,7 @@
 
 @media (max-width: 768px) {
   .sidebar {
+    top: 0;
     width: 100%;
     position: absolute;
     z-index: 100;
@@ -223,4 +226,8 @@
   .mobile-close-btn {
     display: flex;
   }
+  /* .user-info{
+    top: -10px;
+    position: relative;
+  } */
 }

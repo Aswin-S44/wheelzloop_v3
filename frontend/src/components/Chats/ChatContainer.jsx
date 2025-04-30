@@ -82,8 +82,8 @@ const ChatContainer = ({ onMenuClick }) => {
             <img
               src={
                 message.senderId === authUser?._id
-                  ? authUser.profilePic || `${DEFAULT_AVATAR}`
-                  : selectedUser.profilePic || `${DEFAULT_AVATAR}`
+                  ? authUser.profile_picture || `${DEFAULT_AVATAR}`
+                  : selectedUser.profile_picture || `${DEFAULT_AVATAR}`
               }
               alt="profile"
               className="message-avatar"

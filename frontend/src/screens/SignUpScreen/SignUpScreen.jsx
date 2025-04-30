@@ -171,7 +171,13 @@ function SignUpScreen() {
                 <Form>
                   <div className="mt-4">
                     <p className="font-sm">Email</p>
-                    <div style={{ display: "flex", gap: "10px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        flexDirection: "column",
+                      }}
+                    >
                       <Field
                         as={InputBase}
                         name="email"

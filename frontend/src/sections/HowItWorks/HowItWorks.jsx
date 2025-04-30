@@ -121,15 +121,13 @@ function HowItWorks() {
         <div class="modal-dialog modal-dialog-centered car-selling-steps-modal">
           <div class="modal-content">
             <div class="modal-header car-steps-header">
-              <h4 class="modal-title car-steps-title">How to Sell Your Car</h4>
+              <h2 class="modal-title car-steps-title">How to Sell Your Car</h2>
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >
-                dsdsd
-              </button>
+              ></button>
             </div>
             <div class="modal-body car-steps-body">
               <div class="car-steps-container">

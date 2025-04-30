@@ -2,8 +2,10 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { axiosInstance } from "../lib/axios";
+import { BACKEND_URL } from "../config/api";
 
 const BASE_URL = "http://localhost:5000";
+// const BASE_URL = BACKEND_URL;
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
