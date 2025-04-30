@@ -97,6 +97,7 @@ function AdditionalInformation() {
                     src={image}
                     alt={`upload-${index}`}
                     className="additional-image"
+                    title="addional-inf-user-img"
                   />
                   <DeleteOutlineIcon
                     className="delete-icon"

@@ -2,8 +2,10 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { axiosInstance } from "../lib/axios";
+import { BACKEND_URL } from "../config/api";
 
 const BASE_URL = "http://localhost:5000";
+// const BASE_URL = BACKEND_URL;
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -21,8 +23,8 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
-      console.log("Error in checkAuth:", error);
       set({ authUser: null });
+      return error;
     } finally {
       set({ isCheckingAuth: false });
     }
@@ -81,8 +83,8 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
-      console.log("error in update profile:", error);
       toast.error(error.response.data.message);
+      return error;
     } finally {
       set({ isUpdatingProfile: false });
     }

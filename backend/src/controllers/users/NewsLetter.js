@@ -11,7 +11,6 @@ module.exports.NewsLetter = async (req, res) => {
       res.status(200).send({ message: "News letter subscription added" });
     }
   } catch (error) {
-    console.log("Error while adding newsletter : ", error);
     return error;
   }
 };

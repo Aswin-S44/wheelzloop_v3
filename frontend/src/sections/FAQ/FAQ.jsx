@@ -34,8 +34,25 @@ function FAQSection() {
   return (
     <section className="faq-section" id="faq">
       <div className="faq-container">
+        <h3 className="text-center fw-bold">
+          <span className="quality-text">
+            Frequently Asked Questions
+            <svg
+              width="120"
+              height="12"
+              viewBox="0 0 120 12"
+              className="curved-line"
+            >
+              <path
+                d="M0,6 Q60,12 120,6"
+                stroke="#FFD700"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+          </span>{" "}
+        </h3>
         <div className="faq-header">
-          <h2 className="faq-title">Frequently Asked Questions</h2>
           <p className="faq-subtitle">
             Find answers to common questions about our platform
           </p>

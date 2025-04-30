@@ -30,7 +30,6 @@ function Review() {
     let res = null;
     if (id) {
       // Edit car
-      console.log("Edit car api called");
       res = await axios.patch(`${ADD_CAR_URL}/${id}`, body, {
         withCredentials: true,
       });

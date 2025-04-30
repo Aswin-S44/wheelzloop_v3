@@ -1,6 +1,6 @@
 const express = require("express");
 const { SignIn } = require("../../controllers/users/signin");
-const { Signup } = require("../../controllers/users/signup");
+const { Signup } = require("../../controllers/users/signupbkp");
 const { getProfile } = require("../../controllers/users/getProfile");
 const { userVerification } = require("../../../middlewares/AuthMiddleware");
 const { getCars } = require("../../controllers/users/getCars");
@@ -24,7 +24,15 @@ const {
   getUsersForSidebar,
   getMessages,
   sendMessage,
+  addChatUser,
 } = require("../../controllers/messages/messageController");
+const { forgotPassword } = require("../../controllers/users/forgotPassword");
+const { resetPassword } = require("../../controllers/users/resetPassword");
+const {
+  sendSignupOTP,
+  verifySignupOTP,
+} = require("../../controllers/users/signup");
+const { addViewsCount } = require("../../controllers/users/addViewsCount");
 
 const router = express.Router();
 
@@ -35,10 +43,16 @@ router.get("/", (req, res) => {
 
 router.get("/me", getMe);
 
+// Auth related routes
 router.post("/signin", SignIn);
+router.post("/otp/send", sendSignupOTP);
+router.post("/otp/verify", verifySignupOTP);
 router.post("/signup", Signup);
 router.get("/profile", getProfile);
 router.patch("/profile/:id", updateProfile);
+router.post("/reset-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
+
 router.get("/cars", getCars);
 router.post("/car", userVerification, addCar);
 router.patch("/car/:id", updateCar);
@@ -70,9 +84,13 @@ router.post("/subscribe", NewsLetter);
 router.get("/subscribers", getSubscribers);
 
 // Chat related routes
+// router.get("/message/users", userVerification, getUsersForSidebar);
+router.post("/message/user/add", userVerification, addChatUser);
 router.get("/message/users", userVerification, getUsersForSidebar);
 router.get("/message/:id", userVerification, getMessages);
 
 router.post("/message/send/:id", userVerification, sendMessage);
+
+router.post("/add-views-count/:id", addViewsCount);
 
 module.exports = router;

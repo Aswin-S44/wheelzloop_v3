@@ -26,7 +26,7 @@ function DealerProfileScreen() {
           setDealer(res.data[0].dealer_id);
         }
       } catch (error) {
-        console.log("Error while fetching car : ", error);
+        return error;
       }
     };
     fetchCar();

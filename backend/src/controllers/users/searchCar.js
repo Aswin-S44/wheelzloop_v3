@@ -19,7 +19,6 @@ module.exports.searchCar = async (req, res) => {
 
     res.status(200).json({ success: true, data: matchedCars });
   } catch (error) {
-    console.log("Error while search : ", error);
     return error;
   }
 };

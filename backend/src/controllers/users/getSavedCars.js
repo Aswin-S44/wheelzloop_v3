@@ -4,7 +4,7 @@ module.exports.getSavedCars = async (req, res) => {
   try {
     const { page = 1, limit = 10, sort = "createdAt" } = req.query;
     const ids = req.body.savedIds;
-    console.log("IDS------------", ids);
+
     const cars = await Cars.find({ _id: { $in: ids } })
       .sort(sort)
       .skip((page - 1) * limit)

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./DetailsScreen.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { CAR_DETAILS_API, GET_ALL_CARS } from "../../config/api";
+import { ADD_CHAT_USER, CAR_DETAILS_API, GET_ALL_CARS } from "../../config/api";
 import { ToastContainer, toast } from "react-toastify";
 
 import Loader from "../../components/Loader/Loader";
@@ -22,9 +22,24 @@ import {
 } from "react-icons/fa";
 import { BsFillGearFill } from "react-icons/bs";
 import { GiCarWheel } from "react-icons/gi";
+import { UserContext } from "../../hooks/UserContext";
+import { Box, Modal } from "@mui/material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 function DetailsScreen() {
   const { id } = useParams();
+  const { user } = useContext(UserContext);
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState("");
@@ -32,6 +47,25 @@ function DetailsScreen() {
   const [saved, setSaved] = useState(false);
   const [similarCars, setSimilarCars] = useState([]);
   const [isFavourite, setIsFavourite] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleNavigatetoChat = async () => {
+    if (!user) {
+      handleOpen();
+    } else {
+      const res = await axios.post(
+        `${ADD_CHAT_USER}`,
+        {
+          receiverId: car?.dealer_id?._id,
+        },
+        { withCredentials: true }
+      );
+      window.location.href = "/chats";
+    }
+  };
 
   const notify = () => toast.success("Link copied");
 
@@ -50,7 +84,7 @@ function DetailsScreen() {
           setMainImage(res.data.data.images[0]);
         }
       } catch (error) {
-        console.error("Error fetching car details:", error);
+        return error;
       } finally {
         setLoading(false);
       }
@@ -67,10 +101,6 @@ function DetailsScreen() {
         if (similar_cars) {
           setSimilarCars(similar_cars.data.data);
         }
-        console.log(
-          "similar_cars----------",
-          similar_cars ? similar_cars : "mpsimilar_cars"
-        );
       }
     };
     fetchSimilarCars();
@@ -87,7 +117,7 @@ function DetailsScreen() {
         notify();
       })
       .catch((err) => {
-        console.error("Failed to copy: ", err);
+        return err;
       });
   };
 
@@ -112,7 +142,9 @@ function DetailsScreen() {
   return (
     <div className="details-container">
       <div className="breadcrumb">
-        <span>Home</span> &gt; <span>{car.make}</span> &gt;{" "}
+        <a href="/">Home</a>
+        <span className="separator">/</span>
+
         <span>{car.model}</span>
       </div>
 
@@ -127,6 +159,7 @@ function DetailsScreen() {
                 (e.target.src =
                   "https://via.placeholder.com/800x600?text=Image+Not+Available")
               }
+              title="car details image"
             />
             <div className="image-actions">
               <button className="save-btn" onClick={addToFav}>
@@ -154,18 +187,20 @@ function DetailsScreen() {
                     (e.target.src =
                       "https://via.placeholder.com/100x75?text=Image+Not+Available")
                   }
+                  title="car more images"
                 />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="info-section">
-          <div className="header-section">
-            <h1>
+        <div className="car-info-section">
+          <div className="car-header">
+            <h1 className="car-title">
               {car.year} {car.make} {car.model}
             </h1>
-            <div className="price-section">
+
+            <div className="price-container">
               <span className="current-price">
                 ${car.price?.toLocaleString()}
               </span>
@@ -175,67 +210,80 @@ function DetailsScreen() {
                 </span>
               )}
             </div>
-            <div className="location">
-              <FaMapMarkerAlt /> {car.location || "Location not specified"}
+
+            <div className="location-badge">
+              <FaMapMarkerAlt className="location-icon" />
+              <span>{car.location || "Location not specified"}</span>
             </div>
           </div>
 
-          <div className="quick-specs">
-            <div className="spec-item">
-              <FaTachometerAlt />
-              <span>{car.mileage?.toLocaleString()} mi</span>
+          <div className="specs-grid">
+            <div className="spec-card">
+              <FaTachometerAlt className="spec-icon" />
+              <div>
+                <p className="spec-label">Mileage</p>
+                <p className="spec-value">{car.mileage?.toLocaleString()} mi</p>
+              </div>
             </div>
-            <div className="spec-item">
-              <FaGasPump />
-              <span>{car.fuel_type}</span>
+            <div className="spec-card">
+              <FaGasPump className="spec-icon" />
+              <div>
+                <p className="spec-label">Fuel</p>
+                <p className="spec-value">{car.fuel_type}</p>
+              </div>
             </div>
-            <div className="spec-item">
-              <BsFillGearFill />
-              <span>{car.transmission}</span>
+            <div className="spec-card">
+              <BsFillGearFill className="spec-icon" />
+              <div>
+                <p className="spec-label">Transmission</p>
+                <p className="spec-value">{car.transmission}</p>
+              </div>
             </div>
-            <div className="spec-item">
-              <GiCarWheel />
-              <span>{car.drivetrain}</span>
+            <div className="spec-card">
+              <GiCarWheel className="spec-icon" />
+              <div>
+                <p className="spec-label">Drivetrain</p>
+                <p className="spec-value">{car.drivetrain}</p>
+              </div>
             </div>
           </div>
 
           <div className="action-buttons">
-            <a href={`tel: ${car?.dealer_id?.phone}`}>
-              <button className="contact-btn">
-                <FaPhone /> Contact Seller
-              </button>
-            </a>
-            <button
-              className="finance-btn"
-              style={{ border: "1px solid grey" }}
+            <a
+              href={`tel:${car?.dealer_id?.phone}`}
+              className="contact-seller-btn"
             >
-              Chat with dealer
+              <FaPhone /> Contact Seller
+            </a>
+            <button className="btn-secondary" onClick={handleNavigatetoChat}>
+              Chat with Dealer
             </button>
           </div>
 
-          <div className="seller-info">
-            <h3>Seller Information</h3>
-            <div className="seller-details">
-              <div className="seller-avatar">
-                <img
-                  src={car?.dealer_id?.profile_picture}
-                  alt="no dealer image"
-                  className="avatar"
-                />
-              </div>
-              <div>
-                <p className="seller-name">{car?.dealer_id?.first_name}</p>
-                {/* <p className="seller-rating">★★★★☆ (24 reviews)</p> */}
-                <p className="seller-rating">{car?.dealer_id?.location}</p>
+          <div className="seller-card">
+            <h3 className="seller-title">Seller Information</h3>
+            <div className="seller-profile">
+              <img
+                src={car?.dealer_id?.profile_picture || "/default-avatar.jpg"}
+                alt="Dealer"
+                className="seller-avatar"
+              />
+              <div className="seller-info">
+                <p className="seller-name">
+                  {car?.dealer_id?.first_name || "Dealer"}
+                </p>
+                <p className="seller-location">
+                  {car?.dealer_id?.location || "Location not specified"}
+                </p>
               </div>
             </div>
             <button
-              className="contact-btn"
+              className="btn-outline"
               onClick={() =>
                 (window.location.href = `/profile/${car?.dealer_id._id}`)
               }
             >
-              Visit Profile
+              View Full Profile
             </button>
           </div>
         </div>
@@ -275,18 +323,6 @@ function DetailsScreen() {
             >
               {car?.status}
             </h3>
-
-            {/* <div className="history-section">
-              <h3>Vehicle History</h3>
-              <div className="history-item">
-                <FaCalendarAlt />
-                <span>Last serviced: 3 months ago</span>
-              </div>
-              <div className="history-item">
-                <FaCalendarAlt />
-                <span>Clean title</span>
-              </div>
-            </div> */}
           </div>
         )}
 
@@ -353,7 +389,7 @@ function DetailsScreen() {
 
       <div className="similar-section">
         <h2>Similar Vehicles</h2>
-        {console.log("similarCars===========", similarCars)}
+
         <div className="similar-cars">
           {similarCars?.map((item) => (
             <div
@@ -364,7 +400,11 @@ function DetailsScreen() {
               }}
             >
               <div className="similar-image">
-                <img src={item?.images?.[0]} alt="no-image" />
+                <img
+                  src={item?.images?.[0]}
+                  alt="no-image"
+                  title="similar car images"
+                />
               </div>
               <div className="similar-info">
                 <h4>
@@ -382,6 +422,61 @@ function DetailsScreen() {
         </div>
       </div>
       <ToastContainer />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "16px",
+                padding: "24px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                maxWidth: "400px",
+                margin: "0 auto",
+                textAlign: "center",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "16px",
+                  color: "#333",
+                }}
+              >
+                You need to create account to chat with dealer
+              </span>
+              <button
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#30bfa1",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  transition: "background-color 0.2s",
+                  ":hover": {
+                    backgroundColor: "#30bfa1",
+                  },
+                }}
+                onClick={() => (window.location.href = "/signin")}
+              >
+                Go to login
+              </button>
+            </div>
+          </>
+        </Box>
+      </Modal>
     </div>
   );
 }

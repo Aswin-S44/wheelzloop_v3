@@ -7,6 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Pagination,
 } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { Search, Close } from "@mui/icons-material";
@@ -31,7 +32,12 @@ function ExploreCarsScreen() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [searchParams] = useSearchParams();
   const brand = searchParams.get("brand");
-  const [pagination, setPagination] = useState({ pageSize: 10, lastDoc: null });
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 12,
+    total: 0,
+  });
+
   useEffect(() => {
     const updateScreenSize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener("resize", updateScreenSize);
@@ -40,14 +46,21 @@ function ExploreCarsScreen() {
 
   const fetchCars = async (filters = {}) => {
     try {
-      console.log("filters---------", filters);
       setLoading(true);
-      // const res = await axios.get(`${GET_ALL_CARS}`);
-      const queryParams = new URLSearchParams(filters).toString();
+      const queryParams = new URLSearchParams({
+        ...filters,
+        page: pagination.page,
+        limit: pagination.pageSize,
+      }).toString();
       const res = await axios.get(`${GET_ALL_CARS}?${queryParams}`);
       if (res?.data?.data?.length > 0) {
         setCars(res.data.data);
         setFilteredCars(res.data.data);
+        setPagination((prev) => ({
+          ...prev,
+          total: res.data.pagination.total,
+          pages: res.data.pagination.pages,
+        }));
       } else {
         setCars([]);
         setFilteredCars([]);
@@ -61,7 +74,7 @@ function ExploreCarsScreen() {
 
   useEffect(() => {
     fetchCars(filters);
-  }, [brand]);
+  }, [brand, pagination.page]);
 
   const handleSortChange = (event) => {
     const value = event.target.value;
@@ -80,134 +93,90 @@ function ExploreCarsScreen() {
 
   const applyFilters = (newFilters) => {
     setFilters(newFilters);
-    fetchCars(newFilters);
+    setPagination((prev) => ({ ...prev, page: 1 }));
   };
 
-  useEffect(() => {
-    fetchCars(filters);
-  }, [pagination, brand]);
+  const handlePageChange = (event, value) => {
+    setPagination((prev) => ({ ...prev, page: value }));
+  };
 
   return (
     <div className="explore-cars-screen">
-      <div className="container-fluid p-5">
-        <div className="row">
-          <div className="col-md-3">
-            <div className="filter-section">
-              {isMobile ? (
-                <MobileFilter onFilterChange={applyFilters} />
-              ) : (
-                <Filter onFilterChange={applyFilters} />
-              )}
-              {/* <Filter onFilterChange={applyFilters} /> */}
-            </div>
+      <div className="layout-container">
+        <div className="filter-column">
+          <div className="filter-section">
+            {isMobile ? (
+              <MobileFilter onFilterChange={applyFilters} />
+            ) : (
+              <Filter onFilterChange={applyFilters} />
+            )}
           </div>
-          <div className="col-md-9">
-            <Carousel />
-            <div className="content-wrapper" style={{ padding: "20px" }}>
-              <div
-                className="cars-section"
-                style={{ maxWidth: "1400px", margin: "0 auto" }}
-              >
-                <div
-                  className="sort-bar"
-                  style={{
-                    marginBottom: "20px",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    padding: "0 15px",
-                  }}
-                >
-                  <FormControl style={{ minWidth: "200px" }}>
-                    <InputLabel>Sort by</InputLabel>
-                    <Select value={order} onChange={handleSortChange}>
-                      <MenuItem value="asc">Price: Low to High</MenuItem>
-                      <MenuItem value="desc">Price: High to Low</MenuItem>
-                      <MenuItem value="latest">Latest</MenuItem>
-                      <MenuItem value="oldest">Oldest</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-
-                <div
-                  className="cards-container"
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                      "repeat(auto-fill, minmax(280px, 1fr))",
-                    gap: "20px",
-                    padding: "0 15px",
-                  }}
-                >
-                  {loading ? (
-                    <div
-                      style={{
-                        gridColumn: "1 / -1",
-                        display: "flex",
-                        justifyContent: "center",
-                        padding: "40px 0",
-                      }}
-                    >
-                      <Loader />
-                    </div>
-                  ) : error ? (
-                    <div
-                      className="error"
-                      style={{
-                        gridColumn: "1 / -1",
-                        textAlign: "center",
-                        padding: "40px 0",
-                        color: "red",
-                      }}
-                    >
-                      {error}
-                    </div>
-                  ) : filteredCars.length === 0 ? (
-                    <div style={{ gridColumn: "1 / -1" }}>
-                      <EmptyState />
-                    </div>
-                  ) : (
-                    filteredCars.map((car) => (
-                      <div
-                        key={car.id}
-                        className="car-card"
-                        style={{
-                          transition: "transform 0.2s",
-                          cursor: "pointer",
-                          "&:hover": {
-                            transform: "scale(1.02)",
-                          },
-                        }}
-                        onClick={() =>
-                          (window.location.href = `/car/${car._id}`)
-                        }
-                      >
-                        <Card car={car} />
-                      </div>
-                    ))
-                  )}
-                </div>
+        </div>
+        <div className="content-column">
+          <Carousel />
+          <div className="content-wrapper">
+            <div className="cars-section">
+              <div className="sort-bar">
+                <FormControl style={{ minWidth: "200px" }}>
+                  <InputLabel>Sort by</InputLabel>
+                  <Select value={order} onChange={handleSortChange}>
+                    <MenuItem value="asc">Price: Low to High</MenuItem>
+                    <MenuItem value="desc">Price: High to Low</MenuItem>
+                    <MenuItem value="latest">Latest</MenuItem>
+                    <MenuItem value="oldest">Oldest</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
+
+              <div className="cards-grid">
+                {loading ? (
+                  <div className="loader-container">
+                    <Loader />
+                  </div>
+                ) : error ? (
+                  <div className="error-message">{error}</div>
+                ) : filteredCars.length === 0 ? (
+                  <div className="empty-state">
+                    <EmptyState />
+                  </div>
+                ) : (
+                  filteredCars.map((car) => (
+                    <div key={car.id} className="car-card">
+                      <Card car={car} />
+                    </div>
+                  ))
+                )}
+              </div>
+              {filteredCars.length > 0 && (
+                <div className="pagination-container">
+                  <Pagination
+                    count={pagination.pages}
+                    page={pagination.page}
+                    onChange={handlePageChange}
+                    color="primary"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
-        {isMobile && (
-          <div className="search-container">
-            <InputBase
-              placeholder="Search cars..."
-              className="search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) =>
-                e.key === "Enter" &&
-                fetchCars({ ...filters, search: searchTerm })
-              }
-            />
-            <IconButton onClick={() => setSearchTerm("")}>
-              {searchTerm ? <Close /> : <Search />}
-            </IconButton>
-          </div>
-        )}
       </div>
+      {isMobile && (
+        <div className="mobile-search-container">
+          <InputBase
+            placeholder="Search cars..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={(e) =>
+              e.key === "Enter" && fetchCars({ ...filters, search: searchTerm })
+            }
+          />
+          <IconButton onClick={() => setSearchTerm("")}>
+            {searchTerm ? <Close /> : <Search />}
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 }

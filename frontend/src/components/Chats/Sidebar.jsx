@@ -11,7 +11,10 @@ const Sidebar = ({ onClose }) => {
     useChatStore();
   const { onlineUsers } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
-
+  console.log(
+    "setSelectedUser-----------",
+    setSelectedUser ? setSelectedUser : "no setSelectedUser"
+  );
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -30,23 +33,6 @@ const Sidebar = ({ onClose }) => {
             <Users className="icon" style={{ color: "#30bfa1" }} />
             <span className="title">Contacts</span>
           </div>
-          <button onClick={onClose} className="mobile-close-btn">
-            ✕
-          </button>
-        </div>
-        <div className="online-filter">
-          <label className="filter-label">
-            <input
-              type="checkbox"
-              checked={showOnlineOnly}
-              onChange={(e) => setShowOnlineOnly(e.target.checked)}
-              className="filter-checkbox"
-            />
-            <span className="filter-text">Show online only</span>
-          </label>
-          <span className="online-count">
-            {onlineUsers.length - 1 < 0 ? 0 : onlineUsers.length - 1} online
-          </span>
         </div>
       </div>
 
@@ -59,12 +45,12 @@ const Sidebar = ({ onClose }) => {
               selectedUser?._id === user._id ? "active" : ""
             }`}
           >
-            {console.log("user--------", user)}
             <div className="avatar-container">
               <img
-                src={user.profileImage || `${DEFAULT_AVATAR}`}
+                src={user.profile_picture || `${DEFAULT_AVATAR}`}
                 alt={user.name}
                 className="avatar"
+                title="user-sidebar-img"
               />
 
               {onlineUsers.includes(user._id) && (

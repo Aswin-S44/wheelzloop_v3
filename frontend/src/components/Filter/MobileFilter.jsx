@@ -11,6 +11,7 @@ import { transmissionTypes } from "../../dummyData/transmissionTypes";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import TuneIcon from "@mui/icons-material/Tune";
 import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 
 function MobileFilter({ onFilterChange }) {
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -29,16 +30,13 @@ function MobileFilter({ onFilterChange }) {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   useEffect(() => {
-    // Get the height of your app's header
-    const appHeader = document.querySelector(".header"); // Replace with your app's header class or ID
+    const appHeader = document.querySelector(".header");
     if (appHeader) {
       setHeaderHeight(appHeader.offsetHeight);
     }
   }, []);
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  const handleSearch = (e) => setSearch(e.target.value);
 
   const handleCheckboxChange = (selectedArray, setSelectedArray, value) => {
     if (selectedArray.includes(value)) {
@@ -55,6 +53,7 @@ function MobileFilter({ onFilterChange }) {
   const applyFilters = () => {
     const filters = {
       brands: selectedCars.map((item) => item.brand),
+      car_name: selectedCars.map((item) => item.car),
       year: selectedYear ? `${selectedYear} & ${selectedYear}` : null,
       fuelTypes: selectedFuelTypes.length > 0 ? selectedFuelTypes : null,
       ownership: selectedOwnership.length > 0 ? selectedOwnership : null,
@@ -66,7 +65,6 @@ function MobileFilter({ onFilterChange }) {
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(([_, value]) => value !== null)
     );
-
     onFilterChange(validFilters);
     setIsFilterVisible(false);
   };
@@ -94,10 +92,9 @@ function MobileFilter({ onFilterChange }) {
       <button
         className="mobile-filter-toggle"
         onClick={() => setIsFilterVisible(true)}
-        aria-label="Search for used cars"
       >
+        <TuneIcon style={{ marginRight: 8 }} />
         Filters
-        <TuneIcon />
       </button>
 
       {isFilterVisible && (
@@ -108,189 +105,159 @@ function MobileFilter({ onFilterChange }) {
           <div className="mobile-filter-container">
             <div className="mobile-filter-header">
               <h2>Filters</h2>
-              <button
-                onClick={() => setIsFilterVisible(false)}
-                aria-label="Search for used cars"
-              >
-                <CloseIcon style={{ fontSize: "21px" }} />
+              <button onClick={() => setIsFilterVisible(false)}>
+                <CloseIcon />
               </button>
             </div>
 
             <div className="mobile-filter-content">
-              <input
-                type="text"
-                placeholder="Search brand or car"
-                value={search}
-                onChange={handleSearch}
-                className="search-box"
-              />
-
-              <div className="mobile-filter-section">
-                <h4>Top brands</h4>
-                <div className="scrollable-brands">
-                  {filteredBrands.map((brandItem, index) => (
-                    <div key={index} className="accordion">
-                      <div
-                        className="accordion-header"
-                        onClick={() => handleAccordionToggle(index)}
-                      >
-                        <h3>{brandItem.brand}</h3>
-                        <span>
-                          {activeIndex === index ? (
-                            <RemoveCircleOutlineIcon
-                              style={{ fontSize: "28px" }}
-                            />
-                          ) : (
-                            <KeyboardArrowDownIcon
-                              style={{ fontSize: "28px" }}
-                            />
-                          )}
-                        </span>
-                      </div>
-                      {activeIndex === index && (
-                        <div className="accordion-body">
-                          {brandItem.cars.map((car, idx) => (
-                            <div key={idx} className="checkbox-container">
-                              <input
-                                type="checkbox"
-                                id={`${brandItem.brand}-${car}`}
-                                checked={selectedCars.some(
-                                  (item) =>
-                                    item.brand === brandItem.brand &&
-                                    item.car === car
-                                )}
-                                onChange={() =>
-                                  handleCheckboxChange(
-                                    selectedCars,
-                                    setSelectedCars,
-                                    {
-                                      brand: brandItem.brand,
-                                      car,
-                                    }
-                                  )
-                                }
-                              />
-                              <label htmlFor={`${brandItem.brand}-${car}`}>
-                                {car}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+              <div className="search-section">
+                <div className="search-input-container">
+                  <SearchIcon className="search-icon" />
+                  <input
+                    type="text"
+                    placeholder="Search brand or car..."
+                    value={search}
+                    onChange={handleSearch}
+                    className="search-input"
+                  />
                 </div>
               </div>
 
-              <div className="mobile-filter-section">
-                <h4>Years</h4>
-                {years.map((year, index) => (
-                  <div key={index} className="checkbox-container">
-                    <input
-                      type="radio"
-                      name="year"
-                      checked={selectedYear === year.text}
-                      onChange={() => setSelectedYear(year.text)}
-                    />
-                    <label>{year.text}</label>
+              <div className="filter-sections">
+                {/* Top Brands Section */}
+                <div className="filter-section">
+                  <h3 className="section-title">Top Brands</h3>
+                  <div className="brands-list">
+                    {filteredBrands.map((brandItem, index) => (
+                      <div key={index} className="brand-accordion">
+                        <div
+                          className="brand-header"
+                          onClick={() => handleAccordionToggle(index)}
+                        >
+                          <span>{brandItem.brand}</span>
+                          {activeIndex === index ? (
+                            <RemoveCircleOutlineIcon className="accordion-icon" />
+                          ) : (
+                            <KeyboardArrowDownIcon className="accordion-icon" />
+                          )}
+                        </div>
+                        {activeIndex === index && (
+                          <div className="brand-models">
+                            {brandItem.cars.map((car, idx) => (
+                              <label key={idx} className="model-checkbox">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedCars.some(
+                                    (item) =>
+                                      item.brand === brandItem.brand &&
+                                      item.car === car
+                                  )}
+                                  onChange={() =>
+                                    handleCheckboxChange(
+                                      selectedCars,
+                                      setSelectedCars,
+                                      { brand: brandItem.brand, car }
+                                    )
+                                  }
+                                />
+                                <span className="checkmark"></span>
+                                {car}
+                              </label>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
 
-              <div className="mobile-filter-section">
-                <h4>Fuel Types</h4>
-                {fuelTypes.map((fuel, index) => (
-                  <div key={index} className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      checked={selectedFuelTypes.includes(fuel.text)}
-                      onChange={() =>
-                        handleCheckboxChange(
-                          selectedFuelTypes,
-                          setSelectedFuelTypes,
-                          fuel.text
-                        )
-                      }
-                    />
-                    <label>{fuel.text}</label>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mobile-filter-section">
-                <h4>Ownership</h4>
-                {ownerShip.map((ownership, index) => (
-                  <div key={index} className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      checked={selectedOwnership.includes(ownership.text)}
-                      onChange={() =>
-                        handleCheckboxChange(
-                          selectedOwnership,
-                          setSelectedOwnership,
-                          ownership.text
-                        )
-                      }
-                    />
-                    <label>{ownership.text}</label>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mobile-filter-section">
-                <h4>Features</h4>
-                {carFeatures.map((feature, index) => (
-                  <div key={index} className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      checked={selectedFeatures.includes(feature.text)}
-                      onChange={() =>
-                        handleCheckboxChange(
-                          selectedFeatures,
-                          setSelectedFeatures,
-                          feature.text
-                        )
-                      }
-                    />
-                    <label>{feature.text}</label>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mobile-filter-section">
-                <h4>Body Types</h4>
-                {carBodyTypes.map((bodyType, index) => (
-                  <div key={index} className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      checked={selectedBodyTypes.includes(bodyType.text)}
-                      onChange={() =>
-                        handleCheckboxChange(
-                          selectedBodyTypes,
-                          setSelectedBodyTypes,
-                          bodyType.text
-                        )
-                      }
-                    />
-                    <label>{bodyType.text}</label>
+                {/* Other Filter Sections */}
+                {[
+                  {
+                    title: "Year",
+                    items: years,
+                    state: selectedYear,
+                    isRadio: true,
+                  },
+                  {
+                    title: "Fuel Type",
+                    items: fuelTypes,
+                    state: selectedFuelTypes,
+                  },
+                  {
+                    title: "Ownership",
+                    items: ownerShip,
+                    state: selectedOwnership,
+                  },
+                  {
+                    title: "Features",
+                    items: carFeatures,
+                    state: selectedFeatures,
+                  },
+                  {
+                    title: "Body Type",
+                    items: carBodyTypes,
+                    state: selectedBodyTypes,
+                  },
+                  {
+                    title: "Transmission",
+                    items: transmissionTypes,
+                    state: selectedTransmissionTypes,
+                  },
+                ].map((section, i) => (
+                  <div key={i} className="filter-section">
+                    <h3 className="section-title">{section.title}</h3>
+                    <div className="options-grid">
+                      {section.items.map((item, idx) => (
+                        <label key={idx}>
+                          <input
+                            type={section.isRadio ? "radio" : "checkbox"}
+                            name={
+                              section.isRadio
+                                ? section.title.toLowerCase()
+                                : undefined
+                            }
+                            checked={
+                              section.isRadio
+                                ? section.state === item.text
+                                : section.state.includes(item.text)
+                            }
+                            onChange={() =>
+                              section.isRadio
+                                ? setSelectedYear(item.text)
+                                : handleCheckboxChange(
+                                    section.state,
+                                    section.isRadio
+                                      ? setSelectedYear
+                                      : section.title === "Fuel Type"
+                                      ? setSelectedFuelTypes
+                                      : section.title === "Ownership"
+                                      ? setSelectedOwnership
+                                      : section.title === "Features"
+                                      ? setSelectedFeatures
+                                      : section.title === "Body Type"
+                                      ? setSelectedBodyTypes
+                                      : setSelectedTransmissionTypes,
+                                    item.text
+                                  )
+                            }
+                          />
+                          <span className="checkmark"></span>
+                          <span className="option-text">{item.text}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="mobile-filter-footer">
-              <button
-                className="clear-filter-btn"
-                onClick={clearFilters}
-                aria-label="Search for used cars"
-              >
-                Clear
+              <button className="clear-btn" onClick={clearFilters}>
+                Clear All
               </button>
-              <button
-                className="apply-filter-btn"
-                onClick={applyFilters}
-                aria-label="Search for used cars"
-              >
+              <button className="apply-btn" onClick={applyFilters}>
                 Apply
               </button>
             </div>

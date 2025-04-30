@@ -32,10 +32,11 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "90%",
+  maxWidth: 500,
   bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
+  borderRadius: "12px",
+  boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.1)",
   p: 4,
 };
 
@@ -120,8 +121,6 @@ const ReviewScreen = () => {
         handleClose();
         Swal.fire("Thank you for your Rating!");
       }
-
-      // onSubmit({ rating, reviewText });
       setRating(0);
       setReviewText("");
     }
@@ -137,17 +136,11 @@ const ReviewScreen = () => {
       </div>
 
       <div className="review-stats-container">
-        <div className="average-rating-card glow-effect">
+        <div className="average-rating-card">
           <div className="rating-display">
-            <span className="rating-value">{avg}</span>
+            <span className="rating-value">{avg.toFixed(1)}</span>
             <div className="stars">
-              {/* <Rating
-                value={4.6}
-                precision={0.1}
-                readOnly
-                icon={<StarIcon className="star-icon filled" />}
-                emptyIcon={<StarBorderIcon className="star-icon" />}
-              /> */}
+              <Ratings rating={Math.round(avg)} />
             </div>
             <span className="rating-count">{reviews.length} reviews</span>
           </div>
@@ -173,9 +166,9 @@ const ReviewScreen = () => {
         </div>
       </div>
 
-      <div className="review-filter-tabs">
-        <button className="sell-btn" onClick={handleOpen}>
-          Add Review
+      <div className="review-actions-container">
+        <button className="add-review-btn" onClick={handleOpen}>
+          Add Your Review
         </button>
 
         <Modal
@@ -187,45 +180,10 @@ const ReviewScreen = () => {
           <Box sx={style}>
             <>
               {!user ? (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "16px",
-                    padding: "24px",
-                    backgroundColor: "#f5f5f5",
-                    borderRadius: "8px",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    maxWidth: "400px",
-                    margin: "0 auto",
-                    textAlign: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "16px",
-                      color: "#333",
-                    }}
-                  >
-                    You need to create account to add review
-                  </span>
+                <div className="auth-required-message">
+                  <span>You need to create account to add review</span>
                   <button
-                    style={{
-                      padding: "8px 16px",
-                      backgroundColor: "#30bfa1",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      transition: "background-color 0.2s",
-                      ":hover": {
-                        backgroundColor: "#30bfa1",
-                      },
-                    }}
+                    className="login-redirect-btn"
                     onClick={() => (window.location.href = "/signin")}
                   >
                     Go to login
@@ -243,6 +201,14 @@ const ReviewScreen = () => {
                         value={rating}
                         onChange={(e, newValue) => setRating(newValue)}
                         size="large"
+                        sx={{
+                          "& .MuiRating-iconFilled": {
+                            color: "#30bfa1",
+                          },
+                          "& .MuiRating-iconHover": {
+                            color: "#30bfa1",
+                          },
+                        }}
                       />
                     </Box>
                     <TextField
@@ -260,9 +226,18 @@ const ReviewScreen = () => {
                       variant="contained"
                       fullWidth
                       disabled={!rating || !reviewText || loading}
-                      style={{ backgroundColor: "#30bfa1" }}
+                      sx={{
+                        backgroundColor: "#30bfa1",
+                        "&:hover": {
+                          backgroundColor: "#259c82",
+                        },
+                        padding: "12px",
+                        fontSize: "16px",
+                        fontWeight: "600",
+                        borderRadius: "8px",
+                      }}
                     >
-                      {loading ? <>Please wait....</> : <>Submit Review</>}
+                      {loading ? "Submitting..." : "Submit Review"}
                     </Button>
                   </form>
                 </>
@@ -270,105 +245,118 @@ const ReviewScreen = () => {
             </>
           </Box>
         </Modal>
-        <button
-          className={`filter-tab ${activeTab === "all" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("all");
-            setCurrentPage(1);
-          }}
-        >
-          <FilterIcon className="tab-icon" />
-          All Reviews
-        </button>
-        {[5, 4, 3, 2, 1].map((rating) => (
+
+        <div className="filter-tabs-container">
           <button
-            key={rating}
-            className={`filter-tab ${
-              activeTab === rating.toString() ? "active" : ""
-            }`}
+            className={`filter-tab ${activeTab === "all" ? "active" : ""}`}
             onClick={() => {
-              setActiveTab(rating.toString());
+              setActiveTab("all");
               setCurrentPage(1);
             }}
           >
-            {getSentimentIcon(rating)}
-            {rating} Star
+            <FilterIcon className="tab-icon" />
+            All Reviews
           </button>
-        ))}
+          {[5, 4, 3, 2, 1].map((rating) => (
+            <button
+              key={rating}
+              className={`filter-tab ${
+                activeTab === rating.toString() ? "active" : ""
+              }`}
+              onClick={() => {
+                setActiveTab(rating.toString());
+                setCurrentPage(1);
+              }}
+            >
+              {getSentimentIcon(rating)}
+              {rating} Star
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="review-list">
-        {paginatedReviews.map((review) => (
-          <div key={review.id} className="review-card">
-            <div className="review-card-header">
-              <div className="reviewer-info">
-                <div
-                  className="avatar"
-                  style={{
-                    backgroundColor: `hsl(${Math.random() * 360}, 70%, 60%)`,
-                  }}
-                >
-                  {review.name.charAt(0)}
+        {paginatedReviews.length > 0 ? (
+          paginatedReviews.map((review) => (
+            <div key={review.id} className="review-card">
+              <div className="review-card-header">
+                <div className="reviewer-info">
+                  <div
+                    className="avatar"
+                    style={{
+                      backgroundColor: `hsl(${Math.random() * 360}, 70%, 60%)`,
+                    }}
+                  >
+                    {review.name.charAt(0)}
+                  </div>
+                  <div className="reviewer-details">
+                    <h2>{review.name}</h2>
+                    <p>{new Date(review.date).toLocaleDateString()}</p>
+                  </div>
                 </div>
-                <div className="reviewer-details">
-                  <h3>{review.name}</h3>
-                  <p>{review.date}</p>
-                </div>
-              </div>
-              {review.verified && (
-                <div className="verified-badge">
-                  <VerifiedIcon className="verified-icon" />
-                  Verified Purchase
-                </div>
-              )}
-            </div>
-
-            <div className="review-content">
-              <div className="rating-display">
-                {getSentimentIcon(review.rating)}
-                <div className="stars">
-                  <Ratings rating={review.rating} />
-                </div>
-                <span className="car-model">{review.car}</span>
+                {review.verified && (
+                  <div className="verified-badge">
+                    <VerifiedIcon className="verified-icon" />
+                    Verified Purchase
+                  </div>
+                )}
               </div>
 
-              <p className="review-text">{review.reviewText}</p>
+              <div className="review-content">
+                <div className="rating-display">
+                  {getSentimentIcon(review.rating)}
+                  <div className="stars">
+                    <Ratings rating={review.rating} />
+                  </div>
+                  {review.car && (
+                    <span className="car-model">{review.car}</span>
+                  )}
+                </div>
+
+                <p className="review-text">{review.reviewText}</p>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="no-reviews-message">
+            <p>No reviews found for the selected filter.</p>
           </div>
-        ))}
+        )}
       </div>
 
-      <div className="pagination-container">
-        <button
-          className="pagination-button"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="pagination-icon" />
-        </button>
-
-        {[...Array(totalPages)].map((_, i) => (
+      {totalPages > 1 && (
+        <div className="pagination-container">
           <button
-            key={i}
-            className={`pagination-button ${
-              currentPage === i + 1 ? "active" : ""
-            }`}
-            onClick={() => setCurrentPage(i + 1)}
+            className="pagination-button"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
           >
-            {i + 1}
+            <ChevronLeft className="pagination-icon" />
           </button>
-        ))}
 
-        <button
-          className="pagination-button"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className="pagination-icon" />
-        </button>
-      </div>
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              className={`pagination-button ${
+                currentPage === i + 1 ? "active" : ""
+              }`}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className="pagination-button"
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className="pagination-icon" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

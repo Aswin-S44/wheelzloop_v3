@@ -16,6 +16,7 @@ function ProfileCard({ user, editable = false }) {
           src={user?.profile_picture || DEFAULT_AVATAR}
           alt="User Avatar"
           className="avatar-2"
+          title="profile-avatar-img"
         />
       </div>
       <div className="name">{user?.first_name + " " + user?.last_name}</div>

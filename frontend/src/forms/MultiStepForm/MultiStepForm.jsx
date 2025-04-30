@@ -55,7 +55,7 @@ const renderStep = (step) => {
 function MultiStepForm() {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  console.log("ID------------", id ? id : "no id");
+
   const [basicDetails, setBasicDetails] = useState(basicInformationState);
   const [specificationDetails, setSpecificationDetails] =
     useState(specificationState);
@@ -114,7 +114,7 @@ function MultiStepForm() {
     setCurrentStep(currentStep + 1);
   };
   const prev = () => setCurrentStep(currentStep - 1);
-  console.log("basicDetails-------", basicDetails);
+
   return (
     <div className="mt-5">
       <Provider

@@ -32,26 +32,38 @@ function HowItWorks() {
   };
   const handleClose = () => setOpen(false);
 
-  console.log("USER-------------", user ? user : "no user");
   return (
     <div className="how-it-works-section">
       <div className="container">
-        <div className="section-header">
+        <h3 className="text-center fw-bold">
+          <span className="quality-text">
+            HOW WHEELZLOOP WORKS
+            <svg
+              width="120"
+              height="12"
+              viewBox="0 0 120 12"
+              className="curved-line"
+            >
+              <path
+                d="M0,6 Q60,12 120,6"
+                stroke="#FFD700"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+          </span>{" "}
+        </h3>
+        <div className="section-header mt-4">
           <div className="news-header">
-            <h2>HOW WHEELZLOOP WORKS</h2>
             <p>Sell your car in just 3 simple steps</p>
           </div>
-          {/* <h2 className="section-title">How WheelzLoop Works</h2>
-          <p className="section-subtitle">
-            Sell your car in just 3 simple steps
-          </p> */}
         </div>
 
         <div className="steps-wrapper">
           <div className="step">
             <div className="step-number">1</div>
             <div className="step-icon">
-              <PersonAddAlt1 className="icon" />
+              <PersonAddAlt1 className="icon" style={{ color: "#28c694" }} />
             </div>
             <h3 className="step-title">Create an Account</h3>
             <p className="step-description">
@@ -65,7 +77,7 @@ function HowItWorks() {
           <div className="step">
             <div className="step-number">2</div>
             <div className="step-icon">
-              <DirectionsCar className="icon" />
+              <DirectionsCar className="icon" style={{ color: "#28c694" }} />
             </div>
             <h3 className="step-title">List Your Vehicle</h3>
             <p className="step-description">
@@ -79,7 +91,7 @@ function HowItWorks() {
           <div className="step">
             <div className="step-number">3</div>
             <div className="step-icon">
-              <Handshake className="icon" />
+              <Handshake className="icon" style={{ color: "#28c694" }} />
             </div>
             <h3 className="step-title">Connect With Buyers</h3>
             <p className="step-description">
@@ -96,7 +108,6 @@ function HowItWorks() {
         >
           Get Started Now
         </button>
-        {console.log("OPEN-----------", open ? open : "no open")}
       </div>
       <div
         class="modal fade"
@@ -110,7 +121,7 @@ function HowItWorks() {
         <div class="modal-dialog modal-dialog-centered car-selling-steps-modal">
           <div class="modal-content">
             <div class="modal-header car-steps-header">
-              <h1 class="modal-title car-steps-title">How to Sell Your Car</h1>
+              <h2 class="modal-title car-steps-title">How to Sell Your Car</h2>
               <button
                 type="button"
                 class="btn-close"

@@ -32,6 +32,6 @@ module.exports.updateCar = async (req, res, next) => {
 
     res.send(resp);
   } catch (error) {
-    console.log("Error while editing car : ", error);
+    return error;
   }
 };

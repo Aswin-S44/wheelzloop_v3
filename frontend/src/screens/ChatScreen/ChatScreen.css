@@ -22,20 +22,26 @@
   flex-direction: column;
 }
 
+/* Mobile styles */
 @media (max-width: 768px) {
   .chat-screen {
-    flex-direction: column;
+    position: relative;
   }
 
   .sidebar {
     width: 100%;
     max-width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.mobile-hidden {
+    transform: translateX(-100%);
   }
 
   .chat-content {
     width: 100%;
-    flex: 1;
   }
 }

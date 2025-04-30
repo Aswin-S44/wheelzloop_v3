@@ -41,7 +41,6 @@ module.exports.getReviews = async (req, res) => {
       ratings: transformed,
     });
   } catch (error) {
-    console.log("Error while fetching reviews : ", error);
     res.status(500).send({ error: "Internal Server Error" });
   }
 };

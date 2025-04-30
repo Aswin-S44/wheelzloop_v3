@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+.banner-container {
+    background-color: #c3fde2;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.banner-image:hover {
+    transform: scale(1.03);
+}
+
+.btn {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.banner-subtitle{
+    color: grey;
+    font-family: "Kaushan Script", cursive;
+    font-size: 29px !important;
+    font-weight: 400 !important;
+}
+
+.banner-subtitle span{
+    color: #cfcf00;
+    font-size: 35px;
+
+}
+
+.quality-text {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .curved-line {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    color: #cfcf00;
+  }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .banner-container {
+        border-radius: 15px;
+        margin: 0 10px;
+    }
+    
+    .banner-title {
+        font-size: 2rem;
+        text-align: left;
+    }
+    
+    .banner-subtitle {
+        font-size: 1rem;
+        text-align: left;
+    }
+    
+    .banner-button {
+        display: block;
+        margin: 0 auto;
+        width: 80%;
+    }
+    
+    .p-md-5 {
+        padding: 2rem !important;
+    }
+
+    .banner-image{
+        margin-top: 0 !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .banner-title {
+        font-size: 1.5rem;
+    }
+    
+    .banner-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .p-md-5 {
+        padding: 1.5rem !important;
+    }
+}

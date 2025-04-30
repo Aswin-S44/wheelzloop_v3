@@ -1,5 +1,8 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const wheelzLoopEmail = process.env.EMAIL_USER;
+const crypto = require("crypto");
 
 module.exports.createSecretToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_KEY, {
@@ -13,4 +16,39 @@ module.exports.verifyToken = (token) => {
   } catch (error) {
     return null;
   }
+};
+
+module.exports.sendEmail = async (subject, content, htmlContent = null, to) => {
+  try {
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    var mailOptions = {
+      from: wheelzLoopEmail,
+      to,
+      subject,
+      text: content,
+      html: htmlContent,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  } catch (error) {
+    console.log("Error while sending email : ", error);
+    return error;
+  }
+};
+
+module.exports.generateOTP = () => {
+  return crypto.randomInt(100000, 999999).toString();
 };

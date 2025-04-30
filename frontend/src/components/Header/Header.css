@@ -5,7 +5,8 @@
   padding: 15px 20px;
   background: #f8f9fa;
   border-bottom: 2px solid #ddd;
-  position: fixed;
+  /* position: fixed; */
+  position: relative;
   z-index: 100;
   top: 0;
   width: 100%;
@@ -15,7 +16,7 @@
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #30bfa1;
+  color: var(--primary-color);
 }
 
 .logo a {
@@ -43,7 +44,7 @@
 }
 
 .search button {
-  background: #30bfa1;
+  background: var(--primary-color);
   color: white;
   padding: 8px 12px;
   border: none;
@@ -141,7 +142,7 @@
 
 .login-btn {
   background: none;
-  border: 2px solid #30bfa1;
+  border: 2px solid var(--primary-color);
   color: #002f34;
   padding: 5px 12px;
   cursor: pointer;
@@ -164,7 +165,7 @@
 }
 
 .sell-btn {
-  background: #30bfa1;
+  background: var(--primary-color);
   border: none;
   padding: 8px 15px;
   border-radius: 20px;
@@ -289,4 +290,8 @@
   .search-card-location {
     font-size: 13px;
   }
+}
+.search-icon{
+  float:right;
+  position: relative;
 }

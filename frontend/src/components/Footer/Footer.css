@@ -75,14 +75,15 @@
 }
 
 .footer-extra-box {
-  background-color: #222;
-  color: white;
+  background-color: var(--primary-color);
+  color: #fff;
   width: 90%;
   margin: 30px auto 0;
   text-align: center;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
 }
 
 .footer-extra-box h3 {
