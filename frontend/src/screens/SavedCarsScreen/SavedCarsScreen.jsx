@@ -6,6 +6,8 @@ import ShareIcon from "@mui/icons-material/Share";
 import { GET_SAVED_CARS_URL } from "../../config/api";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SavedCarsScreen() {
   const [savedCars, setSavedCars] = useState([]);
@@ -41,6 +43,13 @@ function SavedCarsScreen() {
     };
     fetchSavedCars();
   }, []);
+
+  const handleShare = (carId) => {
+    const carUrl = `${window.location.origin}/car/${carId}`;
+    navigator.clipboard.writeText(carUrl);
+
+    toast.success("Link copied to clipboard!");
+  };
 
   return (
     <div className="saved-cars-container">
@@ -100,7 +109,10 @@ function SavedCarsScreen() {
                     <DeleteIcon />
                     <span>Remove</span>
                   </button>
-                  <button className="action-btn share-btn">
+                  <button
+                    className="action-btn share-btn"
+                    onClick={() => handleShare(car._id)}
+                  >
                     <ShareIcon />
                     <span>Share</span>
                   </button>
@@ -110,6 +122,7 @@ function SavedCarsScreen() {
           ))}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }

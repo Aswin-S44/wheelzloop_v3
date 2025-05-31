@@ -3,7 +3,9 @@ import BasicInformation from "./BasicInformation";
 import Specifications from "./Specifications";
 import AdditionalInformation from "./AdditionalInformation";
 import { Provider } from "./MultiStepFormContext";
-import { Steps } from "antd";
+// import { Steps } from "antd";
+import Steps from "antd/es/steps";
+
 import Review from "./Review";
 import { useParams } from "react-router-dom";
 import { CAR_DETAILS_API } from "../../config/api";

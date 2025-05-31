@@ -3,25 +3,22 @@ import "./EmptyState.css";
 
 function EmptyState() {
   return (
-    <div className="empty-state">
+    <div className="empty-state w-100">
       <div className="empty-icon">
-        <div className="pulse-circle">
-          <svg width="100" height="100" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1-8h-2V7h2v2z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
+        <img
+          src="https://cdni.iconscout.com/illustration/premium/thumb/data-not-found-illustration-download-in-svg-png-gif-file-formats--message-empty-communication-emptystate-no-pack-design-development-illustrations-9404367.png"
+          className="w-100"
+          alt="no-data available"
+          title="No data available"
+        />
       </div>
-      <h2 className="empty-title">Whoops! Nothing Here</h2>
+      <h2 className="empty-title">No cars Available</h2>
       <p className="empty-description">
-        The data you're looking for has ghosted us. Try refreshing or come back
-        later.
+        We couldn't find any data matching your request.
       </p>
       <button className="empty-action">
-        <span>Try Again</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        Refresh Page
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
           <path
             d="M23 12c0-6.07-4.93-11-11-11S1 5.93 1 12s4.93 11 11 11 11-4.93 11-11zM4.93 12c0-3.96 3.22-7.18 7.18-7.18"
             stroke="currentColor"

@@ -17,6 +17,7 @@ function ProfileScreen() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
+  console.log("user---------", user ? user : "no user");
 
   useEffect(() => {
     const fetchCar = async () => {

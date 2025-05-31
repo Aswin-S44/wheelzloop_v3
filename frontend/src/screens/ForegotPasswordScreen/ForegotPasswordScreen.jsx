@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import "./ForegotPasswordScreen.css";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { InputBase } from "@mui/material";
+import Swal from "sweetalert2";
 import axios from "axios";
 import { FOREGOT_PASSWORD_URL } from "../../config/api";
-import { ToastContainer, toast } from "react-toastify";
+import "./ForegotPasswordScreen.css";
 
-function ForegotPasswordScreen() {
+function ForgotPasswordScreen() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  const notify = () => toast.success("Password reset link sent to your email");
+
   const initialValues = {
     email: "",
   };
+
   const validationSchema = Yup.object({
-    email: Yup.string().required("Email is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -23,92 +26,107 @@ function ForegotPasswordScreen() {
       setLoading(true);
       const res = await axios.post(`${FOREGOT_PASSWORD_URL}`, values);
       setLoading(false);
-      if (res && res.status == 200) {
-        notify();
+
+      if (res && res.status === 200) {
+        Swal.fire({
+          title: "Success!",
+          text: "Password reset link sent to your email",
+          icon: "success",
+        }).then(() => {
+          navigate("/signin");
+        });
       } else {
-        toast.error("User not found with this email");
+        Swal.fire({
+          title: "Error",
+          text: "User not found with this email",
+          icon: "error",
+        });
       }
     } catch (error) {
-      toast.error("User not found with this email");
-      return error;
+      Swal.fire({
+        title: "Error",
+        text: "User not found with this email",
+        icon: "error",
+      });
     } finally {
       setLoading(false);
       setSubmitting(false);
       resetForm();
     }
-    setSubmitting(false);
   };
-  return (
-    <div>
-      <div className="login-screen">
-        <div className="container p-4">
-          <div className="row">
-            <div className="col-md-6">
-              <img
-                src="/images/intro.png"
-                className="w-100"
-                // loading="lazy"
-                alt="Login"
-                title="forgot password page image"
-              />
-            </div>
-            <div className="col-md-6">
-              <h1 className="font-lg">
-                Foregot <span className="highlighted">Password ?</span>
-              </h1>
-              <p className="font-sm-2">
-                The easiest and most convenient platform for buying and selling
-                cars.
-              </p>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-              >
-                {({ isSubmitting }) => (
-                  <Form>
-                    {message && <div className="message-box">{message}</div>}
-                    <div className="mt-5">
-                      <p className="font-sm">Email</p>
-                      <Field
-                        as={InputBase}
-                        name="email"
-                        placeholder="Email or Phone Number"
-                        className="search-input-2"
-                        style={{ border: "1px solid grey", width: "100%" }}
-                      />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
 
-                    <button
-                      type="submit"
-                      className="w-100 highlighted-btn mt-5"
-                      disabled={isSubmitting || loading}
-                    >
-                      {loading ? "Signing In..." : "Sign In"}
-                    </button>
-                  </Form>
-                )}
-              </Formik>
-              <div className="mt-4">
-                <a href="/signup" className="link">
-                  Don't have an account? Sign Up
-                </a>
-              </div>
-              <a href="/signin" className="link">
-                Already have an account ?
-              </a>
-            </div>
+  return (
+    <div className="login-screen">
+      <div className="login-container">
+        <div className="login-left">
+          <img
+            src="/images/intro.png"
+            className="login-image"
+            alt="Login"
+            title="forgot password page image"
+          />
+        </div>
+        <div className="login-right">
+          <div className="login-header">
+            <h1 className="login-title">
+              Forgot <span className="highlighted">Password?</span>
+            </h1>
+            <p className="login-subtitle">
+              The easiest and most convenient platform for buying and selling
+              cars.
+            </p>
+          </div>
+
+          {message && <div className="message-box">{message}</div>}
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form className="login-form">
+                <div className="form-group">
+                  <label className="form-label">Email</label>
+                  <Field
+                    as={InputBase}
+                    name="email"
+                    placeholder="Enter your email"
+                    className="form-input"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="login-button"
+                  disabled={isSubmitting || loading}
+                >
+                  {loading ? "Sending..." : "Send Reset Link"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+
+          <div className="login-footer">
+            <a href="/" className="login-link">
+              Back to Home? <span>Wheelzloop</span>
+            </a>
+            <a href="/signup" className="login-link">
+              Don't have an account? <span>Sign Up</span>
+            </a>
+            <a href="/signin" className="login-link">
+              Already have an account?
+            </a>
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }
 
-export default ForegotPasswordScreen;
+export default ForgotPasswordScreen;

@@ -27,6 +27,7 @@ import ChatScreen from "./screens/ChatScreen/ChatScreen";
 import { useAuthStore } from "./store/useAuthStore";
 import ForegotPasswordScreen from "./screens/ForegotPasswordScreen/ForegotPasswordScreen";
 import ResetPassswordScreen from "./screens/ResetPassswordScreen/ResetPassswordScreen";
+import ContactScreen from "./screens/ContactScreen/ContactScreen";
 
 function Layout() {
   const location = useLocation();
@@ -52,7 +53,8 @@ function Layout() {
             <Route path="/" element={<HomeScreen />} />
             <Route path="/car" element={<DetailsScreen />} />
             <Route path="/favourites" element={<SavedCarsScreen />} />
-            <Route path="/blogs" element={<BlogsScreen />} />
+            {/* <Route path="/blogs/:slug" element={<BlogsScreen />} /> */}
+            <Route path="/blogs/:slug?" element={<BlogsScreen />} />
             <Route path="/used-cars" element={<ExploreCarsScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/car/add" element={<AddCarScreen />} />
@@ -74,6 +76,7 @@ function Layout() {
               path="/reset-password/:id"
               element={<ResetPassswordScreen />}
             />
+            <Route path="/contact-us" element={<ContactScreen />} />
           </Routes>
           {!hideHeaderFooter && <Footer />}
           <BackToTop />

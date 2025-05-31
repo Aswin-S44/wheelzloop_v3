@@ -11,15 +11,26 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { useAuthStore } from "../../store/useAuthStore";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { logout } = useAuthStore();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    // logout();
+  };
+
+  const handleLogout = async () => {
+    logout();
+  };
+
+  const handleNavigateToProfile = () => {
+    window.location.href = "profile";
   };
   return (
     <React.Fragment>
@@ -82,7 +93,7 @@ export default function AccountMenu() {
         </MenuItem>
         <Divider />
 
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

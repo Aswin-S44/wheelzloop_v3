@@ -191,9 +191,11 @@ function Header() {
           <a href="/favourites" title="saved cars">
             Favourites
           </a>
-          <a onClick={handleNavigateToChat} title="chats">
-            Chats
-          </a>
+          {user && (
+            <a href="/chats" title="chats">
+              Chats
+            </a>
+          )}
           <a href="/about-us" title="about us">
             About-Us
           </a>
@@ -266,12 +268,12 @@ function Header() {
                   color: "#333",
                 }}
               >
-                You need to create account to add review
+                You need to create account to add car
               </span>
               <button
                 style={{
                   padding: "8px 16px",
-                  backgroundColor: "#30bfa1",
+                  backgroundColor: "#606cbc",
                   color: "white",
                   border: "none",
                   borderRadius: "4px",

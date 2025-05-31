@@ -11,7 +11,7 @@ body {
 }
 
 :root {
-  --primary-color:#28c694;
+  --primary-color:#606cbc;
   --secondary-color: #f60;
   --border-radius: 20px;
   --main-bg-color: #30bfa1
@@ -52,7 +52,7 @@ a {
 }
 
 .span {
-  color: var(--primary-color)
+  color: #606cbc
 }
 
 button.medium {
@@ -110,3 +110,13 @@ button.medium {
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* main{
+  margin-top: 110px;
+}
+
+@media (max-width: 768px) {
+  main {
+    margin-top: 80px;
+  }
+} */

@@ -23,7 +23,7 @@
   padding: 2rem;
 }
 
-.react-tabs__tab-list {
+/* .react-tabs__tab-list {
   border-bottom: 1px solid #e0e0e0;
   margin: 0 0 2rem;
   padding: 0;
@@ -52,6 +52,106 @@
 
 .react-tabs__tab-panel {
   padding: 0;
+} */
+
+/* Base tab styles */
+.react-tabs__tab-list {
+  border-bottom: 1px solid #e0e0e0;
+  margin: 0;
+  padding: 0 40px; /* Space for arrows */
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  position: relative;
+  white-space: nowrap;
+}
+
+/* Hide scrollbar for Chrome, Safari */
+.react-tabs__tab-list::-webkit-scrollbar {
+  display: none;
+}
+
+.react-tabs__tab {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  margin-right: 8px;
+  transition: all 0.2s ease;
+  flex-shrink: 0; /* Prevent tabs from shrinking */
+}
+
+.react-tabs__tab--selected {
+  color: #101c3a;
+  border-bottom: 3px solid #606cbc;
+}
+
+.react-tabs__tab:hover {
+  color: #606cbc;
+}
+
+.react-tabs__tab-panel {
+  padding: 0;
+}
+
+/* Scrollable tabs container */
+.tabs-container {
+  position: relative;
+}
+
+.tab-scroll-wrapper {
+  position: relative;
+}
+
+/* Navigation arrows */
+.tab-scroll-button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.tab-scroll-button:hover {
+  opacity: 1;
+}
+
+.tab-scroll-button.left {
+  left: 0;
+}
+
+.tab-scroll-button.right {
+  right: 0;
+}
+
+.tab-scroll-button svg {
+  width: 16px;
+  height: 16px;
+  color: #555;
+}
+
+/* Mobile styles */
+@media (min-width: 769px) {
+  .tab-scroll-button {
+    display: none; /* Hide arrows on desktop */
+  }
+  .react-tabs__tab-list {
+    padding: 0; /* Remove arrow space on desktop */
+  }
 }
 
 .cars-header {
@@ -82,7 +182,7 @@
 }
 
 .add-car-btn:hover {
-  background-color: #259c83;
+  background-color: #606cbc;
   transform: translateY(-2px);
 }
 
@@ -95,7 +195,7 @@
 .no-cars {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: #101c3a;
   font-size: 1.2rem;
   grid-column: 1 / -1;
 }

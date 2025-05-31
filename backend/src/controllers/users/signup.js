@@ -6,6 +6,7 @@ const {
   badRequestResponse,
 } = require("../../utils/responseHelpers");
 const { generateOTP, sendEmail } = require("../../utils/utils");
+require("dotenv").config();
 
 module.exports = {
   sendSignupOTP: async (req, res, next) => {
@@ -33,6 +34,7 @@ module.exports = {
 
       let htmlContent = `<p>Your OTP is: <strong>${otp}</strong></p>`;
       await sendEmail(
+        process.env.EMAIL_USER,
         "Your OTP for WheeelzLoop Signup",
         `Your OTP is: ${otp}`,
         htmlContent,

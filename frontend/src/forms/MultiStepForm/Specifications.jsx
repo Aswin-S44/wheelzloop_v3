@@ -1,6 +1,21 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
-import { Button, Input, Select, Row, Col, Typography } from "antd";
+// import { Button, Input, Select, Row, Col, Typography } from "antd";
+
+import Button from "antd/es/button";
+import Input from "antd/es/input";
+import Select from "antd/es/select";
+import Row from "antd/es/row";
+import Col from "antd/es/col";
+import Typography from "antd/es/typography";
+
+// import 'antd/es/button/style/css';
+// import 'antd/es/input/style/css';
+// import 'antd/es/select/style/css';
+// import 'antd/es/row/style/css';
+// import 'antd/es/col/style/css';
+// import 'antd/es/typography/style/css';
+
 import {
   DirectionsCar,
   Speed,

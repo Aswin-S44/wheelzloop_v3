@@ -49,11 +49,11 @@
   position: relative;
   z-index: 2;
 }
-
+ 
 .step-number {
   width: 40px;
   height: 40px;
-  background: #30bfa1;
+  background: #606cbc;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -79,13 +79,14 @@
 
 .step:hover .step-icon {
   transform: scale(1.1);
-  background: #30bfa1;
+  /* background: #30bfa1;
+  color: #fff; */
 }
 
 .icon {
   font-size: 48px !important;
   /* color: #30bfa1; */
-  color: #148a84;
+  color: #ADB2D4;
 }
 
 .step:hover .icon {
@@ -116,7 +117,7 @@
 }
 
 .cta-button {
-  background: #30bfa1;
+  background: #606cbc;
   color: white;
   border: none;
   padding: 15px 40px;

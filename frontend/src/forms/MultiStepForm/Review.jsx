@@ -1,6 +1,16 @@
 import React, { useContext, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
-import { Button, Col, Row, Card } from "antd";
+// import { Button, Col, Row, Card } from "antd";
+import Button from "antd/es/button";
+import Col from "antd/es/col";
+import Row from "antd/es/row";
+import Card from "antd/es/card";
+
+// import 'antd/es/button/style/css';
+// import 'antd/es/col/style/css';
+// import 'antd/es/row/style/css';
+// import 'antd/es/card/style/css';
+
 import axios from "axios";
 import { ADD_CAR_URL } from "../../config/api";
 import Swal from "sweetalert2";
@@ -158,7 +168,7 @@ function Review() {
           onClick={handleSubmit}
           disabled={loading}
         >
-          {loading ? <>Pleasw wait....</> : <>Confirm</>}
+          {loading ? <>Please wait....</> : <>Confirm</>}
         </button>
       </div>
     </div>

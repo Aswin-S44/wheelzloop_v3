@@ -161,7 +161,7 @@ function ExploreCarsScreen() {
           </div>
         </div>
       </div>
-      {isMobile && (
+      {/* {isMobile && (
         <div className="mobile-search-container">
           <InputBase
             placeholder="Search cars..."
@@ -176,7 +176,7 @@ function ExploreCarsScreen() {
             {searchTerm ? <Close /> : <Search />}
           </IconButton>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

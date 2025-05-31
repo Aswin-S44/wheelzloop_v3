@@ -139,7 +139,7 @@ function Filter({ onFilterChange }) {
                             )
                           }
                         />
-                        <span className="checkmark"></span>
+
                         {car}
                       </label>
                     ))}
@@ -185,7 +185,7 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span className="checkmark"></span>
+
                 <span
                   style={{
                     marginLeft: "10px",
@@ -218,7 +218,7 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span className="checkmark"></span>
+
                 <span
                   style={{
                     marginLeft: "10px",
@@ -284,7 +284,6 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span className="checkmark"></span>
 
                 <span
                   style={{

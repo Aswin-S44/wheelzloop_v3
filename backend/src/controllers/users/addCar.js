@@ -1,5 +1,6 @@
 const { cloudinary } = require("../../../config/cloudinary");
 const Cars = require("../../../models/users/carSchema");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports.addCar = async (req, res) => {
   try {
