@@ -22,3 +22,4 @@ export const OTP_SEND_URL = `${BACKEND_URL}/api/v1/user/otp/send`;
 export const VERIFY_OTP__URL = `${BACKEND_URL}/api/v1/user/otp/verify`;
 export const ADD_CHAT_USER = `${BACKEND_URL}/api/v1/user/message/user/add`;
 export const ADD_CAR_VIEWS_COUNT = `${BACKEND_URL}/api/v1/user/add-views-count`;
+export const SEND_FEEDBACK_API = `${BACKEND_URL}/api/v1/user/feedback`;
