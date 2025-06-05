@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { SUBRIPTION_PLANS } = require("../../src/constants/constants");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -20,6 +21,15 @@ const UserSchema = new mongoose.Schema(
     },
     verified: { type: Boolean, default: false },
     subscribed: { type: Boolean, default: false },
+    subscription_plan: {
+      type: String,
+      enum: [
+        SUBRIPTION_PLANS.FREE.TITLE,
+        SUBRIPTION_PLANS.PRO.TITLE,
+        SUBRIPTION_PLANS.ELITE.TITLE,
+      ],
+      default: "free",
+    },
     subscription_expires_at: { type: Date },
     post_count: { type: Number, default: 0 },
     expired_listings_count: { type: Number, default: 0 },

@@ -164,9 +164,16 @@ function Review() {
         </button>
         <button
           type="submit"
-          className="medium mb-4 w-25"
           onClick={handleSubmit}
           disabled={loading}
+          className="w-25"
+          style={{
+            borderRadius: 8,
+            background: "rgb(96, 108, 188)",
+            color: "#fff",
+            padding: "10px 42px",
+            border: "none",
+          }}
         >
           {loading ? <>Please wait....</> : <>Confirm</>}
         </button>

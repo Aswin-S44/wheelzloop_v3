@@ -1,21 +1,12 @@
 import React, { useContext } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 import { Formik } from "formik";
-// import { Input, Button, Row, Col, Select, Typography } from "antd";
 import Input from "antd/es/input";
 import Button from "antd/es/button";
 import Row from "antd/es/row";
 import Col from "antd/es/col";
 import Select from "antd/es/select";
 import Typography from "antd/es/typography";
-
-// import 'antd/es/input/style/css';
-// import 'antd/es/button/style/css';
-// import 'antd/es/row/style/css';
-// import 'antd/es/col/style/css';
-// import 'antd/es/select/style/css';
-// import 'antd/es/typography/style/css';
-
 import {
   CarOutlined,
   DashboardOutlined,
@@ -36,11 +27,10 @@ function BasicInformation() {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
       <Title
-        level={2}
-        style={{ textAlign: "center", marginBottom: 32, color: "#30bfa1" }}
+        level={3}
+        style={{ textAlign: "left", marginBottom: 32, color: "#606cbc" }}
       >
-        <CarOutlined style={{ marginRight: 8 }} />
-        Enter Your Car Details
+        Basic Information
       </Title>
 
       <Formik
@@ -65,15 +55,10 @@ function BasicInformation() {
         {({ handleSubmit, handleChange, values, errors, setFieldValue }) => (
           <form
             onSubmit={handleSubmit}
-            style={{
-              background:
-                "linear-gradient(135deg, rgb(245, 247, 250), rgb(255 255 255))",
-              padding: 24,
-              borderRadius: 12,
-            }}
+            style={{ background: "#fff", padding: 24, borderRadius: 12 }}
           >
-            <Row gutter={24}>
-              <Col span={24}>
+            <Row gutter={[24, 24]}>
+              <Col xs={24} md={24}>
                 <div
                   className={`form__item ${errors.car_name && "input__error"}`}
                 >
@@ -99,20 +84,24 @@ function BasicInformation() {
                   )}
                 </div>
               </Col>
-            </Row>
 
-            <Row gutter={24} style={{ marginTop: 24 }}>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <div className={`form__item ${errors.brand && "input__error"}`}>
                   <label style={{ fontWeight: 500, color: "#333" }}>
                     Brand*
                   </label>
                   <Select
+                    showSearch
                     placeholder="Select Brand"
                     size="large"
                     style={{ width: "100%", borderRadius: 8, height: "60px" }}
                     value={values.brand}
                     onChange={(value) => setFieldValue("brand", value)}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
                     suffixIcon={<CarOutlined style={{ color: "#888" }} />}
                   >
                     {car_brands.map((brand) => (
@@ -131,17 +120,17 @@ function BasicInformation() {
                   )}
                 </div>
               </Col>
-              <Col span={12}>
+
+              <Col xs={24} md={12}>
                 <div className={`form__item ${errors.model && "input__error"}`}>
                   <label style={{ fontWeight: 500, color: "#333" }}>
                     Model*
                   </label>
                   <Input
                     name="model"
-                    placeholder="Example: VXI Variant"
+                    placeholder="Example: VXI"
                     value={values.model}
                     onChange={handleChange}
-                    prefix={<CarOutlined style={{ color: "#888" }} />}
                     size="large"
                     style={{ borderRadius: 8, height: "60px" }}
                   />
@@ -155,20 +144,22 @@ function BasicInformation() {
                   )}
                 </div>
               </Col>
-            </Row>
 
-            <Row gutter={24} style={{ marginTop: 24 }}>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <div className={`form__item ${errors.year && "input__error"}`}>
                   <label style={{ fontWeight: 500, color: "#333" }}>
                     Year*
                   </label>
                   <Select
+                    showSearch
                     placeholder="Select Year"
                     size="large"
                     style={{ width: "100%", borderRadius: 8, height: "60px" }}
                     value={values.year}
                     onChange={(value) => setFieldValue("year", value)}
+                    filterOption={(input, option) =>
+                      option.children.toString().includes(input)
+                    }
                     suffixIcon={<CalendarOutlined style={{ color: "#888" }} />}
                   >
                     {years.map((year) => (
@@ -187,7 +178,8 @@ function BasicInformation() {
                   )}
                 </div>
               </Col>
-              <Col span={12}>
+
+              <Col xs={24} md={12}>
                 <div
                   className={`form__item ${errors.mileage && "input__error"}`}
                 >
@@ -213,10 +205,8 @@ function BasicInformation() {
                   )}
                 </div>
               </Col>
-            </Row>
 
-            <Row gutter={24} style={{ marginTop: 24 }}>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <div className={`form__item ${errors.price && "input__error"}`}>
                   <label style={{ fontWeight: 500, color: "#333" }}>
                     Price*
@@ -240,7 +230,8 @@ function BasicInformation() {
                   )}
                 </div>
               </Col>
-              <Col span={12}>
+
+              <Col xs={24} md={12}>
                 <div
                   className={`form__item ${errors.condition && "input__error"}`}
                 >
@@ -281,7 +272,7 @@ function BasicInformation() {
                 size="large"
                 style={{
                   borderRadius: 8,
-                  background: "#30bfa1",
+                  background: "rgb(96, 108, 188)",
                   border: "none",
                   padding: "10px 32px",
                   color: "#fff",

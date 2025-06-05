@@ -2,13 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import "./EditProfileScreen.css";
 import { UserContext } from "../../hooks/UserContext";
 import { DEFAULT_AVATAR } from "../../constants/urls";
-// import { Button, Upload } from "antd";
 import Button from "antd/es/button";
 import Upload from "antd/es/upload";
-
-// import 'antd/es/button/style/css';
-// import 'antd/es/upload/style/css';
-
 import { UploadOutlined } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -53,9 +48,7 @@ function EditProfileScreen() {
 
   const handleImageUpload = async ({ fileList }) => {
     if (fileList.length === 0) return;
-
     const base64Image = await convertToBase64(fileList[fileList.length - 1]);
-
     setUserData((prev) => {
       const updatedData = { ...prev, profile_picture: base64Image };
       setIsEdited(JSON.stringify(updatedData) !== JSON.stringify(user));
@@ -105,14 +98,10 @@ function EditProfileScreen() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (user) {
         setLoading(true);
-        const res = await axios.patch(
-          `${UPDATE_PROFILE_URL}/${user._id}`,
-          userData
-        );
+        await axios.patch(`${UPDATE_PROFILE_URL}/${user._id}`, userData);
         Swal.fire({
           title: "Success!",
           text: "Profile updated",
@@ -147,22 +136,18 @@ function EditProfileScreen() {
                 title="dealer profile image"
               />
               <div className="avatar-actions">
-                <label>Upload Images</label>
                 <Upload
                   listType="picture"
                   multiple={false}
                   beforeUpload={() => false}
                   onChange={handleImageUpload}
                   showUploadList={false}
-                  className="avatar-upload-btn"
                 >
-                  <Button icon={<UploadOutlined />}>Select Images</Button>
+                  <Button icon={<UploadOutlined />} className="upload-btn">
+                    Change Photo
+                  </Button>
                 </Upload>
-
-                <button
-                  className="avatar-remove-btn"
-                  onClick={handleRemoveImage}
-                >
+                <button className="remove-btn" onClick={handleRemoveImage}>
                   Remove
                 </button>
               </div>
@@ -171,7 +156,7 @@ function EditProfileScreen() {
               <h3>
                 {user?.first_name} {user?.last_name}
               </h3>
-              <p>
+              <p className="account-type">
                 {userData.role === "company"
                   ? "Business Account"
                   : "Personal Account"}
@@ -277,14 +262,18 @@ function EditProfileScreen() {
             <div className="form-actions">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="discard-btn"
                 onClick={handleDiscardChanges}
                 disabled={!isEdited}
               >
                 Discard Changes
               </button>
-              <button type="submit" className="medium" disabled={loading}>
-                {loading ? "Saving..." : "Save Profile"}
+              <button
+                type="submit"
+                className="save-btn"
+                disabled={loading || !isEdited}
+              >
+                {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>

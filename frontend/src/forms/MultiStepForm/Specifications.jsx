@@ -1,21 +1,11 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
-// import { Button, Input, Select, Row, Col, Typography } from "antd";
-
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 import Select from "antd/es/select";
 import Row from "antd/es/row";
 import Col from "antd/es/col";
 import Typography from "antd/es/typography";
-
-// import 'antd/es/button/style/css';
-// import 'antd/es/input/style/css';
-// import 'antd/es/select/style/css';
-// import 'antd/es/row/style/css';
-// import 'antd/es/col/style/css';
-// import 'antd/es/typography/style/css';
-
 import {
   DirectionsCar,
   Speed,
@@ -37,10 +27,9 @@ function Specifications() {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
       <Title
-        level={2}
-        style={{ textAlign: "center", marginBottom: 32, color: "#30bfa1" }}
+        level={3}
+        style={{ textAlign: "left", marginBottom: 32, color: "#606cbc" }}
       >
-        <DirectionsCar style={{ marginRight: 8 }} />
         Enter Car Specifications
       </Title>
 
@@ -68,14 +57,13 @@ function Specifications() {
           <form
             onSubmit={handleSubmit}
             style={{
-              background:
-                "linear-gradient(135deg, rgb(245, 247, 250), rgb(255 255 255))",
+              background: "#fff",
               padding: 24,
               borderRadius: 12,
             }}
           >
             <Row gutter={24}>
-              <Col span={12}>
+              <Col xs={24} md={12} marginTop={0} style={{ marginTop: "20px" }}>
                 <div
                   className={`form__item ${errors.fuel_type && "input__error"}`}
                 >
@@ -88,7 +76,6 @@ function Specifications() {
                     style={{ width: "100%", borderRadius: 8, height: "60px" }}
                     value={values.fuel_type}
                     onChange={(value) => setFieldValue("fuel_type", value)}
-                    suffixIcon={<LocalGasStation style={{ color: "#888" }} />}
                   >
                     {["Petrol", "Diesel", "Hybrid", "Electric"].map((fuel) => (
                       <Option key={fuel} value={fuel}>
@@ -107,7 +94,7 @@ function Specifications() {
                 </div>
               </Col>
 
-              <Col span={12}>
+              <Col xs={24} md={12} style={{ marginTop: "20px" }}>
                 <div
                   className={`form__item ${
                     errors.transmission && "input__error"
@@ -122,7 +109,6 @@ function Specifications() {
                     style={{ width: "100%", borderRadius: 8, height: "60px" }}
                     value={values.transmission}
                     onChange={(value) => setFieldValue("transmission", value)}
-                    suffixIcon={<SyncAlt style={{ color: "#888" }} />}
                   >
                     {["Automatic", "Manual"].map((trans) => (
                       <Option key={trans} value={trans}>
@@ -142,8 +128,8 @@ function Specifications() {
               </Col>
             </Row>
 
-            <Row gutter={24} style={{ marginTop: 24 }}>
-              <Col span={12}>
+            <Row gutter={24}>
+              <Col xs={24} md={12} style={{ marginTop: "20px" }}>
                 <div
                   className={`form__item ${errors.body_type && "input__error"}`}
                 >
@@ -156,7 +142,6 @@ function Specifications() {
                     style={{ width: "100%", borderRadius: 8, height: "60px" }}
                     value={values.body_type}
                     onChange={(value) => setFieldValue("body_type", value)}
-                    suffixIcon={<Category style={{ color: "#888" }} />}
                   >
                     {["Sedan", "SUV", "Hatchback"].map((body) => (
                       <Option key={body} value={body}>
@@ -175,7 +160,7 @@ function Specifications() {
                 </div>
               </Col>
 
-              <Col span={12}>
+              <Col xs={24} md={12} style={{ marginTop: "20px" }}>
                 <div
                   className={`form__item ${
                     errors.engine_size && "input__error"
@@ -189,7 +174,6 @@ function Specifications() {
                     placeholder="Example: 1500cc"
                     value={values.engine_size}
                     onChange={handleChange}
-                    prefix={<Speed style={{ color: "#888" }} />}
                     size="large"
                     style={{ borderRadius: 8, height: "60px" }}
                   />
@@ -205,8 +189,8 @@ function Specifications() {
               </Col>
             </Row>
 
-            <Row gutter={24} style={{ marginTop: 24 }}>
-              <Col span={12}>
+            <Row gutter={24}>
+              <Col xs={24} md={12} style={{ marginTop: "20px" }}>
                 <div className={`form__item ${errors.seats && "input__error"}`}>
                   <label style={{ fontWeight: 500, color: "#333" }}>
                     Number of Seats*
@@ -216,7 +200,6 @@ function Specifications() {
                     placeholder="Example: 5"
                     value={values.seats}
                     onChange={handleChange}
-                    prefix={<People style={{ color: "#888" }} />}
                     size="large"
                     style={{ borderRadius: 8, height: "60px" }}
                   />
@@ -231,7 +214,7 @@ function Specifications() {
                 </div>
               </Col>
 
-              <Col span={12}>
+              <Col xs={24} md={12} style={{ marginTop: "20px" }}>
                 <div
                   className={`form__item ${
                     errors.price_negotiable && "input__error"
@@ -248,7 +231,6 @@ function Specifications() {
                     onChange={(value) =>
                       setFieldValue("price_negotiable", value)
                     }
-                    suffixIcon={<AttachMoney style={{ color: "#888" }} />}
                   >
                     {["Yes", "No"].map((option) => (
                       <Option key={option} value={option}>
@@ -273,15 +255,19 @@ function Specifications() {
                 type="default"
                 size="large"
                 onClick={prev}
-                style={{ borderRadius: 8 }}
+                style={{ borderRadius: 8, padding: "10px 32px" }}
               >
                 Back
               </Button>
               <Button
-                type="primary"
                 size="large"
                 onClick={handleSubmit}
-                style={{ borderRadius: 8 }}
+                style={{
+                  borderRadius: 8,
+                  background: "rgb(96, 108, 188)",
+                  color: "#fff",
+                  padding: "10px 32px",
+                }}
               >
                 Next
               </Button>

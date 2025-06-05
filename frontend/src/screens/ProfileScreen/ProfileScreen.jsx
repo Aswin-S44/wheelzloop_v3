@@ -11,6 +11,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import { UserContext } from "../../hooks/UserContext";
+import EmptyState from "../../components/EmptyState/EmptyState";
 
 function ProfileScreen() {
   const navigate = useNavigate();
@@ -59,8 +60,7 @@ function ProfileScreen() {
             </TabPanel> */}
             <TabPanel>
               <div className="cars-header">
-                <h2>My Vehicles</h2>
-                <button className="add-car-btn" onClick={handleAddCar}>
+                <button className="add-car-btn mt-2" onClick={handleAddCar}>
                   <ControlPointIcon />
                   Add Car
                 </button>
@@ -69,7 +69,9 @@ function ProfileScreen() {
                 {loading ? (
                   <Loader />
                 ) : cars.length === 0 ? (
-                  <div className="no-cars">No cars available</div>
+                  <div className="no-cars">
+                    <EmptyState />
+                  </div>
                 ) : (
                   cars?.map((car, index) => (
                     <Card

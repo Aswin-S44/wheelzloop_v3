@@ -89,6 +89,7 @@
 .react-tabs__tab--selected {
   color: #101c3a;
   border-bottom: 3px solid #606cbc;
+  font-size: 20px;
 }
 
 .react-tabs__tab:hover {
@@ -156,7 +157,7 @@
 
 .cars-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 1.5rem;
 }
@@ -168,7 +169,7 @@
 }
 
 .add-car-btn {
-  background-color: #30bfa1;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;

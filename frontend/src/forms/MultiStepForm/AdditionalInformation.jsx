@@ -145,10 +145,26 @@ function AdditionalInformation() {
             </div>
           </div>
           <div className="form__item button__items d-flex justify-content-between mt-4">
-            <Button type="default" onClick={prev}>
+            <Button
+              type="default"
+              onClick={prev}
+              style={{
+                borderRadius: 8,
+                padding: "20px 32px",
+              }}
+            >
               Back
             </Button>
-            <Button type="primary" onClick={handleSubmit}>
+            <Button
+              type="primary"
+              onClick={handleSubmit}
+              style={{
+                borderRadius: 8,
+                background: "rgb(96, 108, 188)",
+                color: "#fff",
+                padding: "20px 32px",
+              }}
+            >
               Next
             </Button>
           </div>
