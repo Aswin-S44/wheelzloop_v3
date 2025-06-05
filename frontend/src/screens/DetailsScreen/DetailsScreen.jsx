@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ADD_CHAT_USER, CAR_DETAILS_API, GET_ALL_CARS } from "../../config/api";
 import { ToastContainer, toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 import Loader from "../../components/Loader/Loader";
 import {
@@ -141,6 +142,34 @@ function DetailsScreen() {
 
   return (
     <div className="details-container">
+      <Helmet>
+        <title>
+          {car?.title || car?.brand + " " + car?.model} - WheelzLoop
+        </title>
+        <meta
+          name="description"
+          content={`Buy ${car?.brand} ${car?.model} in ${car?.location}. ${car?.kilometers_driven} driven, ${car?.fuel_type} car in good condition. Check price & details now.`}
+        />
+        <meta
+          name="keywords"
+          content={`${car?.brand}, ${car?.model}, used cars in ${car?.location}, second hand ${car?.brand}, pre-owned ${car?.model}, buy used car Kerala`}
+        />
+        <meta
+          property="og:title"
+          content={`${car?.brand} ${car?.model} - WheelzLoop`}
+        />
+        <meta
+          property="og:description"
+          content={`Buy this ${car?.fuel_type} ${car?.brand} ${car?.model} car in ${car?.location}. Explore details now.`}
+        />
+        <meta property="og:image" content={car?.images?.[0]} />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://www.wheelzloop.com/cars/${id}`}
+        />
+        <link rel="canonical" href={`https://www.wheelzloop.com/cars/${id}`} />
+      </Helmet>
       <div className="breadcrumb">
         <a href="/">Home</a>
         <span className="separator">/</span>
