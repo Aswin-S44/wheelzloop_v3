@@ -3,6 +3,7 @@ import "./Footer.css";
 import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
 import XIcon from "@mui/icons-material/X";
 import EmailIcon from "@mui/icons-material/Email";
+import { FACEBOOK, INSTAGRAM, LINKEDIN, X } from "../../constants/social-urls";
 
 function Footer() {
   return (
@@ -39,7 +40,7 @@ function Footer() {
         </div>
         <div className="footer-container">
           <div className="footer-section footer-logo">
-            <h3 style={{ color: "#28c694", fontWeight: "bold" }}>WheelzLoop</h3>
+            <h3 style={{ color: "#606cbc", fontWeight: "bold" }}>WheelzLoop</h3>
             <p>Your trusted partner for buying and selling used cars.</p>
           </div>
           <div className="footer-section footer-links">
@@ -116,7 +117,7 @@ function Footer() {
             <h3>Contact Us</h3>
             {/* <p>123 Auto Lane, CarCity, Country</p> */}
             <p>
-              <EmailIcon style={{ color: "#28c694" }} /> wheelzloop@gmail.com
+              <EmailIcon style={{ color: "#606cbc" }} /> wheelzloop@gmail.com
             </p>
             {/* <p>Phone: +1 (555) 123-4567</p> */}
           </div>
@@ -124,40 +125,40 @@ function Footer() {
             <h3>Follow Us</h3>
             <div className="social-icons">
               <a
-                href="https://www.facebook.com/profile.php?id=61565890412918"
+                href={FACEBOOK}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook page"
                 title="facebook page"
               >
-                <Facebook style={{ color: "#28c694" }} fontSize="large" />
+                <Facebook style={{ color: "#606cbc" }} fontSize="large" />
               </a>
               <a
-                href="https://x.com/WheelzLoop"
+                href={X}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X page"
                 title="x page"
               >
-                <XIcon style={{ color: "#28c694" }} fontSize="large" />
+                <XIcon style={{ color: "#606cbc" }} fontSize="large" />
               </a>
               <a
-                href="https://www.instagram.com/wheelz_loop/"
+                href={INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram page"
                 title="instagram"
               >
-                <Instagram style={{ color: "#28c694" }} fontSize="large" />
+                <Instagram style={{ color: "#606cbc" }} fontSize="large" />
               </a>
               <a
-                href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/"
+                href={LINKEDIN}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Linkedin page"
                 title="linkedin"
               >
-                <LinkedIn style={{ color: "#28c694" }} fontSize="large" />
+                <LinkedIn style={{ color: "#606cbc" }} fontSize="large" />
               </a>
             </div>
           </div>

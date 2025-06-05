@@ -43,7 +43,7 @@
 }
 
 .apply-btn {
-  background: #30bfa1;
+  background: #606cbc;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -121,7 +121,7 @@
 
 .section-title {
   font-size: 1.1rem;
-  color: #30bfa1;
+  color: #606cbc;
   margin-bottom: 16px;
   font-weight: 600;
 }
@@ -158,7 +158,7 @@
 }
 
 .brand-header:hover {
-  color: #30bfa1;
+  color: var(--primary-color);
 }
 
 .accordion-icon {

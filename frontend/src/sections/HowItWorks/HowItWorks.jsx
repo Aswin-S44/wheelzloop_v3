@@ -63,7 +63,7 @@ function HowItWorks() {
           <div className="step">
             <div className="step-number">1</div>
             <div className="step-icon">
-              <PersonAddAlt1 className="icon" style={{ color: "#28c694" }} />
+              <PersonAddAlt1 className="icon" style={{ color: "#ADB2D4" }} />
             </div>
             <h3 className="step-title">Create an Account</h3>
             <p className="step-description">
@@ -77,7 +77,7 @@ function HowItWorks() {
           <div className="step">
             <div className="step-number">2</div>
             <div className="step-icon">
-              <DirectionsCar className="icon" style={{ color: "#28c694" }} />
+              <DirectionsCar className="icon" style={{ color: "#ADB2D4" }} />
             </div>
             <h3 className="step-title">List Your Vehicle</h3>
             <p className="step-description">
@@ -91,7 +91,7 @@ function HowItWorks() {
           <div className="step">
             <div className="step-number">3</div>
             <div className="step-icon">
-              <Handshake className="icon" style={{ color: "#28c694" }} />
+              <Handshake className="icon" style={{ color: "#ADB2D4" }} />
             </div>
             <h3 className="step-title">Connect With Buyers</h3>
             <p className="step-description">

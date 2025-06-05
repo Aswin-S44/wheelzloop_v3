@@ -1,7 +1,7 @@
-/* Modern Blog Styles */
 :root {
-  --primary: #30bfa1;
-  --primary-dark: #148a84;
+  --primary: #606cbc;
+  --primary-dark: #4a5699;
+  --secondary: #ADB2D4;
   --dark: #2c3e50;
   --light: #ffffff;
   --gray: #6c757d;
@@ -14,23 +14,22 @@
   --radius-lg: 18px;
 }
 
-/* Base Styles */
 .blogs-container {
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'Inter', system-ui, sans-serif;
   color: var(--dark);
   line-height: 1.6;
+  padding: 0 1rem;
 }
 
-/* Hero Section */
 .blog-hero {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   padding: 4rem 2rem;
   text-align: center;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  margin-bottom: 2rem;
+  border-radius: var(--radius-md);
+  margin: 2rem 0;
 }
 
 .hero-content h1 {
@@ -46,12 +45,11 @@
   opacity: 0.9;
 }
 
-/* Navigation */
 .blog-navigation {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 3rem;
+  margin: 2rem 0;
   flex-wrap: wrap;
 }
 
@@ -63,6 +61,8 @@
   text-decoration: none;
   transition: all 0.2s;
   border: 1px solid var(--border);
+  background: var(--light);
+  cursor: pointer;
 }
 
 .nav-link:hover {
@@ -76,13 +76,12 @@
   border-color: var(--primary);
 }
 
-/* Article Styles */
 .blog-article {
   background: var(--light);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -104,7 +103,7 @@
 }
 
 .article-category {
-  background: rgba(48, 191, 161, 0.1);
+  background: rgba(96, 108, 188, 0.1);
   color: var(--primary);
   padding: 0.3rem 0.8rem;
   border-radius: 1rem;
@@ -141,6 +140,7 @@
   cursor: pointer;
   transition: all 0.2s;
   font-size: 0.9rem;
+  border: none;
 }
 
 .save-btn {
@@ -160,7 +160,7 @@
 }
 
 .share-btn:hover {
-  background: rgba(48, 191, 161, 0.1);
+  background: rgba(96, 108, 188, 0.1);
 }
 
 .article-image {
@@ -208,13 +208,15 @@
   margin-bottom: 1rem;
 }
 
-/* Article Footer */
 .article-footer {
   padding: 2rem;
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--light);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  margin-top: -1rem;
 }
 
 .author-info {
@@ -260,12 +262,18 @@
   cursor: pointer;
   transition: all 0.2s;
   font-size: 0.9rem;
+  border: none;
 }
 
 .prev-btn {
   background: var(--light-gray);
   color: var(--dark);
   border: 1px solid var(--border);
+}
+
+.prev-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .next-btn {
@@ -278,7 +286,11 @@
   background: var(--primary-dark);
 }
 
-/* Newsletter */
+.next-btn:disabled {
+  background: var(--secondary);
+  cursor: not-allowed;
+}
+
 .newsletter-cta {
   background: var(--light-gray);
   padding: 3rem;
@@ -313,6 +325,11 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm) 0 0 var(--radius-sm);
   font-size: 1rem;
+  outline: none;
+}
+
+.subscribe-form input:focus {
+  border-color: var(--primary);
 }
 
 .subscribe-form button {
@@ -333,7 +350,6 @@
   background: var(--primary-dark);
 }
 
-/* Related Articles */
 .related-articles {
   margin-bottom: 3rem;
 }
@@ -356,6 +372,7 @@
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 .related-card:hover {
@@ -375,7 +392,7 @@
 
 .card-category {
   display: inline-block;
-  background: rgba(48, 191, 161, 0.1);
+  background: rgba(96, 108, 188, 0.1);
   color: var(--primary);
   padding: 0.3rem 0.8rem;
   border-radius: 1rem;
@@ -398,29 +415,9 @@
   line-height: 1.5;
 }
 
-.card-content a {
-  color: var(--primary);
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.card-content a::after {
-  content: '→';
-  transition: transform 0.2s;
-}
-
-.card-content a:hover::after {
-  transform: translateX(3px);
-}
-
-/* Responsive Styles */
 @media (max-width: 768px) {
   .blog-hero {
     padding: 3rem 1.5rem;
-    border-radius: 0;
   }
   
   .hero-content h1 {
@@ -476,8 +473,7 @@
   }
   
   .article-header,
-  .article-body,
-  .article-footer {
+  .article-body {
     padding: 1.5rem;
   }
   

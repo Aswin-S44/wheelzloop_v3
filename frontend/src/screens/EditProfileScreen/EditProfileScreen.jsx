@@ -2,7 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import "./EditProfileScreen.css";
 import { UserContext } from "../../hooks/UserContext";
 import { DEFAULT_AVATAR } from "../../constants/urls";
-import { Button, Upload } from "antd";
+// import { Button, Upload } from "antd";
+import Button from "antd/es/button";
+import Upload from "antd/es/upload";
+
+// import 'antd/es/button/style/css';
+// import 'antd/es/upload/style/css';
+
 import { UploadOutlined } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import axios from "axios";

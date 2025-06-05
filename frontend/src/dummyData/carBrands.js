@@ -42,6 +42,8 @@ export const car_brands = [
   "GMC",
   "Buick",
   "Suzuki",
+  "Tata",
+  "Scoda",
 ];
 
 export const car_conditions = [

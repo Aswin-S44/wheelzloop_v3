@@ -14,12 +14,13 @@ import axios from "axios";
 import { GET_ALL_CARS } from "../../config/api";
 import Loader from "../../components/Loader/Loader";
 import EmptyState from "../../components/EmptyState/EmptyState";
-import Banner from "../../components/Banner/Banner";
+// import Banner from "../../components/Banner/Banner";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { carBodyTypes } from "../../dummyData/bodyTypes";
 import CategoryCars from "../../components/CategoryCars/CategoryCars";
 import Banner2 from "../../components/Banner2/Banner2";
+
 import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
 import AdvSection from "../../sections/AdvSection/AdvSection";
 
@@ -40,6 +41,15 @@ function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const currentTab = carBodyTypes.find((tab) => tab.index == 2);
   const [selectedTab, setSelectedTab] = useState(currentTab);
+
+  const tabListRef = useRef(null);
+
+  const scrollTabs = (direction) => {
+    if (tabListRef.current) {
+      const scrollAmount = direction === "left" ? -200 : 200;
+      tabListRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -77,7 +87,25 @@ function HomeScreen() {
         {/* <Banner /> */}
         <Banner2 />
       </div>
-      <div>
+      <div className="mt-5">
+        <h3 className="text-center fw-bold">
+          <span className="quality-text">
+            Choose by Category
+            <svg
+              width="120"
+              height="12"
+              viewBox="0 0 120 12"
+              className="curved-line"
+            >
+              <path
+                d="M0,6 Q60,12 120,6"
+                stroke="#FFD700"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+          </span>{" "}
+        </h3>
         <CarCategoriesSection />
       </div>
       <div className="container">
@@ -144,7 +172,7 @@ function HomeScreen() {
             optionLink={`/used-cars?.category=sedan`}
           />
 
-          <Tabs>
+          {/* <Tabs>
             <div>
               <TabList>
                 {carBodyTypes?.slice(0, 4).map((type, index) => (
@@ -158,7 +186,54 @@ function HomeScreen() {
                 <CategoryCars category={type.value} />
               </TabPanel>
             ))}
-          </Tabs>
+          </Tabs> */}
+          <div className="tabs-container">
+            <Tabs>
+              <div className="tab-scroll-wrapper">
+                <button
+                  className="tab-scroll-button left"
+                  onClick={() => scrollTabs("left")}
+                  aria-label="Scroll tabs left"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+
+                <TabList ref={tabListRef}>
+                  {carBodyTypes?.slice(0, 3).map((type, index) => (
+                    <Tab key={index}>{type.text}</Tab>
+                  ))}
+                </TabList>
+
+                <button
+                  className="tab-scroll-button right"
+                  onClick={() => scrollTabs("right")}
+                  aria-label="Scroll tabs right"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {carBodyTypes?.slice(0, 4).map((type, index) => (
+                <TabPanel key={index}>
+                  <CategoryCars category={type.value} />
+                </TabPanel>
+              ))}
+            </Tabs>
+          </div>
         </div>
       </div>
       <div className="mt-0">

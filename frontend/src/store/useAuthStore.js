@@ -2,10 +2,10 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { axiosInstance } from "../lib/axios";
-import { BACKEND_URL } from "../config/api";
+// import { BACKEND_URL } from "../config/api";
 
-const BASE_URL = "http://localhost:5000";
-// const BASE_URL = BACKEND_URL;
+// const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://wheelzloop-v3-1.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -67,10 +67,11 @@ export const useAuthStore = create((set, get) => ({
 
   logout: async () => {
     try {
-      await axiosInstance.post("/logout");
+      await axiosInstance.post("/api/v1/user/logout");
       set({ authUser: null });
       toast.success("Logged out successfully");
       get().disconnectSocket();
+      window.location.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     }

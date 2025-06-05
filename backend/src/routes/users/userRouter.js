@@ -33,6 +33,8 @@ const {
   verifySignupOTP,
 } = require("../../controllers/users/signup");
 const { addViewsCount } = require("../../controllers/users/addViewsCount");
+const { Logout } = require("../../controllers/users/logout");
+const { sentFeedback } = require("../../controllers/users/sentFeedback");
 
 const router = express.Router();
 
@@ -45,6 +47,7 @@ router.get("/me", getMe);
 
 // Auth related routes
 router.post("/signin", SignIn);
+router.post("/logout", Logout);
 router.post("/otp/send", sendSignupOTP);
 router.post("/otp/verify", verifySignupOTP);
 router.post("/signup", Signup);
@@ -92,5 +95,7 @@ router.get("/message/:id", userVerification, getMessages);
 router.post("/message/send/:id", userVerification, sendMessage);
 
 router.post("/add-views-count/:id", addViewsCount);
+
+router.post("/feedback", sentFeedback);
 
 module.exports = router;

@@ -31,19 +31,15 @@ function MobileFilter({ onFilterChange }) {
 
   useEffect(() => {
     const appHeader = document.querySelector(".header");
-    if (appHeader) {
-      setHeaderHeight(appHeader.offsetHeight);
-    }
+    if (appHeader) setHeaderHeight(appHeader.offsetHeight);
   }, []);
 
   const handleSearch = (e) => setSearch(e.target.value);
 
   const handleCheckboxChange = (selectedArray, setSelectedArray, value) => {
-    if (selectedArray.includes(value)) {
-      setSelectedArray(selectedArray.filter((item) => item !== value));
-    } else {
-      setSelectedArray([...selectedArray, value]);
-    }
+    selectedArray.includes(value)
+      ? setSelectedArray(selectedArray.filter((item) => item !== value))
+      : setSelectedArray([...selectedArray, value]);
   };
 
   const handleAccordionToggle = (index) => {
@@ -62,10 +58,11 @@ function MobileFilter({ onFilterChange }) {
         selectedTransmissionTypes.length > 0 ? selectedTransmissionTypes : null,
     };
 
-    const validFilters = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => value !== null)
+    onFilterChange(
+      Object.fromEntries(
+        Object.entries(filters).filter(([_, value]) => value !== null)
+      )
     );
-    onFilterChange(validFilters);
     setIsFilterVisible(false);
   };
 
@@ -80,12 +77,11 @@ function MobileFilter({ onFilterChange }) {
     onFilterChange({});
   };
 
-  const filteredBrands = brands.filter((brand) => {
-    return (
+  const filteredBrands = brands.filter(
+    (brand) =>
       brand.brand.toLowerCase().includes(search.toLowerCase()) ||
       brand.cars.some((car) => car.toLowerCase().includes(search.toLowerCase()))
-    );
-  });
+  );
 
   return (
     <div>
@@ -100,7 +96,7 @@ function MobileFilter({ onFilterChange }) {
       {isFilterVisible && (
         <div
           className="mobile-filter-overlay"
-          style={{ top: `${headerHeight}px` }}
+          // style={{ top: `${headerHeight}px` }}
         >
           <div className="mobile-filter-container">
             <div className="mobile-filter-header">
@@ -119,13 +115,11 @@ function MobileFilter({ onFilterChange }) {
                     placeholder="Search brand or car..."
                     value={search}
                     onChange={handleSearch}
-                    className="search-input"
                   />
                 </div>
               </div>
 
               <div className="filter-sections">
-                {/* Top Brands Section */}
                 <div className="filter-section">
                   <h3 className="section-title">Top Brands</h3>
                   <div className="brands-list">
@@ -172,7 +166,6 @@ function MobileFilter({ onFilterChange }) {
                   </div>
                 </div>
 
-                {/* Other Filter Sections */}
                 {[
                   {
                     title: "Year",
@@ -210,7 +203,7 @@ function MobileFilter({ onFilterChange }) {
                     <h3 className="section-title">{section.title}</h3>
                     <div className="options-grid">
                       {section.items.map((item, idx) => (
-                        <label key={idx}>
+                        <label key={idx} className="option-item">
                           <input
                             type={section.isRadio ? "radio" : "checkbox"}
                             name={
@@ -228,9 +221,7 @@ function MobileFilter({ onFilterChange }) {
                                 ? setSelectedYear(item.text)
                                 : handleCheckboxChange(
                                     section.state,
-                                    section.isRadio
-                                      ? setSelectedYear
-                                      : section.title === "Fuel Type"
+                                    section.title === "Fuel Type"
                                       ? setSelectedFuelTypes
                                       : section.title === "Ownership"
                                       ? setSelectedOwnership
@@ -243,7 +234,6 @@ function MobileFilter({ onFilterChange }) {
                                   )
                             }
                           />
-                          <span className="checkmark"></span>
                           <span className="option-text">{item.text}</span>
                         </label>
                       ))}

@@ -2,7 +2,7 @@ const User = require("../../../models/users/userSchema");
 const crypto = require("crypto");
 const { sendEmail } = require("../../utils/utils");
 const { emailSubjects } = require("../../../constants/templates");
-
+require("dotenv").config();
 const applicationUrl = process.env.APPLICATION_URL || "http://localhost:3000";
 
 module.exports.forgotPassword = async (req, res) => {
@@ -19,6 +19,7 @@ module.exports.forgotPassword = async (req, res) => {
 
   let htmlContent = `<p>You requested to reset your password. Click <a href=${resetPasswordLink}>here</a> to reset.</p>`;
   await sendEmail(
+    process.env.EMAIL_USER,
     emailSubjects.PASSWORD_RESET,
     emailSubjects.PASSWORD_RESET,
     htmlContent,

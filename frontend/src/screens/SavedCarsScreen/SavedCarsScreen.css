@@ -14,12 +14,11 @@
 .saved-cars-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1a365d;
+  color: var(--primary-color);
   margin-bottom: 10px;
-  background: linear-gradient(90deg, #3182ce, #38b2ac);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  /* background: linear-gradient(90deg, #3182ce, #38b2ac); */
+
+  
 }
 
 .saved-cars-subtitle {
@@ -33,7 +32,7 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -50,7 +49,7 @@
 }
 
 .empty-state p {
-  color: #718096;
+  color: #101c3a;
   margin-bottom: 20px;
 }
 

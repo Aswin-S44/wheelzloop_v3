@@ -1,7 +1,21 @@
 import React, { useContext } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 import { Formik } from "formik";
-import { Input, Button, Row, Col, Select, Typography } from "antd";
+// import { Input, Button, Row, Col, Select, Typography } from "antd";
+import Input from "antd/es/input";
+import Button from "antd/es/button";
+import Row from "antd/es/row";
+import Col from "antd/es/col";
+import Select from "antd/es/select";
+import Typography from "antd/es/typography";
+
+// import 'antd/es/input/style/css';
+// import 'antd/es/button/style/css';
+// import 'antd/es/row/style/css';
+// import 'antd/es/col/style/css';
+// import 'antd/es/select/style/css';
+// import 'antd/es/typography/style/css';
+
 import {
   CarOutlined,
   DashboardOutlined,

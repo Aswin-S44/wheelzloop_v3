@@ -18,7 +18,13 @@ module.exports.verifyToken = (token) => {
   }
 };
 
-module.exports.sendEmail = async (subject, content, htmlContent = null, to) => {
+module.exports.sendEmail = async (
+  from,
+  subject,
+  content,
+  htmlContent = null,
+  to
+) => {
   try {
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -27,9 +33,10 @@ module.exports.sendEmail = async (subject, content, htmlContent = null, to) => {
         pass: process.env.EMAIL_PASS,
       },
     });
-
+    console.log("from-----------", from);
+    console.log("to----------", to);
     var mailOptions = {
-      from: wheelzLoopEmail,
+      from,
       to,
       subject,
       text: content,

@@ -2,9 +2,18 @@ import React, { useContext, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Button, Input, Tag, Upload } from "antd";
+// import { Button, Input, Tag, Upload } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import Button from "antd/es/button";
+import Input from "antd/es/input";
+import Tag from "antd/es/tag";
+import Upload from "antd/es/upload";
+
+// import 'antd/es/button/style/css';
+// import 'antd/es/input/style/css';
+// import 'antd/es/tag/style/css';
+// import 'antd/es/upload/style/css';
 
 function AdditionalInformation() {
   const { additionalInformations, setAdditionalInformations, next, prev } =

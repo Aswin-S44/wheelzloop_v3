@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 .banner-container {
-    background-color: #c3fde2;
+    background-color: #ADB2D4;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .banner-image {
+    aspect-ratio: 2 / 1;
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -29,14 +30,14 @@
 }
 
 .banner-subtitle{
-    color: grey;
+    color: #51533f;
     font-family: "Kaushan Script", cursive;
     font-size: 29px !important;
     font-weight: 400 !important;
 }
 
 .banner-subtitle span{
-    color: #cfcf00;
+    color: #101c3a;
     font-size: 35px;
 
 }
@@ -54,11 +55,19 @@
     color: #cfcf00;
   }
 
+  .banner-title{
+    color: #111;
+  }
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .banner-container {
         border-radius: 15px;
         margin: 0 10px;
+    }
+
+    .banner-image{
+        width: 100%;
     }
     
     .banner-title {
