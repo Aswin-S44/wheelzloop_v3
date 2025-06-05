@@ -12,6 +12,8 @@ import "react-tabs/style/react-tabs.css";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import { UserContext } from "../../hooks/UserContext";
 import EmptyState from "../../components/EmptyState/EmptyState";
+import PremiumPlans from "../../components/PremiumPlans/PremiumPlans";
+import SubscriptionPromoCard from "../../components/SubscriptionPromoCard/SubscriptionPromoCard";
 
 function ProfileScreen() {
   const navigate = useNavigate();
@@ -47,7 +49,11 @@ function ProfileScreen() {
       <div className="profile-layout">
         <div className="profile-sidebar">
           <ProfileCard user={user} editable={true} />
+          <div className="mt-4">
+            <SubscriptionPromoCard />
+          </div>
         </div>
+
         <div className="profile-content">
           <Tabs>
             <TabList>

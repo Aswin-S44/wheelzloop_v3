@@ -16,7 +16,9 @@ module.exports.Signup = async (req, res, next) => {
       res.status(409).send(conflictResponse());
     }
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await User.create({ ...req.body, password: hashedPassword });
+
     const token = createSecretToken(user._id);
 
     res.cookie("token", token, {
@@ -29,6 +31,7 @@ module.exports.Signup = async (req, res, next) => {
 
     next();
   } catch (error) {
+    console.error("Signup error:", error);
     return error;
   }
 };

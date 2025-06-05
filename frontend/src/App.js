@@ -28,6 +28,8 @@ import { useAuthStore } from "./store/useAuthStore";
 import ForegotPasswordScreen from "./screens/ForegotPasswordScreen/ForegotPasswordScreen";
 import ResetPassswordScreen from "./screens/ResetPassswordScreen/ResetPassswordScreen";
 import ContactScreen from "./screens/ContactScreen/ContactScreen";
+import PremiumPlans from "./components/PremiumPlans/PremiumPlans";
+import PaymentScreen from "./screens/PaymentScreen/PaymentScreen";
 
 function Layout() {
   const location = useLocation();
@@ -64,6 +66,8 @@ function Layout() {
             <Route path="/about-us" element={<AboutUsScreen />} />
             <Route path="/reviews" element={<ReviewScreen />} />
             <Route path="/profile/:id" element={<DealerProfileScreen />} />
+            <Route path="/premium-plans" element={<PremiumPlans />} />
+            <Route path="/subscribe/:plan" element={<PaymentScreen />} />
             <Route
               path="/chats"
               element={authUser ? <ChatScreen /> : <ChatScreen />}
