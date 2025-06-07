@@ -41,6 +41,7 @@ const {
 const {
   getDashboardGraphStats,
 } = require("../../controllers/users/getDashboardGraphStats");
+const { createPaymentIntent } = require("../../controllers/users/payment");
 
 const router = express.Router();
 
@@ -106,5 +107,7 @@ router.post("/feedback", sentFeedback);
 
 router.get("/dashboard/:id/stats", getDashboardStats);
 router.get("/dashboard/:id/graph", getDashboardGraphStats);
+
+router.post("/create-payment-intent", createPaymentIntent);
 
 module.exports = router;

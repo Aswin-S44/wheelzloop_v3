@@ -17,34 +17,10 @@ import Swal from "sweetalert2";
 
 const PremiumPlans = () => {
   // Commenting for now
-  // const handleSubscribePan = async (plan) => {
-  //   window.location.href = `/subscribe/${plan}`;
-  // };
-  const { user } = useContext(UserContext);
-
   const handleSubscribePan = async (plan) => {
-    try {
-      const oneMonthFromNow = new Date();
-      oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
-      const res = await axios.patch(`${UPDATE_PROFILE_URL}/${user?._id}`, {
-        subscribed: true,
-        subscription_plan: plan,
-        subscription_expires_at: oneMonthFromNow.toISOString(),
-      });
-
-      if (res && res.status == 200) {
-        Swal.fire({
-          title: "Subsribed",
-          text: `You have subribed our ${plan} Plan`,
-          icon: "success",
-        }).then(() => {
-          window.location.href = "/profile";
-        });
-      }
-    } catch (error) {
-      console.log("Error while subsribing plans : ", error);
-    }
+    window.location.href = `/subscribe/${plan}`;
   };
+  const { user } = useContext(UserContext);
 
   return (
     <div className="premium-plans-container mt-2">
