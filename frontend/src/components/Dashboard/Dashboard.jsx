@@ -1,143 +1,193 @@
-// import React, { useState } from "react";
-// import { Bar } from "react-chartjs-2";
-// import "./Dashboard.css";
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from "chart.js";
+import React, { useEffect, useState } from "react";
+import { Bar, Line } from "react-chartjs-2";
+import "./Dashboard.css";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import axios from "axios";
+import { BACKEND_URL } from "../../config/api";
 
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-// function Dashboard() {
-//   const [timePeriod, setTimePeriod] = useState("1month");
+function Dashboard({ dealerId }) {
+  const [timePeriod, setTimePeriod] = useState("week");
+  const [stats, setStats] = useState(null);
+  const [graphData, setGraphData] = useState([]);
 
-//   const cardData = [
-//     { title: "Total Cars", value: "1,284", icon: "🚗", trend: "↑ 12%" },
-//     {
-//       title: "Total Profile Views",
-//       value: "8,542",
-//       icon: "👥",
-//       trend: "↑ 23%",
-//     },
-//     { title: "Sale Cars", value: "432", icon: "💰", trend: "↑ 5%" },
-//   ];
+  useEffect(() => {
+    if (dealerId) {
+      const fetchStats = async () => {
+        try {
+          const res = await axios.get(
+            `${BACKEND_URL}/api/v1/user/dashboard/${dealerId}/stats`
+          );
+          if (res && res.data) {
+            setStats(res.data);
+          }
+        } catch (error) {
+          console.log("Error while fetching status : ", error);
+        }
+      };
+      fetchStats();
+    }
+  }, [dealerId]);
 
-//   const getChartData = (period) => {
-//     if (period === "1week") {
-//       return {
-//         labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-//         datasets: [
-//           {
-//             label: "Cars Sold",
-//             data: [12, 19, 15, 21, 14, 25, 18],
-//             backgroundColor: "rgba(75, 192, 192, 0.6)",
-//           },
-//         ],
-//       };
-//     } else if (period === "1year") {
-//       return {
-//         labels: [
-//           "Jan",
-//           "Feb",
-//           "Mar",
-//           "Apr",
-//           "May",
-//           "Jun",
-//           "Jul",
-//           "Aug",
-//           "Sep",
-//           "Oct",
-//           "Nov",
-//           "Dec",
-//         ],
-//         datasets: [
-//           {
-//             label: "Cars Sold",
-//             data: [65, 59, 80, 81, 56, 72, 45, 67, 55, 82, 68, 76],
-//             backgroundColor: "rgba(75, 192, 192, 0.6)",
-//           },
-//         ],
-//       };
-//     } else {
-//       return {
-//         labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-//         datasets: [
-//           {
-//             label: "Cars Sold",
-//             data: [65, 59, 80, 81],
-//             backgroundColor: "rgba(75, 192, 192, 0.6)",
-//           },
-//         ],
-//       };
-//     }
-//   };
+  useEffect(() => {
+    if (dealerId) {
+      const fetchGraphStats = async () => {
+        try {
+          const res = await axios.get(
+            `${BACKEND_URL}/api/v1/user/dashboard/${dealerId}/graph?period=${timePeriod}`
+          );
+          if (res && res.data) {
+            setGraphData(res.data.data);
+          }
+        } catch (error) {
+          console.log("Error while fetching graph details : ", error);
+        }
+      };
+      fetchGraphStats();
+    }
+  }, [dealerId, timePeriod]);
 
-//   const options = {
-//     responsive: true,
-//     maintainAspectRatio: false,
-//     plugins: {
-//       legend: {
-//         position: "top",
-//       },
-//     },
-//   };
+  const cardData = [
+    {
+      title: "Total Cars",
+      value: stats ? stats.totalCars.toString() : "0",
+      icon: "🚗",
+      trendColor: "#27ae60",
+    },
+    {
+      title: "Total Car Views",
+      value: stats ? stats.totalViews.toString() : "0",
+      icon: "👁️",
+      trendColor: "#27ae60",
+    },
+    {
+      title: "Expired Cars",
+      value: stats ? stats.expiredCars.toString() : "0",
+      icon: "📩",
+      trendColor: "#e74c3c",
+    },
+  ];
 
-//   return (
-//     <div className="dashboard-container">
-//       <h1 className="dashboard-title">Dashboard Overview</h1>
+  const getChartData = () => {
+    let labels = [];
+    if (timePeriod === "week") {
+      labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    } else if (timePeriod === "month") {
+      labels = Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
+    } else {
+      labels = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+    }
 
-//       <div className="cards-container">
-//         {cardData.map((card, index) => (
-//           <div key={index} className="dashboard-card">
-//             <div className="card-icon">{card.icon}</div>
-//             <div className="card-content">
-//               <h3>{card.title}</h3>
-//               <h2>{card.value}</h2>
-//               <p className="trend">{card.trend}</p>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: "Car Views",
+          data: graphData,
+          borderColor: "#606cbc",
+          backgroundColor: "#606cbc30",
+          tension: 0.4,
+          fill: true,
+        },
+      ],
+    };
+  };
 
-//       <div className="chart-section">
-//         <div className="chart-header">
-//           <h2>Sales Analytics</h2>
-//           <select
-//             value={timePeriod}
-//             onChange={(e) => setTimePeriod(e.target.value)}
-//             className="period-selector"
-//           >
-//             <option value="1week">Last Week</option>
-//             <option value="1month">Last Month</option>
-//             <option value="1year">Last Year</option>
-//           </select>
-//         </div>
-//         <div className="chart-wrapper">
-//           <Bar data={getChartData(timePeriod)} options={options} />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          color: "#e0e0e0",
+        },
+      },
+    },
+  };
 
-// export default Dashboard;
+  return (
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">Dashboard Overview</h1>
 
-import React from "react";
+      <div className="cards-container">
+        {cardData.map((card, index) => (
+          <div key={index} className="dashboard-card">
+            <div
+              className="card-icon"
+              style={{ backgroundColor: `${card.trendColor}20` }}
+            >
+              {card.icon}
+            </div>
+            <div className="card-content">
+              <h3>{card.title}</h3>
+              <h2>{card.value}</h2>
+            </div>
+          </div>
+        ))}
+      </div>
 
-function Dashboard() {
-  return <div>Dashboard</div>;
+      <div className="chart-section">
+        <div className="chart-header">
+          <h2>Analytics Overview</h2>
+          <select
+            value={timePeriod}
+            onChange={(e) => setTimePeriod(e.target.value)}
+            className="period-selector"
+          >
+            <option value="week">Week</option>
+            <option value="month">Current Month</option>
+            <option value="year">Last Year</option>
+          </select>
+        </div>
+        <div className="chart-wrapper">
+          <Line data={getChartData()} options={options} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Dashboard;

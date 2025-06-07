@@ -1,5 +1,5 @@
 // const BACKEND_URL = process.env.BACKEND_URL;
-const BACKEND_URL = "http://localhost:5000";
+export const BACKEND_URL = "http://localhost:5000";
 // export const BACKEND_URL = "https://wheelzloop-v3-1.onrender.com"; // "http://localhost:5000";
 export const PROFILE_URL = `${BACKEND_URL}/api/v1/user/me`;
 export const SIGN_IN_URL = `${BACKEND_URL}/api/v1/user/signin`;
@@ -23,3 +23,4 @@ export const VERIFY_OTP__URL = `${BACKEND_URL}/api/v1/user/otp/verify`;
 export const ADD_CHAT_USER = `${BACKEND_URL}/api/v1/user/message/user/add`;
 export const ADD_CAR_VIEWS_COUNT = `${BACKEND_URL}/api/v1/user/add-views-count`;
 export const SEND_FEEDBACK_API = `${BACKEND_URL}/api/v1/user/feedback`;
+export const GET_STATUS_URL = `${BACKEND_URL}/api/v1/user/feedback`;

@@ -6,7 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ShareIcon from "@mui/icons-material/Share";
 import EditIcon from "@mui/icons-material/Edit";
-
+import VerifiedIcon from "@mui/icons-material/Verified";
 function ProfileCard({ user, editable = false }) {
   const handleEditProfile = () => {
     window.location.href = "/profile/edit";
@@ -22,7 +22,22 @@ function ProfileCard({ user, editable = false }) {
         />
       </div>
       <div className="profile-content">
-        <h2 className="name">{user?.first_name + " " + user?.last_name}</h2>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <h2 className="name">{user?.first_name + " " + user?.last_name}</h2>
+          {user && user?.subscribed && (
+            <div className="tooltip-container">
+              <VerifiedIcon className="verified-icon" />
+              <span className="tooltip-text">Verified</span>
+            </div>
+          )}
+        </div>
+
         <div className="profile-details">
           <div className="detail-item">
             <CalendarMonthIcon className="detail-icon" />

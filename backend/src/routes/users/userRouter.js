@@ -35,6 +35,12 @@ const {
 const { addViewsCount } = require("../../controllers/users/addViewsCount");
 const { Logout } = require("../../controllers/users/logout");
 const { sentFeedback } = require("../../controllers/users/sentFeedback");
+const {
+  getDashboardStats,
+} = require("../../controllers/users/getDashboardStats");
+const {
+  getDashboardGraphStats,
+} = require("../../controllers/users/getDashboardGraphStats");
 
 const router = express.Router();
 
@@ -97,5 +103,8 @@ router.post("/message/send/:id", userVerification, sendMessage);
 router.post("/add-views-count/:id", addViewsCount);
 
 router.post("/feedback", sentFeedback);
+
+router.get("/dashboard/:id/stats", getDashboardStats);
+router.get("/dashboard/:id/graph", getDashboardGraphStats);
 
 module.exports = router;

@@ -37,11 +37,17 @@ function ProfileScreen() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
-  console.log("user---------", user ? user : "no user");
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    if (user) {
+      setIsSubscribed(user.subscribed);
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -92,13 +98,15 @@ function ProfileScreen() {
         <div className="profile-content">
           <Tabs>
             <TabList>
-              {/* <Tab>Dashboard</Tab> */}
+              {isSubscribed && <Tab>Dashboard</Tab>}
               <Tab>My Cars</Tab>
             </TabList>
 
-            {/* <TabPanel>
-              <Dashboard />
-            </TabPanel> */}
+            {isSubscribed && (
+              <TabPanel>
+                <Dashboard dealerId={user?._id} />
+              </TabPanel>
+            )}
             <TabPanel>
               <div className="cars-header">
                 <button className="add-car-btn mt-2" onClick={handleAddCar}>
