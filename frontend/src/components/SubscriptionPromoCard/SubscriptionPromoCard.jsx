@@ -7,7 +7,7 @@ const SubscriptionPromoCard = () => {
   const navigate = useNavigate();
 
   const handleSubscribeClick = () => {
-    navigate("/premium-plans"); // Adjust the route as needed
+    navigate("/premium-plans");
   };
 
   return (

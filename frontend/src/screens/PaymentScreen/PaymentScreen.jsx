@@ -1,26 +1,231 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FaLock, FaCheckCircle, FaArrowLeft } from "react-icons/fa";
 import { SiPhonepe, SiPaytm, SiGooglepay } from "react-icons/si";
 import { RiVisaFill, RiMastercardFill } from "react-icons/ri";
 import { useParams, useNavigate } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  CardElement,
+  useStripe,
+  useElements,
+  Elements,
+} from "@stripe/react-stripe-js";
 import "./PaymentScreen.css";
+import { CREATE_PAYMENT_INTENT, UPDATE_PROFILE_URL } from "../../config/api";
+import { UserContext } from "../../hooks/UserContext";
+import axios from "axios";
 
-const PaymentScreen = () => {
-  const { plan } = useParams();
+const stripePromise = loadStripe(
+  process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || ""
+);
+
+const PaymentForm = ({ plan, planDetails }) => {
+  const stripe = useStripe();
+  const elements = useElements();
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [cardDetails, setCardDetails] = useState({
-    number: "",
-    name: "",
-    expiry: "",
-    cvv: "",
-  });
   const [upiId, setUpiId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { user } = useContext(UserContext);
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(CREATE_PAYMENT_INTENT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: planDetails[plan].amount,
+          currency: "inr",
+          paymentMethodType: paymentMethod,
+          plan: plan,
+          interval: plan === "yearly" ? "year" : "month",
+        }),
+      });
+
+      const { clientSecret } = await response.json();
+
+      if (paymentMethod === "card") {
+        const cardElement = elements.getElement(CardElement);
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          clientSecret,
+          {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: user?.username ?? "",
+              },
+            },
+          }
+        );
+
+        if (error) throw error;
+        if (paymentIntent.status === "succeeded") {
+          const handleSubscribePan = async () => {
+            try {
+              const oneMonthFromNow = new Date();
+              oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+              const res = await axios.patch(
+                `${UPDATE_PROFILE_URL}/${user?._id}`,
+                {
+                  subscribed: true,
+                  subscription_plan: plan,
+                  subscription_expires_at: oneMonthFromNow.toISOString(),
+                }
+              );
+
+              if (res && res.status == 200) {
+                navigate("/payment-success");
+              }
+            } catch (error) {
+              console.log("Error while subsribing plans : ", error);
+            }
+          };
+          handleSubscribePan();
+        }
+      } else if (paymentMethod === "upi") {
+        const { error, paymentIntent } = await stripe.confirmUpiPayment(
+          clientSecret,
+          {
+            payment_method: {
+              upi: {
+                vpa: upiId,
+              },
+            },
+          }
+        );
+
+        if (error) throw error;
+        if (paymentIntent.status === "requires_action")
+          navigate("/payment-processing");
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error("Payment failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const cardElementOptions = {
+    style: {
+      base: {
+        fontSize: "16px",
+        color: "#424770",
+        "::placeholder": {
+          color: "#aab7c4",
+        },
+      },
+      invalid: {
+        color: "#9e2146",
+      },
+    },
+  };
+
+  return (
+    <form className="payment-form" onSubmit={handlePayment}>
+      <div className="payment-methods">
+        <h3>Select Payment Method</h3>
+        <div className="method-options">
+          <div
+            className={`method-option ${
+              paymentMethod === "card" ? "active" : ""
+            }`}
+            onClick={() => setPaymentMethod("card")}
+          >
+            <div className="card-icons">
+              <RiVisaFill className="visa-icon" />
+              <RiMastercardFill className="mastercard-icon" />
+            </div>
+            <span>Credit/Debit Card</span>
+          </div>
+
+          <div
+            className={`method-option ${
+              paymentMethod === "upi" ? "active" : ""
+            }`}
+            onClick={() => setPaymentMethod("upi")}
+          >
+            <div className="upi-icons">
+              <SiPhonepe className="phonepe-icon" />
+              <SiPaytm className="paytm-icon" />
+              <SiGooglepay className="gpay-icon" />
+            </div>
+            <span>UPI Payment</span>
+          </div>
+        </div>
+      </div>
+
+      {paymentMethod === "card" && (
+        <div className="card-form">
+          <div className="form-group">
+            <label>Card Details</label>
+            <CardElement options={cardElementOptions} />
+          </div>
+        </div>
+      )}
+
+      {paymentMethod === "upi" && (
+        <div className="upi-form">
+          <div className="form-group">
+            <label>UPI ID</label>
+            <input
+              type="text"
+              placeholder="yourname@upi"
+              value={upiId}
+              onChange={(e) => setUpiId(e.target.value)}
+              required
+            />
+          </div>
+          <div className="upi-apps">
+            <button type="button" className="upi-app">
+              <SiPhonepe className="upi-icon" />
+              PhonePe
+            </button>
+            <button type="button" className="upi-app">
+              <SiPaytm className="upi-icon" />
+              Paytm
+            </button>
+            <button type="button" className="upi-app">
+              <SiGooglepay className="upi-icon" />
+              Google Pay
+            </button>
+          </div>
+        </div>
+      )}
+
+      {error && <div className="payment-error">{error}</div>}
+
+      <button
+        type="submit"
+        className="pay-button"
+        disabled={!paymentMethod || loading || !stripe}
+      >
+        {loading
+          ? "Processing..."
+          : `Pay ${planDetails[plan].price.split(" ")[0]}`}
+      </button>
+    </form>
+  );
+};
+
+const PaymentScreen = () => {
+  let { plan } = useParams();
+  plan = plan?.toLowerCase();
+  const navigate = useNavigate();
 
   const planDetails = {
     pro: {
       name: "Pro Plan",
       price: plan === "yearly" ? "₹5,388 (₹449/month)" : "₹599/month",
+      amount: plan === "yearly" ? 538800 : 59900,
       features: [
         "Up to 25-50 listings",
         "Featured profile badge",
@@ -32,6 +237,7 @@ const PaymentScreen = () => {
     elite: {
       name: "Elite Plan",
       price: plan === "yearly" ? "₹17,988 (₹1,499/month)" : "₹2,499/month",
+      amount: plan === "yearly" ? 1798800 : 249900,
       features: [
         "Unlimited listings",
         "Priority placement",
@@ -40,12 +246,6 @@ const PaymentScreen = () => {
         "Boost up to 10 listings/month",
       ],
     },
-  };
-
-  const handlePayment = (e) => {
-    e.preventDefault();
-
-    // Payment logic
   };
 
   return (
@@ -81,142 +281,9 @@ const PaymentScreen = () => {
         </div>
 
         <div className="payment-form-container">
-          <form className="payment-form" onSubmit={handlePayment}>
-            <div className="payment-methods">
-              <h3>Select Payment Method</h3>
-              <div className="method-options">
-                <div
-                  className={`method-option ${
-                    paymentMethod === "card" ? "active" : ""
-                  }`}
-                  onClick={() => setPaymentMethod("card")}
-                >
-                  <div className="card-icons">
-                    <RiVisaFill className="visa-icon" />
-                    <RiMastercardFill className="mastercard-icon" />
-                  </div>
-                  <span>Credit/Debit Card</span>
-                </div>
-
-                <div
-                  className={`method-option ${
-                    paymentMethod === "upi" ? "active" : ""
-                  }`}
-                  onClick={() => setPaymentMethod("upi")}
-                >
-                  <div className="upi-icons">
-                    <SiPhonepe className="phonepe-icon" />
-                    <SiPaytm className="paytm-icon" />
-                    <SiGooglepay className="gpay-icon" />
-                  </div>
-                  <span>UPI Payment</span>
-                </div>
-              </div>
-            </div>
-
-            {paymentMethod === "card" && (
-              <div className="card-form">
-                <div className="form-group">
-                  <label>Card Number</label>
-                  <input
-                    type="text"
-                    placeholder="1234 5678 9012 3456"
-                    value={cardDetails.number}
-                    onChange={(e) =>
-                      setCardDetails({
-                        ...cardDetails,
-                        number: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Cardholder Name</label>
-                  <input
-                    type="text"
-                    placeholder="Name on card"
-                    value={cardDetails.name}
-                    onChange={(e) =>
-                      setCardDetails({
-                        ...cardDetails,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Expiry Date</label>
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      value={cardDetails.expiry}
-                      onChange={(e) =>
-                        setCardDetails({
-                          ...cardDetails,
-                          expiry: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>CVV</label>
-                    <input
-                      type="text"
-                      placeholder="123"
-                      value={cardDetails.cvv}
-                      onChange={(e) =>
-                        setCardDetails({
-                          ...cardDetails,
-                          cvv: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {paymentMethod === "upi" && (
-              <div className="upi-form">
-                <div className="form-group">
-                  <label>UPI ID</label>
-                  <input
-                    type="text"
-                    placeholder="yourname@upi"
-                    value={upiId}
-                    onChange={(e) => setUpiId(e.target.value)}
-                  />
-                </div>
-
-                <div className="upi-apps">
-                  <button type="button" className="upi-app">
-                    <SiPhonepe className="upi-icon" />
-                    PhonePe
-                  </button>
-                  <button type="button" className="upi-app">
-                    <SiPaytm className="upi-icon" />
-                    Paytm
-                  </button>
-                  <button type="button" className="upi-app">
-                    <SiGooglepay className="upi-icon" />
-                    Google Pay
-                  </button>
-                </div>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="pay-button"
-              disabled={!paymentMethod}
-            >
-              Pay {planDetails[plan].price.split(" ")[0]}
-            </button>
-          </form>
+          <Elements stripe={stripePromise}>
+            <PaymentForm plan={plan} planDetails={planDetails} />
+          </Elements>
         </div>
       </div>
     </div>

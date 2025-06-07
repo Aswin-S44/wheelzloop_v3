@@ -30,6 +30,7 @@ import ResetPassswordScreen from "./screens/ResetPassswordScreen/ResetPassswordS
 import ContactScreen from "./screens/ContactScreen/ContactScreen";
 import PremiumPlans from "./components/PremiumPlans/PremiumPlans";
 import PaymentScreen from "./screens/PaymentScreen/PaymentScreen";
+import PaymentSuccess from "./screens/PaymentSuccess/PaymentSuccess";
 
 function Layout() {
   const location = useLocation();
@@ -81,6 +82,7 @@ function Layout() {
               element={<ResetPassswordScreen />}
             />
             <Route path="/contact-us" element={<ContactScreen />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
           </Routes>
           {!hideHeaderFooter && <Footer />}
           <BackToTop />
