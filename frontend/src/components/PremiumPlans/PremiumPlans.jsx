@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   FaCrown,
   FaStar,
@@ -9,10 +9,41 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import "./PremiumPlans.css";
+import axios from "axios";
+import { UPDATE_PROFILE_URL } from "../../config/api";
+import { UserContext } from "../../hooks/UserContext";
+import { SUBRIPTION_PLANS } from "../../constants/userConstants";
+import Swal from "sweetalert2";
 
 const PremiumPlans = () => {
+  // Commenting for now
+  // const handleSubscribePan = async (plan) => {
+  //   window.location.href = `/subscribe/${plan}`;
+  // };
+  const { user } = useContext(UserContext);
+
   const handleSubscribePan = async (plan) => {
-    window.location.href = `/subscribe/${plan}`;
+    try {
+      const oneMonthFromNow = new Date();
+      oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+      const res = await axios.patch(`${UPDATE_PROFILE_URL}/${user?._id}`, {
+        subscribed: true,
+        subscription_plan: plan,
+        subscription_expires_at: oneMonthFromNow.toISOString(),
+      });
+
+      if (res && res.status == 200) {
+        Swal.fire({
+          title: "Subsribed",
+          text: `You have subribed our ${plan} Plan`,
+          icon: "success",
+        }).then(() => {
+          window.location.href = "/profile";
+        });
+      }
+    } catch (error) {
+      console.log("Error while subsribing plans : ", error);
+    }
   };
 
   return (
@@ -82,7 +113,7 @@ const PremiumPlans = () => {
           </ul>
           <button
             className="plan-button pro-button"
-            onClick={() => handleSubscribePan("pro")}
+            onClick={() => handleSubscribePan(SUBRIPTION_PLANS.PRO.TITLE)}
           >
             Upgrade Now
           </button>
@@ -118,7 +149,7 @@ const PremiumPlans = () => {
           </ul>
           <button
             className="plan-button elite-button"
-            onClick={() => handleSubscribePan("elite")}
+            onClick={() => handleSubscribePan(SUBRIPTION_PLANS.ELITE.TITLE)}
           >
             Go Elite
           </button>

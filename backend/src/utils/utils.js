@@ -33,8 +33,7 @@ module.exports.sendEmail = async (
         pass: process.env.EMAIL_PASS,
       },
     });
-    console.log("from-----------", from);
-    console.log("to----------", to);
+
     var mailOptions = {
       from,
       to,
@@ -43,7 +42,7 @@ module.exports.sendEmail = async (
       html: htmlContent,
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
+    await transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {

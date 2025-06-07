@@ -38,6 +38,7 @@ const UserSchema = new mongoose.Schema(
     last_active: { type: Date, default: Date.now },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date },
+    subsciptionRemainderSent: { type: Boolean, default: false },
   },
   {
     timestamps: true,
