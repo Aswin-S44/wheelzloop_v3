@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Card.css";
 import ActionMenu from "../ActionMenu/ActionMenu";
 import axios from "axios";
@@ -9,11 +9,32 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { formatViews } from "../../utils/utils";
+import { ToastContainer, toast } from "react-toastify";
 
 function Card({ car, editable = false, category }) {
+  const [saved, setSaved] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
   const handleNavigateToCar = async () => {
     window.location.href = `/car/${car._id}`;
     await axios.post(`${ADD_CAR_VIEWS_COUNT}/${car._id}`);
+  };
+
+  const addToFav = async (id) => {
+    setSaved(!saved);
+    let favCars = JSON.parse(localStorage.getItem("fav-cars")) || [];
+
+    if (!favCars.includes(id)) {
+      favCars.push(id);
+      localStorage.setItem("fav-cars", JSON.stringify(favCars));
+      toast.success("Added to favourites");
+      setIsFavourite(true);
+    } else {
+      favCars = favCars.filter((favId) => favId !== id);
+
+      localStorage.setItem("fav-cars", JSON.stringify(favCars));
+      toast.error("Removed from favourites");
+      setIsFavourite(false);
+    }
   };
 
   return (
@@ -27,10 +48,16 @@ function Card({ car, editable = false, category }) {
           onClick={handleNavigateToCar}
         />
 
-        <span className="category-badge">{category}</span>
-        <button className="favorite-btn">
+        {category && <span className="category-badge">{category}</span>}
+        <button className="favorite-btn" id="favorite-btn">
           {editable && <ActionMenu id={car._id} />}
-          {!editable && <FavoriteBorderIcon style={{ fontSize: "20px" }} />}
+          {!editable && (
+            <FavoriteBorderIcon
+              style={{ fontSize: "20px" }}
+              onClick={() => addToFav(car?._id)}
+              className={isFavourite ? "saved" : ""}
+            />
+          )}
         </button>
       </div>
       <div className="card-details">
@@ -72,6 +99,7 @@ function Card({ car, editable = false, category }) {
           View Details
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 }

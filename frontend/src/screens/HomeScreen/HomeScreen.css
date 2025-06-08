@@ -72,21 +72,21 @@
     margin: 20px 0;
   }
   
-  /* Mobile First Approach */
-  .cards-grid {
+
+  /* .cards-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Default: 2 cards in mobile */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 12px;
     width: 100%;
   }
   
-  /* For tablets and desktops */
+
   @media (min-width: 768px) {
     .cards-grid {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Auto-fill for larger screens */
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
       gap: 20px;
     }
-  }
+  } */
 
   .tab-scroll-container {
     position: relative;

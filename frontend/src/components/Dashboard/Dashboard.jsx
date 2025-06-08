@@ -152,7 +152,7 @@ function Dashboard({ dealerId }) {
     <div className="dashboard-container">
       <h1 className="dashboard-title">Dashboard Overview</h1>
 
-      <div className="cards-container">
+      <div className="cards-container-2">
         {cardData.map((card, index) => (
           <div key={index} className="dashboard-card">
             <div
