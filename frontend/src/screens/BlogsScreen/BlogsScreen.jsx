@@ -13,6 +13,7 @@ import axios from "axios";
 import { ADD_SUBSCRIPTION_URL } from "../../config/api";
 import { blogsData } from "./blogData";
 import { ToastContainer, toast } from "react-toastify";
+import { fetchEntries } from "../../contentfull/contentfulClient";
 
 function BlogScreen() {
   const { slug } = useParams();
@@ -23,6 +24,13 @@ function BlogScreen() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetchEntries();
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (blogs.length > 0) {
