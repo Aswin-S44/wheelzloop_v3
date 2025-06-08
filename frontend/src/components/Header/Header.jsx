@@ -209,7 +209,11 @@ function Header() {
             Contact-Us
           </a>
           {!user && (
-            <button className="login-btn" onClick={navigateToLogin}>
+            <button
+              className="login-btn"
+              onClick={navigateToLogin}
+              id="login-btn"
+            >
               <Person /> Login
             </button>
           )}

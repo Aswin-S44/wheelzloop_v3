@@ -97,6 +97,7 @@ function LoginScreen() {
                     name="emailOrPhone"
                     placeholder="Enter your email or phone"
                     className="form-input"
+                    id="emailOrPhone"
                   />
                   <ErrorMessage
                     name="emailOrPhone"
@@ -125,6 +126,7 @@ function LoginScreen() {
                         </IconButton>
                       </InputAdornment>
                     }
+                    id="password"
                   />
                   <ErrorMessage
                     name="password"
@@ -136,6 +138,7 @@ function LoginScreen() {
                   type="submit"
                   className="login-button"
                   disabled={isSubmitting || loading}
+                  id="submit-btn"
                 >
                   {loading ? "Signing In..." : "Sign In"}
                 </button>
