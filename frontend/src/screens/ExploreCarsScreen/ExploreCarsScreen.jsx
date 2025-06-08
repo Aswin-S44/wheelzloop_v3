@@ -45,15 +45,20 @@ function ExploreCarsScreen() {
   const fetchCars = async (filters = {}) => {
     try {
       setLoading(true);
+      const cleanFilters = Object.fromEntries(
+        Object.entries(filters).filter(
+          ([_, value]) => value !== undefined && value !== null
+        )
+      );
       const queryParams = new URLSearchParams({
-        ...filters,
+        ...cleanFilters,
         page: pagination.page,
         limit: pagination.pageSize,
         sortBy,
         order,
       }).toString();
       const res = await axios.get(`${GET_ALL_CARS}?${queryParams}`);
-      if (res?.data?.data?.length > 0) {
+      if (res?.data?.success) {
         setCars(res.data.data);
         setPagination((prev) => ({
           ...prev,
@@ -64,7 +69,7 @@ function ExploreCarsScreen() {
         setCars([]);
       }
     } catch (error) {
-      setError(error.message);
+      setError(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
@@ -72,7 +77,7 @@ function ExploreCarsScreen() {
 
   useEffect(() => {
     fetchCars(filters);
-  }, [brand, pagination.page, sortBy, order]);
+  }, [brand, pagination.page, sortBy, order, filters]);
 
   const handleSortChange = (event) => {
     const value = event.target.value;

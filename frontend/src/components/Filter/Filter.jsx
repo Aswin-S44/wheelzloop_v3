@@ -40,18 +40,26 @@ function Filter({ onFilterChange }) {
 
   const applyFilters = () => {
     const filters = {
-      brands: selectedCars.map((item) => item.brand),
-      car_name: selectedCars.map((item) => item.car),
-      year: selectedYear ? `${selectedYear} & ${selectedYear}` : null,
-      fuelTypes: selectedFuelTypes.length > 0 ? selectedFuelTypes : null,
-      ownership: selectedOwnership.length > 0 ? selectedOwnership : null,
-      bodyTypes: selectedBodyTypes.length > 0 ? selectedBodyTypes : null,
-      transmissionTypes:
-        selectedTransmissionTypes.length > 0 ? selectedTransmissionTypes : null,
+      brands:
+        selectedCars.length > 0
+          ? selectedCars.map((item) => item.brand)
+          : undefined,
+      car_name:
+        selectedCars.length > 0
+          ? selectedCars.map((item) => item.car)
+          : undefined,
+      year: selectedYear ? String(selectedYear) : undefined,
+      fuel_type: selectedFuelTypes.length > 0 ? selectedFuelTypes : undefined,
+      ownership: selectedOwnership.length > 0 ? selectedOwnership : undefined,
+      body_type: selectedBodyTypes.length > 0 ? selectedBodyTypes : undefined,
+      transmission:
+        selectedTransmissionTypes.length > 0
+          ? selectedTransmissionTypes
+          : undefined,
     };
 
     const validFilters = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => value !== null)
+      Object.entries(filters).filter(([_, value]) => value !== undefined)
     );
     onFilterChange(validFilters);
   };
@@ -90,7 +98,6 @@ function Filter({ onFilterChange }) {
 
       <div className="search-section">
         <div className="search-input-container">
-          {/* <SearchIcon className="search-icon" /> */}
           <input
             type="text"
             placeholder="Search brand or car..."
@@ -139,7 +146,6 @@ function Filter({ onFilterChange }) {
                             )
                           }
                         />
-
                         {car}
                       </label>
                     ))}
@@ -185,7 +191,6 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-
                 <span
                   style={{
                     marginLeft: "10px",
@@ -193,7 +198,6 @@ function Filter({ onFilterChange }) {
                     fontSize: "14px",
                   }}
                 >
-                  {" "}
                   {fuel.text}
                 </span>
               </label>
@@ -218,7 +222,6 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-
                 <span
                   style={{
                     marginLeft: "10px",
@@ -226,7 +229,6 @@ function Filter({ onFilterChange }) {
                     fontSize: "14px",
                   }}
                 >
-                  {" "}
                   {ownership.text}
                 </span>
               </label>
@@ -235,7 +237,7 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
-          <p className="section-title">Features2323</p>
+          <p className="section-title">Features</p>
           <div className="options-grid scrollable-div scroll-container">
             {carFeatures.map((feature, index) => (
               <label key={index} className="">
@@ -251,7 +253,6 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                {/* <span className="checkmark"></span> */}
                 <span
                   style={{
                     marginLeft: "10px",
@@ -259,7 +260,6 @@ function Filter({ onFilterChange }) {
                     fontSize: "14px",
                   }}
                 >
-                  {" "}
                   {feature.text}
                 </span>
               </label>
@@ -284,7 +284,6 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-
                 <span
                   style={{
                     marginLeft: "10px",
@@ -292,7 +291,6 @@ function Filter({ onFilterChange }) {
                     fontSize: "14px",
                   }}
                 >
-                  {" "}
                   {bodyType.text}
                 </span>
               </label>
