@@ -155,7 +155,6 @@ function MobileFilter({ onFilterChange }) {
                                     )
                                   }
                                 />
-                                <span className="checkmark"></span>
                                 {car}
                               </label>
                             ))}

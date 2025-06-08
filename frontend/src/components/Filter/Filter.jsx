@@ -157,6 +157,37 @@ function Filter({ onFilterChange }) {
         </div>
 
         <div className="filter-section">
+          <p className="section-title">Body Type</p>
+          <div className="options-grid">
+            {carBodyTypes.map((bodyType, index) => (
+              <label key={index}>
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  checked={selectedBodyTypes.includes(bodyType.text)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      selectedBodyTypes,
+                      setSelectedBodyTypes,
+                      bodyType.text
+                    )
+                  }
+                />
+                <span
+                  style={{
+                    marginLeft: "10px",
+                    color: "#555",
+                    fontSize: "14px",
+                  }}
+                >
+                  {bodyType.text}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="filter-section">
           <p className="section-title">Year</p>
           <div className="options-grid">
             {years.map((year, index) => (
@@ -261,37 +292,6 @@ function Filter({ onFilterChange }) {
                   }}
                 >
                   {feature.text}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="filter-section">
-          <p className="section-title">Body Type</p>
-          <div className="options-grid">
-            {carBodyTypes.map((bodyType, index) => (
-              <label key={index}>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  checked={selectedBodyTypes.includes(bodyType.text)}
-                  onChange={() =>
-                    handleCheckboxChange(
-                      selectedBodyTypes,
-                      setSelectedBodyTypes,
-                      bodyType.text
-                    )
-                  }
-                />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {bodyType.text}
                 </span>
               </label>
             ))}
