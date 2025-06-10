@@ -119,3 +119,8 @@
       gap: 8px;
     }
   }
+
+
+  .primary-added-color-pagination {
+        background-color: linear-gradient(135deg, #6e8efb, #a777e3);
+  }

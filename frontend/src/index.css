@@ -33,7 +33,9 @@ a {
   margin-left: 20px;
   margin-right: 20px
 }
-
+.screens {
+    margin-top: 110px;
+}
 .space-btn {
   display: flex;
   justify-content: space-between

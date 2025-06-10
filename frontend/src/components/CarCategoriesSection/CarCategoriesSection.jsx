@@ -8,7 +8,7 @@ function CarCategoriesSection() {
         <div className="category-card">
           <div className="circle">
             <img
-              src="/images/sedan.jpeg"
+              src="/images/sedan-removebg-preview.png"
               alt="Sedan"
               className="category-image"
               title="sedan-car"
@@ -41,7 +41,7 @@ function CarCategoriesSection() {
         <div className="category-card">
           <div className="circle">
             <img
-              src="/images/sports.jpeg"
+              src="/images/sports-removebg-preview.png"
               alt="Sports"
               className="category-image"
               title="sports-car"

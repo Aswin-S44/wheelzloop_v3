@@ -11,6 +11,7 @@ import AccountDropdown from "../AccountDropdown/AccountMenu";
 import AccountMenu from "../AccountDropdown/AccountMenu";
 import SubHeader from "../SubHeader/SubHeader";
 import MailIcon from "@mui/icons-material/Mail";
+const LOCAL_STORAGE_KEY = 'previousCarSearches';
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
@@ -22,10 +23,38 @@ function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showResults, setShowResults] = useState(false);
   const { user } = useContext(UserContext);
+   const [previousSearches, setPreviousSearches] = useState(() => {
+    const storedSearches = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return storedSearches ? JSON.parse(storedSearches) : [];
+  });
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+
+
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < lastScrollY) {
+        setShowHeader(true); // Scrolling up
+      } else {
+        setShowHeader(false); // Scrolling down
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+
+
+
 
   const handleSellCar = () => {
     if (!user) {
@@ -104,8 +133,29 @@ function Header() {
     setSearchKey("");
   };
 
-  const handleSearch = async (e) => {
-    setSearchKey(e.target.value);
+  // const handleSearch = async (e) => {
+  //   setSearchKey(e.target.value);
+  //   const currentSearchValue = e.target.value;
+
+  //   if (currentSearchValue.trim().length > 3 && !previousSearches.includes(currentSearchValue)) {
+  //     setPreviousSearches((prevSearches) => [...prevSearches, currentSearchValue]);
+  //   }
+  // };
+
+const handleSearch = async (e) => {
+    const currentSearchValue = e.target.value;
+    setSearchKey(currentSearchValue);
+
+    if (currentSearchValue.trim().length > 3) {
+      setPreviousSearches((prevSearches) => {
+        // Create a new array without the currentSearchValue if it already exists
+        const filteredSearches = prevSearches.filter(
+          (search) => search !== currentSearchValue
+        );
+        // Add the currentSearchValue to the end of the new array
+        return [...filteredSearches, currentSearchValue];
+      });
+    }
   };
 
   const handleResultClick = () => {
@@ -113,9 +163,14 @@ function Header() {
     setSearchKey("");
   };
 
+useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(previousSearches));
+  }, [previousSearches]);
+
+
   return (
     <>
-      <header className="header">
+      <header className={`header ${showHeader ? 'show' : 'hide'}`}>
         <div className="logo">
           <a href="/" title="logo">
             <img
@@ -144,37 +199,40 @@ function Header() {
           <div className="search-results-container">
             {searchResults.length > 0
               ? searchResults.map((result, index) => (
-                  <a
-                    href={`/car-details/${result._id}`}
-                    key={index}
-                    className="search-card"
-                    onClick={handleResultClick}
-                    title="seach result"
-                  >
-                    <div className="search-card-image">
-                      <img
-                        src={result.images[0]}
-                        alt={result.car_name}
-                        title="search-result-car-img"
-                      />
-                    </div>
-                    <div className="search-card-content">
-                      <h3>{result.car_name}</h3>
-                      <p className="search-card-meta">
-                        {result.brand} • {result.model} • {result.year}
-                      </p>
+                <a
+                  href={`/car-details/${result._id}`}
+                  key={index}
+                  className="search-card"
+                  onClick={handleResultClick}
+                  title={result.brand} 
+                >
+                  <div className="search-card-image">
+                    <img
+                      src={result.images[0]}
+                      alt={result.car_name}
+                      title="search-result-car-img"
+                    />
+                  </div>
+                  <div className="search-card-content">
+                    <div className="d-flex justify-content-between"><h3>{result.car_name}</h3>
+                    <p className="search-card-meta">
+                      {result.brand} • {result.model} • {result.year}
+                    </p></div>
+                    <div className="d-flex justify-content-between">
                       <p className="search-card-price">
-                        ${result?.price?.toLocaleString()}
-                      </p>
-                      <p className="search-card-location">{result.place}</p>
+                      ${result?.price?.toLocaleString()}
+                    </p>
+                    <p className="search-card-location">  <img style={{width:"20px",height:"20px"}} src="/images/gps.png" alt="location" />  {result.place}</p>
+              
                     </div>
-                  </a>
-                ))
+                  </div>
+                </a>
+              ))
               : searchResults.length == 0 && (
-                  <a className="search-card">
-                    <div>No results found</div>
-                  </a>
-                )}
+                <a className="search-card">
+                  <div>No results found</div>
+                </a>
+              )}
           </div>
         )}
 

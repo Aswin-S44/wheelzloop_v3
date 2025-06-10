@@ -11,7 +11,7 @@ function Carousel() {
       tagline: "@WHEELZLOOP",
       bgColor: "rgb(203 237 211)",
       textColor: "#1111",
-      image: "/images/hatchback.webp",
+      image: "/images/wheeelzloop cars1.webp",
     },
     {
       title: "FIND YOUR PERFECT CAR AT WHEELZLOOP",
@@ -19,7 +19,7 @@ function Carousel() {
       tagline: "@WHEELZLOOP",
       bgColor: "rgb(203 237 211)",
       textColor: "#1111",
-      image: "/images/suv.webp",
+      image: "/images/wheeelzloop blue-sports-car-isolated-white-vector.webp",
     },
   ];
 
@@ -71,7 +71,7 @@ function Carousel() {
             <p className="banner-subtitle">{slides[0].subtitle}</p>
             <p className="banner-tagline">{slides[0].tagline}</p>
           </div>
-          <img src={slides[0].image} className="w-50" alt="banner-1" title="banner-1" />
+          <img src={slides[0].image} className="w-50 slider-image-sec" alt="banner-1" title="banner-1" />
         </div>
         <div
           key={2}
@@ -86,7 +86,7 @@ function Carousel() {
             <p className="banner-subtitle">{slides[1].subtitle}</p>
             <p className="banner-tagline">{slides[1].tagline}</p>
           </div>
-          <img src={slides[1].image} className="w-50" alt="banner-2" title="banner-2" />
+          <img src={slides[1].image} className="w-50 slider-image-sec" alt="banner-2" title="banner-2" />
         </div>
       </div>
       <div className="dots">

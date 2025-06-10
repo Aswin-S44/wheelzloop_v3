@@ -23,6 +23,7 @@ import Banner2 from "../../components/Banner2/Banner2";
 
 import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
 import AdvSection from "../../sections/AdvSection/AdvSection";
+import { LOCAL_STORAGE_KEY } from "../../store/useAuthStore";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -41,6 +42,45 @@ function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const currentTab = carBodyTypes.find((tab) => tab.index == 2);
   const [selectedTab, setSelectedTab] = useState(currentTab);
+  const [originalCars, setOriginalCars] = useState([]);
+
+const storedSearches = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+
+
+
+const calculateRelevanceScore = (car, searchTerms) => {
+  if (!searchTerms || searchTerms.length === 0) return 0;
+
+  let score = 0;
+  const lowerCaseSearchTerms = searchTerms.map(term => term.toLowerCase());
+  const totalTerms = lowerCaseSearchTerms.length;
+  lowerCaseSearchTerms.forEach((term, index) => {
+    const weight = index === totalTerms - 1 ? 10 : 1; 
+
+    if (car.car_name && car.car_name.toLowerCase().includes(term)) score += 3 * weight;
+    if (car.brand && car.brand.toLowerCase().includes(term)) score += 2 * weight;
+    if (car.place && car.place.toLowerCase().includes(term)) score += 1 * weight;
+  });
+
+  return score;
+};
+
+
+  const sortCarsByPreviousSearches = (carList, searches) => {
+    return [...carList].sort((a, b) => {
+      const scoreA = calculateRelevanceScore(a, searches);
+      const scoreB = calculateRelevanceScore(b, searches);
+      return scoreB - scoreA;
+    });
+  };
+
+  useEffect(() => {
+    const sortedCars = sortCarsByPreviousSearches(cars, storedSearches);
+    setCars(sortedCars);
+  }, []);
+
+
+
 
   const tabListRef = useRef(null);
 
@@ -69,7 +109,9 @@ function HomeScreen() {
         setLoading(true);
         const res = await axios.get(`${GET_ALL_CARS}`);
         if (res && res.data?.data?.length > 0) {
-          setCars(res.data.data);
+          const sortedInitialCars = sortCarsByPreviousSearches(res.data.data, storedSearches);
+
+          setCars(sortedInitialCars);
         }
       } catch (error) {
         return error;
@@ -79,6 +121,9 @@ function HomeScreen() {
     };
     fetchCars();
   }, []);
+
+
+
 
   return (
     <div className="screens">

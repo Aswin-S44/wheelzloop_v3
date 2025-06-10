@@ -4,8 +4,10 @@ import { io } from "socket.io-client";
 import { axiosInstance } from "../lib/axios";
 // import { BACKEND_URL } from "../config/api";
 
-const BASE_URL = "http://localhost:5000";
-// const BASE_URL = "https://wheelzloop-v3-1.onrender.com";
+// const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://wheelzloop-v3-1.onrender.com";
+
+export const LOCAL_STORAGE_KEY = 'previousCarSearches';
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,

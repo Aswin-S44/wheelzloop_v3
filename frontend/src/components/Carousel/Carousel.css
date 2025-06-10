@@ -75,6 +75,11 @@
   background-color: #333;
 }
 
+.slider-image-sec {
+    object-fit: cover !important;
+}
+
+
 @media (max-width: 768px) {
   .slide{
     padding: 0;
@@ -84,3 +89,4 @@
     position: relative;
   }
 }
+

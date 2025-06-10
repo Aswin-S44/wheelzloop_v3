@@ -115,7 +115,8 @@ const NewsAndResources = () => {
         ))}
       </div>
       <div className="view-all-container">
-        <button className="view-all-button">View All Articles</button>
+        <a href="/blogs"><button className="view-all-button">View All Articles</button></a>
+        
       </div>
     </section>
   );

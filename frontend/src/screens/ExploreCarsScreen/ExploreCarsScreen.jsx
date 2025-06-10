@@ -153,7 +153,12 @@ function ExploreCarsScreen() {
                     count={pagination.pages}
                     page={pagination.page}
                     onChange={handlePageChange}
-                    color="primary"
+                    sx={{
+                      "& .MuiPaginationItem-root.Mui-selected": {
+                        background: "linear-gradient(135deg, #6e8efb, #a777e3)",
+                        color: "#fff", // Ensures text is visible
+                      },
+                    }}
                   />
                 </div>
               )}

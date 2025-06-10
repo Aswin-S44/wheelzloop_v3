@@ -6,7 +6,7 @@ import axios from "axios";
 // });
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://wheelzloop-v3-1.onrender.com",
   withCredentials: true,
   // timeout: 5000,
 });

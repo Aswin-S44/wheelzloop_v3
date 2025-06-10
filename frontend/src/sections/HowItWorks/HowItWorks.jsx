@@ -100,14 +100,15 @@ function HowItWorks() {
             </p>
           </div>
         </div>
-
-        <button
-          className="cta-button"
+<a href="/signin">
+<button
+          className="cta-button d-block mx-auto"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
         >
           Get Started Now
-        </button>
+        </button></a>
+        
       </div>
       <div
         class="modal fade"
