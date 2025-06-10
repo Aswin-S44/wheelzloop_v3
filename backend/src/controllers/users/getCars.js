@@ -20,6 +20,7 @@ module.exports.getCars = async (req, res) => {
       brands,
       car_name,
       dealer_id,
+      features,
     } = req.query;
 
     const pageNum = parseInt(page);
@@ -61,6 +62,15 @@ module.exports.getCars = async (req, res) => {
     if (body_type)
       filter.body_type = { $regex: new RegExp(`^${body_type}$`, "i") };
     if (status) filter.status = status;
+
+    if (features) {
+      const featuresArray = Array.isArray(features) ? features : [features];
+      filter.features = {
+        $all: featuresArray.map(
+          (feature) => new RegExp(`^${feature.replace(/\s+/g, "\\s*")}$`, "i")
+        ),
+      };
+    }
 
     const cars = await Cars.find(filter)
       .sort({ [sortBy]: order === "desc" ? -1 : 1 })

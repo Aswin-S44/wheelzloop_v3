@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Menu, MenuItem, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from "axios";
-import { ADD_CAR_URL } from "../../config/api";
+import { ADD_CAR_URL, UPDATE_CAR_URL } from "../../config/api";
 import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 const ActionMenu = ({ id }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -43,6 +44,18 @@ const ActionMenu = ({ id }) => {
     });
   };
 
+  const handleUpdateCarStatus = async () => {
+    if (id) {
+      const res = await axios.patch(`${UPDATE_CAR_URL}/${id}`, {
+        status: "Sold",
+      });
+      if (res && res.status == 200) {
+        toast.success("Status updated");
+      }
+      handleMenuClose();
+    }
+  };
+
   const handleSubMenuOpen = (event) => setSubMenuAnchorEl(event.currentTarget);
   const handleSubMenuClose = () => setSubMenuAnchorEl(null);
 
@@ -63,12 +76,7 @@ const ActionMenu = ({ id }) => {
         <MenuItem onClick={handleNavigateToDetails}>View</MenuItem>
         <MenuItem onClick={handleEditCar}>Edit</MenuItem>
         <MenuItem onClick={handleDeleteCar}>Delete</MenuItem>
-        <MenuItem
-          onMouseEnter={handleSubMenuOpen}
-          onMouseLeave={handleSubMenuClose}
-        >
-          Update Status
-        </MenuItem>
+        <MenuItem onClick={handleUpdateCarStatus}>Mark as sold</MenuItem>
       </Menu>
       <Menu
         anchorEl={subMenuAnchorEl}
@@ -78,6 +86,7 @@ const ActionMenu = ({ id }) => {
         <MenuItem onClick={handleSubMenuClose}>Sold</MenuItem>
         <MenuItem onClick={handleSubMenuClose}>Not Available</MenuItem>
       </Menu>
+      <ToastContainer />
     </div>
   );
 };

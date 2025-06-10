@@ -100,11 +100,25 @@ function HowItWorks() {
             </p>
           </div>
         </div>
-
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <button
-          className="cta-button"
+          // className="cta-button"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
+          style={{
+            background: "#606cbc",
+            padding: "15px 40px",
+            color: "#fff",
+            border: "none",
+            borderRadius: "50px",
+          }}
         >
           Get Started Now
         </button>

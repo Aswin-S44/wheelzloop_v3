@@ -125,10 +125,11 @@
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
-  display: block;
+  /* display: block; */
   margin: 0 auto;
   transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(48, 191, 161, 0.3);
+ 
 }
 
 .cta-button:hover {

@@ -51,30 +51,21 @@ function Review() {
 
     setLoading(false);
     if (res && res.status == 200) {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-        },
-        buttonsStyling: false,
+      Swal.fire({
+        title: "Successfully added your car!",
+        text: "Do you want to add another car ?",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/car/add";
+        } else {
+          window.location.href = "/profile";
+        }
       });
-      swalWithBootstrapButtons
-        .fire({
-          title: "Successfully added your car!",
-          text: "Do you want to add another car ?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          cancelButtonText: "Go to profile",
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/car/add";
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            window.location.href = "/profile";
-          }
-        });
     }
   };
 
