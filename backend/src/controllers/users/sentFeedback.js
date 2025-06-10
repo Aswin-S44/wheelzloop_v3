@@ -4,7 +4,7 @@ const { sendEmail } = require("../../utils/utils");
 module.exports.sentFeedback = async (req, res) => {
   try {
     const { email, subject } = req.body;
-    console.log("email--------", email);
+
     let htmlContent = `<p>New feedback received</p>`;
     await Feedback.create(req.body).then(async () => {
       await sendEmail(

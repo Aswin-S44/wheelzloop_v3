@@ -26,7 +26,6 @@ module.exports.getDashboardStats = async (req, res) => {
       expiredCars,
     });
   } catch (error) {
-    console.log("Error while getting dashboard stats : ", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error });
   }
 };

@@ -26,7 +26,7 @@ function Card({ car, editable = false, category }) {
     window.location.href = `/car/${car._id}`;
     await axios.post(`${ADD_CAR_VIEWS_COUNT}/${car._id}`);
   };
-  console.log("isFavourite-------", isFavourite);
+
   const addToFav = () => {
     let updatedFavCars;
 

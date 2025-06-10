@@ -39,7 +39,6 @@ function Filter({ onFilterChange }) {
   };
 
   const applyFilters = () => {
-    console.log("selected features----", selectedFeatures);
     const filters = {
       brands:
         selectedCars.length > 0

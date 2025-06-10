@@ -42,7 +42,7 @@ function Dashboard({ dealerId }) {
             setStats(res.data);
           }
         } catch (error) {
-          console.log("Error while fetching status : ", error);
+          console.log(error);
         }
       };
       fetchStats();
