@@ -11,18 +11,35 @@ import {
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import axios from "axios";
 import { ADD_SUBSCRIPTION_URL } from "../../config/api";
-import { blogsData } from "./blogData";
+
 import { ToastContainer, toast } from "react-toastify";
+import { fetchEntries } from "../../contentfull/contentfulClient";
+import { convertContentfullResponse } from "../../utils/utils";
 
 function BlogScreen() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [blogs] = useState(blogsData);
+
+  const [blogs, setBlogs] = useState([]);
   const [currentBlog, setCurrentBlog] = useState(null);
   const [blogIndex, setBlogIndex] = useState(0);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await fetchEntries();
+      setLoading(false);
+
+      if (res) {
+        let formatedData = await convertContentfullResponse(res);
+        setBlogs(formatedData);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (blogs.length > 0) {
@@ -169,7 +186,7 @@ function BlogScreen() {
           <div className="article-body mt-4">
             {currentBlog.sections.map((section, index) => (
               <section key={index} className="content-section">
-                <h3>{section.heading}</h3>
+                {/* <h3>{index}</h3> */}
                 <p>{section.content}</p>
               </section>
             ))}

@@ -160,7 +160,7 @@ const calculateRelevanceScore = (car, searchTerms) => {
       <div>
         <div className="mt-4">
           <div>
-            <div className="container">
+            <div className="">
               <h3 className="text-center fw-bold">
                 <span className="quality-text">
                   Latest Cars
@@ -179,7 +179,7 @@ const calculateRelevanceScore = (car, searchTerms) => {
                   </svg>
                 </span>{" "}
               </h3>
-              <div className="cards-container mt-4">
+              <div className="mt-4">
                 {loading ? (
                   <Loader />
                 ) : cars.length === 0 ? (
