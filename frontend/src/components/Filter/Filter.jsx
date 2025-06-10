@@ -56,6 +56,7 @@ function Filter({ onFilterChange }) {
         selectedTransmissionTypes.length > 0
           ? selectedTransmissionTypes
           : undefined,
+      features: selectedFeatures.length > 0 ? selectedFeatures : undefined,
     };
 
     const validFilters = Object.fromEntries(
@@ -112,47 +113,52 @@ function Filter({ onFilterChange }) {
         <div className="filter-section">
           <p className="section-title">Top Brands</p>
           <div className="brands-list">
-            {filteredBrands.map((brandItem, index) => (
-              <div key={index} className="brand-accordion ">
-                <div
-                  className="brand-header"
-                  onClick={() => handleAccordionToggle(index)}
-                >
-                  <span>{brandItem.brand}</span>
-                  {activeIndex === index ? (
-                    <RemoveCircleOutlineIcon className="accordion-icon" />
-                  ) : (
-                    <KeyboardArrowDownIcon className="accordion-icon" />
+            {filteredBrands.length > 0 ? (
+              filteredBrands.map((brandItem, index) => (
+                <div key={index} className="brand-accordion ">
+                  <div
+                    className="brand-header"
+                    onClick={() => handleAccordionToggle(index)}
+                  >
+                    <span>{brandItem.brand}</span>
+                    {activeIndex === index ? (
+                      <RemoveCircleOutlineIcon className="accordion-icon" />
+                    ) : (
+                      <KeyboardArrowDownIcon className="accordion-icon" />
+                    )}
+                  </div>
+                  {activeIndex === index && (
+                    <div className="brand-models">
+                      {brandItem.cars.map((car, idx) => (
+                        <label key={idx} className="model-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={selectedCars.some(
+                              (item) =>
+                                item.brand === brandItem.brand &&
+                                item.car === car
+                            )}
+                            onChange={() =>
+                              handleCheckboxChange(
+                                selectedCars,
+                                setSelectedCars,
+                                {
+                                  brand: brandItem.brand,
+                                  car,
+                                }
+                              )
+                            }
+                          />
+                          {car}
+                        </label>
+                      ))}
+                    </div>
                   )}
                 </div>
-                {activeIndex === index && (
-                  <div className="brand-models">
-                    {brandItem.cars.map((car, idx) => (
-                      <label key={idx} className="model-checkbox">
-                        <input
-                          type="checkbox"
-                          checked={selectedCars.some(
-                            (item) =>
-                              item.brand === brandItem.brand && item.car === car
-                          )}
-                          onChange={() =>
-                            handleCheckboxChange(
-                              selectedCars,
-                              setSelectedCars,
-                              {
-                                brand: brandItem.brand,
-                                car,
-                              }
-                            )
-                          }
-                        />
-                        {car}
-                      </label>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+              ))
+            ) : (
+              <span className="spec-item">No brands available</span>
+            )}
           </div>
         </div>
 

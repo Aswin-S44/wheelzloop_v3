@@ -19,3 +19,36 @@ export const formatViews = (view) => {
     return view;
   }
 };
+
+export const convertContentfullResponse = async (resp) => {
+  const formattedResponse = [];
+
+  if (resp.length > 0) {
+    resp.forEach((item, index) => {
+      const entry = {
+        id: index + 1,
+        slug: item.fields.title
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]+/g, ""),
+        category: item.fields.category || "Demo",
+        title: item.fields.title,
+        date: new Date(item.fields.date).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        image: item.fields.image?.fields?.file?.url || "",
+        alt: item.fields.title.toLowerCase().replace(/\s+/g, " "),
+        sections:
+          item.fields.sections?.map((section) => ({
+            content: section,
+          })) || [],
+      };
+
+      formattedResponse.push(entry);
+    });
+  }
+
+  return formattedResponse;
+};

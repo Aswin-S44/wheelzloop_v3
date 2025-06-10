@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 import ActionMenu from "../ActionMenu/ActionMenu";
 import axios from "axios";
@@ -10,31 +10,36 @@ import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { formatViews } from "../../utils/utils";
 import { ToastContainer, toast } from "react-toastify";
+import { FaHeart } from "react-icons/fa";
 
 function Card({ car, editable = false, category }) {
-  const [saved, setSaved] = useState(false);
-  const [isFavourite, setIsFavourite] = useState(false);
+  const [favCars, setFavCars] = useState([]);
+
+  useEffect(() => {
+    const favsCarss = JSON.parse(localStorage.getItem("fav-cars")) || [];
+    setFavCars(favsCarss);
+  }, [car]);
+
+  const isFavourite = favCars.includes(car?._id);
+
   const handleNavigateToCar = async () => {
     window.location.href = `/car/${car._id}`;
     await axios.post(`${ADD_CAR_VIEWS_COUNT}/${car._id}`);
   };
 
-  const addToFav = async (id) => {
-    setSaved(!saved);
-    let favCars = JSON.parse(localStorage.getItem("fav-cars")) || [];
+  const addToFav = () => {
+    let updatedFavCars;
 
-    if (!favCars.includes(id)) {
-      favCars.push(id);
-      localStorage.setItem("fav-cars", JSON.stringify(favCars));
-      toast.success("Added to favourites");
-      setIsFavourite(true);
-    } else {
-      favCars = favCars.filter((favId) => favId !== id);
-
-      localStorage.setItem("fav-cars", JSON.stringify(favCars));
+    if (isFavourite) {
+      updatedFavCars = favCars.filter((favId) => favId !== car._id);
       toast.error("Removed from favourites");
-      setIsFavourite(false);
+    } else {
+      updatedFavCars = [...favCars, car._id];
+      toast.success("Added to favourites");
     }
+
+    localStorage.setItem("fav-cars", JSON.stringify(updatedFavCars));
+    setFavCars(updatedFavCars);
   };
 
   return (
@@ -49,12 +54,13 @@ function Card({ car, editable = false, category }) {
         />
 
         {category && <span className="category-badge">{category}</span>}
-        <button className="favorite-btn" id="favorite-btn">
+
+        <button className="favorite-btn">
           {editable && <ActionMenu id={car._id} />}
           {!editable && (
-            <FavoriteBorderIcon
+            <FaHeart
               style={{ fontSize: "20px" }}
-              onClick={() => addToFav(car?._id)}
+              onClick={addToFav}
               className={isFavourite ? "saved" : ""}
             />
           )}

@@ -129,7 +129,7 @@ function ProfileScreen() {
                       key={index}
                       car={car}
                       editable={true}
-                      category={"Latest"}
+                      category={car.status == "Sold" && "Sold"}
                     />
                   ))
                 )}
