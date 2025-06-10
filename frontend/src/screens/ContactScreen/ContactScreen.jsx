@@ -46,7 +46,7 @@ function ContactScreen() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Form submitted:", formData);
+
     setSubmitted(true);
     setFormData({
       name: "",
@@ -66,8 +66,6 @@ function ContactScreen() {
     } finally {
       setLoading(false);
     }
-    // console.log("form data---------", formData);
-    // setTimeout(() => setSubmitted(false), 5000);
   };
 
   return (

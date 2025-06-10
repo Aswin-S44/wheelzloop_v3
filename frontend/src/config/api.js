@@ -23,3 +23,6 @@ export const VERIFY_OTP__URL = `${BACKEND_URL}/api/v1/user/otp/verify`;
 export const ADD_CHAT_USER = `${BACKEND_URL}/api/v1/user/message/user/add`;
 export const ADD_CAR_VIEWS_COUNT = `${BACKEND_URL}/api/v1/user/add-views-count`;
 export const SEND_FEEDBACK_API = `${BACKEND_URL}/api/v1/user/feedback`;
+export const GET_STATUS_URL = `${BACKEND_URL}/api/v1/user/feedback`;
+export const CREATE_PAYMENT_INTENT = `${BACKEND_URL}/api/v1/user/create-payment-intent`;
+export const UPDATE_CAR_URL = `${BACKEND_URL}/api/v1/user/car`

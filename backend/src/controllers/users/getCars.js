@@ -20,6 +20,7 @@ module.exports.getCars = async (req, res) => {
       brands,
       car_name,
       dealer_id,
+      features,
     } = req.query;
 
     const pageNum = parseInt(page);
@@ -34,21 +35,7 @@ module.exports.getCars = async (req, res) => {
       ];
     if (make) filter.make = make;
     if (model) filter.model = model;
-
-    if (year) {
-      const years = year.split(",").map((y) => parseInt(y.trim()));
-      if (years.length === 1) {
-        filter.year = years[0];
-      } else if (years.length === 2) {
-        const [startYear, endYear] = years.sort((a, b) => a - b);
-        filter.year = { $gte: startYear, $lte: endYear };
-      }
-    }
-
-    if (brands) {
-      const brandsArray = Array.isArray(brands) ? brands : [brands];
-      filter.brand = { $in: brandsArray };
-    }
+    if (year) filter.year = parseInt(year);
 
     if (priceMin || priceMax)
       filter.price = {
@@ -57,13 +44,33 @@ module.exports.getCars = async (req, res) => {
       };
     if (fuel_type) filter.fuel_type = fuel_type;
     if (dealer_id && dealer_id != "undefined") filter.dealer_id = dealer_id;
+
+    if (brands) {
+      const brandsArray = Array.isArray(brands) ? brands : [brands];
+      filter.brand = {
+        $in: brandsArray.map((brand) => new RegExp(brand, "i")),
+      };
+    }
+
     if (car_name) {
-      filter.car_name = { $regex: new RegExp(`^${car_name}$`, "i") };
+      const carNames = Array.isArray(car_name) ? car_name : [car_name];
+      filter.$or = carNames.map((name) => ({
+        car_name: { $regex: new RegExp(name.split(" ").join(".*"), "i") },
+      }));
     }
     if (transmission) filter.transmission = transmission;
     if (body_type)
       filter.body_type = { $regex: new RegExp(`^${body_type}$`, "i") };
     if (status) filter.status = status;
+
+    if (features) {
+      const featuresArray = Array.isArray(features) ? features : [features];
+      filter.features = {
+        $all: featuresArray.map(
+          (feature) => new RegExp(`^${feature.replace(/\s+/g, "\\s*")}$`, "i")
+        ),
+      };
+    }
 
     const cars = await Cars.find(filter)
       .sort({ [sortBy]: order === "desc" ? -1 : 1 })

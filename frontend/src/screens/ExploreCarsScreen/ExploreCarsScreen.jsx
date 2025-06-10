@@ -21,14 +21,12 @@ import { GET_ALL_CARS } from "../../config/api";
 import Carousel from "../../components/Carousel/Carousel";
 
 function ExploreCarsScreen() {
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState("desc");
+  const [sortBy, setSortBy] = useState("created_at");
   const [loading, setLoading] = useState(false);
   const [cars, setCars] = useState([]);
-  const [filteredCars, setFilteredCars] = useState([]);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({});
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [searchParams] = useSearchParams();
   const brand = searchParams.get("brand");
@@ -47,15 +45,21 @@ function ExploreCarsScreen() {
   const fetchCars = async (filters = {}) => {
     try {
       setLoading(true);
+      const cleanFilters = Object.fromEntries(
+        Object.entries(filters).filter(
+          ([_, value]) => value !== undefined && value !== null
+        )
+      );
       const queryParams = new URLSearchParams({
-        ...filters,
+        ...cleanFilters,
         page: pagination.page,
         limit: pagination.pageSize,
+        sortBy,
+        order,
       }).toString();
       const res = await axios.get(`${GET_ALL_CARS}?${queryParams}`);
-      if (res?.data?.data?.length > 0) {
+      if (res?.data?.success) {
         setCars(res.data.data);
-        setFilteredCars(res.data.data);
         setPagination((prev) => ({
           ...prev,
           total: res.data.pagination.total,
@@ -63,10 +67,9 @@ function ExploreCarsScreen() {
         }));
       } else {
         setCars([]);
-        setFilteredCars([]);
       }
     } catch (error) {
-      setError(error.message);
+      setError(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
@@ -74,21 +77,33 @@ function ExploreCarsScreen() {
 
   useEffect(() => {
     fetchCars(filters);
-  }, [brand, pagination.page]);
+  }, [brand, pagination.page, sortBy, order, filters]);
 
   const handleSortChange = (event) => {
     const value = event.target.value;
-    setOrder(value);
-    const sortedCars = [...filteredCars].sort((a, b) => {
-      if (value === "asc") return a.rate - b.rate;
-      if (value === "desc") return b.rate - a.rate;
-      if (value === "latest")
-        return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-      if (value === "oldest")
-        return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
-      return 0;
-    });
-    setFilteredCars(sortedCars);
+    setOrder(value.includes("desc") ? "desc" : "asc");
+
+    switch (value) {
+      case "price_asc":
+        setSortBy("price");
+        setOrder("asc");
+        break;
+      case "price_desc":
+        setSortBy("price");
+        setOrder("desc");
+        break;
+      case "latest":
+        setSortBy("created_at");
+        setOrder("desc");
+        break;
+      case "oldest":
+        setSortBy("created_at");
+        setOrder("asc");
+        break;
+      default:
+        setSortBy("created_at");
+        setOrder("desc");
+    }
   };
 
   const applyFilters = (newFilters) => {
@@ -119,11 +134,14 @@ function ExploreCarsScreen() {
               <div className="sort-bar">
                 <FormControl style={{ minWidth: "200px" }}>
                   <InputLabel>Sort by</InputLabel>
-                  <Select value={order} onChange={handleSortChange}>
-                    <MenuItem value="asc">Price: Low to High</MenuItem>
-                    <MenuItem value="desc">Price: High to Low</MenuItem>
-                    <MenuItem value="latest">Latest</MenuItem>
-                    <MenuItem value="oldest">Oldest</MenuItem>
+                  <Select
+                    value={`${sortBy}_${order}`}
+                    onChange={handleSortChange}
+                  >
+                    <MenuItem value="price_asc">Price: Low to High</MenuItem>
+                    <MenuItem value="price_desc">Price: High to Low</MenuItem>
+                    <MenuItem value="created_at_desc">Latest</MenuItem>
+                    <MenuItem value="created_at_asc">Oldest</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -135,19 +153,19 @@ function ExploreCarsScreen() {
                   </div>
                 ) : error ? (
                   <div className="error-message">{error}</div>
-                ) : filteredCars.length === 0 ? (
+                ) : cars.length === 0 ? (
                   <div className="empty-state">
                     <EmptyState />
                   </div>
                 ) : (
-                  filteredCars.map((car) => (
+                  cars.map((car) => (
                     <div key={car.id} className="car-card">
                       <Card car={car} />
                     </div>
                   ))
                 )}
               </div>
-              {filteredCars.length > 0 && (
+              {cars.length > 0 && (
                 <div className="pagination-container">
                   <Pagination
                     count={pagination.pages}
@@ -166,22 +184,6 @@ function ExploreCarsScreen() {
           </div>
         </div>
       </div>
-      {/* {isMobile && (
-        <div className="mobile-search-container">
-          <InputBase
-            placeholder="Search cars..."
-            className="search-input"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyPress={(e) =>
-              e.key === "Enter" && fetchCars({ ...filters, search: searchTerm })
-            }
-          />
-          <IconButton onClick={() => setSearchTerm("")}>
-            {searchTerm ? <Close /> : <Search />}
-          </IconButton>
-        </div>
-      )} */}
     </div>
   );
 }

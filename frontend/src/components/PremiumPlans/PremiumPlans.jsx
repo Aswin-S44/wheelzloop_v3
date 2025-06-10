@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   FaCrown,
   FaStar,
@@ -9,11 +9,18 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import "./PremiumPlans.css";
+import axios from "axios";
+import { UPDATE_PROFILE_URL } from "../../config/api";
+import { UserContext } from "../../hooks/UserContext";
+import { SUBRIPTION_PLANS } from "../../constants/userConstants";
+import Swal from "sweetalert2";
 
 const PremiumPlans = () => {
+  // Commenting for now
   const handleSubscribePan = async (plan) => {
     window.location.href = `/subscribe/${plan}`;
   };
+  const { user } = useContext(UserContext);
 
   return (
     <div className="premium-plans-container mt-2">
@@ -82,7 +89,7 @@ const PremiumPlans = () => {
           </ul>
           <button
             className="plan-button pro-button"
-            onClick={() => handleSubscribePan("pro")}
+            onClick={() => handleSubscribePan(SUBRIPTION_PLANS.PRO.TITLE)}
           >
             Upgrade Now
           </button>
@@ -118,7 +125,7 @@ const PremiumPlans = () => {
           </ul>
           <button
             className="plan-button elite-button"
-            onClick={() => handleSubscribePan("elite")}
+            onClick={() => handleSubscribePan(SUBRIPTION_PLANS.ELITE.TITLE)}
           >
             Go Elite
           </button>

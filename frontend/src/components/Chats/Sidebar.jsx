@@ -11,10 +11,7 @@ const Sidebar = ({ onClose }) => {
     useChatStore();
   const { onlineUsers } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
-  console.log(
-    "setSelectedUser-----------",
-    setSelectedUser ? setSelectedUser : "no setSelectedUser"
-  );
+
   useEffect(() => {
     getUsers();
   }, [getUsers]);

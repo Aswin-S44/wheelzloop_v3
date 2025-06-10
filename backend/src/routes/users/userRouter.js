@@ -35,6 +35,13 @@ const {
 const { addViewsCount } = require("../../controllers/users/addViewsCount");
 const { Logout } = require("../../controllers/users/logout");
 const { sentFeedback } = require("../../controllers/users/sentFeedback");
+const {
+  getDashboardStats,
+} = require("../../controllers/users/getDashboardStats");
+const {
+  getDashboardGraphStats,
+} = require("../../controllers/users/getDashboardGraphStats");
+const { createPaymentIntent } = require("../../controllers/users/payment");
 
 const router = express.Router();
 
@@ -58,7 +65,7 @@ router.post("/reset-password/:token", resetPassword);
 
 router.get("/cars", getCars);
 router.post("/car", userVerification, addCar);
-router.patch("/car/:id", updateCar);
+router.patch("/car/:id", updateCar); 
 router.get("/cars/me", userVerification, async (req, res) => {
   const dealerId = req.user._id;
   const cars = await getCarByDealerId(dealerId);
@@ -97,5 +104,10 @@ router.post("/message/send/:id", userVerification, sendMessage);
 router.post("/add-views-count/:id", addViewsCount);
 
 router.post("/feedback", sentFeedback);
+
+router.get("/dashboard/:id/stats", getDashboardStats);
+router.get("/dashboard/:id/graph", getDashboardGraphStats);
+
+router.post("/create-payment-intent", createPaymentIntent);
 
 module.exports = router;

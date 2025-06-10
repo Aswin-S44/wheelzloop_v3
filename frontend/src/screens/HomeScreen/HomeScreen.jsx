@@ -154,12 +154,6 @@ const calculateRelevanceScore = (car, searchTerms) => {
         <CarCategoriesSection />
       </div>
       <div className="container">
-        {/* <TitleHeader
-          title1={"Why Choose"}
-          title2={"Us"}
-          showOption={true}
-          option={null}
-        /> */}
         <FeaturesSection />
       </div>
 

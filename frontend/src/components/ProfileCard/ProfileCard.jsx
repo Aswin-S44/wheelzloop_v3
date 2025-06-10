@@ -6,10 +6,26 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ShareIcon from "@mui/icons-material/Share";
 import EditIcon from "@mui/icons-material/Edit";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { ToastContainer, toast } from "react-toastify";
 
 function ProfileCard({ user, editable = false }) {
   const handleEditProfile = () => {
     window.location.href = "/profile/edit";
+  };
+
+  const handleShareProfile = async () => {
+    if (user) {
+      const currentUrl = window.location.href + "/" + user._id;
+      navigator.clipboard
+        .writeText(currentUrl)
+        .then(() => {
+          toast.success("Link copied to clipboard!");
+        })
+        .catch(() => {
+          toast.error("Failed to copy link.");
+        });
+    }
   };
 
   return (
@@ -22,7 +38,22 @@ function ProfileCard({ user, editable = false }) {
         />
       </div>
       <div className="profile-content">
-        <h2 className="name">{user?.first_name + " " + user?.last_name}</h2>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <h2 className="name">{user?.first_name + " " + user?.last_name}</h2>
+          {user && user?.subscribed && (
+            <div className="tooltip-container">
+              <VerifiedIcon className="verified-icon" />
+              <span className="tooltip-text">Verified</span>
+            </div>
+          )}
+        </div>
+
         <div className="profile-details">
           <div className="detail-item">
             <CalendarMonthIcon className="detail-icon" />
@@ -40,12 +71,13 @@ function ProfileCard({ user, editable = false }) {
               Edit profile
             </button>
           )}
-          <button className="share-button">
+          <button className="share-button" onClick={handleShareProfile}>
             <ShareIcon fontSize="small" />
             Share
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

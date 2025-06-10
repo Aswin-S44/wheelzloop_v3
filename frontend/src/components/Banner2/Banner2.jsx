@@ -14,8 +14,8 @@ function Banner2() {
             The Best used Cars Collection in Kochi, Kerala
           </h1>
           <h2
-            className="fs-5 mb-4 banner-subtitle"
-            style={{ fontSize: "40px", fontWeight: 400 }}
+            className="fs-5 mb-4 banner-subtitle-2"
+            // style={{ fontSize: "40px", fontWeight: 400 }}
           >
             Discover our wide range of{" "}
             <span className="quality-text">

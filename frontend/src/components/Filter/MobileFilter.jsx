@@ -56,6 +56,7 @@ function MobileFilter({ onFilterChange }) {
       bodyTypes: selectedBodyTypes.length > 0 ? selectedBodyTypes : null,
       transmissionTypes:
         selectedTransmissionTypes.length > 0 ? selectedTransmissionTypes : null,
+      features: selectedFeatures.length > 0 ? selectedFeatures : undefined,
     };
 
     onFilterChange(
@@ -155,7 +156,6 @@ function MobileFilter({ onFilterChange }) {
                                     )
                                   }
                                 />
-                                <span className="checkmark"></span>
                                 {car}
                               </label>
                             ))}

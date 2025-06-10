@@ -47,13 +47,24 @@ function BlogScreen() {
             text: "Thank you for subscribing with us!",
             icon: "success",
           });
+        } else {
+          Swal.fire({
+            title: "You are already subscribed",
+            icon: "success",
+            draggable: true,
+          });
         }
         setEmail("");
       }
     } catch (error) {
       console.error("Subscription error:", error);
-      toast.error("Failed to subscribe");
+      Swal.fire({
+        title: "You are already subscribed",
+        icon: "success",
+        draggable: true,
+      });
       setLoading(false);
+      setEmail("");
     }
   };
 
@@ -194,7 +205,7 @@ function BlogScreen() {
 
       <div className="newsletter-cta">
         <div className="cta-content">
-          <h3>Get More Car Buying Tips</h3>
+          <h3 className="text-center">Get More Car Buying Tips</h3>
           <p>
             Subscribe to our newsletter for the latest advice and market trends
           </p>

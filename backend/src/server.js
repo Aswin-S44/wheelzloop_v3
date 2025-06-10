@@ -9,11 +9,15 @@ const rateLimit = require("express-rate-limit");
 // const app = express();
 
 const { app, server } = require("../libs/socket");
+const { Crons } = require("./crons/tasks");
 
 const port = process.env.PORT || 5000;
 
 // Database connection
 db.connect();
+
+// Cron Jobs
+Crons();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,

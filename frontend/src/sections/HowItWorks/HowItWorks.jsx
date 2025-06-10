@@ -7,6 +7,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
+
 function HowItWorks() {
   const { user } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -105,6 +106,13 @@ function HowItWorks() {
           className="cta-button d-block mx-auto"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
+          style={{
+            background: "#606cbc",
+            padding: "15px 40px",
+            color: "#fff",
+            border: "none",
+            borderRadius: "50px",
+          }}
         >
           Get Started Now
         </button></a>
