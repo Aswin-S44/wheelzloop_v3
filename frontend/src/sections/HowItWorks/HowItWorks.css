@@ -6,7 +6,6 @@
 }
 
 .container {
-  /* max-width: 1200px; */
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -37,6 +36,7 @@
   align-items: flex-start;
   position: relative;
   margin-bottom: 50px;
+  flex-wrap: wrap;
 }
 
 .step {
@@ -48,8 +48,10 @@
   padding: 0 20px;
   position: relative;
   z-index: 2;
+  min-width: 300px;
+  margin-bottom: 40px;
 }
- 
+
 .step-number {
   width: 40px;
   height: 40px;
@@ -79,13 +81,10 @@
 
 .step:hover .step-icon {
   transform: scale(1.1);
-  /* background: #30bfa1;
-  color: #fff; */
 }
 
 .icon {
   font-size: 48px !important;
-  /* color: #30bfa1; */
   color: #ADB2D4;
 }
 
@@ -108,7 +107,7 @@
 }
 
 .step-connector {
-  flex: 1;
+  flex: 0 0 50px;
   height: 2px;
   background: linear-gradient(135deg, #30bfa1, #148a84);
   margin-top: 70px;
@@ -125,11 +124,9 @@
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
-  /* display: block; */
   margin: 0 auto;
   transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(48, 191, 161, 0.3);
- 
 }
 
 .cta-button:hover {
@@ -139,18 +136,29 @@
 
 @media (max-width: 992px) {
   .steps-wrapper {
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .step {
+    flex: 0 0 calc(50% - 40px);
+    margin-bottom: 40px;
+  }
+  
+  .step-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .steps-wrapper {
     flex-direction: column;
     align-items: center;
     gap: 50px;
   }
   
-  .step-connector {
-    width: 2px;
-    height: 50px;
-    margin: 0;
-  }
-  
   .step {
+    flex: 1;
     max-width: 400px;
   }
 }
@@ -222,7 +230,6 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  
 }
 
 .car-step-icon .material-icons {
