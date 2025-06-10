@@ -126,3 +126,12 @@ button.medium {
 .saved{
   color: red;
 }
+
+
+@media (max-width: 768px) {
+  .latst-cars-section .container {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  
+}
