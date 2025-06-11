@@ -1,11 +1,18 @@
 import { createClient } from "contentful";
 const contentful = require("contentful");
 
+// const client = createClient({
+//   space: process.env.REACT_APP_CONTENTFULL_SPACEID, 
+//   environment: "master",
+//   accessToken: process.env.REACT_APP_CONTENTFULL_ACCESS_TOKEN, 
+// });
+
+
 const client = createClient({
-  space: process.env.REACT_APP_CONTENTFULL_SPACEID, 
-  environment: "master",
-  accessToken: process.env.REACT_APP_CONTENTFULL_ACCESS_TOKEN, 
+  space: 'your_space_id_here',
+  accessToken: 'your_access_token_here',
 });
+
 export default client;
 
 export const fetchEntries = async () => {

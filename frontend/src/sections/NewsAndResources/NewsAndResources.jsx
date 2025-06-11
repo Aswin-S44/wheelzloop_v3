@@ -87,7 +87,7 @@ const NewsAndResources = () => {
                 <h3 className="news-card-title">{blog.title}</h3>
                 <p className="news-text">{blog.sections[0]?.content}</p>
                 <button className="news-link">
-                  Read More
+                  View More
                   <svg className="arrow-icon" viewBox="0 0 24 24">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>

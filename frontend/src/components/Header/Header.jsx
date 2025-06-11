@@ -23,7 +23,9 @@ function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showResults, setShowResults] = useState(false);
   const { user } = useContext(UserContext);
-   const [previousSearches, setPreviousSearches] = useState(() => {
+  const [isListening, setIsListening] = useState(false);
+
+  const [previousSearches, setPreviousSearches] = useState(() => {
     const storedSearches = localStorage.getItem(LOCAL_STORAGE_KEY);
     return storedSearches ? JSON.parse(storedSearches) : [];
   });
@@ -142,7 +144,7 @@ function Header() {
   //   }
   // };
 
-const handleSearch = async (e) => {
+  const handleSearch = async (e) => {
     const currentSearchValue = e.target.value;
     setSearchKey(currentSearchValue);
 
@@ -163,13 +165,45 @@ const handleSearch = async (e) => {
     setSearchKey("");
   };
 
-useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(previousSearches));
   }, [previousSearches]);
 
+ const startListening = () => {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert("Your browser does not support speech recognition.");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  setIsListening(true); // 👈 Change image
+
+  recognition.start();
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript.trim();
+    setSearchKey(transcript);
+  };
+
+  recognition.onend = () => {
+    setIsListening(false); // 👈 Reset image
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error:", event.error);
+    setIsListening(false); // 👈 Also reset on error
+  };
+};
 
   return (
-    <>
+    <div className="header-container">
       <header className={`header ${showHeader ? 'show' : 'hide'}`}>
         <div className="logo">
           <a href="/" title="logo">
@@ -190,6 +224,16 @@ useEffect(() => {
             onChange={handleSearch}
             value={searchKey}
           />
+          <button className="voice-search-btn" onClick={startListening} aria-label="voice-search">
+  <img
+    className={isListening ? "listening-animation" : ""}
+    style={{ width: "25px" }}
+    src={isListening ? "/images/sound-wave.png" : "/images/voice.png"}
+    alt="Voice Search"
+  />
+</button>
+
+
           <button aria-label="search-button">
             <Search />
           </button>
@@ -204,7 +248,7 @@ useEffect(() => {
                   key={index}
                   className="search-card"
                   onClick={handleResultClick}
-                  title={result.brand} 
+                  title={result.brand}
                 >
                   <div className="search-card-image">
                     <img
@@ -215,15 +259,15 @@ useEffect(() => {
                   </div>
                   <div className="search-card-content">
                     <div className="d-flex justify-content-between"><h3>{result.car_name}</h3>
-                    <p className="search-card-meta">
-                      {result.brand} • {result.model} • {result.year}
-                    </p></div>
+                      <p className="search-card-meta">
+                        {result.brand} • {result.model} • {result.year}
+                      </p></div>
                     <div className="d-flex justify-content-between">
                       <p className="search-card-price">
-                      ${result?.price?.toLocaleString()}
-                    </p>
-                    <p className="search-card-location">  <img style={{width:"20px",height:"20px"}} src="/images/gps.png" alt="location" />  {result.place}</p>
-              
+                        ${result?.price?.toLocaleString()}
+                      </p>
+                      <p className="search-card-location">  <img style={{ width: "20px", height: "20px" }} src="/images/gps.png" alt="location" />  {result.place}</p>
+
                     </div>
                   </div>
                 </a>
@@ -351,7 +395,7 @@ useEffect(() => {
           </>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 }
 
