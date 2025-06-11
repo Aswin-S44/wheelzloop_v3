@@ -169,7 +169,7 @@ useEffect(() => {
 
 
   return (
-    <>
+    <div className="header-container">
       <header className={`header ${showHeader ? 'show' : 'hide'}`}>
         <div className="logo">
           <a href="/" title="logo">
@@ -351,7 +351,7 @@ useEffect(() => {
           </>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 }
 

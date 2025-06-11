@@ -213,6 +213,13 @@ a.search-card:hover {
   z-index: 99;
 } */
 
+@media (min-width: 768px) {
+  .header-container {
+    height: 110px;
+  }
+}
+
+
 @media (max-width: 768px) {
   .search {
     display: none;
