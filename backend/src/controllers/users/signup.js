@@ -1,3 +1,4 @@
+const { sentOTPTemplate } = require("../../../email-templates/otp-template");
 const OTP = require("../../../models/users/otpModel");
 const User = require("../../../models/users/userSchema");
 const {
@@ -32,11 +33,11 @@ module.exports = {
 
       await newOTP.save();
 
-      let htmlContent = `<p>Your OTP is: <strong>${otp}</strong></p>`;
+      let htmlContent = sentOTPTemplate(otp);
       await sendEmail(
         process.env.EMAIL_USER,
         "Your OTP for WheeelzLoop Signup",
-        `Your OTP is: ${otp}`,
+        htmlContent,
         htmlContent,
         email
       );
