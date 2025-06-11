@@ -44,27 +44,28 @@ function HomeScreen() {
   const [selectedTab, setSelectedTab] = useState(currentTab);
   const [originalCars, setOriginalCars] = useState([]);
 
-const storedSearches = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+  const storedSearches =
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
 
+  const calculateRelevanceScore = (car, searchTerms) => {
+    if (!searchTerms || searchTerms.length === 0) return 0;
 
+    let score = 0;
+    const lowerCaseSearchTerms = searchTerms.map((term) => term.toLowerCase());
+    const totalTerms = lowerCaseSearchTerms.length;
+    lowerCaseSearchTerms.forEach((term, index) => {
+      const weight = index === totalTerms - 1 ? 10 : 1;
 
-const calculateRelevanceScore = (car, searchTerms) => {
-  if (!searchTerms || searchTerms.length === 0) return 0;
+      if (car.car_name && car.car_name.toLowerCase().includes(term))
+        score += 3 * weight;
+      if (car.brand && car.brand.toLowerCase().includes(term))
+        score += 2 * weight;
+      if (car.place && car.place.toLowerCase().includes(term))
+        score += 1 * weight;
+    });
 
-  let score = 0;
-  const lowerCaseSearchTerms = searchTerms.map(term => term.toLowerCase());
-  const totalTerms = lowerCaseSearchTerms.length;
-  lowerCaseSearchTerms.forEach((term, index) => {
-    const weight = index === totalTerms - 1 ? 10 : 1; 
-
-    if (car.car_name && car.car_name.toLowerCase().includes(term)) score += 3 * weight;
-    if (car.brand && car.brand.toLowerCase().includes(term)) score += 2 * weight;
-    if (car.place && car.place.toLowerCase().includes(term)) score += 1 * weight;
-  });
-
-  return score;
-};
-
+    return score;
+  };
 
   const sortCarsByPreviousSearches = (carList, searches) => {
     return [...carList].sort((a, b) => {
@@ -78,9 +79,6 @@ const calculateRelevanceScore = (car, searchTerms) => {
     const sortedCars = sortCarsByPreviousSearches(cars, storedSearches);
     setCars(sortedCars);
   }, []);
-
-
-
 
   const tabListRef = useRef(null);
 
@@ -109,7 +107,10 @@ const calculateRelevanceScore = (car, searchTerms) => {
         setLoading(true);
         const res = await axios.get(`${GET_ALL_CARS}`);
         if (res && res.data?.data?.length > 0) {
-          const sortedInitialCars = sortCarsByPreviousSearches(res.data.data, storedSearches);
+          const sortedInitialCars = sortCarsByPreviousSearches(
+            res.data.data,
+            storedSearches
+          );
 
           setCars(sortedInitialCars);
         }
@@ -121,9 +122,6 @@ const calculateRelevanceScore = (car, searchTerms) => {
     };
     fetchCars();
   }, []);
-
-
-
 
   return (
     <div className="screens">
@@ -159,7 +157,7 @@ const calculateRelevanceScore = (car, searchTerms) => {
 
       <div>
         <div className="mt-4">
-          <div>
+          <div className="latst-cars-section">
             <div className="container">
               <h3 className="text-center fw-bold">
                 <span className="quality-text">
@@ -179,7 +177,7 @@ const calculateRelevanceScore = (car, searchTerms) => {
                   </svg>
                 </span>{" "}
               </h3>
-              <div className="cards-container mt-4">
+              <div className="mt-4">
                 {loading ? (
                   <Loader />
                 ) : cars.length === 0 ? (

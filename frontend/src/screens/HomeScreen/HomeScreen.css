@@ -73,6 +73,21 @@
   }
   
 
+  /* .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px;
+    width: 100%;
+  }
+  
+
+  @media (min-width: 768px) {
+    .cards-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+      gap: 20px;
+    }
+  } */
+
   .tab-scroll-container {
     position: relative;
     display: flex;
