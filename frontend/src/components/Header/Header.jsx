@@ -11,7 +11,7 @@ import AccountDropdown from "../AccountDropdown/AccountMenu";
 import AccountMenu from "../AccountDropdown/AccountMenu";
 import SubHeader from "../SubHeader/SubHeader";
 import MailIcon from "@mui/icons-material/Mail";
-const LOCAL_STORAGE_KEY = 'previousCarSearches';
+const LOCAL_STORAGE_KEY = "previousCarSearches";
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
@@ -23,17 +23,14 @@ function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showResults, setShowResults] = useState(false);
   const { user } = useContext(UserContext);
-   const [previousSearches, setPreviousSearches] = useState(() => {
+  const [previousSearches, setPreviousSearches] = useState(() => {
     const storedSearches = localStorage.getItem(LOCAL_STORAGE_KEY);
     return storedSearches ? JSON.parse(storedSearches) : [];
   });
 
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -48,13 +45,9 @@ function Header() {
       setLastScrollY(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
-
-
-
-
 
   const handleSellCar = () => {
     if (!user) {
@@ -92,7 +85,7 @@ function Header() {
         setShowResults(true);
       } else {
         setSearchResults([]);
-        setShowResults(false);
+        setShowResults(true);
       }
     } else {
       setSearchResults([]);
@@ -142,7 +135,7 @@ function Header() {
   //   }
   // };
 
-const handleSearch = async (e) => {
+  const handleSearch = async (e) => {
     const currentSearchValue = e.target.value;
     setSearchKey(currentSearchValue);
 
@@ -163,14 +156,13 @@ const handleSearch = async (e) => {
     setSearchKey("");
   };
 
-useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(previousSearches));
   }, [previousSearches]);
 
-
   return (
     <>
-      <header className={`header ${showHeader ? 'show' : 'hide'}`}>
+      <header className={`header ${showHeader ? "show" : "hide"}`}>
         <div className="logo">
           <a href="/" title="logo">
             <img
@@ -186,7 +178,7 @@ useEffect(() => {
         <div className={`search ${showSearch ? "mobile-search" : ""}`}>
           <input
             type="text"
-            placeholder="Search for cars"
+            placeholder="Search for car name or brand or location"
             onChange={handleSearch}
             value={searchKey}
           />
@@ -195,16 +187,16 @@ useEffect(() => {
           </button>
         </div>
 
-        {showResults && (
+        {showResults && searchKey.trim() != "" && (
           <div className="search-results-container">
-            {searchResults.length > 0
-              ? searchResults.map((result, index) => (
+            {searchResults.length > 0 ? (
+              searchResults.map((result, index) => (
                 <a
                   href={`/car-details/${result._id}`}
                   key={index}
                   className="search-card"
                   onClick={handleResultClick}
-                  title={result.brand} 
+                  title={result.brand}
                 >
                   <div className="search-card-image">
                     <img
@@ -214,25 +206,34 @@ useEffect(() => {
                     />
                   </div>
                   <div className="search-card-content">
-                    <div className="d-flex justify-content-between"><h3>{result.car_name}</h3>
-                    <p className="search-card-meta">
-                      {result.brand} • {result.model} • {result.year}
-                    </p></div>
+                    <div className="d-flex justify-content-between">
+                      <h3>{result.car_name}</h3>
+                      <p className="search-card-meta">
+                        {result.brand} • {result.model} • {result.year}
+                      </p>
+                    </div>
                     <div className="d-flex justify-content-between">
                       <p className="search-card-price">
-                      ${result?.price?.toLocaleString()}
-                    </p>
-                    <p className="search-card-location">  <img style={{width:"20px",height:"20px"}} src="/images/gps.png" alt="location" />  {result.place}</p>
-              
+                        ${result?.price?.toLocaleString()}
+                      </p>
+                      <p className="search-card-location">
+                        {" "}
+                        <img
+                          style={{ width: "20px", height: "20px" }}
+                          src="/images/gps.png"
+                          alt="location"
+                        />{" "}
+                        {result.place}
+                      </p>
                     </div>
                   </div>
                 </a>
               ))
-              : searchResults.length == 0 && (
-                <a className="search-card">
-                  <div>No results found</div>
-                </a>
-              )}
+            ) : (
+              <a className="search-card">
+                <div>No results found</div>
+              </a>
+            )}
           </div>
         )}
 
@@ -244,7 +245,7 @@ useEffect(() => {
             Home
           </a>
           <a href="/used-cars" title="find used cars">
-            Find Cars
+            Find-Cars
           </a>
           <a href="/favourites" title="saved cars">
             Favourites
@@ -284,7 +285,12 @@ useEffect(() => {
               onClick={toggleSearch}
             />
           )}
-          {user && <AccountMenu />}
+          {user && (
+            <AccountMenu
+              profileImage={user?.profile_picture ?? null}
+              username={user?.first_name ?? "A"}
+            />
+          )}
           {isMobile && (
             <>
               <Menu className="menu-icon" onClick={toggleNav} />

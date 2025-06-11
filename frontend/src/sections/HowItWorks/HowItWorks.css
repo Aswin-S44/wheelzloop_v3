@@ -126,7 +126,7 @@
   cursor: pointer;
   margin: 0 auto;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(48, 191, 161, 0.3);
+  box-shadow: 0 5px 15px #606cbc;
 }
 
 .cta-button:hover {

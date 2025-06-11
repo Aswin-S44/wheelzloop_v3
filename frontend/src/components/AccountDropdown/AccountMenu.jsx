@@ -13,7 +13,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useAuthStore } from "../../store/useAuthStore";
 
-export default function AccountMenu() {
+export default function AccountMenu({ profileImage, first_name }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { logout } = useAuthStore();
   const open = Boolean(anchorEl);
@@ -44,7 +44,13 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            {profileImage ? (
+              <Avatar src={profileImage} sx={{ width: 32, height: 32 }} />
+            ) : (
+              <>
+                <Avatar sx={{ width: 32, height: 32 }}>{first_name}</Avatar>
+              </>
+            )}
           </IconButton>
         </Tooltip>
       </Box>
