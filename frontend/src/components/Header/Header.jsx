@@ -11,7 +11,7 @@ import AccountDropdown from "../AccountDropdown/AccountMenu";
 import AccountMenu from "../AccountDropdown/AccountMenu";
 import SubHeader from "../SubHeader/SubHeader";
 import MailIcon from "@mui/icons-material/Mail";
-const LOCAL_STORAGE_KEY = 'previousCarSearches';
+const LOCAL_STORAGE_KEY = "previousCarSearches";
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
@@ -30,12 +30,9 @@ function Header() {
     return storedSearches ? JSON.parse(storedSearches) : [];
   });
 
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -50,13 +47,9 @@ function Header() {
       setLastScrollY(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
-
-
-
-
 
   const handleSellCar = () => {
     if (!user) {
@@ -94,7 +87,7 @@ function Header() {
         setShowResults(true);
       } else {
         setSearchResults([]);
-        setShowResults(false);
+        setShowResults(true);
       }
     } else {
       setSearchResults([]);
@@ -220,7 +213,7 @@ function Header() {
         <div className={`search ${showSearch ? "mobile-search" : ""}`}>
           <input
             type="text"
-            placeholder="Search for cars"
+            placeholder="Search for car name or brand or location"
             onChange={handleSearch}
             value={searchKey}
           />
@@ -239,10 +232,10 @@ function Header() {
           </button>
         </div>
 
-        {showResults && (
+        {showResults && searchKey.trim() != "" && (
           <div className="search-results-container">
-            {searchResults.length > 0
-              ? searchResults.map((result, index) => (
+            {searchResults.length > 0 ? (
+              searchResults.map((result, index) => (
                 <a
                   href={`/car-details/${result._id}`}
                   key={index}
@@ -272,11 +265,11 @@ function Header() {
                   </div>
                 </a>
               ))
-              : searchResults.length == 0 && (
-                <a className="search-card">
-                  <div>No results found</div>
-                </a>
-              )}
+            ) : (
+              <a className="search-card">
+                <div>No results found</div>
+              </a>
+            )}
           </div>
         )}
 
@@ -288,7 +281,7 @@ function Header() {
             Home
           </a>
           <a href="/used-cars" title="find used cars">
-            Find Cars
+            Find-Cars
           </a>
           <a href="/favourites" title="saved cars">
             Favourites
@@ -328,7 +321,12 @@ function Header() {
               onClick={toggleSearch}
             />
           )}
-          {user && <AccountMenu />}
+          {user && (
+            <AccountMenu
+              profileImage={user?.profile_picture ?? null}
+              username={user?.first_name ?? "A"}
+            />
+          )}
           {isMobile && (
             <>
               <Menu className="menu-icon" onClick={toggleNav} />

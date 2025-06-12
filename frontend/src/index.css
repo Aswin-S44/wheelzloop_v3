@@ -133,3 +133,8 @@ button.medium {
   }
   
 }
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-steps .ant-steps-item-process .ant-steps-item-icon {
+  background-color: #606cbc !important;
+  border-color: #606cbc;
+}

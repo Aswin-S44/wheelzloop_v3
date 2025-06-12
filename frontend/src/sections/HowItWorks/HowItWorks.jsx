@@ -101,22 +101,24 @@ function HowItWorks() {
             </p>
           </div>
         </div>
-<a href="/signin">
-<button
-          className="cta-button d-block mx-auto"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-          style={{
-            background: "#606cbc",
-            padding: "15px 40px",
-            color: "#fff",
-            border: "none",
-            borderRadius: "50px",
-          }}
-        >
-          Get Started Now
-        </button></a>
-        
+        {!loggedIn && (
+          <a href="/signin">
+            <button
+              className="cta-button d-block mx-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              style={{
+                background: "#606cbc",
+                padding: "15px 40px",
+                color: "#fff",
+                border: "none",
+                borderRadius: "50px",
+              }}
+            >
+              Get Started Now
+            </button>
+          </a>
+        )}
       </div>
       <div
         class="modal fade"
