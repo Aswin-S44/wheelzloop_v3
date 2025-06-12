@@ -223,6 +223,12 @@ a.search-card:hover {
   }
 }
 
+@media (max-width: 768px) {
+  .header-container {
+    height: 80px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .search {
@@ -315,9 +321,6 @@ a.search-card:hover {
   float: right;
   position: relative;
 }
-
-
-
 
 
 .header {

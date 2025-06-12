@@ -11,7 +11,7 @@ body {
 }
 
 :root {
-  --primary-color:#606cbc;
+  --primary-color: #606cbc;
   --secondary-color: #f60;
   --border-radius: 20px;
   --main-bg-color: #30bfa1
@@ -121,18 +121,43 @@ button.medium {
   }
 } */
 
-.saved{
+.saved {
   color: red;
 }
 
 
 @media (max-width: 768px) {
+
+  h3.font-md {
+    font-size: calc(1.3rem + .6vw);
+  }
+
   .latst-cars-section .container {
     padding-right: 0 !important;
     padding-left: 0 !important;
   }
-  
+
 }
+
+
+@media (max-width: 400px) {
+  h3.font-md {
+    font-size: 18px;
+  }
+
+
+  .font-sm {
+    display: flex;
+    font-size: 12px;
+  }
+
+  .font-sm svg {
+    font-size: 12px !important;
+    margin-top: 3px;
+  }
+
+}
+
 
 :where(.css-dev-only-do-not-override-1a3rktk).ant-steps .ant-steps-item-process .ant-steps-item-icon {
   background-color: #606cbc !important;
