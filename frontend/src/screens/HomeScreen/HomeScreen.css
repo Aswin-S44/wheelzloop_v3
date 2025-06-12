@@ -128,3 +128,20 @@
   .scroll-button:hover svg {
     color: #333;
   }
+
+  .latst-cars-section .card, .tabs-container .card {
+    display: flex;
+    justify-content: space-between;
+}
+
+.latst-cars-section section.Toastify, .tabs-container section.Toastify {
+    display: none;
+}
+
+
+@media (max-width: 400px) {
+    .cards-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 8px;
+    }
+}

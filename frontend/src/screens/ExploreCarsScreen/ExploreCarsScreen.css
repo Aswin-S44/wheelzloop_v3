@@ -154,3 +154,15 @@
       gap: 8px;
     }
   } */
+
+
+  @media (max-width: 400px) {
+.sort-bar .sort-select-container {
+  width: 100%;
+}
+
+    .cards-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 8px;
+    }
+}

@@ -132,7 +132,7 @@ function ExploreCarsScreen() {
           <div className="content-wrapper">
             <div className="cars-section">
               <div className="sort-bar">
-                <FormControl style={{ minWidth: "200px" }}>
+                <FormControl style={{ minWidth: "200px" }} className="sort-select-container">
                   <InputLabel>Sort by</InputLabel>
                   <Select
                     value={`${sortBy}_${order}`}
