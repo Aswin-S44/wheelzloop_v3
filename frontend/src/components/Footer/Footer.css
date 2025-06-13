@@ -306,6 +306,22 @@ footer .content .link-boxes .box{
   cursor: pointer;
   transition: all 0.4s ease;
 }
+
+.subsri-btn{
+  background: #fff;
+  color:#606cbc;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 4px 0;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  width: calc(100% + 55px);
+  padding: 7px;
+  border-radius: 5px;
+}
+
 .input-box input[type="button"]:hover{
   opacity: 1;
 }

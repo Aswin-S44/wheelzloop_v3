@@ -1,15 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Footer.css";
 import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
 import XIcon from "@mui/icons-material/X";
 import EmailIcon from "@mui/icons-material/Email";
 import { FACEBOOK, INSTAGRAM, LINKEDIN, X } from "../../constants/social-urls";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from "@mui/icons-material/Facebook";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import axios from "axios";
+import { ADD_SUBSCRIPTION_URL } from "../../config/api";
+import Swal from "sweetalert2";
 
 function Footer() {
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState(null);
+  const handleSubscribe = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      if (email) {
+        const res = await axios.post(ADD_SUBSCRIPTION_URL, { email });
+        setLoading(false);
+        if (res && res.status === 200) {
+          Swal.fire({
+            title: "Subscription added!",
+            text: "Thank you for subscribing with us!",
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: "You are already subscribed",
+            icon: "success",
+            draggable: true,
+          });
+        }
+        setEmail("");
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+      Swal.fire({
+        title: "You are already subscribed",
+        icon: "success",
+        draggable: true,
+      });
+      setLoading(false);
+      setEmail("");
+    }
+  };
   return (
     <>
       {/* <footer className="footer">
@@ -153,59 +191,135 @@ function Footer() {
         </div>
       </footer> */}
 
-
       <footer className="footer">
         <div class="content">
           <div class="top">
             <div class="logo-details">
-             <img src="/images/logo.png" className="footer-logo" alt="logo" />
+              <img src="/images/logo.png" className="footer-logo" alt="logo" />
             </div>
             <div class="media-icons">
-              <a target="_blank" href="#">    <FacebookIcon className="icon font-size-footer" style={{ color: "#fff" }} /></a>
-              <a target="_blank"  href="https://www.instagram.com/wheelz_loop/"><InstagramIcon className="icon font-size-footer" style={{ color: "#fff" }} /></a>
-              <a target="_blank"  href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"><LinkedInIcon className="icon font-size-footer" style={{ color: "#fff" }} /></a>
-              <a target="_blank"  href="https://www.youtube.com/@wheelzloop"><YouTubeIcon className="icon font-size-footer" style={{ color: "#fff" }} /></a>
+              <a target="_blank" href="#">
+                {" "}
+                <FacebookIcon
+                  className="icon font-size-footer"
+                  style={{ color: "#fff" }}
+                />
+              </a>
+              <a target="_blank" href="https://www.instagram.com/wheelz_loop/">
+                <InstagramIcon
+                  className="icon font-size-footer"
+                  style={{ color: "#fff" }}
+                />
+              </a>
+              <a
+                target="_blank"
+                href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
+              >
+                <LinkedInIcon
+                  className="icon font-size-footer"
+                  style={{ color: "#fff" }}
+                />
+              </a>
+              <a target="_blank" href="https://www.youtube.com/@wheelzloop">
+                <YouTubeIcon
+                  className="icon font-size-footer"
+                  style={{ color: "#fff" }}
+                />
+              </a>
             </div>
           </div>
           <div class="link-boxes">
             <ul class="box">
               <li class="link_name">Company</li>
-              <li><a href="/">Home</a></li>
-              <li><a href="/contact-us">Contact us</a></li>
-              <li><a href="/about-us">About us</a></li>
-              <li><a href="/signin">Get started</a></li>
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>
+                <a href="/contact-us">Contact us</a>
+              </li>
+              <li>
+                <a href="/about-us">About us</a>
+              </li>
+              <li>
+                <a href="/signin">Get started</a>
+              </li>
             </ul>
             <ul class="box">
               <li class="link_name">Services</li>
-              <li><a href="/used-cars">Find-Cars</a></li>
-              <li><a href="/favourites">Favourites</a></li>
-              <li><a href="/reviews">Reviews</a></li>
-              <li><a href="/blogs">Blogs</a></li>
+              <li>
+                <a href="/used-cars">Find-Cars</a>
+              </li>
+              <li>
+                <a href="/favourites">Favourites</a>
+              </li>
+              <li>
+                <a href="/reviews">Reviews</a>
+              </li>
+              <li>
+                <a href="/blogs">Blogs</a>
+              </li>
             </ul>
             <ul class="box">
               <li class="link_name">Account</li>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">My account</a></li>
-              <li><a href="#">Prefrences</a></li>
-              <li><a href="#">Purchase</a></li>
+              <li>
+                <a href="#">Profile</a>
+              </li>
+              <li>
+                <a href="#">My account</a>
+              </li>
+              <li>
+                <a href="#">Prefrences</a>
+              </li>
+              <li>
+                <a href="#">Purchase</a>
+              </li>
             </ul>
             <ul class="box">
               <li class="link_name">Courses</li>
-              <li><a href="#">HTML & CSS</a></li>
-              <li><a href="#">JavaScript</a></li>
-              <li><a href="#">Photography</a></li>
-              <li><a href="#">Photoshop</a></li>
+              <li>
+                <a href="#">HTML & CSS</a>
+              </li>
+              <li>
+                <a href="#">JavaScript</a>
+              </li>
+              <li>
+                <a href="#">Photography</a>
+              </li>
+              <li>
+                <a href="#">Photoshop</a>
+              </li>
             </ul>
             <ul class="box input-box">
-              <li class="link_name">Subscribe</li>
-              <li><input type="text" placeholder="Enter your email" /></li>
-              <li><input type="button" value="Subscribe" /></li>
+              <form onSubmit={handleSubscribe}>
+                <li class="link_name">Subscribe</li>
+                <li>
+                  <input
+                    type="text"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </li>
+                <li>
+                  {/* <input type="button" value="Subscribe" /> */}
+                  <button
+                    type="submit"
+                    className="subsri-btn"
+                    disabled={loading}
+                  >
+                    {loading ? "Please wait" : "Subscribe"}
+                  </button>
+                </li>
+              </form>
             </ul>
           </div>
         </div>
         <div class="bottom-details">
           <div class="bottom_text">
-            <span class="copyright_text">Copyright © 2021 <a href="https://wheelzloop.com/">WheelzLoop.</a>All rights reserved</span>
+            <span class="copyright_text">
+              Copyright © 2021 <a href="https://wheelzloop.com/">WheelzLoop.</a>
+              All rights reserved
+            </span>
             <span class="policy_terms">
               <a href="#">Privacy policy</a>
               <a href="#">Terms & condition</a>
@@ -213,7 +327,6 @@ function Footer() {
           </div>
         </div>
       </footer>
-
     </>
   );
 }
