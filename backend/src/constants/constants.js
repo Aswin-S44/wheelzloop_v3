@@ -42,3 +42,5 @@ module.exports.SUBRIPTION_PLANS = {
     WHATSAPP_CONTACT_BUTTON: true,
   },
 };
+
+module.exports.WEBSITE_URL = "https://wheelzloop.com";

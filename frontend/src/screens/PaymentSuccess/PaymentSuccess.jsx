@@ -1,15 +1,31 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import "./PaymentSuccess.css";
+import { UserContext } from "../../hooks/UserContext";
+import axios from "axios";
+import { PLAN_CONFIRMATION_API_URL } from "../../config/api";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const { plan } = useParams();
 
   useEffect(() => {
-    const timer = setTimeout(() => navigate("/profile"), 5000);
-    return () => clearTimeout(timer);
-  }, [navigate]);
+    if (user && plan) {
+      const completePaymentConfirmation = async () => {
+        const res = await axios.post(
+          `${PLAN_CONFIRMATION_API_URL}/${user._id}`,
+          { plan }
+        );
+        if (res && res.status == 200) {
+          const timer = setTimeout(() => navigate("/profile"), 2000);
+          return () => clearTimeout(timer);
+        }
+      };
+      completePaymentConfirmation();
+    }
+  }, [user, plan, navigate]);
 
   return (
     <div id="payment-success-container">

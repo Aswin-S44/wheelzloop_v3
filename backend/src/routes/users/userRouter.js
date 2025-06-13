@@ -42,6 +42,9 @@ const {
   getDashboardGraphStats,
 } = require("../../controllers/users/getDashboardGraphStats");
 const { createPaymentIntent } = require("../../controllers/users/payment");
+const {
+  updatePlanConfirmation,
+} = require("../../controllers/users/updatePlanConfirmation");
 
 const router = express.Router();
 
@@ -109,5 +112,7 @@ router.get("/dashboard/:id/stats", getDashboardStats);
 router.get("/dashboard/:id/graph", getDashboardGraphStats);
 
 router.post("/create-payment-intent", createPaymentIntent);
+
+router.post("/plan-confirmation/:id", updatePlanConfirmation);
 
 module.exports = router;

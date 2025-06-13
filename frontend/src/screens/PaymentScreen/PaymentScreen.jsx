@@ -80,7 +80,7 @@ const PaymentForm = ({ plan, planDetails }) => {
               );
 
               if (res && res.status == 200) {
-                navigate("/payment-success");
+                navigate(`/payment-success/${plan}`);
               }
             } catch (error) {
               console.log("Error while subsribing plans : ", error);

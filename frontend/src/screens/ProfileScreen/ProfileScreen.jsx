@@ -93,11 +93,11 @@ function ProfileScreen() {
       <div className="profile-layout">
         <div className="profile-sidebar">
           <ProfileCard user={user} editable={true} />
-          {/* {user && !user?.subscribed && ( */}
-          <div className="mt-4">
-            <SubscriptionPromoCard />
-          </div>
-          {/* )} */}
+          {user && !user?.subscribed && (
+            <div className="mt-4">
+              <SubscriptionPromoCard />
+            </div>
+          )}
         </div>
 
         <div className="profile-content">

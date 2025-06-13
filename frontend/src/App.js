@@ -82,7 +82,7 @@ function Layout() {
               element={<ResetPassswordScreen />}
             />
             <Route path="/contact-us" element={<ContactScreen />} />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-success/:plan" element={<PaymentSuccess />} />
           </Routes>
           {!hideHeaderFooter && <Footer />}
           <BackToTop />
