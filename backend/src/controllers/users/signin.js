@@ -18,9 +18,19 @@ module.exports.SignIn = async (req, res, next) => {
       return res.json({ message: "Incorrect password or email" });
     }
     const token = createSecretToken(user._id);
+    // res.cookie("token", token, {
+    //   withCredentials: true,
+    //   httpOnly: false,
+    // });
     res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Enable in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "https://wheelzloop-v3-1.onrender.com"
+          : undefined,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     res
       .status(201)
