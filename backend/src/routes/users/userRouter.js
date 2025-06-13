@@ -50,7 +50,7 @@ router.get("/", (req, res) => {
   res.send("User router called");
 });
 
-router.get("/me", getMe);
+router.post("/me", getMe);
 
 // Auth related routes
 router.post("/signin", SignIn);
@@ -65,7 +65,7 @@ router.post("/reset-password/:token", resetPassword);
 
 router.get("/cars", getCars);
 router.post("/car", userVerification, addCar);
-router.patch("/car/:id", updateCar); 
+router.patch("/car/:id", updateCar);
 router.get("/cars/me", userVerification, async (req, res) => {
   const dealerId = req.user._id;
   const cars = await getCarByDealerId(dealerId);

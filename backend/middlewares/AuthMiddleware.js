@@ -2,7 +2,8 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/users/userSchema");
 module.exports.userVerification = (req, res, next) => {
-  const token = req.cookies.token;
+  const token =
+    req.header["Authorization"] || req.body.token || req.cookies.token;
   if (!token) {
     return res.json({ status: 403, message: "Forebidden" });
   }

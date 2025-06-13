@@ -2,8 +2,10 @@ const User = require("../../../models/users/userSchema");
 const jwt = require("jsonwebtoken");
 
 module.exports.getMe = (req, res) => {
-  const token = req.cookies.token;
-  console.log("TOKEN-------------", token ? token : "no token");
+  // const token = req.body.token || req.cookies.token;
+  const token =
+    req.header["Authorization"] || req.body.token || req.cookies.token;
+
   if (!token) {
     return res.json({ status: false });
   }
