@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/users/userSchema");
 module.exports.userVerification = (req, res, next) => {
   const token =
-    req.header["Authorization"] || req.body.token || req.cookies.token;
+    req.headers["authorization"]?.split(" ")[1] ||
+    req.body.token ||
+    req.cookies.token;
+
   if (!token) {
     return res.json({ status: 403, message: "Forebidden" });
   }
