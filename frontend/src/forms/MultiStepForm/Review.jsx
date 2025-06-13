@@ -38,14 +38,21 @@ function Review() {
       ...additionalInformations,
     };
     let res = null;
-    if (id) {
+    const token = localStorage.getItem("token");
+    if (id && token) {
       // Edit car
       res = await axios.patch(`${ADD_CAR_URL}/${id}`, body, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
     } else {
       res = await axios.post(ADD_CAR_URL, body, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
     }
 
@@ -58,7 +65,7 @@ function Review() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = "/car/add";

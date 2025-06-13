@@ -27,6 +27,7 @@ export default function AccountMenu({ profileImage, first_name }) {
 
   const handleLogout = async () => {
     logout();
+    window.location.href = "/";
   };
 
   const handleNavigateToProfile = () => {

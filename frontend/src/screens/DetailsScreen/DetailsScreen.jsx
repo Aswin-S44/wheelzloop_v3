@@ -54,6 +54,7 @@ function DetailsScreen() {
   const handleClose = () => setOpen(false);
 
   const handleNavigatetoChat = async () => {
+    const token = localStorage.getItem("token");
     if (!user) {
       handleOpen();
     } else {
@@ -62,7 +63,12 @@ function DetailsScreen() {
         {
           receiverId: car?.dealer_id?._id,
         },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       window.location.href = "/chats";
     }

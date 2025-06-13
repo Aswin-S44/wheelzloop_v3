@@ -15,7 +15,7 @@ import { CREATE_PAYMENT_INTENT, UPDATE_PROFILE_URL } from "../../config/api";
 import { UserContext } from "../../hooks/UserContext";
 import axios from "axios";
 
-const stripePromise = loadStripe("");
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ({ plan, planDetails }) => {
   const stripe = useStripe();

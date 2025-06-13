@@ -1,12 +1,8 @@
 import axios from "axios";
-
-// export const axiosInstance = axios.create({
-//   baseURL: "https://wheelzloop-v3-1.onrender.com", // "http://localhost:5000",
-//   withCredentials: true,
-// });
+import { BACKEND_URL } from "../config/api";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://wheelzloop-v3-1.onrender.com",
+  baseURL: BACKEND_URL,
   withCredentials: true,
   // timeout: 5000,
 });

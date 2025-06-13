@@ -54,6 +54,8 @@ function LoginScreen() {
       }
     } catch (error) {
       Swal.fire({ title: "Error", text: "Invalid credentials", icon: "error" });
+    } finally {
+      setLoading(false);
     }
     setSubmitting(false);
   };

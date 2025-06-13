@@ -22,9 +22,15 @@ module.exports.SignIn = async (req, res, next) => {
       withCredentials: true,
       httpOnly: false,
     });
-    res
-      .status(201)
-      .json({ message: "User logged in successfully", success: true, user });
+
+    let loggedInUser = user;
+    loggedInUser["token"] = token;
+
+    res.status(201).json({
+      message: "User logged in successfully",
+      success: true,
+      user: loggedInUser,
+    });
     next();
   } catch (error) {
     return error;

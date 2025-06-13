@@ -7,14 +7,15 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-
-
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`${PROFILE_URL}`, { withCredentials: true });
+      const token = localStorage.getItem("token");
+      if (token) {
+        const res = await axios.post(`${PROFILE_URL}`, { token });
 
-      if (res && res.data.success) {
-        setUser(res.data.user);
+        if (res && res.data.success) {
+          setUser(res.data.user);
+        }
       }
     };
     fetchUser();

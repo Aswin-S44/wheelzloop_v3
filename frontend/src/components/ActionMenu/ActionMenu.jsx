@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 const ActionMenu = ({ id }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [subMenuAnchorEl, setSubMenuAnchorEl] = useState(null);
+  const token = localStorage.getItem("token");
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
@@ -36,6 +37,9 @@ const ActionMenu = ({ id }) => {
       if (result.isConfirmed) {
         const res = await axios.delete(`${ADD_CAR_URL}/${id}`, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         Swal.fire("Saved!", "", "delete");
         window.location.reload();
