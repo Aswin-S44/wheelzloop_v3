@@ -124,7 +124,7 @@ function HomeScreen() {
   }, []);
 
   return (
-    <div className="screens">
+    <div className="screens" id='Choose by Category'>
       <div className="">
         {/* <Carousel images={images} /> */}
         {/* <Banner /> */}

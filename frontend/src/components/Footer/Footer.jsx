@@ -262,31 +262,29 @@ function Footer() {
             <ul class="box">
               <li class="link_name">Account</li>
               <li>
-                <a href="#">Profile</a>
+                <a href="/signin">Profile</a>
               </li>
               <li>
-                <a href="#">My account</a>
+                <a href="/signin">Sign In</a>
               </li>
               <li>
-                <a href="#">Prefrences</a>
+                <a href="/signup">Create New Account</a>
               </li>
-              <li>
-                <a href="#">Purchase</a>
-              </li>
+              
             </ul>
             <ul class="box">
-              <li class="link_name">Courses</li>
+              <li class="link_name">Useful Links</li>
               <li>
-                <a href="#">HTML & CSS</a>
+                <a href="#faq">Faq</a>
               </li>
               <li>
-                <a href="#">JavaScript</a>
+                <a href="#Works">How It Works</a>
               </li>
               <li>
-                <a href="#">Photography</a>
+                <a href="#Our Achievements">Our Achievements</a>
               </li>
               <li>
-                <a href="#">Photoshop</a>
+                <a href="#Choose by Category">Choose by Category</a>
               </li>
             </ul>
             <ul class="box input-box">
