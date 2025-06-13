@@ -429,6 +429,10 @@
 }
 
 @media (max-width: 480px) {
+.stat-bubble p {
+      font-size: 12px !important;
+}
+
   .hero-section {
     height: 80vh;
   }

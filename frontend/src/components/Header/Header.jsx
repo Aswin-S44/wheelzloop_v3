@@ -20,7 +20,7 @@ function Header() {
   const [logoSize, setLogoSize] = useState({ width: "220px", height: "70px" });
   const [searchKey, setSearchKey] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1100);
   const [showResults, setShowResults] = useState(false);
   const { user } = useContext(UserContext);
   const [isListening, setIsListening] = useState(false);

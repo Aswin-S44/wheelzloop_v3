@@ -344,10 +344,12 @@ a.search-card:hover {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 0.7;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -356,4 +358,60 @@ a.search-card:hover {
 
 .listening-animation {
   animation: pulse 1s infinite;
+}
+
+
+@media (min-width: 760px) and (max-width: 900px) {
+  .categories-section .categories-container {
+    gap: 1px;
+  }
+
+  .header-container {
+    height: 100px;
+  }
+}
+
+
+@media (min-width: 900px) and (max-width: 1100px) {
+
+.filter-section, .filter-container {
+  padding: 0px;
+}
+
+.filter-header {
+      flex-direction: column;
+}
+
+.search input {
+      width: 100%;
+}
+
+  .header-container {
+    height: 80px;
+  }
+
+  img.brand-name {
+    width: 120px !important;
+    height: auto !important;
+  }
+
+  .nav a {
+    font-size: 12px;
+  }
+}
+
+
+@media (min-width: 1300px) and (max-width: 1400px) {
+  .header-container {
+    height: 80px;
+  }
+
+  img.brand-name {
+    width: 150px !important;
+    height: auto !important;
+  }
+
+  .nav a {
+    font-size: 14px;
+  }
 }

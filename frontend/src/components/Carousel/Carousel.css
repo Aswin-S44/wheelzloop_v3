@@ -82,7 +82,7 @@
 
 @media (max-width: 768px) {
   .slide{
-    padding: 0;
+    padding: 5px;
   }
   .mobile-filter-toggle{
     top: 10px;
@@ -91,6 +91,13 @@
 }
 
 @media (max-width: 400px) {
+
+button.mobile-filter-toggle {
+    display: block;
+    margin: auto;
+    margin-right: 0px;
+}
+
 h1.banner-title,  .banner-subtitle, .banner-tagline, .banner-tagline, .banner-subtitle, .banner-title {
   text-align: center !important;
 }
