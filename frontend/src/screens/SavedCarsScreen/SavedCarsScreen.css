@@ -224,6 +224,6 @@
   }
   
   .car-actions {
-    flex-direction: column;
+    flex-direction: row;
   }
 }
