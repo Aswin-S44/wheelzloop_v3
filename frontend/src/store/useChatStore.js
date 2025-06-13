@@ -2,7 +2,7 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
-
+const token = localStorage.getItem("token");
 export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],
@@ -13,7 +13,11 @@ export const useChatStore = create((set, get) => ({
   getUsers: async () => {
     set({ isUsersLoading: true });
     try {
-      const res = await axiosInstance.get("/api/v1/user/message/users");
+      const res = await axiosInstance.get("/api/v1/user/message/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       set({ users: res.data });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -25,7 +29,11 @@ export const useChatStore = create((set, get) => ({
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
     try {
-      const res = await axiosInstance.get(`/api/v1/user/message/${userId}`);
+      const res = await axiosInstance.get(`/api/v1/user/message/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       set({ messages: res.data });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -38,7 +46,12 @@ export const useChatStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post(
         `/api/v1/user/message/send/${selectedUser._id}`,
-        messageData
+        messageData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       set({ messages: [...messages, res.data] });
     } catch (error) {

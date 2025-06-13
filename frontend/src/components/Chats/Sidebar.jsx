@@ -34,38 +34,42 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <div className="user-list">
-        {filteredUsers.map((user) => (
-          <button
-            key={user._id}
-            onClick={() => setSelectedUser(user)}
-            className={`user-item ${
-              selectedUser?._id === user._id ? "active" : ""
-            }`}
-          >
-            <div className="avatar-container">
-              <img
-                src={user.profile_picture || `${DEFAULT_AVATAR}`}
-                alt={user.name}
-                className="avatar"
-                title="user-sidebar-img"
-              />
+        {console.log("filteredUsers : ", filteredUsers)}
+        {filteredUsers &&
+          filteredUsers.length > 0 &&
+          filteredUsers.map((user) => (
+            <button
+              key={user._id}
+              onClick={() => setSelectedUser(user)}
+              className={`user-item ${
+                selectedUser?._id === user._id ? "active" : ""
+              }`}
+            >
+              <div className="avatar-container">
+                <img
+                  src={user.profile_picture || `${DEFAULT_AVATAR}`}
+                  alt={user.name}
+                  className="avatar"
+                  title="user-sidebar-img"
+                />
 
-              {onlineUsers.includes(user._id) && (
-                <span className="online-badge" />
-              )}
-            </div>
-            <div className="user-info">
-              <div className="user-name">{user.username}</div>
-              <div className="user-status">
-                {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                {onlineUsers.includes(user._id) && (
+                  <span className="online-badge" />
+                )}
               </div>
-            </div>
-          </button>
-        ))}
+              <div className="user-info">
+                <div className="user-name">{user.username}</div>
+                <div className="user-status">
+                  {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                </div>
+              </div>
+            </button>
+          ))}
 
-        {filteredUsers.length === 0 && (
-          <div className="empty-state">No contacts found</div>
-        )}
+        {!filteredUsers ||
+          (filteredUsers.length === 0 && (
+            <div className="empty-state">No contacts found</div>
+          ))}
       </div>
     </aside>
   );

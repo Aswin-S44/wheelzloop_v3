@@ -2,12 +2,12 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { axiosInstance } from "../lib/axios";
+import { BACKEND_URL } from "../config/api";
 // import { BACKEND_URL } from "../config/api";
 
 // const BASE_URL = "http://localhost:5000";
-const BASE_URL = "https://wheelzloop-v3-1.onrender.com";
 
-export const LOCAL_STORAGE_KEY = 'previousCarSearches';
+export const LOCAL_STORAGE_KEY = "previousCarSearches";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -20,7 +20,7 @@ export const useAuthStore = create((set, get) => ({
 
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/auth/check");
+      const res = await axiosInstance.get("/api/v1/user/auth/check");
 
       set({ authUser: res.data });
       get().connectSocket();
@@ -37,6 +37,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/api/v1/user/signup", data);
       set({ authUser: res.data });
+
       toast.success("Account created successfully");
       get().connectSocket();
     } catch (error) {
@@ -53,14 +54,17 @@ export const useAuthStore = create((set, get) => ({
 
       if (res?.data?.user) {
         set({ authUser: res?.data?.user });
-        toast.success("Logged in successfully");
+        localStorage.setItem("token", res.data.user.token);
         get().connectSocket();
         return true;
       } else {
         return false;
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error("Login error:", error);
+      if (error.response) {
+      }
+      toast.error(error.response?.data?.message || "Login failed");
       return false;
     } finally {
       set({ isLoggingIn: false });
@@ -69,6 +73,7 @@ export const useAuthStore = create((set, get) => ({
 
   logout: async () => {
     try {
+      localStorage.removeItem("token");
       await axiosInstance.post("/api/v1/user/logout");
       set({ authUser: null });
       toast.success("Logged out successfully");
@@ -97,7 +102,7 @@ export const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, {
+    const socket = io(BACKEND_URL, {
       query: {
         userId: authUser._id,
       },

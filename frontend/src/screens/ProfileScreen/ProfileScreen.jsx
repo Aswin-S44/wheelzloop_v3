@@ -38,7 +38,7 @@ function ProfileScreen() {
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
   const [isSubscribed, setIsSubscribed] = useState(false);
-
+  const token = localStorage.getItem("token");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -55,6 +55,9 @@ function ProfileScreen() {
         setLoading(true);
         const res = await axios.get(GET_DEALER_CAR_URL, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setLoading(false);
         if (res && res.data) {
@@ -90,11 +93,11 @@ function ProfileScreen() {
       <div className="profile-layout">
         <div className="profile-sidebar">
           <ProfileCard user={user} editable={true} />
-          {user && !user?.subscribed && (
-            <div className="mt-4">
-              <SubscriptionPromoCard />
-            </div>
-          )}
+          {/* {user && !user?.subscribed && ( */}
+          <div className="mt-4">
+            <SubscriptionPromoCard />
+          </div>
+          {/* )} */}
         </div>
 
         <div className="profile-content">
