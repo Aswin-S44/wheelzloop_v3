@@ -34,7 +34,7 @@ function HowItWorks() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="how-it-works-section">
+    <div className="how-it-works-section" id="Works">
       <div className="container">
         <h3 className="text-center fw-bold">
           <span className="quality-text">

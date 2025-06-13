@@ -60,7 +60,7 @@ function Counter() {
   }, [targetCounts]);
 
   return (
-    <section className="counter-section">
+    <section className="counter-section" id="Our Achievements">
       <div className="">
         <h3 className="text-center fw-bold">
           <span className="quality-text">
