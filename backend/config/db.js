@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const dbUrl =
   process.env.NODE_ENV === "production"
-    ? process.env.DATABASE_URL_DEV
+    ? process.env.DATABASE_URL_PRODUCTION
     : process.env.DATABASE_URL_DEV;
 
 mongoose.set("strictQuery", true);

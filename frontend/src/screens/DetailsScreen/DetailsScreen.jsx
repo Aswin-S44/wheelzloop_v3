@@ -290,9 +290,11 @@ function DetailsScreen() {
             >
               <FaPhone /> Contact Seller
             </a>
-            <button className="btn-secondary" onClick={handleNavigatetoChat}>
-              Chat with Dealer
-            </button>
+            {car?.dealer_id?._id !== user?._id && (
+              <button className="btn-secondary" onClick={handleNavigatetoChat}>
+                Chat with Dealer
+              </button>
+            )}
           </div>
 
           <div className="seller-card">

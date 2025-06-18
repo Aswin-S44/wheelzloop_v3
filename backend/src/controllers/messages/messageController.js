@@ -3,22 +3,8 @@ const { cloudinary } = require("../../../config/cloudinary");
 const User = require("../../../models/users/userSchema");
 
 const Message = require("../../../models/messages/messageSchema");
-const { getReceiverSocketId } = require("../../../libs/socket");
+const { getReceiverSocketId, io } = require("../../../libs/socket");
 const ChatUsers = require("../../../models/messages/chatUserSchema");
-
-// module.exports.getUsersForSidebar = async (req, res) => {
-//   try {
-//     const loggedInUserId = req.user._id;
-//     const filteredUsers = await User.find({
-//       _id: { $ne: loggedInUserId },
-//     }).select("-password");
-
-//     res.status(200).json(filteredUsers);
-//   } catch (error) {
-//     console.error("Error in getUsersForSidebar: ", error.message);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
 
 module.exports.addChatUser = async (req, res) => {
   try {
@@ -76,7 +62,7 @@ module.exports.getMessages = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
+const userSocketMap = {};
 module.exports.sendMessage = async (req, res) => {
   try {
     const { text, image } = req.body;
@@ -101,6 +87,12 @@ module.exports.sendMessage = async (req, res) => {
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
+    const senderSocketId = getReceiverSocketId(senderId);
+    if (senderSocketId) {
+      console.log(`Emitting to sender ${senderId} on socket ${senderSocketId}`);
+      io.to(senderSocketId).emit("newMessage", newMessage);
     }
 
     res.status(201).json(newMessage);
