@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   BrowserRouter,
   Route,
@@ -35,7 +35,14 @@ import PaymentSuccess from "./screens/PaymentSuccess/PaymentSuccess";
 function Layout() {
   const location = useLocation();
   const hideHeaderFooter = ["/signin", "/signup"].includes(location.pathname);
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth, onlineUsers, connectSocket } =
+    useAuthStore();
+
+  useEffect(() => {
+    checkAuth().then(() => {
+      connectSocket();
+    });
+  }, [checkAuth, connectSocket]);
 
   // const [loggedIn, setLoggedIn] = useState(false);
 
