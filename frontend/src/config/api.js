@@ -1,5 +1,9 @@
-export const BACKEND_URL = "https://wheelzloop-v3-1.onrender.com";
-// export const BACKEND_URL = "http://localhost:5000";
+export const BACKEND_URL =
+  process.env.REACT_APP_ENV == "development"
+    ? "http://localhost:5000"
+    : process.env.REACT_APP_ENV == "production"
+    ? "https://wheelzloop-v3-1.onrender.com"
+    : "https://wheelzloop-v3-1.onrender.com";
 export const PROFILE_URL = `${BACKEND_URL}/api/v1/user/me`;
 export const SIGN_IN_URL = `${BACKEND_URL}/api/v1/user/signin`;
 export const SIGN_UP_URL = `${BACKEND_URL}/api/v1/user/signup`;
