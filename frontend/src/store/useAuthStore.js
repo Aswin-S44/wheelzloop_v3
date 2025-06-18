@@ -2,7 +2,9 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { axiosInstance } from "../lib/axios";
-import { BACKEND_URL } from "../config/api";
+import { BACKEND_URL, PROFILE_URL } from "../config/api";
+import axios from "axios";
+
 // import { BACKEND_URL } from "../config/api";
 
 // const BASE_URL = "http://localhost:5000";
@@ -20,10 +22,15 @@ export const useAuthStore = create((set, get) => ({
 
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/api/v1/user/auth/check");
+      const token = localStorage.getItem("token");
+      if (token) {
+        const res = await axios.post(`${PROFILE_URL}`, { token });
 
-      set({ authUser: res.data });
-      get().connectSocket();
+        if (res && res.status == 200) {
+          set({ authUser: res.data.user });
+          get().connectSocket();
+        }
+      }
     } catch (error) {
       set({ authUser: null });
       return error;
@@ -100,22 +107,35 @@ export const useAuthStore = create((set, get) => ({
 
   connectSocket: () => {
     const { authUser } = get();
-    if (!authUser || get().socket?.connected) return;
+
+    if (!authUser) return;
+
+    // if (get().socket) {
+    //   get().disconnectSocket();
+    // }
 
     const socket = io(BACKEND_URL, {
+      auth: {
+        token: localStorage.getItem("token"),
+      },
       query: {
         userId: authUser._id,
       },
     });
-    socket.connect();
 
-    set({ socket: socket });
+    socket.on("connect", () => {
+      console.log("Socket connected:", socket.id);
+      set({ socket });
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected");
+    });
 
     socket.on("getOnlineUsers", (userIds) => {
       set({ onlineUsers: userIds });
     });
-  },
-  disconnectSocket: () => {
-    if (get().socket?.connected) get().socket.disconnect();
+
+    set({ socket });
   },
 }));

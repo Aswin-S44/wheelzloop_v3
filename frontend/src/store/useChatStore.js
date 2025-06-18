@@ -54,25 +54,37 @@ export const useChatStore = create((set, get) => ({
         }
       );
       set({ messages: [...messages, res.data] });
+      const socket = useAuthStore.getState().socket;
+      if (socket) {
+        socket.emit("sendMessage", {
+          message: res.data,
+          receiverId: selectedUser._id,
+        });
+      }
     } catch (error) {
       toast.error(error.response.data.message);
     }
   },
 
   subscribeToMessages: () => {
-    const { selectedUser } = get();
+    const { selectedUser, messages } = get();
+
     if (!selectedUser) return;
 
     const socket = useAuthStore.getState().socket;
     if (socket) {
       socket.on("newMessage", (newMessage) => {
-        const isMessageSentFromSelectedUser =
-          newMessage.senderId === selectedUser._id;
-        if (!isMessageSentFromSelectedUser) return;
+        const isRelevantMessage =
+          newMessage.senderId === selectedUser._id ||
+          newMessage.receiverId === selectedUser._id;
 
-        set({
-          messages: [...get().messages, newMessage],
-        });
+        if (isRelevantMessage) {
+          if (!messages.some((msg) => msg._id === newMessage._id)) {
+            set({
+              messages: [...get().messages, newMessage],
+            });
+          }
+        }
       });
     }
   },
