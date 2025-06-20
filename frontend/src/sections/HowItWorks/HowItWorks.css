@@ -1,0 +1,275 @@
+.how-it-works-section {
+  background: #f8f9fa;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #002f34;
+  margin-bottom: 15px;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: #465a5e;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.steps-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+  min-width: 300px;
+  margin-bottom: 40px;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background: #606cbc;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+.step-icon {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.step:hover .step-icon {
+  transform: scale(1.1);
+}
+
+.icon {
+  font-size: 48px !important;
+  color: #ADB2D4;
+}
+
+.step:hover .icon {
+  color: white;
+}
+
+.step-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #002f34;
+  margin-bottom: 15px;
+}
+
+.step-description {
+  font-size: 1rem;
+  color: #465a5e;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.step-connector {
+  flex: 0 0 50px;
+  height: 2px;
+  background: linear-gradient(135deg, #30bfa1, #148a84);
+  margin-top: 70px;
+  position: relative;
+  opacity: 0.3;
+}
+
+.cta-button {
+  background: #606cbc;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px #606cbc;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(48, 191, 161, 0.4);
+}
+
+@media (max-width: 992px) {
+  .steps-wrapper {
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .step {
+    flex: 0 0 calc(50% - 40px);
+    margin-bottom: 40px;
+  }
+  
+  .step-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 758px) {
+  .steps-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .step {
+    flex: 1;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  .step-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .icon {
+    font-size: 36px !important;
+  }
+  
+  .step-title {
+    font-size: 1.3rem;
+  }
+}
+
+.car-selling-steps-modal {
+  max-width: 600px;
+}
+
+.car-steps-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.car-steps-title {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.8rem;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.car-steps-body {
+  padding: 1.5rem 2rem;
+}
+
+.car-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.car-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.car-step-icon {
+  background-color: #30bfa1;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.car-step-icon .material-icons {
+  font-size: 1.2rem;
+}
+
+.car-step-details h3 {
+  margin: 0 0 0.3rem 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.car-step-details p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.car-steps-footer {
+  border-top: none;
+  justify-content: center;
+  padding-top: 0;
+}
+
+.car-steps-close-btn,
+.car-steps-primary-btn {
+  padding: 0.5rem 2rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.car-steps-primary-btn {
+  background-color: #30bfa1;
+  border-color: #30bfa1;
+  color: white;
+}
+
+.car-steps-primary-btn:hover {
+  background-color: #28a98c;
+  border-color: #28a98c;
+}
