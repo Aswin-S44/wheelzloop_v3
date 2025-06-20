@@ -24,6 +24,7 @@ import Banner2 from "../../components/Banner2/Banner2";
 import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
 import AdvSection from "../../sections/AdvSection/AdvSection";
 import { LOCAL_STORAGE_KEY } from "../../store/useAuthStore";
+import { TourProvider, useTour } from "@reactour/tour";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -43,6 +44,7 @@ function HomeScreen() {
   const currentTab = carBodyTypes.find((tab) => tab.index == 2);
   const [selectedTab, setSelectedTab] = useState(currentTab);
   const [originalCars, setOriginalCars] = useState([]);
+  const { setIsOpen } = useTour();
 
   const storedSearches =
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
@@ -123,13 +125,25 @@ function HomeScreen() {
     fetchCars();
   }, []);
 
+  const steps = [
+    {
+      selector: ".logo",
+      content: "Welcome! Click this logo to return to homepage.",
+    },
+    {
+      selector: ".search-bar",
+      content: "Search for your dream used car here!",
+    },
+  ];
+
   return (
-    <div className="screens" id='Choose by Category'>
+    <div className="screens" id="Choose by Category">
       <div className="">
         {/* <Carousel images={images} /> */}
         {/* <Banner /> */}
         <Banner2 />
       </div>
+      <button onClick={() => setIsOpen(true)}>Start Tourss</button>;
       <div className="mt-5">
         <h3 className="text-center fw-bold">
           <span className="quality-text">
@@ -154,7 +168,6 @@ function HomeScreen() {
       <div className="container">
         <FeaturesSection />
       </div>
-
       <div>
         <div className="mt-4">
           <div className="latst-cars-section">

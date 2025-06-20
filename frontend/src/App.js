@@ -31,9 +31,19 @@ import ContactScreen from "./screens/ContactScreen/ContactScreen";
 import PremiumPlans from "./components/PremiumPlans/PremiumPlans";
 import PaymentScreen from "./screens/PaymentScreen/PaymentScreen";
 import PaymentSuccess from "./screens/PaymentSuccess/PaymentSuccess";
+import { TourProvider, useTour } from "@reactour/tour";
+import { tourSteps } from "./tutorial/steps";
+
+// const tourSteps = [
+//   {
+//     selector: ".logo",
+//     content: "This is our logo. Click it to return to the homepage.",
+//   },
+// ];
 
 function Layout() {
   const location = useLocation();
+
   const hideHeaderFooter = ["/signin", "/signup"].includes(location.pathname);
   const { authUser, checkAuth, isCheckingAuth, onlineUsers, connectSocket } =
     useAuthStore();
@@ -102,7 +112,9 @@ function Layout() {
 function App() {
   return (
     <BrowserRouter>
-      <Layout />
+      <TourProvider steps={tourSteps}>
+        <Layout />
+      </TourProvider>
     </BrowserRouter>
   );
 }

@@ -3,6 +3,8 @@ import { Search, Menu, Person, AddBox, Close } from "@mui/icons-material";
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTour } from "@reactour/tour";
+
 import { SEARCH_URL } from "../../config/api";
 import { UserContext } from "../../hooks/UserContext";
 import Modal from "@mui/material/Modal";
@@ -35,6 +37,8 @@ function Header() {
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const { setIsOpen } = useTour();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -198,7 +202,7 @@ function Header() {
     <div className="header-container">
       <header className={`header ${showHeader ? "show" : "hide"}`}>
         <div className="logo">
-          <a href="/" title="logo">
+          <a href="/" title="logo" id="logo">
             <img
               src="/images/logo.png"
               className="brand-name"
@@ -291,10 +295,10 @@ function Header() {
           <a href="/" title="home">
             Home
           </a>
-          <a href="/used-cars" title="find used cars">
+          <a href="/used-cars" title="find used cars" className="find-cars">
             Find-Cars
           </a>
-          <a href="/favourites" title="saved cars">
+          <a href="/favourites" title="saved cars" className="saved-cars">
             Favourites
           </a>
           {user && (
@@ -336,6 +340,7 @@ function Header() {
             <AccountMenu
               profileImage={user?.profile_picture ?? null}
               username={user?.first_name ?? "A"}
+              className="profile"
             />
           )}
           {isMobile && (

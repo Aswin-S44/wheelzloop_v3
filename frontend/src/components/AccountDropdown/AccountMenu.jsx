@@ -36,7 +36,7 @@ export default function AccountMenu({ profileImage, first_name }) {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
+        <Tooltip title="Account settings" className="account-menu">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -92,7 +92,10 @@ export default function AccountMenu({ profileImage, first_name }) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => (window.location.href = "/profile")}>
+        <MenuItem
+          onClick={() => (window.location.href = "/profile")}
+          className="profile"
+        >
           <Avatar /> Profile
         </MenuItem>
         <MenuItem onClick={() => (window.location.href = "/profile/edit")}>
