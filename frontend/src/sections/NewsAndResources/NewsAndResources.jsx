@@ -4,7 +4,7 @@ import { fetchEntries } from "../../contentfull/contentfulClient";
 import { convertContentfullResponse } from "../../utils/utils";
 import Loader from "../../components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
-
+ 
 const NewsAndResources = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(false);

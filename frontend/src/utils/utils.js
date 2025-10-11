@@ -28,7 +28,7 @@ export const convertContentfullResponse = async (resp) => {
       const entry = {
         id: index + 1,
         slug: item.fields.title
-          .toLowerCase()
+          ?.toLowerCase()
           .replace(/\s+/g, "-")
           .replace(/[^\w-]+/g, ""),
         category: item.fields.category || "Demo",
@@ -39,7 +39,7 @@ export const convertContentfullResponse = async (resp) => {
           day: "numeric",
         }),
         image: item.fields.image?.fields?.file?.url || "",
-        alt: item.fields.title.toLowerCase().replace(/\s+/g, " "),
+        alt: item.fields.title?.toLowerCase().replace(/\s+/g, " "),
         sections:
           item.fields.sections?.map((section) => ({
             content: section,

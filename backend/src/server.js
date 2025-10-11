@@ -28,7 +28,7 @@ const limiter = rateLimit({
 var corsOptions = {
   origin:
     process.env.NODE_ENV == "production"
-      ? "https://wheelzloop.com"
+      ? "http://localhost:3000"
       : "http://localhost:3000",
 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -40,7 +40,7 @@ var corsOptions = {
 // Middlewares
 dotenv.config();
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(limiter);

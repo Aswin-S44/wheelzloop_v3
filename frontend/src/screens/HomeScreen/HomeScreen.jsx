@@ -24,6 +24,7 @@ import Banner2 from "../../components/Banner2/Banner2";
 import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
 import AdvSection from "../../sections/AdvSection/AdvSection";
 import { LOCAL_STORAGE_KEY } from "../../store/useAuthStore";
+import PopularBrandsSection from "../../sections/PopularBrandsSection/PopularBrandsSection";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -124,7 +125,7 @@ function HomeScreen() {
   }, []);
 
   return (
-    <div className="screens" id='Choose by Category'>
+    <div className="screens" id="Choose by Category">
       <div className="">
         {/* <Carousel images={images} /> */}
         {/* <Banner /> */}
@@ -275,12 +276,15 @@ function HomeScreen() {
       </div>
       <div className="mt-0">
         <HowItWorks />
-        <div className="mt-0">
+        {/* <div className="mt-0">
           <NewsAndResources />
-        </div>
+        </div> */}
         <div className="mt-0">
           <Counter />
         </div>
+        {/* <div>
+          <PopularBrandsSection />
+        </div> */}
         <div className="mt-0">
           <FAQSection />
         </div>

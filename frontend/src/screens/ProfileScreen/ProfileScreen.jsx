@@ -103,15 +103,21 @@ function ProfileScreen() {
         <div className="profile-content">
           <Tabs>
             <TabList>
-              {isSubscribed && <Tab>Dashboard</Tab>}
+              {/* {isSubscribed && <Tab>Dashboard</Tab>} */}
+              <Tab>Dashboard</Tab>
               <Tab>My Cars</Tab>
             </TabList>
 
-            {isSubscribed && (
+            {/* {isSubscribed && (
               <TabPanel>
                 <Dashboard dealerId={user?._id} />
               </TabPanel>
-            )}
+            )} */}
+
+            <TabPanel>
+              <Dashboard dealerId={user?._id} />
+            </TabPanel>
+
             <TabPanel>
               <div className="cars-header">
                 <button className="add-car-btn mt-2" onClick={handleAddCar}>

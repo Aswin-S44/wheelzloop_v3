@@ -34,7 +34,7 @@ function AdditionalInformation() {
   const removeFeature = (feature) => {
     setFeatures(features.filter((f) => f !== feature));
   };
-
+ 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

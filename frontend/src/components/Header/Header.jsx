@@ -239,7 +239,7 @@ function Header() {
             {searchResults.length > 0 ? (
               searchResults.map((result, index) => (
                 <a
-                  href={`/car-details/${result._id}`}
+                  href={`/car/${result._id}`}
                   key={index}
                   className="search-card"
                   onClick={handleResultClick}
@@ -297,20 +297,20 @@ function Header() {
           <a href="/favourites" title="saved cars">
             Favourites
           </a>
-          {user && (
+          {/* {user && (
             <a href="/chats" title="chats">
               Chats
             </a>
-          )}
+          )} */}
           <a href="/about-us" title="about us">
             About-Us
           </a>
           <a href="/reviews" title="reviews">
             Reviews
           </a>
-          <a href="/blogs" title="blogs">
+          {/* <a href="/blogs" title="blogs">
             Blogs
-          </a>
+          </a> */}
           <a href="/contact-us" title="contact us">
             Contact-Us
           </a>
