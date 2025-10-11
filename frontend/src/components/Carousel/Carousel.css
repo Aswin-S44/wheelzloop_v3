@@ -1,0 +1,112 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-height: 320px;
+  border-radius: 10px;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+  height: 80%;
+  border-radius: 10px;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+}
+
+.banner-content {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+ 
+}
+
+.banner-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.banner-subtitle {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.banner-tagline {
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #51533f;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: none;
+  background-color: #bbb;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #333;
+}
+
+.slider-image-sec {
+    object-fit: cover !important;
+}
+
+
+@media (max-width: 768px) {
+  .slide{
+    padding: 5px;
+  }
+  .mobile-filter-toggle{
+    top: 10px;
+    position: relative;
+  }
+}
+
+@media (max-width: 400px) {
+
+button.mobile-filter-toggle {
+    display: block;
+    margin: auto;
+    margin-right: 0px;
+}
+
+h1.banner-title,  .banner-subtitle, .banner-tagline, .banner-tagline, .banner-subtitle, .banner-title {
+  text-align: center !important;
+}
+
+  .slide {
+    display: flex;
+    flex-direction: column;
+        text-align: center !important;
+        align-items: center;
+}
+}
+

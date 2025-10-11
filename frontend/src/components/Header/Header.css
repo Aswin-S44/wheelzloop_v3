@@ -1,0 +1,417 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #f8f9fa;
+  border-bottom: 2px solid #ddd;
+  position: fixed;
+  /* position: relative; */
+  z-index: 100;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.search {
+  display: flex;
+  flex: 1;
+  max-width: 500px;
+  margin: 0 20px;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  position: relative;
+}
+
+.search input {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+}
+
+.search button {
+  background: #606cbc;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.search button.voice-search-btn {
+  background: #fff;
+}
+
+.search-results-container {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+  max-height: 400px;
+  overflow-y: auto;
+  width: 500px;
+  left: 16%;
+  top: calc(70% + 2px);
+  border-radius: 30px;
+}
+
+.search-card {
+  display: flex;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #002f34;
+  transition: background 0.2s;
+}
+
+a.search-card:hover {
+  background: #adb2d452;
+}
+
+.search-card:hover {
+  background: #f5f5f5;
+}
+
+.search-card-image {
+  width: 80px;
+  height: 60px;
+  margin-right: 12px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.search-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-card-content {
+  flex: 1;
+}
+
+.search-card h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.search-card-meta {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.search-card-price {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #002f34;
+}
+
+.search-card-location {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #002f34;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.nav a:hover {
+  color: #ff6600;
+}
+
+.login-btn {
+  background: none;
+  border: 2px solid #606cbc;
+  color: #002f34;
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: #002f34;
+  color: white;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sell-btn {
+  background: #606cbc;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.menu-icon,
+.search-icon {
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+.close-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+} */
+
+@media (min-width: 768px) {
+  .header-container {
+    height: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    height: 80px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .search {
+    display: none;
+  }
+
+  .search.mobile-search {
+    display: flex;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    right: 20px;
+    z-index: 101;
+    max-width: none;
+  }
+
+  .search-results-container {
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 20px 20px;
+    transition: 0.3s;
+    z-index: 100;
+  }
+
+  .nav.show {
+    left: 0;
+  }
+
+  .nav a {
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .close-btn {
+    display: block;
+  }
+
+  .menu-icon,
+  .search-icon {
+    display: block;
+
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 15px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .sell-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .search-card-image {
+    width: 60px;
+    height: 50px;
+  }
+
+  .search-card h3 {
+    font-size: 15px;
+  }
+
+  .search-card-meta,
+  .search-card-price,
+  .search-card-location {
+    font-size: 13px;
+  }
+}
+
+.search-icon {
+  float: right;
+  position: relative;
+}
+
+
+.header {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.header.show {
+  opacity: 1;
+}
+
+.header.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.listening-animation {
+  animation: pulse 1s infinite;
+}
+
+
+@media (min-width: 760px) and (max-width: 900px) {
+  .categories-section .categories-container {
+    gap: 1px;
+  }
+
+  .header-container {
+    height: 100px;
+  }
+}
+
+
+@media (min-width: 900px) and (max-width: 1100px) {
+
+.filter-section, .filter-container {
+  padding: 0px;
+}
+
+.filter-header {
+      flex-direction: column;
+}
+
+.search input {
+      width: 100%;
+}
+
+  .header-container {
+    height: 80px;
+  }
+
+  img.brand-name {
+    width: 120px !important;
+    height: auto !important;
+  }
+
+  .nav a {
+    font-size: 12px;
+  }
+}
+
+
+@media (min-width: 1300px) and (max-width: 1400px) {
+  .header-container {
+    height: 80px;
+  }
+
+  img.brand-name {
+    width: 150px !important;
+    height: auto !important;
+  }
+
+  .nav a {
+    font-size: 14px;
+  }
+}
