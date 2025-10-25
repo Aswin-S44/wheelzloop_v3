@@ -132,6 +132,7 @@
   .latst-cars-section .card, .tabs-container .card {
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
 }
 
 .latst-cars-section section.Toastify, .tabs-container section.Toastify {

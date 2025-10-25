@@ -8,17 +8,17 @@ function Carousel() {
     {
       title: "FIND QUALITY USED CARS IN KERALA, KOCHI",
       subtitle: "USED CARS",
-      tagline: "@WHEELZLOOP",
+      tagline: "@CarAuras",
       bgColor: "rgb(203 237 211)",
-      textColor: "#1111",
+      textColor: "#333",
       image: "/images/wheeelzloop cars1.webp",
     },
     {
-      title: "FIND YOUR PERFECT CAR AT WHEELZLOOP",
+      title: "FIND YOUR PERFECT CAR AT CarAuras",
       subtitle: "IN KERALA",
-      tagline: "@WHEELZLOOP",
+      tagline: "@CarAuras",
       bgColor: "rgb(203 237 211)",
-      textColor: "#1111",
+      textColor: "#333",
       image: "/images/wheeelzloop blue-sports-car-isolated-white-vector.webp",
     },
   ];
@@ -26,7 +26,7 @@ function Carousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -40,7 +40,7 @@ function Carousel() {
         className="slides"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {/* {slides.map((slide, index) => (
+        {slides.map((slide, index) => (
           <div
             key={index}
             className="slide"
@@ -50,44 +50,18 @@ function Carousel() {
             }}
           >
             <div className="banner-content">
+              <h2 className="banner-subtitle">{slide.subtitle}</h2>
               <h1 className="banner-title">{slide.title}</h1>
-              <p className="banner-subtitle">{slide.subtitle}</p>
               <p className="banner-tagline">{slide.tagline}</p>
             </div>
-            <img src={slide.image} className="w-50" />
+            <img
+              src={slide.image}
+              className="slider-image-sec"
+              alt={`banner-${index + 1}`}
+              title={`banner-${index + 1}`}
+            />
           </div>
-        ))} */}
-
-        <div
-          key={1}
-          className="slide"
-          style={{
-            backgroundColor: slides[0].bgColor,
-            color: slides[0].textColor,
-          }}
-        >
-          <div className="banner-content">
-            <h1 className="banner-title">{slides[0].title}</h1>
-            <p className="banner-subtitle">{slides[0].subtitle}</p>
-            <p className="banner-tagline">{slides[0].tagline}</p>
-          </div>
-          <img src={slides[0].image} className="w-50 slider-image-sec" alt="banner-1" title="banner-1" />
-        </div>
-        <div
-          key={2}
-          className="slide"
-          style={{
-            backgroundColor: slides[1].bgColor,
-            color: slides[1].textColor,
-          }}
-        >
-          <div className="banner-content">
-            <h2 className="banner-title">{slides[1].title}</h2>
-            <p className="banner-subtitle">{slides[1].subtitle}</p>
-            <p className="banner-tagline">{slides[1].tagline}</p>
-          </div>
-          <img src={slides[1].image} className="w-50 slider-image-sec" alt="banner-2" title="banner-2" />
-        </div>
+        ))}
       </div>
       <div className="dots">
         {slides.map((_, index) => (
@@ -95,6 +69,7 @@ function Carousel() {
             key={index}
             className={`dot ${index === currentIndex ? "active" : ""}`}
             onClick={() => goToSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>

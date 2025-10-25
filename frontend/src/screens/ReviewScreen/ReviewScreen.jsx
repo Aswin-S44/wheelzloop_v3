@@ -132,7 +132,7 @@ const ReviewScreen = () => {
         <h1>
           Customer <span className="highlight">Reviews</span>
         </h1>
-        <p>See what our community says about their WheelzLoop experience</p>
+        <p>See what our community says about their CarAuras experience</p>
       </div>
 
       <div className="review-stats-container">

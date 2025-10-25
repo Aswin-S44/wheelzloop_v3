@@ -70,7 +70,7 @@ function SavedCarsScreen() {
           <p>Start saving your favorite vehicles to see them here</p>
           <button
             className="browse-button"
-            onClick={() => (window.location.href = "/cars")}
+            onClick={() => (window.location.href = "/used-cars")}
           >
             Browse Vehicles
           </button>

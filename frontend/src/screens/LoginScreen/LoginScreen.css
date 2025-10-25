@@ -9,7 +9,7 @@
 
 .login-container {
   display: flex;
-  max-width: 1000px;
+  /* max-width: 1000px; */
   width: 100%;
   background: white;
   border-radius: 20px;
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #606cbc 0%, #ADB2D4 100%);
+  background: linear-gradient(135deg, #183f3f 0%, #ADB2D4 100%);
   padding: 40px;
 }
 

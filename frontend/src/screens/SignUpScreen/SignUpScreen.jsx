@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import {
   IconButton,
-  InputBase,
   Switch,
   FormControlLabel,
   InputAdornment,
@@ -16,6 +15,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { OTP_SEND_URL, SIGN_UP_URL, VERIFY_OTP__URL } from "../../config/api";
 import axios from "axios";
 import ComboBox from "../../components/ComboBox/ComboBox";
+import "./SignUpScreen.css";
 
 function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(false);
@@ -132,7 +132,7 @@ function SignUpScreen() {
     } catch (error) {
       Swal.fire({
         title: "Error",
-        text: "Unable to process request",
+        text: "User already exists with this email",
         icon: "error",
       });
     } finally {
@@ -145,7 +145,7 @@ function SignUpScreen() {
       <div className="login-container">
         <div className="login-left">
           <img
-            src="https://img.freepik.com/free-vector/features-overview-concept-illustration_114360-1481.jpg"
+            src="https://www.autotrainingcentre.com/wp-content/uploads/2015/12/auto-sales-college.jpg"
             className="login-image"
             alt="Sign Up"
             title="signup page image"
@@ -166,29 +166,76 @@ function SignUpScreen() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue, isValid }) => (
+            {({ values, setFieldValue, isValid, handleChange, handleBlur }) => (
               <Form className="login-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">First Name</label>
+                    <input
+                      type="text"
+                      name="first_name"
+                      placeholder="First Name"
+                      className="form-input"
+                      value={values.first_name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <ErrorMessage
+                      name="first_name"
+                      component="div"
+                      className="error-text"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Last Name</label>
+                    <input
+                      type="text"
+                      name="last_name"
+                      placeholder="Last Name"
+                      className="form-input"
+                      value={values.last_name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <ErrorMessage
+                      name="last_name"
+                      component="div"
+                      className="error-text"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    className="form-input"
+                    value={values.username}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
                 <div className="form-group">
                   <label className="form-label">Email</label>
                   <div style={{ display: "flex", gap: "10px" }}>
-                    <Field
-                      as={InputBase}
+                    <input
+                      type="email"
                       name="email"
                       placeholder="Email"
                       className="form-input"
-                      disabled={otpSent}
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
-                    {!otpSent && (
-                      <button
-                        type="button"
-                        className="login-button"
-                        onClick={() => handleSendOtp(values.email)}
-                        disabled={!values.email || loading}
-                        style={{ width: "120px" }}
-                      >
-                        {loading ? "Sending..." : "Send OTP"}
-                      </button>
-                    )}
                   </div>
                   <ErrorMessage
                     name="email"
@@ -197,196 +244,120 @@ function SignUpScreen() {
                   />
                 </div>
 
-                {otpSent && (
+                <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">OTP Verification</label>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <Field
-                        as={InputBase}
-                        name="otp"
-                        placeholder="Enter OTP"
-                        className="form-input"
-                        disabled={emailVerified}
-                      />
-                      {!emailVerified && (
-                        <button
-                          type="button"
-                          className="login-button"
-                          onClick={() =>
-                            handleVerifyOtp(values.otp, values.email)
-                          }
-                          disabled={!values.otp || loading}
-                          style={{ width: "120px" }}
-                        >
-                          {loading ? "Verifying..." : "Verify"}
-                        </button>
-                      )}
-                    </div>
+                    <label className="form-label">Phone Number</label>
+                    <input
+                      type="text"
+                      name="phone"
+                      placeholder="Phone number"
+                      className="form-input"
+                      value={values.phone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
                     <ErrorMessage
-                      name="otp"
+                      name="phone"
+                      component="div"
+                      className="error-text"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Location</label>
+                    <ComboBox
+                      options={districtsInKerala}
+                      value={values.location || ""}
+                      onChange={(e, newValue) =>
+                        setFieldValue("location", newValue)
+                      }
+                      className="form-input"
+                    />
+                    <ErrorMessage
+                      name="location"
+                      component="div"
+                      className="error-text"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={hasPhysicalStore}
+                        onChange={() => {
+                          setHasPhysicalStore(!hasPhysicalStore);
+                          setFieldValue(
+                            "has_physical_store",
+                            !hasPhysicalStore
+                          );
+                        }}
+                      />
+                    }
+                    label="Do you have a physical store?"
+                    className="form-label"
+                  />
+                </div>
+
+                {hasPhysicalStore && (
+                  <div className="form-group">
+                    <label className="form-label">Business Name</label>
+                    <input
+                      type="text"
+                      name="business_name"
+                      placeholder="Business Name"
+                      className="form-input"
+                      value={values.business_name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <ErrorMessage
+                      name="business_name"
                       component="div"
                       className="error-text"
                     />
                   </div>
                 )}
 
-                {emailVerified && (
-                  <>
-                    <div className="form-group">
-                      <label className="form-label">Username</label>
-                      <Field
-                        as={InputBase}
-                        name="username"
-                        placeholder="Username"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="username"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">First Name</label>
-                      <Field
-                        as={InputBase}
-                        name="first_name"
-                        placeholder="First Name"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="first_name"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Last Name</label>
-                      <Field
-                        as={InputBase}
-                        name="last_name"
-                        placeholder="Last Name"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="last_name"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Phone Number</label>
-                      <Field
-                        as={InputBase}
-                        name="phone"
-                        placeholder="Phone number"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="phone"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Location</label>
-                      <ComboBox
-                        options={districtsInKerala}
-                        value={values.location || ""}
-                        onChange={(e, newValue) =>
-                          setFieldValue("location", newValue)
+                <div className="form-group">
+                  <label className="form-label">Password</label>
+                  <div className="password-input-container">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Password"
+                      className="form-input"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {/* <InputAdornment position="end" className="password-toggle">
+                      <IconButton
+                        onClick={togglePasswordVisibility}
+                        edge="end"
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
                         }
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="location"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment> */}
+                  </div>
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
 
-                    <div className="form-group">
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={hasPhysicalStore}
-                            onChange={() => {
-                              setHasPhysicalStore(!hasPhysicalStore);
-                              setFieldValue(
-                                "has_physical_store",
-                                !hasPhysicalStore
-                              );
-                            }}
-                          />
-                        }
-                        label="Do you have a physical store?"
-                        className="form-label"
-                      />
-                    </div>
-
-                    {hasPhysicalStore && (
-                      <div className="form-group">
-                        <label className="form-label">Business Name</label>
-                        <Field
-                          as={InputBase}
-                          name="business_name"
-                          placeholder="Business Name"
-                          className="form-input"
-                        />
-                        <ErrorMessage
-                          name="business_name"
-                          component="div"
-                          className="error-text"
-                        />
-                      </div>
-                    )}
-
-                    <div className="form-group">
-                      <label className="form-label">Password</label>
-                      <Field
-                        as={InputBase}
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        className="form-input"
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              onClick={togglePasswordVisibility}
-                              edge="end"
-                              aria-label={
-                                showPassword ? "Hide password" : "Show password"
-                              }
-                            >
-                              {showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                      />
-                      <ErrorMessage
-                        name="password"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="login-button"
-                      disabled={loading || !isValid}
-                    >
-                      {loading ? "Signing Up..." : "Sign Up"}
-                    </button>
-                  </>
-                )}
+                <button
+                  type="submit"
+                  className="login-button"
+                  disabled={loading || !isValid}
+                >
+                  {loading ? "Signing Up..." : "Sign Up"}
+                </button>
 
                 <div className="login-footer">
                   <a href="/signin" className="login-link">

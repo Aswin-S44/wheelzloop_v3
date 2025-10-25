@@ -17,7 +17,7 @@ function Header() {
   const [showNav, setShowNav] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
-  const [logoSize, setLogoSize] = useState({ width: "220px", height: "70px" });
+  const [logoSize, setLogoSize] = useState({ width: "221px", height: "70px" });
   const [searchKey, setSearchKey] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1100);
@@ -202,9 +202,10 @@ function Header() {
             <img
               src="/images/logo.png"
               className="brand-name"
-              style={logoSize}
+              // style={logoSize}
               alt="Logo"
               title="brand-logo"
+              style={{ height: "70px", width: "121px" }}
             />
           </a>
         </div>

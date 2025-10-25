@@ -60,7 +60,7 @@ module.exports.createExpirationEmail = (userName) => {
           <a href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in" style="margin: 0 8px;"><img src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0000_xv9djg.jpg" width="36" alt="LinkedIn" /></a>
           <a href="https://www.youtube.com/@wheelzloop" style="margin: 0 8px;"><img src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0003_ibz8nz.jpg" width="36" alt="YouTube" /></a>
         </div>
-        <p style="margin: 16px 0 0; color: #434343;">Copyright © 2025 WheelzLoop. All rights reserved.</p>
+        <p style="margin: 16px 0 0; color: #434343;">Copyright © 2025 CarAuras. All rights reserved.</p>
       </footer>
     </div>
   </body>

@@ -262,7 +262,7 @@ module.exports.subscriptionConfirmationEmail = (
           </a>
         </div>
         <p style="margin: 0; margin-top: 16px; color: #434343">
-          Copyright © 2025 WheelzLoop. All rights reserved.
+          Copyright © 2025 CarAuras. All rights reserved.
         </p>
       </footer>
     </div>

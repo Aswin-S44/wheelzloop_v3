@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
-import { InputBase, InputAdornment, IconButton } from "@mui/material";
+import { InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import "./LoginScreen.css";
 import { useAuthStore } from "../../store/useAuthStore";
@@ -69,7 +69,7 @@ function LoginScreen() {
       <div className="login-container">
         <div className="login-left">
           <img
-            src="/images/intro.png"
+            src="https://www.autotrainingcentre.com/wp-content/uploads/2015/12/auto-sales-college.jpg"
             className="login-image"
             alt="Login"
             title="login page image"
@@ -90,16 +90,24 @@ function LoginScreen() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, errors, touched }) => (
               <Form className="login-form">
                 <div className="form-group">
                   <label className="form-label">Email or Phone Number</label>
-                  <Field
-                    as={InputBase}
-                    name="emailOrPhone"
-                    placeholder="Enter your email or phone"
-                    className="form-input"
-                  />
+                  <Field name="emailOrPhone">
+                    {({ field }) => (
+                      <input
+                        {...field}
+                        type="text"
+                        placeholder="Enter your email or phone"
+                        className={`form-input ${
+                          errors.emailOrPhone && touched.emailOrPhone
+                            ? "input-error"
+                            : ""
+                        }`}
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage
                     name="emailOrPhone"
                     component="div"
@@ -108,26 +116,33 @@ function LoginScreen() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Password</label>
-                  <Field
-                    as={InputBase}
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Enter your password"
-                    className="form-input"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                          aria-label={
-                            showPassword ? "Hide password" : "Show password"
-                          }
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
+                  <Field name="password">
+                    {({ field }) => (
+                      <div className="password-input-container">
+                        <input
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Enter your password"
+                          className={`form-input ${
+                            errors.password && touched.password
+                              ? "input-error"
+                              : ""
+                          }`}
+                        />
+                        {/* <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                            aria-label={
+                              showPassword ? "Hide password" : "Show password"
+                            }
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment> */}
+                      </div>
+                    )}
+                  </Field>
                   <ErrorMessage
                     name="password"
                     component="div"
@@ -146,7 +161,7 @@ function LoginScreen() {
           </Formik>
           <div className="login-footer">
             <a href="/" className="login-link">
-              Back to Home? <span>Wheelzloop</span>
+              Back to Home? <span>CarAuras</span>
             </a>
             <a href="/signup" className="login-link">
               Don't have an account? <span>Sign Up</span>

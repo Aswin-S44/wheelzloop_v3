@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./Filter.css";
 import { brands } from "../../dummyData/brands";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { years } from "../../dummyData/year";
 import { fuelTypes } from "../../dummyData/fuelTypes";
 import { ownerShip } from "../../dummyData/ownerShip";
 import { carFeatures } from "../../dummyData/carFeatures";
 import { carBodyTypes } from "../../dummyData/bodyTypes";
 import { transmissionTypes } from "../../dummyData/transmissionTypes";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import SearchIcon from "@mui/icons-material/Search";
 
 function Filter({ onFilterChange }) {
@@ -99,6 +99,7 @@ function Filter({ onFilterChange }) {
 
       <div className="search-section">
         <div className="search-input-container">
+          <SearchIcon className="search-icon" />
           <input
             type="text"
             placeholder="Search brand or car..."
@@ -112,17 +113,17 @@ function Filter({ onFilterChange }) {
       <div className="filter-sections">
         <div className="filter-section">
           <p className="section-title">Top Brands</p>
-          <div className="brands-list">
+          <div className="brands-list custom-scroll">
             {filteredBrands.length > 0 ? (
               filteredBrands.map((brandItem, index) => (
-                <div key={index} className="brand-accordion ">
+                <div key={index} className="brand-accordion">
                   <div
                     className="brand-header"
                     onClick={() => handleAccordionToggle(index)}
                   >
                     <span>{brandItem.brand}</span>
                     {activeIndex === index ? (
-                      <RemoveCircleOutlineIcon className="accordion-icon" />
+                      <KeyboardArrowUpIcon className="accordion-icon" />
                     ) : (
                       <KeyboardArrowDownIcon className="accordion-icon" />
                     )}
@@ -130,7 +131,7 @@ function Filter({ onFilterChange }) {
                   {activeIndex === index && (
                     <div className="brand-models">
                       {brandItem.cars.map((car, idx) => (
-                        <label key={idx} className="model-checkbox">
+                        <label key={idx} className="custom-checkbox">
                           <input
                             type="checkbox"
                             checked={selectedCars.some(
@@ -149,6 +150,7 @@ function Filter({ onFilterChange }) {
                               )
                             }
                           />
+                          <span className="checkbox-checkmark"></span>
                           {car}
                         </label>
                       ))}
@@ -157,7 +159,7 @@ function Filter({ onFilterChange }) {
                 </div>
               ))
             ) : (
-              <span className="spec-item">No brands available</span>
+              <span className="no-items">No brands available</span>
             )}
           </div>
         </div>
@@ -166,10 +168,9 @@ function Filter({ onFilterChange }) {
           <p className="section-title">Body Type</p>
           <div className="options-grid">
             {carBodyTypes.map((bodyType, index) => (
-              <label key={index}>
+              <label key={index} className="custom-checkbox">
                 <input
                   type="checkbox"
-                  className="checkbox"
                   checked={selectedBodyTypes.includes(bodyType.text)}
                   onChange={() =>
                     handleCheckboxChange(
@@ -179,15 +180,8 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {bodyType.text}
-                </span>
+                <span className="checkbox-checkmark"></span>
+                {bodyType.text}
               </label>
             ))}
           </div>
@@ -197,14 +191,14 @@ function Filter({ onFilterChange }) {
           <p className="section-title">Year</p>
           <div className="options-grid">
             {years.map((year, index) => (
-              <label key={index} className="radio-option">
+              <label key={index} className="custom-radio">
                 <input
                   type="radio"
                   name="year"
                   checked={selectedYear === year.value}
                   onChange={() => setSelectedYear(year.value)}
                 />
-                <span className="radiomark"></span>
+                <span className="radio-checkmark"></span>
                 {year.text}
               </label>
             ))}
@@ -215,10 +209,9 @@ function Filter({ onFilterChange }) {
           <p className="section-title">Fuel Type</p>
           <div className="options-grid">
             {fuelTypes.map((fuel, index) => (
-              <label key={index}>
+              <label key={index} className="custom-checkbox">
                 <input
                   type="checkbox"
-                  className="checkbox"
                   checked={selectedFuelTypes.includes(fuel.text)}
                   onChange={() =>
                     handleCheckboxChange(
@@ -228,15 +221,8 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {fuel.text}
-                </span>
+                <span className="checkbox-checkmark"></span>
+                {fuel.text}
               </label>
             ))}
           </div>
@@ -246,10 +232,9 @@ function Filter({ onFilterChange }) {
           <p className="section-title">Ownership</p>
           <div className="options-grid">
             {ownerShip.map((ownership, index) => (
-              <label key={index}>
+              <label key={index} className="custom-checkbox">
                 <input
                   type="checkbox"
-                  className="checkbox"
                   checked={selectedOwnership.includes(ownership.text)}
                   onChange={() =>
                     handleCheckboxChange(
@@ -259,15 +244,8 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {ownership.text}
-                </span>
+                <span className="checkbox-checkmark"></span>
+                {ownership.text}
               </label>
             ))}
           </div>
@@ -275,11 +253,10 @@ function Filter({ onFilterChange }) {
 
         <div className="filter-section">
           <p className="section-title">Features</p>
-          <div className="options-grid scrollable-div scroll-container">
+          <div className="options-grid custom-scroll features-grid">
             {carFeatures.map((feature, index) => (
-              <label key={index} className="">
+              <label key={index} className="custom-checkbox">
                 <input
-                  className="checkbox"
                   type="checkbox"
                   checked={selectedFeatures.includes(feature.text)}
                   onChange={() =>
@@ -290,15 +267,8 @@ function Filter({ onFilterChange }) {
                     )
                   }
                 />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {feature.text}
-                </span>
+                <span className="checkbox-checkmark"></span>
+                {feature.text}
               </label>
             ))}
           </div>

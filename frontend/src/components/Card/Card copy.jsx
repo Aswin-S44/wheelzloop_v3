@@ -47,15 +47,13 @@ function Card({ car, editable = false, category }) {
   return (
     <div className="card">
       <div className="card-header">
-        <div className="card-image-container">
-          <img
-            src={car?.images[0]}
-            alt="Car"
-            className="card-image"
-            title={car?.car_name || "car image"}
-            onClick={handleNavigateToCar}
-          />
-        </div>
+        <img
+          src={car?.images[0]}
+          alt="Car"
+          className="card-image"
+          title={car?.car_name || "car image"}
+          onClick={handleNavigateToCar}
+        />
 
         {category && <span className="category-badge">{category}</span>}
 
@@ -69,25 +67,29 @@ function Card({ car, editable = false, category }) {
           )}
         </button>
       </div>
-      <div className="card-details">
+      <div className="card-body">
         <h3 className="car-name" onClick={handleNavigateToCar}>
           {car?.car_name ?? "Car Name"}
         </h3>
-        <div className="car-specs-container">
-          <div className="spec-item">
-            <FaCar />
+        <div className="car-meta">
+          <div className="meta-item">
             <span>{car?.model ?? "N/A"}</span>
           </div>
-          <div className="spec-item">
+          <div className="meta-item">
             <FaGasPump />
             <span>{car?.fuel_type ?? "N/A"}</span>
           </div>
-          <div className="spec-item">
+          <div className="meta-item">
             <FaCogs />
             <span>{car?.transmission ?? "N/A"}</span>
           </div>
         </div>
-        <div className="price-section">
+        <div className="car-meta">
+          <div className="meta-item">
+            <span>{car?.model ?? "-"}</span>
+          </div>
+        </div>
+        <div className="car-price-info">
           <span className="current-price">
             ₹{car?.price?.toLocaleString() ?? "N/A"}
           </span>
@@ -97,20 +99,15 @@ function Card({ car, editable = false, category }) {
             </span>
           )}
         </div>
-        <div className="card-footer">
-          <p className="location">
-            <FaMapMarkerAlt /> {car?.place ?? "N/A"}
-          </p>
-          <div className="visitors">
-            <FaEye />
-            <span>{formatViews(car?.views?.toLocaleString())}</span>
-          </div>
+      </div>
+      <div className="card-footer">
+        <p className="location">
+          <FaMapMarkerAlt /> {car?.place ?? "N/A"}
+        </p>
+        <div className="views">
+          <FaEye />
+          <span>{formatViews(car?.views?.toLocaleString())}</span>
         </div>
-        {!editable && (
-          <button className="view-details-btn" onClick={handleNavigateToCar}>
-            View Details
-          </button>
-        )}
       </div>
       <ToastContainer />
     </div>

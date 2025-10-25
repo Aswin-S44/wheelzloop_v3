@@ -96,6 +96,8 @@
     max-height: 80%;
     object-fit: contain;
     transition: transform 0.3s ease;
+    width: 121px;
+    height: 70px;
   }
   
   .brand-card:hover .brand-logo {

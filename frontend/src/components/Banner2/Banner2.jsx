@@ -4,60 +4,55 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 function Banner2() {
   return (
-    <div className="banner-container mt-2">
-      <div className="row align-items-center">
-        <div className="col-md-6 order-md-1 order-2 p-md-5 p-4">
-          <h1
-            className="display-4 fw-bold mb-3 banner-title"
-            style={{ color: "#1a1a1a" }}
-          >
-            The Best used Cars Collection in Kochi, Kerala
+    <div className="dynamic-banner-container mt-4">
+      <div className="dynamic-banner-content">
+        <div className="dynamic-banner-text p-md-5 p-4">
+          <h1 className="display-3 fw-bold mb-3 dynamic-banner-title">
+            Drive Your Dream: Discover Premium Used Cars
           </h1>
-          <h2
-            className="fs-5 mb-4 banner-subtitle-2"
-            // style={{ fontSize: "40px", fontWeight: 400 }}
-          >
-            Discover our wide range of{" "}
-            <span className="quality-text">
-              Quality
+          <h2 className="fs-5 mb-4 dynamic-banner-subtitle">
+            Unveiling Kochi's finest collection of{" "}
+            <span className="dynamic-highlight-text">
+              Certified Quality
               <svg
-                width="120"
-                height="12"
-                viewBox="0 0 120 12"
-                className="curved-line"
+                width="200"
+                height="20"
+                viewBox="0 0 200 20"
+                className="dynamic-underline-svg"
               >
                 <path
-                  d="M0,6 Q60,12 120,6"
-                  stroke="#FFD700"
-                  strokeWidth="2"
+                  d="M0,10 Q100,20 200,10"
+                  stroke="#FFC107"
+                  strokeWidth="4"
                   fill="none"
                 />
               </svg>
             </span>{" "}
-            used cars collections.
+            vehicles, ready for the road.
           </h2>
           <button
-            className="btn btn-dark px-4 py-3 banner-button"
+            className="btn dynamic-explore-button px-5 py-3"
             onClick={() => (window.location.href = "/used-cars")}
           >
-            Explore Now <ArrowRightAltIcon />
+            Explore Inventory <ArrowRightAltIcon className="ms-2" />
           </button>
         </div>
-        <div className="col-md-6 order-md-2 order-1 p-0">
+        <div className="dynamic-banner-image-wrapper p-0">
           <img
             src="/images/wheelzloop-main-img.webp"
             srcSet="
-    /images/wheelzloop-main-img-480.webp 480w,
-    /images/wheelzloop-main-img-768.webp 768w,
-    /images/wheelzloop-main-img.webp 1200w
-  "
+              /images/wheelzloop-main-img-480.webp 480w,
+              /images/wheelzloop-main-img-768.webp 768w,
+              /images/wheelzloop-main-img.webp 1200w
+            "
             sizes="(max-width: 768px) 100vw, 1200px"
             width="1200"
             height="600"
-            className="w-100 banner-image"
-            alt="Luxury Car"
-            title="Wheelzloop banner image"
+            className="dynamic-banner-main-image"
+            alt="Sleek Modern Car"
+            title="Wheelzloop main banner image"
           />
+          <div className="dynamic-image-overlay"></div>
         </div>
       </div>
     </div>
