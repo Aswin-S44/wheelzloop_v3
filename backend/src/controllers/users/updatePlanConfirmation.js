@@ -30,7 +30,7 @@ module.exports.updatePlanConfirmation = async (req, res) => {
       await sendEmail(
         from,
         subject,
-        "Your subscription plan is expiring today. Please visit www.wheelzloop.com/premium-plans to renew.",
+        "Your subscription plan is expiring today. Please visit https://carauras.com/premium-plans to renew.",
         htmlContent,
         user.email
       );

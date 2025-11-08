@@ -5,7 +5,7 @@ module.exports.sentOTPTemplate = (otp) => {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>WheelzLoop</title>
+    <title>CarAuras</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
@@ -420,13 +420,13 @@ module.exports.sentOTPTemplate = (otp) => {
             color: #434343;
           "
         >
-          WheelzLoop 
+          CarAuras 
         </p>
         <p style="margin: 0; margin-top: 8px; color: #434343">
           Best Used Cars website in Kerala
         </p>
         <div style="margin: 0; margin-top: 16px">
-          <a href="https://www.facebook.com/profile.php?id=61576649437997" target="_blank" style="display: inline-block">
+          <a href="https://www.facebook.com/profile.php?id=61581912191717" target="_blank" style="display: inline-block">
             <img
               width="36px"
               alt="Facebook"
@@ -434,7 +434,7 @@ module.exports.sentOTPTemplate = (otp) => {
             />
           </a>
           <a
-            href="https://www.instagram.com/wheelz_loop/"
+            href="https://www.instagram.com/carsauraa/"
             target="_blank"
             style="display: inline-block; margin-left: 8px"
           >
@@ -443,19 +443,19 @@ module.exports.sentOTPTemplate = (otp) => {
               alt="Instagram"
               src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0002_djru8s.jpg"
           /></a>
+          // <a
+          //   href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
+          //   target="_blank"
+          //   style="display: inline-block; margin-left: 8px"
+          // >
+          //   <img
+          //     width="36px"
+          //     alt="Linkedin"
+          //     src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0000_xv9djg.jpg "
+          //   />
+          // </a>
           <a
-            href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
-            target="_blank"
-            style="display: inline-block; margin-left: 8px"
-          >
-            <img
-              width="36px"
-              alt="Linkedin"
-              src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0000_xv9djg.jpg "
-            />
-          </a>
-          <a
-            href="https://www.youtube.com/@wheelzloop"
+            href="https://www.youtube.com/@carauras"
             target="_blank"
             style="display: inline-block; margin-left: 8px"
           >
@@ -466,7 +466,7 @@ module.exports.sentOTPTemplate = (otp) => {
           /></a>
         </div>
         <p style="margin: 0; margin-top: 16px; color: #434343">
-          Copyright © 2025 WheelzLoop. All rights reserved.
+          Copyright © 2025 CarAuras. All rights reserved.
         </p>
       </footer>
     </div>

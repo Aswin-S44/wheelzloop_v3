@@ -11,7 +11,7 @@ const server = http.createServer(app);
 
 const socketOrigin = [];
 
-const productionSiteUrl = "https://wheelzloop.com";
+const productionSiteUrl = "https://carauras.com";
 const localSiteUrl = "http://localhost:3000";
 
 process.env.NODE_ENV == "production"

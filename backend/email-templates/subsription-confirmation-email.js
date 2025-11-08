@@ -9,7 +9,7 @@ module.exports.subscriptionConfirmationEmail = (
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>WheelzLoop</title>
+    <title>CarAuras</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -140,7 +140,7 @@ module.exports.subscriptionConfirmationEmail = (
                                         <tr>
                                           <td align="center">
                                             <h1 style="margin: 16px 0; font-size: 22px">
-                                              Welcome to WheelzLoop Premium!
+                                              Welcome to CarAuras Premium!
                                             </h1>
                                             <p style="font-size: 14px">
                                               Hi, ${userName}, Your ${planType} Plan subscription has been successfully activated.
@@ -214,55 +214,55 @@ module.exports.subscriptionConfirmationEmail = (
             color: #434343;
           "
         >
-          WheelzLoop 
+          CarAuras 
         </p>
         <p style="margin: 0; margin-top: 8px; color: #434343">
           Best Used Cars website in Kerala
         </p>
-        <div style="margin: 0; margin-top: 16px">
-          <a href="" target="_blank" style="display: inline-block">
-            <img
-              width="36px"
-              alt="Facebook"
-              src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0001_duqjea.jpg"
-            />
-          </a>
-          <a
-            href="https://www.instagram.com/wheelz_loop/"
-            target="_blank"
-            style="display: inline-block; margin-left: 8px"
-          >
-            <img
-              width="36px"
-              alt="Instagram"
-              src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0002_djru8s.jpg"
-            />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
-            target="_blank"
-            style="display: inline-block; margin-left: 8px"
-          >
-            <img
-              width="36px"
-              alt="Linkedin"
-              src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0000_xv9djg.jpg"
-            />
-          </a>
-          <a
-            href="https://www.youtube.com/@wheelzloop"
-            target="_blank"
-            style="display: inline-block; margin-left: 8px"
-          >
-            <img
-              width="36px"
-              alt="Youtube"
-              src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0003_ibz8nz.jpg"
-            />
-          </a>
-        </div>
+        // <div style="margin: 0; margin-top: 16px">
+        //   <a href="" target="_blank" style="display: inline-block">
+        //     <img
+        //       width="36px"
+        //       alt="Facebook"
+        //       src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0001_duqjea.jpg"
+        //     />
+        //   </a>
+        //   <a
+        //     href="https://www.instagram.com/wheelz_loop/"
+        //     target="_blank"
+        //     style="display: inline-block; margin-left: 8px"
+        //   >
+        //     <img
+        //       width="36px"
+        //       alt="Instagram"
+        //       src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0002_djru8s.jpg"
+        //     />
+        //   </a>
+        //   <a
+        //     href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
+        //     target="_blank"
+        //     style="display: inline-block; margin-left: 8px"
+        //   >
+        //     <img
+        //       width="36px"
+        //       alt="Linkedin"
+        //       src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0000_xv9djg.jpg"
+        //     />
+        //   </a>
+        //   <a
+        //     href="https://www.youtube.com/@wheelzloop"
+        //     target="_blank"
+        //     style="display: inline-block; margin-left: 8px"
+        //   >
+        //     <img
+        //       width="36px"
+        //       alt="Youtube"
+        //       src="https://res.cloudinary.com/diunslxah/image/upload/v1749623649/IMG-20250611-WA0003_ibz8nz.jpg"
+        //     />
+        //   </a>
+        // </div>
         <p style="margin: 0; margin-top: 16px; color: #434343">
-          Copyright © 2025 WheelzLoop. All rights reserved.
+          Copyright © 2025 CarAuras. All rights reserved.
         </p>
       </footer>
     </div>
