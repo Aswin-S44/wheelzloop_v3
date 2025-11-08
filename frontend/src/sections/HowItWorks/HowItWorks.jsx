@@ -6,6 +6,7 @@ import {
   PersonAddAlt1,
   RecentActors,
   WatchLater,
+  CheckCircleOutline,
 } from "@mui/icons-material";
 import "./HowItWorks.css";
 import { UserContext } from "../../hooks/UserContext";
@@ -13,7 +14,6 @@ import { UserContext } from "../../hooks/UserContext";
 function HowItWorks() {
   const { user } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -37,40 +37,47 @@ function HowItWorks() {
           <p>Selling your car is simple with our easy 3-step process.</p>
         </div>
 
-        <div className="steps-wrapper">
-          <div className="step-card">
-            <div className="step-number">01</div>
-            <div className="step-icon">
+        <div className="steps-timeline">
+          <div className="timeline-item">
+            <div className="timeline-icon">
               <AccountCircleOutlined />
             </div>
-            <h3 className="step-title">Create Your Account</h3>
-            <p className="step-description">
-              Sign up in seconds to join our community of car enthusiasts and
-              sellers.
-            </p>
+            <div className="timeline-content">
+              <h3>Create Your Account</h3>
+              <p>
+                Sign up in seconds to join our community of car enthusiasts and
+                sellers.
+              </p>
+            </div>
+            <div className="timeline-number">01</div>
           </div>
 
-          <div className="step-card">
-            <div className="step-number">02</div>
-            <div className="step-icon">
+          <div className="timeline-item">
+            <div className="timeline-icon">
               <DirectionsCarOutlined />
             </div>
-            <h3 className="step-title">List Your Vehicle</h3>
-            <p className="step-description">
-              Upload details and photos to create an attractive listing for your
-              car.
-            </p>
+            <div className="timeline-content">
+              <h3>List Your Vehicle</h3>
+              <p>
+                Upload details and photos to create an attractive listing for
+                your car.
+              </p>
+            </div>
+            <div className="timeline-number">02</div>
           </div>
 
-          <div className="step-card">
-            <div className="step-number">03</div>
-            <div className="step-icon">
+          <div className="timeline-item">
+            <div className="timeline-icon">
               <HandshakeOutlined />
             </div>
-            <h3 className="step-title">Connect with Buyers</h3>
-            <p className="step-description">
-              Receive offers and finalize deals directly on our secure platform.
-            </p>
+            <div className="timeline-content">
+              <h3>Connect with Buyers</h3>
+              <p>
+                Receive offers and finalize deals directly on our secure
+                platform.
+              </p>
+            </div>
+            <div className="timeline-number">03</div>
           </div>
         </div>
 

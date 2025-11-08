@@ -1,410 +1,311 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Search, Menu, Person, AddBox, Close } from "@mui/icons-material";
-import "./Header.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { SEARCH_URL } from "../../config/api";
-import { UserContext } from "../../hooks/UserContext";
-import Modal from "@mui/material/Modal";
-import { Box } from "@mui/material";
-import AccountDropdown from "../AccountDropdown/AccountMenu";
-import AccountMenu from "../AccountDropdown/AccountMenu";
-import SubHeader from "../SubHeader/SubHeader";
-import MailIcon from "@mui/icons-material/Mail";
-const LOCAL_STORAGE_KEY = "previousCarSearches";
+import React from "react";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import SearchIcon from "@mui/icons-material/Search";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import XIcon from "@mui/icons-material/X";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 function Header() {
-  const [showNav, setShowNav] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const navigate = useNavigate();
-  const [logoSize, setLogoSize] = useState({ width: "221px", height: "70px" });
-  const [searchKey, setSearchKey] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1100);
-  const [showResults, setShowResults] = useState(false);
-  const { user } = useContext(UserContext);
-  const [isListening, setIsListening] = useState(false);
-  const [previousSearches, setPreviousSearches] = useState(() => {
-    const storedSearches = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return storedSearches ? JSON.parse(storedSearches) : [];
-  });
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const [showHeader, setShowHeader] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY < lastScrollY) {
-        setShowHeader(true); // Scrolling up
-      } else {
-        setShowHeader(false); // Scrolling down
-      }
-      setLastScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
-  const handleSellCar = () => {
-    if (!user) {
-      handleOpen();
-    } else {
-      window.location.href = "/car/add";
-    }
-  };
-
-  const handleNavigateToChat = async () => {
-    if (!user) {
-      handleOpen();
-    } else {
-      window.location.href = "/chats";
-    }
-  };
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const searchCar = async (name) => {
-    if (name.length > 0) {
-      const res = await axios.get(`${SEARCH_URL}?key=${name}`);
-      if (res && res?.data && res.data?.data && res.data?.data?.length > 0) {
-        setSearchResults(res.data.data);
-        setShowResults(true);
-      } else {
-        setSearchResults([]);
-        setShowResults(true);
-      }
-    } else {
-      setSearchResults([]);
-      setShowResults(false);
-    }
-  };
-
-  useEffect(() => {
-    searchCar(searchKey);
-  }, [searchKey]);
-
-  useEffect(() => {
-    const updateLogoSize = () => {
-      if (window.innerWidth < 768) {
-        setLogoSize({ width: "150px", height: "50px" });
-      } else {
-        setLogoSize({ width: "220px", height: "70px" });
-      }
-    };
-
-    updateLogoSize();
-    window.addEventListener("resize", updateLogoSize);
-
-    return () => window.removeEventListener("resize", updateLogoSize);
-  }, []);
-
-  const navigateToLogin = () => {
-    navigate("/signin");
-  };
-
-  const toggleNav = () => {
-    setShowNav(!showNav);
-  };
-
-  const toggleSearch = () => {
-    setShowSearch(!showSearch);
-    setShowResults(false);
-    setSearchKey("");
-  };
-
-  // const handleSearch = async (e) => {
-  //   setSearchKey(e.target.value);
-  //   const currentSearchValue = e.target.value;
-
-  //   if (currentSearchValue.trim().length > 3 && !previousSearches.includes(currentSearchValue)) {
-  //     setPreviousSearches((prevSearches) => [...prevSearches, currentSearchValue]);
-  //   }
-  // };
-
-  const handleSearch = async (e) => {
-    const currentSearchValue = e.target.value;
-    setSearchKey(currentSearchValue);
-
-    if (currentSearchValue.trim().length > 3) {
-      setPreviousSearches((prevSearches) => {
-        // Create a new array without the currentSearchValue if it already exists
-        const filteredSearches = prevSearches.filter(
-          (search) => search !== currentSearchValue
-        );
-        // Add the currentSearchValue to the end of the new array
-        return [...filteredSearches, currentSearchValue];
-      });
-    }
-  };
-
-  const handleResultClick = () => {
-    setShowResults(false);
-    setSearchKey("");
-  };
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(previousSearches));
-  }, [previousSearches]);
-
-  const startListening = () => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert("Your browser does not support speech recognition.");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    setIsListening(true); // 👈 Change image
-
-    recognition.start();
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript.trim();
-      setSearchKey(transcript);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false); // 👈 Reset image
-    };
-
-    recognition.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
-      setIsListening(false); // 👈 Also reset on error
-    };
-  };
-
   return (
-    <div className="header-container">
-      <header className={`header ${showHeader ? "show" : "hide"}`}>
-        <div className="logo">
-          <a href="/" title="logo">
-            <img
-              src="/images/logo.png"
-              className="brand-name"
-              // style={logoSize}
-              alt="Logo"
-              title="brand-logo"
-              style={{ height: "70px", width: "121px" }}
-            />
-          </a>
-        </div>
+    <div>
+      <header>
+        <div className="header-top">
+          <div class="container">
+            <div class="row py-4 pb-0 pb-sm-4 align-items-center ">
+              <div class="col-sm-4 col-lg-3 text-center text-sm-start">
+                <div class="main-logo">
+                  <a href="index.html">
+                    {/* <img
+                      src="/images/logo.png"
+                      className="brand-name"
+                      // style={logoSize}
+                      alt="Logo"
+                      title="brand-logo"
+                      style={{ height: "70px", width: "121px" }}
+                    /> */}
+                    <h4 style={{ color: "#00bcbf", fontSize: "45px" }}>
+                      Wheelzloop
+                    </h4>
+                  </a>
+                </div>
+              </div>
 
-        <div className={`search ${showSearch ? "mobile-search" : ""}`}>
-          <input
-            type="text"
-            placeholder="Search for car name or brand or location"
-            onChange={handleSearch}
-            value={searchKey}
-          />
-          <button
-            className="voice-search-btn"
-            onClick={startListening}
-            aria-label="voice-search"
-          >
-            <img
-              className={isListening ? "listening-animation" : ""}
-              style={{ width: "25px" }}
-              src={isListening ? "/images/sound-wave.png" : "/images/voice.png"}
-              alt="Voice Search"
-            />
-          </button>
-
-          <button aria-label="search-button">
-            <Search />
-          </button>
-        </div>
-
-        {showResults && searchKey.trim() != "" && (
-          <div className="search-results-container">
-            {searchResults.length > 0 ? (
-              searchResults.map((result, index) => (
-                <a
-                  href={`/car/${result._id}`}
-                  key={index}
-                  className="search-card"
-                  onClick={handleResultClick}
-                  title={result.brand}
-                >
-                  <div className="search-card-image">
-                    <img
-                      src={result.images[0]}
-                      alt={result.car_name}
-                      title="search-result-car-img"
+              <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
+                <div class="">
+                  <form
+                    id="search-form"
+                    class="text-center d-flex align-items-center"
+                    action=""
+                    method=""
+                  >
+                    <input
+                      type="text"
+                      class="border-2 bg-transparent p-3 search-input"
+                      placeholder="Search by name, brand etc"
+                      style={{ border: "1px solid #fe6a2b" }}
                     />
-                  </div>
-                  <div className="search-card-content">
-                    <div className="d-flex justify-content-between">
-                      <h3>{result.car_name}</h3>
-                      <p className="search-card-meta">
-                        {result.brand} • {result.model} • {result.year}
-                      </p>
+                    <span className="search-box">
+                      <SearchIcon style={{ color: "#fff" }} />
+                    </span>
+                  </form>
+                </div>
+              </div>
+
+              <div class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+                <div class="support-box text-end d-none d-xl-block">
+                  <span className="secondary-text">Follow us on </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "20px",
+                    }}
+                  >
+                    <div>
+                      <MailOutlineIcon />
                     </div>
-                    <div className="d-flex justify-content-between">
-                      <p className="search-card-price">
-                        ${result?.price?.toLocaleString()}
-                      </p>
-                      <p className="search-card-location">
-                        {" "}
-                        <img
-                          style={{ width: "20px", height: "20px" }}
-                          src="/images/gps.png"
-                          alt="location"
-                        />{" "}
-                        {result.place}
-                      </p>
+                    <div>
+                      <InstagramIcon />
+                    </div>
+                    <div>
+                      <FacebookIcon />
+                    </div>
+                    <div>
+                      <XIcon />
                     </div>
                   </div>
-                </a>
-              ))
-            ) : (
-              <a className="search-card">
-                <div>No results found</div>
-              </a>
-            )}
+                </div>
+              </div>
+            </div>
           </div>
-        )}
-
-        <nav className={`nav ${showNav ? "show" : ""}`}>
-          <button className="close-btn" onClick={toggleNav}>
-            <Close />
-          </button>
-          <a href="/" title="home">
-            Home
-          </a>
-          <a href="/used-cars" title="find used cars">
-            Find-Cars
-          </a>
-          <a href="/favourites" title="saved cars">
-            Favourites
-          </a>
-          {/* {user && (
-            <a href="/chats" title="chats">
-              Chats
-            </a>
-          )} */}
-          <a href="/about-us" title="about us">
-            About-Us
-          </a>
-          <a href="/reviews" title="reviews">
-            Reviews
-          </a>
-          {/* <a href="/blogs" title="blogs">
-            Blogs
-          </a> */}
-          <a href="/contact-us" title="contact us">
-            Contact-Us
-          </a>
-          {!user && (
-            <button className="login-btn" onClick={navigateToLogin}>
-              <Person /> Login
-            </button>
-          )}
-        </nav>
-
-        <div className="icons">
-          <button className="sell-btn" onClick={handleSellCar}>
-            <AddBox /> Sell
-          </button>
-          {isMobile && (
-            <Search
-              className="search-icon"
-              style={{ float: "right", position: "relative" }}
-              onClick={toggleSearch}
-            />
-          )}
-          {user && (
-            <AccountMenu
-              profileImage={user?.profile_picture ?? null}
-              username={user?.first_name ?? "A"}
-            />
-          )}
-          {isMobile && (
-            <>
-              <Menu className="menu-icon" onClick={toggleNav} />
-              {/* <Search className="search-icon" onClick={toggleSearch} /> */}
-              {/* <Menu className="menu-icon" onClick={toggleNav} /> */}
-            </>
-          )}
         </div>
 
-        {showNav && <div className="" onClick={toggleNav}></div>}
-      </header>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "16px",
-                padding: "24px",
-                backgroundColor: "#f5f5f5",
-                borderRadius: "8px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                maxWidth: "400px",
-                margin: "0 auto",
-                textAlign: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "16px",
-                  color: "#333",
-                }}
-              >
-                You need to create account to add car
-              </span>
+        <div class="container-fluid">
+          <hr class="m-0" />
+        </div>
+
+        <div className="header-bottom">
+          <div class="container header-bottom">
+            <nav class="main-menu d-flex navbar navbar-expand-lg ">
+              <div class="d-flex d-lg-none align-items-end mt-3">
+                <ul class="d-flex justify-content-end list-unstyled m-0">
+                  <li>
+                    <a href="account.html" class="mx-3">
+                      <iconify-icon
+                        icon="healthicons:person"
+                        class="fs-4"
+                      ></iconify-icon>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="wishlist.html" class="mx-3">
+                      <iconify-icon
+                        icon="mdi:heart"
+                        class="fs-4"
+                      ></iconify-icon>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a
+                      href="#"
+                      class="mx-3"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasCart"
+                      aria-controls="offcanvasCart"
+                    >
+                      <FavoriteBorderIcon />
+                      <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                        03
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
               <button
-                style={{
-                  padding: "8px 16px",
-                  backgroundColor: "#606cbc",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  transition: "background-color 0.2s",
-                  ":hover": {
-                    backgroundColor: "#30bfa1",
-                  },
-                }}
-                onClick={() => (window.location.href = "/signin")}
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar"
               >
-                Go to login
+                <span class="navbar-toggler-icon"></span>
               </button>
-            </div>
-          </>
-        </Box>
-      </Modal>
+
+              <div
+                class="offcanvas offcanvas-end"
+                tabindex="-1"
+                id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel"
+              >
+                <div class="offcanvas-header justify-content-center">
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <div class="offcanvas-body justify-content-between">
+                  <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
+                    <li class="nav-item">
+                      <a
+                        href="index.html"
+                        class="nav-link active"
+                        style={{ color: "#fff" }}
+                      >
+                        Home
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle"
+                        role="button"
+                        id="pages"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Pages
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="pages">
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            About Us
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Shop
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Single Product
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Cart
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Wishlist
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Checkout
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Blog
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Single Post
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Contact
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            FAQs
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Account
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Thankyou
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Error 404
+                          </a>
+                        </li>
+                        <li>
+                          <a href="index.html" class="dropdown-item">
+                            Styles
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link">
+                        Shop
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link">
+                        Blog
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link">
+                        Contact
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link">
+                        Others
+                      </a>
+                    </li>
+                  </ul>
+
+                  <div class="d-none d-lg-flex align-items-end">
+                    <ul class="d-flex justify-content-end list-unstyled m-0">
+                      <li>
+                        <a href="index.html" class="mx-3">
+                          <iconify-icon
+                            icon="healthicons:person"
+                            class="fs-4"
+                          ></iconify-icon>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="index.html" class="mx-3">
+                          <iconify-icon
+                            icon="mdi:heart"
+                            class="fs-4"
+                          ></iconify-icon>
+                        </a>
+                      </li>
+
+                      <li class="">
+                        <a
+                          href="index.html"
+                          class="mx-3"
+                          data-bs-toggle="offcanvas"
+                          data-bs-target="#offcanvasCart"
+                          aria-controls="offcanvasCart"
+                        >
+                          <FavoriteBorderIcon style={{ color: "#fff" }} />
+                          <span class="position-absolute translate-middle badge rounded-circle pt-2">
+                            03
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
     </div>
   );
 }

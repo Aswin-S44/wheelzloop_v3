@@ -126,10 +126,11 @@ function HomeScreen() {
 
   return (
     <div className="screens" id="Choose by Category">
-      <div className="">
+      <div className="mt-1">
         {/* <Carousel images={images} /> */}
         {/* <Banner /> */}
-        <Banner2 />
+        {/* <Banner2 /> */}
+        <Carousel />
       </div>
       <div className="mt-5">
         <h3 className="text-center fw-bold">
@@ -157,7 +158,7 @@ function HomeScreen() {
       </div>
 
       <div>
-        <div className="mt-4">
+        <div className="mt-4"> 
           <div className="latst-cars-section">
             <div className="container">
               <h3 className="text-center fw-bold">

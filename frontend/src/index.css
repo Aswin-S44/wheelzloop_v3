@@ -11,8 +11,8 @@ body {
 }
 
 :root {
-  --primary-color: #2d3748;
-  --secondary-color: #f60;
+  --primary-color: #0B5661;
+  --secondary-color: #fe6a2b;
   --border-radius: 20px;
   --main-bg-color: #30bfa1;
   --text-medium: #666;
@@ -172,3 +172,61 @@ button.medium {
   background-color: #606cbc !important;
   border-color: #606cbc;
 }
+
+/* Header releated styles */
+
+.header-top{
+  background-color: #ffff;
+}
+
+.header-bottom {
+  background-color: var(--primary-color);
+}
+
+header::placeholder{
+  color: #fff;
+}
+header{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(169, 204, 196, 0.19);
+}
+
+.search-box{
+  padding: 16px;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  left: -56px;
+  position: relative;
+}
+
+header.nav-link{
+  color: #fff;
+  font-size: 20px;
+}
+
+.navbar-nav .nav-link{
+  color: #fff;
+  font-size: 20px;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.search-input{
+  width: 100%;
+  border: 1px solid red;
+}
+
+.secondary-text{
+  font-size: 15px;
+  color: grey;
+}
+
+.badge{
+  background-color: var(--secondary-color);
+}
+
+
+header::placeholder{
+  font-size: 20px;
+}
+
+/* End header releted styles */

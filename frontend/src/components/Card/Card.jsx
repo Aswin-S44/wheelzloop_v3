@@ -46,34 +46,34 @@ function Card({ car, editable = false, category }) {
 
   return (
     <div className="card">
-      <div className="card-header">
-        <div className="card-image-container">
-          <img
-            src={car?.images[0]}
-            alt="Car"
-            className="card-image"
-            title={car?.car_name || "car image"}
-            onClick={handleNavigateToCar}
-          />
-        </div>
-
+      <div className="card-image-wrapper" onClick={handleNavigateToCar}>
+        <img
+          src={car?.images[0]}
+          alt="Car"
+          className="card-image"
+          title={car?.car_name || "car image"}
+        />
         {category && <span className="category-badge">{category}</span>}
-
         <button className="favorite-btn">
           {editable && <ActionMenu id={car._id} />}
           {!editable && (
             <FaHeart
-              onClick={addToFav}
+              onClick={(e) => {
+                e.stopPropagation();
+                addToFav();
+              }}
               className={isFavourite ? "saved" : ""}
             />
           )}
         </button>
       </div>
-      <div className="card-details">
+
+      <div className="card-content">
         <h3 className="car-name" onClick={handleNavigateToCar}>
           {car?.car_name ?? "Car Name"}
         </h3>
-        <div className="car-specs-container">
+
+        <div className="car-specs-grid">
           <div className="spec-item">
             <FaCar />
             <span>{car?.model ?? "N/A"}</span>
@@ -87,7 +87,8 @@ function Card({ car, editable = false, category }) {
             <span>{car?.transmission ?? "N/A"}</span>
           </div>
         </div>
-        <div className="price-section">
+
+        <div className="price-info">
           <span className="current-price">
             ₹{car?.price?.toLocaleString() ?? "N/A"}
           </span>
@@ -97,7 +98,8 @@ function Card({ car, editable = false, category }) {
             </span>
           )}
         </div>
-        <div className="card-footer">
+
+        <div className="card-bottom-bar">
           <p className="location">
             <FaMapMarkerAlt /> {car?.place ?? "N/A"}
           </p>
@@ -106,6 +108,7 @@ function Card({ car, editable = false, category }) {
             <span>{formatViews(car?.views?.toLocaleString())}</span>
           </div>
         </div>
+
         {!editable && (
           <button className="view-details-btn" onClick={handleNavigateToCar}>
             View Details

@@ -415,3 +415,7 @@ a.search-card:hover {
     font-size: 14px;
   }
 }
+
+.header-top{
+  background-color: var(--primary-color);
+}

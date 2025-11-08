@@ -6,71 +6,83 @@ function Carousel() {
 
   const slides = [
     {
-      title: "FIND QUALITY USED CARS IN KERALA, KOCHI",
-      subtitle: "USED CARS",
-      tagline: "@CarAuras",
-      bgColor: "rgb(203 237 211)",
-      textColor: "#333",
-      image: "/images/wheeelzloop cars1.webp",
+      title: "Find Your Dream Ride",
+      subtitle: "Premium Used Cars, Unbeatable Prices",
+      imageUrl: `/images/banner-1.png`,
     },
-    {
-      title: "FIND YOUR PERFECT CAR AT CarAuras",
-      subtitle: "IN KERALA",
-      tagline: "@CarAuras",
-      bgColor: "rgb(203 237 211)",
-      textColor: "#333",
-      image: "/images/wheeelzloop blue-sports-car-isolated-white-vector.webp",
-    },
+    // {
+    //   title: "Quality You Can Trust",
+    //   subtitle: "Every Car Inspected, Every Mile Guaranteed",
+    //   imageUrl: `/images/banner-2.png`,
+    // },
+    // {
+    //   title: "Drive Away Happy Today",
+    //   subtitle: "Easy Financing, Swift Delivery",
+    //   imageUrl: `/images/banner-3.png`,
+    // },
+    // {
+    //   title: "Explore Our Extensive Inventory",
+    //   subtitle: "Sedans, SUVs, Trucks & More",
+    //   imageUrl: `/images/banner-4.png`,
+    // },
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-    }, 4000);
+      setCurrentIndex((prevIndex) =>
+        prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
+  const goToPrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   return (
     <div className="carousel">
       <div
-        className="slides"
+        className="carousel-inner"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {slides.map((slide, index) => (
           <div
+            className="carousel-slide"
             key={index}
-            className="slide"
             style={{
-              backgroundColor: slide.bgColor,
-              color: slide.textColor,
+              backgroundImage: `url(${slide.imageUrl})`,
             }}
           >
-            <div className="banner-content">
-              <h2 className="banner-subtitle">{slide.subtitle}</h2>
-              <h1 className="banner-title">{slide.title}</h1>
-              <p className="banner-tagline">{slide.tagline}</p>
+            <div className="carousel-content">
+              <h2>{slide.title}</h2>
+              <p>{slide.subtitle}</p>
+              <button className="carousel-button">Browse Cars</button>
             </div>
-            <img
-              src={slide.image}
-              className="slider-image-sec"
-              alt={`banner-${index + 1}`}
-              title={`banner-${index + 1}`}
-            />
           </div>
         ))}
       </div>
-      <div className="dots">
+      <button className="carousel-control prev" onClick={goToPrev}>
+        &#10094;
+      </button>
+      <button className="carousel-control next" onClick={goToNext}>
+        &#10095;
+      </button>
+      <div className="carousel-dots">
         {slides.map((_, index) => (
-          <button
+          <span
             key={index}
-            className={`dot ${index === currentIndex ? "active" : ""}`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
+            className={`dot ${currentIndex === index ? "active" : ""}`}
+            onClick={() => setCurrentIndex(index)}
+          ></span>
         ))}
       </div>
     </div>

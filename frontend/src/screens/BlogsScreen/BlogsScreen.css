@@ -53,7 +53,7 @@
   flex-wrap: wrap;
 }
 
-.nav-link {
+/* .nav-link {
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
@@ -63,17 +63,17 @@
   border: 1px solid var(--border);
   background: var(--light);
   cursor: pointer;
-}
+} */
 
-.nav-link:hover {
+/* .nav-link:hover {
   color: var(--primary);
   border-color: var(--primary);
-}
+} */
 
 .nav-link.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+  /* background: var(--primary); */
+  /* color: white; */
+  /* border-color: var(--primary); */
 }
 
 .blog-article {
