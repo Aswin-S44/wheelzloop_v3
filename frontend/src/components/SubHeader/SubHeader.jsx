@@ -6,7 +6,8 @@ function SubHeader() {
   return (
     <div className="sub-header">
       <p>
-        Need help ? <MailIcon className="email-icon" />: wheelzloop@gmail.com
+        Need help ? <MailIcon className="email-icon" />:
+        infoatcarauras@gmail.com
       </p>
     </div>
   );

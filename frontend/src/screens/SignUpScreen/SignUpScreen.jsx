@@ -13,15 +13,13 @@ import {
 import { districtsInKerala } from "../../dummyData/discticts";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { OTP_SEND_URL, SIGN_UP_URL, VERIFY_OTP__URL } from "../../config/api";
+import { SIGN_UP_URL } from "../../config/api";
 import axios from "axios";
 import ComboBox from "../../components/ComboBox/ComboBox";
 
 function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [hasPhysicalStore, setHasPhysicalStore] = useState(false);
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -39,7 +37,6 @@ function SignUpScreen() {
     business_name: "",
     location: "",
     has_physical_store: false,
-    otp: "",
   };
 
   const validationSchema = Yup.object({
@@ -57,64 +54,13 @@ function SignUpScreen() {
       ? Yup.string().required("Business name is required")
       : Yup.string(),
     location: Yup.string().required("Location is required"),
-    otp: otpSent ? Yup.string().required("OTP is required") : Yup.string(),
   });
-
-  const handleSendOtp = async (email) => {
-    try {
-      setLoading(true);
-      const otpRes = await axios.post(`${OTP_SEND_URL}`, { email });
-      setOtpSent(true);
-      if (otpRes && otpRes.status == 200) {
-        Swal.fire({
-          title: "Success",
-          text: "OTP Sent",
-          icon: "success",
-        });
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: "User already exists with this email, Please use another",
-          icon: "success",
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Failed to send OTP",
-        icon: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async (otp, email) => {
-    try {
-      setLoading(true);
-      const verifyOtp = await axios.post(`${VERIFY_OTP__URL}`, { email, otp });
-      setEmailVerified(true);
-      Swal.fire({
-        title: "Success",
-        text: "Email verified successfully",
-        icon: "success",
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Invalid OTP",
-        icon: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
       setLoading(true);
       const res = await axios.post(`${SIGN_UP_URL}`, values);
-      if (res && res.status == 200) {
+      if (res && res.status === 200) {
         Swal.fire({
           title: "Success!",
           text: "Successfully created account",
@@ -154,7 +100,7 @@ function SignUpScreen() {
         <div className="login-right">
           <div className="login-header">
             <h1 className="login-title">
-              Welcome to <span className="highlighted">WheeelzLoop</span>
+              Welcome to <span className="highlighted">CarAuras</span>
             </h1>
             <p className="login-subtitle">
               The easiest and most convenient platform for buying and selling
@@ -170,26 +116,12 @@ function SignUpScreen() {
               <Form className="login-form">
                 <div className="form-group">
                   <label className="form-label">Email</label>
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <Field
-                      as={InputBase}
-                      name="email"
-                      placeholder="Email"
-                      className="form-input"
-                      disabled={otpSent}
-                    />
-                    {!otpSent && (
-                      <button
-                        type="button"
-                        className="login-button"
-                        onClick={() => handleSendOtp(values.email)}
-                        disabled={!values.email || loading}
-                        style={{ width: "120px" }}
-                      >
-                        {loading ? "Sending..." : "Send OTP"}
-                      </button>
-                    )}
-                  </div>
+                  <Field
+                    as={InputBase}
+                    name="email"
+                    placeholder="Email"
+                    className="form-input"
+                  />
                   <ErrorMessage
                     name="email"
                     component="div"
@@ -197,196 +129,155 @@ function SignUpScreen() {
                   />
                 </div>
 
-                {otpSent && (
-                  <div className="form-group">
-                    <label className="form-label">OTP Verification</label>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <Field
-                        as={InputBase}
-                        name="otp"
-                        placeholder="Enter OTP"
-                        className="form-input"
-                        disabled={emailVerified}
+                <div className="form-group">
+                  <label className="form-label">Username</label>
+                  <Field
+                    as={InputBase}
+                    name="username"
+                    placeholder="Username"
+                    className="form-input"
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">First Name</label>
+                  <Field
+                    as={InputBase}
+                    name="first_name"
+                    placeholder="First Name"
+                    className="form-input"
+                  />
+                  <ErrorMessage
+                    name="first_name"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Last Name</label>
+                  <Field
+                    as={InputBase}
+                    name="last_name"
+                    placeholder="Last Name"
+                    className="form-input"
+                  />
+                  <ErrorMessage
+                    name="last_name"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Phone Number</label>
+                  <Field
+                    as={InputBase}
+                    name="phone"
+                    placeholder="Phone number"
+                    className="form-input"
+                  />
+                  <ErrorMessage
+                    name="phone"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Location</label>
+                  <ComboBox
+                    options={districtsInKerala}
+                    value={values.location || ""}
+                    onChange={(e, newValue) =>
+                      setFieldValue("location", newValue)
+                    }
+                    className="form-input"
+                  />
+                  <ErrorMessage
+                    name="location"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={hasPhysicalStore}
+                        onChange={() => {
+                          setHasPhysicalStore(!hasPhysicalStore);
+                          setFieldValue(
+                            "has_physical_store",
+                            !hasPhysicalStore
+                          );
+                        }}
                       />
-                      {!emailVerified && (
-                        <button
-                          type="button"
-                          className="login-button"
-                          onClick={() =>
-                            handleVerifyOtp(values.otp, values.email)
-                          }
-                          disabled={!values.otp || loading}
-                          style={{ width: "120px" }}
-                        >
-                          {loading ? "Verifying..." : "Verify"}
-                        </button>
-                      )}
-                    </div>
+                    }
+                    label="Do you have a physical store?"
+                    className="form-label"
+                  />
+                </div>
+
+                {hasPhysicalStore && (
+                  <div className="form-group">
+                    <label className="form-label">Business Name</label>
+                    <Field
+                      as={InputBase}
+                      name="business_name"
+                      placeholder="Business Name"
+                      className="form-input"
+                    />
                     <ErrorMessage
-                      name="otp"
+                      name="business_name"
                       component="div"
                       className="error-text"
                     />
                   </div>
                 )}
 
-                {emailVerified && (
-                  <>
-                    <div className="form-group">
-                      <label className="form-label">Username</label>
-                      <Field
-                        as={InputBase}
-                        name="username"
-                        placeholder="Username"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="username"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
+                <div className="form-group">
+                  <label className="form-label">Password</label>
+                  <Field
+                    as={InputBase}
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    className="form-input"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={togglePasswordVisibility}
+                          edge="end"
+                          aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                          }
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error-text"
+                  />
+                </div>
 
-                    <div className="form-group">
-                      <label className="form-label">First Name</label>
-                      <Field
-                        as={InputBase}
-                        name="first_name"
-                        placeholder="First Name"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="first_name"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Last Name</label>
-                      <Field
-                        as={InputBase}
-                        name="last_name"
-                        placeholder="Last Name"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="last_name"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Phone Number</label>
-                      <Field
-                        as={InputBase}
-                        name="phone"
-                        placeholder="Phone number"
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="phone"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Location</label>
-                      <ComboBox
-                        options={districtsInKerala}
-                        value={values.location || ""}
-                        onChange={(e, newValue) =>
-                          setFieldValue("location", newValue)
-                        }
-                        className="form-input"
-                      />
-                      <ErrorMessage
-                        name="location"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={hasPhysicalStore}
-                            onChange={() => {
-                              setHasPhysicalStore(!hasPhysicalStore);
-                              setFieldValue(
-                                "has_physical_store",
-                                !hasPhysicalStore
-                              );
-                            }}
-                          />
-                        }
-                        label="Do you have a physical store?"
-                        className="form-label"
-                      />
-                    </div>
-
-                    {hasPhysicalStore && (
-                      <div className="form-group">
-                        <label className="form-label">Business Name</label>
-                        <Field
-                          as={InputBase}
-                          name="business_name"
-                          placeholder="Business Name"
-                          className="form-input"
-                        />
-                        <ErrorMessage
-                          name="business_name"
-                          component="div"
-                          className="error-text"
-                        />
-                      </div>
-                    )}
-
-                    <div className="form-group">
-                      <label className="form-label">Password</label>
-                      <Field
-                        as={InputBase}
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        className="form-input"
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              onClick={togglePasswordVisibility}
-                              edge="end"
-                              aria-label={
-                                showPassword ? "Hide password" : "Show password"
-                              }
-                            >
-                              {showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                      />
-                      <ErrorMessage
-                        name="password"
-                        component="div"
-                        className="error-text"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="login-button"
-                      disabled={loading || !isValid}
-                    >
-                      {loading ? "Signing Up..." : "Sign Up"}
-                    </button>
-                  </>
-                )}
+                <button
+                  type="submit"
+                  className="login-button"
+                  disabled={loading || !isValid}
+                >
+                  {loading ? "Signing Up..." : "Sign Up"}
+                </button>
 
                 <div className="login-footer">
                   <a href="/signin" className="login-link">

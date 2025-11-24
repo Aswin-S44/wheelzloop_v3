@@ -149,9 +149,7 @@ function DetailsScreen() {
   return (
     <div className="details-container">
       <Helmet>
-        <title>
-          {car?.title || car?.brand + " " + car?.model} - WheelzLoop
-        </title>
+        <title>{car?.title || car?.brand + " " + car?.model} - CarAuras</title>
         <meta
           name="description"
           content={`Buy ${car?.brand} ${car?.model} in ${car?.location}. ${car?.kilometers_driven} driven, ${car?.fuel_type} car in good condition. Check price & details now.`}
@@ -162,7 +160,7 @@ function DetailsScreen() {
         />
         <meta
           property="og:title"
-          content={`${car?.brand} ${car?.model} - WheelzLoop`}
+          content={`${car?.brand} ${car?.model} - CarAuras`}
         />
         <meta
           property="og:description"
@@ -170,11 +168,8 @@ function DetailsScreen() {
         />
         <meta property="og:image" content={car?.images?.[0]} />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={`https://www.wheelzloop.com/cars/${id}`}
-        />
-        <link rel="canonical" href={`https://www.wheelzloop.com/cars/${id}`} />
+        <meta property="og:url" content={`https://carauras.com/cars/${id}`} />
+        <link rel="canonical" href={`https://carauras.com/cars/${id}`} />
       </Helmet>
       <div className="breadcrumb">
         <a href="/">Home</a>

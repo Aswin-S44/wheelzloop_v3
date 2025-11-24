@@ -130,7 +130,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text-dark);
+  color: var(--primary-color);
   margin-top: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;

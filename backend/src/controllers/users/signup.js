@@ -36,7 +36,7 @@ module.exports = {
       let htmlContent = sentOTPTemplate(otp);
       await sendEmail(
         process.env.EMAIL_USER,
-        "Your OTP for WheeelzLoop Signup",
+        "Your OTP for Carauras Signup",
         htmlContent,
         htmlContent,
         email

@@ -13,7 +13,7 @@ const NoChatSelected = () => {
 
         <div className="text-content">
           <h2 className="title">
-            Welcome to <span className="logo-text">Wheelzloop</span>
+            Welcome to <span className="logo-text">CarAuras</span>
           </h2>
           <p className="subtitle">
             Select a conversation or start a new one to begin messaging

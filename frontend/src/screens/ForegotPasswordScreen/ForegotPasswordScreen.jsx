@@ -114,7 +114,7 @@ function ForgotPasswordScreen() {
 
           <div className="login-footer">
             <a href="/" className="login-link">
-              Back to Home? <span>Wheelzloop</span>
+              Back to Home? <span>CarAuras</span>
             </a>
             <a href="/signup" className="login-link">
               Don't have an account? <span>Sign Up</span>

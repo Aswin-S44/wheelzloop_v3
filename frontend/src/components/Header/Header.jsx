@@ -17,7 +17,7 @@ function Header() {
   const [showNav, setShowNav] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
-  const [logoSize, setLogoSize] = useState({ width: "220px", height: "70px" });
+  const [logoSize, setLogoSize] = useState({ width: "90px", height: "70px" });
   const [searchKey, setSearchKey] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1100);
@@ -103,7 +103,7 @@ function Header() {
       if (window.innerWidth < 768) {
         setLogoSize({ width: "150px", height: "50px" });
       } else {
-        setLogoSize({ width: "220px", height: "70px" });
+        setLogoSize({ width: "100px", height: "70px" });
       }
     };
 
@@ -199,13 +199,14 @@ function Header() {
       <header className={`header ${showHeader ? "show" : "hide"}`}>
         <div className="logo">
           <a href="/" title="logo">
-            <img
+            {/* <img
               src="/images/logo.png"
               className="brand-name"
               style={logoSize}
               alt="Logo"
               title="brand-logo"
-            />
+            /> */}
+            CarAuras
           </a>
         </div>
 

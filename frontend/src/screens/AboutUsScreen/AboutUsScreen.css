@@ -154,7 +154,7 @@
   width: 70px;
   height: 70px;
   margin: 0 auto 1.5rem;
-  background: linear-gradient(135deg, #606cbc, #ADB2D4);
+  background: linear-gradient(135deg, var(--primary-color), #ADB2D4);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -219,7 +219,7 @@
 /* Stats Section */
 .stats-section {
   padding: 5rem 2rem;
-  background: linear-gradient(135deg, #606cbc, #ADB2D4);
+  background: linear-gradient(135deg, #809d99, #ADB2D4);
   color: white;
 }
 
@@ -289,7 +289,7 @@
   width: 50px;
   height: 50px;
   margin: 0 auto 1.5rem;
-  background: linear-gradient(135deg, #606cbc, #ADB2D4);
+  background: linear-gradient(135deg, var(--primary-color), #ADB2D4);
   color: white;
   border-radius: 50%;
   display: flex;

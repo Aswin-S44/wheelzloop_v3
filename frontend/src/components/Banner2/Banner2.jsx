@@ -9,7 +9,7 @@ function Banner2() {
         <div className="col-md-6 order-md-1 order-2 p-md-5 p-4">
           <h1
             className="display-4 fw-bold mb-3 banner-title"
-            style={{ color: "#1a1a1a" }}
+            style={{ color: "rgb(255 255 255)" }}
           >
             The Best used Cars Collection in Kochi, Kerala
           </h1>
@@ -47,16 +47,14 @@ function Banner2() {
           <img
             src="/images/wheelzloop-main-img.webp"
             srcSet="
-    /images/wheelzloop-main-img-480.webp 480w,
-    /images/wheelzloop-main-img-768.webp 768w,
-    /images/wheelzloop-main-img.webp 1200w
+   /images/wheelzloop-main-img.webp
   "
             sizes="(max-width: 768px) 100vw, 1200px"
             width="1200"
             height="600"
             className="w-100 banner-image"
             alt="Luxury Car"
-            title="Wheelzloop banner image"
+            title="CarAuras banner image"
           />
         </div>
       </div>

@@ -11,7 +11,7 @@ body {
 }
 
 :root {
-  --primary-color: #606cbc;
+  --primary-color: #1D6170;
   --secondary-color: #f60;
   --border-radius: 20px;
   --main-bg-color: #30bfa1
@@ -52,7 +52,7 @@ a {
 }
 
 .span {
-  color: #606cbc
+  color: var(--primary-color)
 }
 
 button.medium {

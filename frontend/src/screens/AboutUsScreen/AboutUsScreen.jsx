@@ -68,7 +68,7 @@ const AboutUsScreen = () => {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <GiCarWheel className="hero-icon" />
-          <h1>Welcome to WheelzLoop</h1>
+          <h1>Welcome to CarAuras</h1>
           <p className="hero-subtitle">
             Your trusted marketplace for quality used cars
           </p>
@@ -88,7 +88,7 @@ const AboutUsScreen = () => {
       {/* Value Proposition */}
       <section className="value-section">
         <div className="section-header">
-          <h2>Why Choose WheelzLoop?</h2>
+          <h2>Why Choose CarAuras?</h2>
           <p>We're revolutionizing the way people buy and sell used cars</p>
         </div>
 
@@ -135,7 +135,7 @@ const AboutUsScreen = () => {
           <div className="story-text">
             <h2>Our Journey</h2>
             <p>
-              Founded in 2020 by a team of automotive enthusiasts, WheelzLoop
+              Founded in 2025 by a team of automotive enthusiasts, CarAuras
               began with a simple mission: to make buying and selling used cars
               effortless, transparent, and enjoyable.
             </p>
@@ -145,8 +145,8 @@ const AboutUsScreen = () => {
               dealers, eliminating middlemen and hidden fees.
             </p>
             <p>
-              Today, WheelzLoop has grown into a thriving community of car
-              lovers, but we've never lost sight of our core values - integrity,
+              Today, CarAuras has grown into a thriving community of car lovers,
+              but we've never lost sight of our core values - integrity,
               simplicity, and customer satisfaction.
             </p>
           </div>
@@ -187,7 +187,7 @@ const AboutUsScreen = () => {
       {/* How It Works */}
       <section className="process-section">
         <div className="section-header">
-          <h2>How WheelzLoop Works</h2>
+          <h2>How CarAuras Works</h2>
           <p>Getting your dream car has never been easier</p>
         </div>
 
@@ -224,7 +224,7 @@ const AboutUsScreen = () => {
           <h2>Ready to Find Your Perfect Car?</h2>
           <p>
             Join thousands of satisfied customers who found their dream car on
-            WheelzLoop
+            CarAuras
           </p>
           <div className="cta-buttons">
             <button

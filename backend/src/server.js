@@ -28,7 +28,7 @@ const limiter = rateLimit({
 var corsOptions = {
   origin:
     process.env.NODE_ENV == "production"
-      ? "http://localhost:3000"
+      ? process.env.WEBSITE_URL
       : "http://localhost:3000",
 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

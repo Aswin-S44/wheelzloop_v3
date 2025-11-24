@@ -38,7 +38,7 @@ function HowItWorks() {
       <div className="container">
         <h3 className="text-center fw-bold">
           <span className="quality-text">
-            HOW WHEELZLOOP WORKS
+            HOW CARAURAS WORKS
             <svg
               width="120"
               height="12"
@@ -108,7 +108,7 @@ function HowItWorks() {
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
               style={{
-                background: "#606cbc",
+                background: "#1D6170",
                 padding: "15px 40px",
                 color: "#fff",
                 border: "none",

@@ -75,7 +75,7 @@ function ContactScreen() {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <GiCarWheel className="hero-icon" />
-          <h1>Contact WheelzLoop</h1>
+          <h1>Contact CarAuras</h1>
           <p>We're here to help with all your used car needs</p>
         </div>
       </section>
@@ -96,7 +96,7 @@ function ContactScreen() {
                 <FaEnvelope />
               </div>
               <h3>Email Us</h3>
-              <p>wheelzloop@gmail.com</p>
+              <p>infoatcarauras@gmail.com</p>
               <p>Response within 24 hours</p>
             </div>
           </div>

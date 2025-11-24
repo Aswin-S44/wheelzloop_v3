@@ -195,23 +195,26 @@ function Footer() {
         <div class="content">
           <div class="top">
             <div class="logo-details">
-              <img src="/images/logo.png" className="footer-logo" alt="logo" />
+              <div>CarAuras</div>
             </div>
             <div class="media-icons">
-              <a target="_blank" href="#">
+              <a
+                target="_blank"
+                href="https://www.facebook.com/profile.php?id=61581912191717"
+              >
                 {" "}
                 <FacebookIcon
                   className="icon font-size-footer"
                   style={{ color: "#fff" }}
                 />
               </a>
-              <a target="_blank" href="https://www.instagram.com/wheelz_loop/">
+              <a target="_blank" href="https://www.instagram.com/carsauraa/">
                 <InstagramIcon
                   className="icon font-size-footer"
                   style={{ color: "#fff" }}
                 />
               </a>
-              <a
+              {/* <a
                 target="_blank"
                 href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
               >
@@ -219,8 +222,8 @@ function Footer() {
                   className="icon font-size-footer"
                   style={{ color: "#fff" }}
                 />
-              </a>
-              <a target="_blank" href="https://www.youtube.com/@wheelzloop">
+              </a> */}
+              <a target="_blank" href="https://www.youtube.com/@carauras">
                 <YouTubeIcon
                   className="icon font-size-footer"
                   style={{ color: "#fff" }}
@@ -270,7 +273,6 @@ function Footer() {
               <li>
                 <a href="/signup">Create New Account</a>
               </li>
-              
             </ul>
             <ul class="box">
               <li class="link_name">Useful Links</li>
@@ -315,7 +317,7 @@ function Footer() {
         <div class="bottom-details">
           <div class="bottom_text">
             <span class="copyright_text">
-              Copyright © 2021 <a href="https://wheelzloop.com/">WheelzLoop.</a>
+              Copyright © 2021 <a href="https://carauras.com/">CarAuras.</a>
               All rights reserved
             </span>
             <span class="policy_terms">
