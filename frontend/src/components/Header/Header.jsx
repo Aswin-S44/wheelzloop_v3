@@ -147,120 +147,120 @@ function Header() {
               {!user && <a href="/signin">Sign In / Register</a>}
             </div>
           </div>
-        </div>
-        <hr />
-        <div className="main-header">
-          <div className="container main-header-content">
-            <div className="mobile-toggle">
-              <Menu onClick={() => setShowMobileMenu(true)} />
-            </div>
-
-            <div className="brand-logo">
-              <a href="/">CarAuras</a>
-            </div>
-
-            <div className="search-container">
-              <div className="search-box">
-                <input
-                  type="text"
-                  placeholder="Search by brand, model, or year..."
-                  value={searchKey}
-                  onChange={handleSearchChange}
-                />
-                <button
-                  className={`voice-btn ${isListening ? "active" : ""}`}
-                  onClick={startListening}
-                >
-                  <img
-                    src={
-                      isListening
-                        ? "/images/sound-wave.png"
-                        : "/images/voice.png"
-                    }
-                    alt="mic"
-                  />
-                </button>
-                <button className="search-btn">
-                  <Search />
-                </button>
+          <div className="main-header">
+            <div className="container main-header-content">
+              <div className="mobile-toggle">
+                <Menu onClick={() => setShowMobileMenu(true)} />
               </div>
 
-              {showResults && searchKey && (
-                <div className="search-dropdown">
-                  {searchResults.length > 0 ? (
-                    searchResults.map((result, index) => (
-                      <a
-                        href={`/car/${result._id}`}
-                        key={index}
-                        className="search-item"
-                        onClick={handleResultClick}
-                      >
-                        <img src={result.images[0]} alt={result.car_name} />
-                        <div className="item-info">
-                          <h4>{result.car_name}</h4>
-                          <span>
-                            {result.brand} • {result.year}
-                          </span>
-                          <span className="price">
-                            ${result?.price?.toLocaleString()}
-                          </span>
-                        </div>
-                      </a>
-                    ))
-                  ) : (
-                    <div className="no-results">
-                      No cars found matching "{searchKey}"
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+              <div className="brand-logo">
+                <a href="/">CarAuras</a>
+              </div>
 
-            <div className="header-actions">
-              <a href="/favourites" className="action-item wishlist">
-                <FavoriteBorder />
-                <span className="action-label">Saved</span>
-              </a>
-
-              {user ? (
-                <div className="action-item user-menu">
-                  <AccountMenu
-                    profileImage={user?.profile_picture}
-                    username={user?.first_name}
+              <div className="search-container">
+                <div className="search-box">
+                  <input
+                    type="text"
+                    placeholder="Search by brand, model, or year..."
+                    value={searchKey}
+                    onChange={handleSearchChange}
                   />
+                  <button
+                    className={`voice-btn ${isListening ? "active" : ""}`}
+                    onClick={startListening}
+                  >
+                    <img
+                      src={
+                        isListening
+                          ? "/images/sound-wave.png"
+                          : "/images/voice.png"
+                      }
+                      alt="mic"
+                    />
+                  </button>
+                  <button className="search-btn">
+                    <Search />
+                  </button>
                 </div>
-              ) : (
-                <div
-                  className="action-item user-auth"
-                  onClick={() => navigate("/signin")}
-                >
-                  <Person />
-                  <div className="auth-text">
-                    <small>Hello, Sign in</small>
-                    <span>My Account</span>
+
+                {showResults && searchKey && (
+                  <div className="search-dropdown">
+                    {searchResults.length > 0 ? (
+                      searchResults.map((result, index) => (
+                        <a
+                          href={`/car/${result._id}`}
+                          key={index}
+                          className="search-item"
+                          onClick={handleResultClick}
+                        >
+                          <img src={result.images[0]} alt={result.car_name} />
+                          <div className="item-info">
+                            <h4>{result.car_name}</h4>
+                            <span>
+                              {result.brand} • {result.year}
+                            </span>
+                            <span className="price">
+                              ${result?.price?.toLocaleString()}
+                            </span>
+                          </div>
+                        </a>
+                      ))
+                    ) : (
+                      <div className="no-results">
+                        No cars found matching "{searchKey}"
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
-              <button className="sell-car-btn" onClick={handleSellCar}>
-                <AddBox fontSize="small" /> SELL CAR
-              </button>
+              <div className="header-actions">
+                <a href="/favourites" className="action-item wishlist">
+                  <FavoriteBorder />
+                  <span className="action-label">Saved</span>
+                </a>
+
+                {user ? (
+                  <div className="action-item user-menu">
+                    <AccountMenu
+                      profileImage={user?.profile_picture}
+                      username={user?.first_name}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="action-item user-auth"
+                    onClick={() => navigate("/signin")}
+                  >
+                    <Person />
+                    <div className="auth-text">
+                      <small>Hello, Sign in</small>
+                      <span>My Account</span>
+                    </div>
+                  </div>
+                )}
+
+                <button className="sell-car-btn" onClick={handleSellCar}>
+                  <AddBox fontSize="small" /> SELL CAR
+                </button>
+              </div>
             </div>
           </div>
+          {/* <hr /> */}
+          <nav className="nav-bar">
+            <div className="container nav-content">
+              <div className="nav-links">
+                <a href="/">Home</a>
+                <a href="/used-cars">Browse All Cars</a>
+                <a href="/reviews">Reviews</a>
+                <a href="/blogs">Latest News</a>
+                <a href="/about-us">About-Us</a>
+                <a href="/contact-us">Contact</a>
+              </div>
+            </div>
+          </nav>
         </div>
-
-        <nav className="nav-bar">
-          <div className="container nav-content">
-            <div className="nav-links">
-              <a href="/">Home</a>
-              <a href="/used-cars">Browse All Cars</a>
-              <a href="/reviews">Reviews</a>
-              <a href="/blogs">Latest News</a>
-              <a href="/about-us">About-Us</a>
-              <a href="/contact-us">Contact</a>
-            </div>
-          </div>
-        </nav>
+        {/* <hr /> */}
       </div>
 
       <div className={`mobile-drawer ${showMobileMenu ? "open" : ""}`}>

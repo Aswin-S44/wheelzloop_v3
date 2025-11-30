@@ -52,11 +52,11 @@ function Layout() {
   //   }
   // }, [user]);
 
-  return (
+  return ( 
     <UserProvider>
       <div>
         {!hideHeaderFooter && <Header />}
-        <main>
+        <main className="screen">
           <Routes>
             <Route path="/signin" element={<LoginScreen />} />
             <Route path="/signup" element={<SignUpScreen />} />

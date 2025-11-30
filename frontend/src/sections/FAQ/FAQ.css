@@ -54,7 +54,7 @@
 }
 
 .faq-highlight {
-  color: #1D6170;
+  color: var(--primary-color);
   position: relative;
   display: inline-block;
 }

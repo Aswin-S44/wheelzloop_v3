@@ -33,7 +33,7 @@ function FAQSection() {
         "We prioritize privacy. All communication happens via our secure in-app chat. You will be notified via email/SMS instantly when a buyer sends a message or offer.",
     },
   ];
-
+ 
   return (
     <section className="faq-modern-section" id="faq">
       <div className="faq-bg-blur"></div>

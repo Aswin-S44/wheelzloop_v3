@@ -57,7 +57,7 @@ function ContactScreen() {
       <div className="contact-wrapper">
         {/* Left Side: Contact Info */}
         <div className="contact-sidebar">
-          <div className="sidebar-header">
+          <div className="sidebar-header-2">
             <h3>Get in Touch</h3>
             <p>
               Have questions about a car or want to sell yours? We're here to

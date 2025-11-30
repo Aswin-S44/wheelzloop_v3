@@ -120,11 +120,12 @@ function ExploreCarsScreen() {
       <div className="layout-container">
         <div className="filter-column">
           <div className="filter-section">
-            {isMobile ? (
+            {/* {isMobile ? (
               <MobileFilter onFilterChange={applyFilters} />
             ) : (
               <Filter onFilterChange={applyFilters} />
-            )}
+            )} */}
+            <Filter onFilterChange={applyFilters} />
           </div>
         </div>
         <div className="content-column">
@@ -132,7 +133,10 @@ function ExploreCarsScreen() {
           <div className="content-wrapper">
             <div className="cars-section">
               <div className="sort-bar">
-                <FormControl style={{ minWidth: "200px" }} className="sort-select-container">
+                <FormControl
+                  style={{ minWidth: "200px" }}
+                  className="sort-select-container"
+                >
                   <InputLabel>Sort by</InputLabel>
                   <Select
                     value={`${sortBy}_${order}`}
@@ -173,7 +177,7 @@ function ExploreCarsScreen() {
                     onChange={handlePageChange}
                     sx={{
                       "& .MuiPaginationItem-root.Mui-selected": {
-                        background: "linear-gradient(135deg, #6e8efb, #a777e3)",
+                        background: "#BA1C73",
                         color: "#fff", // Ensures text is visible
                       },
                     }}

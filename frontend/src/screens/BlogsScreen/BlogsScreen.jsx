@@ -3,16 +3,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./BlogsScreen.css";
 import Swal from "sweetalert2";
 import {
-  FaCalendarAlt,
   FaShareAlt,
-  FaBookmark,
   FaChevronRight,
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaClock,
+  FaUser,
 } from "react-icons/fa";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import axios from "axios";
 import { ADD_SUBSCRIPTION_URL } from "../../config/api";
-
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { fetchEntries } from "../../contentfull/contentfulClient";
 import { convertContentfullResponse } from "../../utils/utils";
 import Loader from "../../components/Loader/Loader";
@@ -26,13 +29,13 @@ function BlogScreen() {
   const [blogIndex, setBlogIndex] = useState(0);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setPageLoading(true);
       const res = await fetchEntries();
-      setLoading(false);
+      setPageLoading(false);
 
       if (res) {
         let formatedData = await convertContentfullResponse(res);
@@ -50,47 +53,31 @@ function BlogScreen() {
         setCurrentBlog(blogs[index]);
       }
     }
-  }, [slug, blogs, blogIndex]);
+  }, [slug, blogs]);
 
   const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setLoading(true);
     try {
-      e.preventDefault();
-      setLoading(true);
-      if (email) {
-        const res = await axios.post(ADD_SUBSCRIPTION_URL, { email });
-        setLoading(false);
-        if (res && res.status === 200) {
-          Swal.fire({
-            title: "Subscription added!",
-            text: "Thank you for subscribing with us!",
-            icon: "success",
-          });
-        } else {
-          Swal.fire({
-            title: "You are already subscribed",
-            icon: "success",
-            draggable: true,
-          });
-        }
-        setEmail("");
+      const res = await axios.post(ADD_SUBSCRIPTION_URL, { email });
+      setLoading(false);
+      if (res && res.status === 200) {
+        Swal.fire({
+          title: "Welcome Aboard!",
+          text: "You've successfully subscribed to our newsletter.",
+          icon: "success",
+          confirmButtonColor: "#2563EB",
+        });
+      } else {
+        toast.info("You are already subscribed.");
       }
+      setEmail("");
     } catch (error) {
-      console.error("Subscription error:", error);
-      Swal.fire({
-        title: "You are already subscribed",
-        icon: "success",
-        draggable: true,
-      });
+      toast.info("You are already subscribed.");
       setLoading(false);
       setEmail("");
-    }
-  };
-
-  const handlePrevClick = () => {
-    if (blogIndex > 0) {
-      const prevIndex = blogIndex - 1;
-      navigate(`/blogs/${blogs[prevIndex].slug}`);
-      scrollToTop();
     }
   };
 
@@ -101,20 +88,21 @@ function BlogScreen() {
     });
   };
 
-  const handleNextClick = () => {
-    if (blogIndex < blogs.length - 1) {
-      const nextIndex = blogIndex + 1;
-      navigate(`/blogs/${blogs[nextIndex].slug}`);
+  const handlePrevClick = () => {
+    if (blogIndex > 0) {
+      navigate(`/blogs/${blogs[blogIndex - 1].slug}`);
       scrollToTop();
     }
   };
 
-  const handleNavLinkClick = (index) => {
-    navigate(`/blog/${blogs[index].slug}`);
+  const handleNextClick = () => {
+    if (blogIndex < blogs.length - 1) {
+      navigate(`/blogs/${blogs[blogIndex + 1].slug}`);
+      scrollToTop();
+    }
   };
 
   const handleRelatedBlogClick = (index) => {
-    setBlogIndex(index);
     navigate(`/blogs/${blogs[index].slug}`);
     scrollToTop();
   };
@@ -123,166 +111,157 @@ function BlogScreen() {
     const currentUrl = window.location.href;
     navigator.clipboard
       .writeText(currentUrl)
-      .then(() => {
-        toast.success("Link copied to clipboard!");
-      })
-      .catch(() => {
-        toast.error("Failed to copy link.");
-      });
+      .then(() => toast.success("Link copied to clipboard!"))
+      .catch(() => toast.error("Failed to copy link."));
   };
 
-  if (isLoading) {
-    return <div className="loading-spinner">Loading...</div>;
+  const calculateReadingTime = (text) => {
+    const wordsPerMinute = 200;
+    const words = text ? text.split(/\s+/).length : 0;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    return `${minutes} min read`;
+  };
+
+  if (pageLoading) {
+    return <Loader />;
   }
 
-  if (!currentBlog && !loading && slug) {
-    return <div className="error-message">Blog not found</div>;
+  if (!currentBlog && !pageLoading && slug) {
+    return (
+      <div className="error-container">
+        <h2>Blog post not found</h2>
+        <button onClick={() => navigate("/")} className="back-home-btn">
+          Return Home
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div className="blogs-container">
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="blog-hero">
-            <div className="hero-content">
-              <h1>Car Buying Resources & Guides</h1>
-              <p>
-                Expert advice to help you make informed decisions about buying,
-                selling, and maintaining your vehicle
-              </p>
-            </div>
-          </div>
+    <div className="blog-page-wrapper">
+      <div className="main-content-grid">
+        <main className="blog-main mt-5">
+          {currentBlog && (
+            <article className="article-container">
+              <header className="article-header">
+                <div className="article-badges">
+                  <span className="category-badge">
+                    {currentBlog?.category || "Automotive"}
+                  </span>
+                  <span className="read-time">
+                    <FaClock /> {calculateReadingTime(currentBlog?.description)}
+                  </span>
+                </div>
 
-          <div className="blog-content">
-            <article className="blog-article" id={currentBlog?.slug}>
-              <div className="article-header">
-                <div className="article-meta">
-                  <span className="article-category">
-                    {currentBlog?.category}
-                  </span>
-                  <span className="article-date">
-                    <FaCalendarAlt /> {currentBlog?.date}
-                  </span>
+                <h1 className="article-title">{currentBlog?.title}</h1>
+
+                <div className="article-meta-row">
+                  <div className="author-block">
+                    <div className="author-icon">
+                      <FaUser />
+                    </div>
+                    <div className="author-details">
+                      <span className="author-name">Aswin</span>
+                      <span className="author-role">Auto Expert</span>
+                    </div>
+                  </div>
+                  <div className="share-actions">
+                    <button onClick={handleShare} className="share-circle">
+                      <FaShareAlt />
+                    </button>
+                    <button onClick={handleShare} className="share-circle">
+                      <FaFacebookF />
+                    </button>
+                    <button onClick={handleShare} className="share-circle">
+                      <FaTwitter />
+                    </button>
+                    <button onClick={handleShare} className="share-circle">
+                      <FaLinkedinIn />
+                    </button>
+                  </div>
                 </div>
-                <h2 className="article-title">{currentBlog?.title}</h2>
-                <div className="article-actions">
-                  <button
-                    className=""
-                    style={{
-                      padding: "8px",
-                      border: "none",
-                      outline: "none",
-                      background: "rgba(96, 108, 188, 0.1)",
-                    }}
-                    onClick={handleShare}
-                  >
-                    <FaShareAlt /> Share
-                  </button>
-                </div>
-              </div>
-              <div className="article-image">
+              </header>
+
+              <div className="article-featured-image">
                 <img
                   src={currentBlog?.image}
-                  alt={currentBlog?.alt}
+                  alt={currentBlog?.alt || "Blog Cover"}
                   loading="lazy"
-                  title={currentBlog?.title}
                 />
               </div>
-              <div className="article-body mt-4">
-                {currentBlog?.sections.map((section, index) => (
-                  <section key={index} className="content-section">
-                    {/* <h3>{index}</h3> */}
-                    <p>{section.content}</p>
-                  </section>
-                ))}
-              </div>
-            </article>
 
-            <div className="article-footer">
-              <div className="author-info">
-                <div className="author-avatar">JD</div>
-                <div>
-                  <h4>Aswin</h4>
-                  <p>Auto Expert</p>
-                </div>
+              <div className="article-body-content">
+                <p>{currentBlog?.description}</p>
               </div>
-              <div className="article-nav">
+
+              <div className="article-navigation">
                 <button
-                  className="nav-btn prev-btn"
+                  className={`nav-control prev ${
+                    blogIndex === 0 ? "disabled" : ""
+                  }`}
                   onClick={handlePrevClick}
                   disabled={blogIndex === 0}
                 >
-                  <BsArrowLeft /> Previous
+                  <BsArrowLeft />
+                  <div className="nav-text">
+                    <span>Previous Article</span>
+                  </div>
                 </button>
+                <div className="nav-divider"></div>
                 <button
-                  className="nav-btn next-btn"
+                  className={`nav-control next ${
+                    blogIndex === blogs.length - 1 ? "disabled" : ""
+                  }`}
                   onClick={handleNextClick}
                   disabled={blogIndex === blogs.length - 1}
                 >
-                  Next <BsArrowRight />
+                  <div className="nav-text">
+                    <span>Next Article</span>
+                  </div>
+                  <BsArrowRight />
                 </button>
               </div>
-            </div>
-          </div>
+            </article>
+          )}
+        </main>
+      </div>
 
-          <div className="newsletter-cta">
-            <div className="cta-content">
-              <h3 className="text-center">Get More Car Buying Tips</h3>
-              <p>
-                Subscribe to our newsletter for the latest advice and market
-                trends
-              </p>
-              <form className="subscribe-form" onSubmit={handleSubscribe}>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? (
-                    "Please wait...."
-                  ) : (
-                    <>
-                      Subscribe <FaChevronRight />
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <div className="related-articles">
-            <h3>More Helpful Guides</h3>
-            <div className="article-grid">
-              {blogs
-                .filter((_, index) => index !== blogIndex)
-                .slice(0, 3)
-                .map((blog) => {
-                  const index = blogs.findIndex((b) => b.id === blog.id);
-                  return (
-                    <div
-                      key={blog.id}
-                      className="related-card"
-                      onClick={() => handleRelatedBlogClick(index)}
-                    >
-                      <img src={blog.image} alt={blog.alt} title={blog.title} />
-                      <div className="card-content">
-                        <span className="card-category">{blog.category}</span>
-                        <h4>{blog.title}</h4>
-                        <p>{blog.sections[0].content.substring(0, 60)}...</p>
-                      </div>
+      <section className="related-section">
+        <div className="related-container">
+          <h3>You Might Also Like</h3>
+          <div className="related-grid">
+            {blogs
+              .filter((_, idx) => idx !== blogIndex)
+              .slice(0, 3)
+              .map((blog) => {
+                const originalIndex = blogs.findIndex((b) => b.id === blog.id);
+                return (
+                  <div
+                    key={blog.id}
+                    className="related-card"
+                    onClick={() => handleRelatedBlogClick(originalIndex)}
+                  >
+                    <div className="card-image-wrapper">
+                      <img src={blog.image} alt={blog.alt} />
+                      <span className="card-cat-overlay">
+                        {blog.category || "Guide"}
+                      </span>
                     </div>
-                  );
-                })}
-            </div>
+                    <div className="card-info">
+                      <h4>{blog.title}</h4>
+                      <p>{blog.description?.substring(0, 80)}...</p>
+                      <span className="read-more">
+                        Read Article <BsArrowRight />
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
-          <ToastContainer />
-        </>
-      )}
+        </div>
+      </section>
+
+      <ToastContainer position="bottom-right" theme="colored" />
     </div>
   );
 }
