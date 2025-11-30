@@ -5,8 +5,7 @@ import MultiStepForm from "../MultiStepForm/MultiStepForm";
 
 function AddCar() {
   return (
-    <div>
-      {/* <BasicInformation /> */}
+    <div className="screen" style={{ marginTop: "180px", position: "relative" }}>
       <MultiStepForm />
     </div>
   );

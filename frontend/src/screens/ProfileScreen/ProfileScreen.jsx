@@ -183,7 +183,7 @@ function ProfileScreen() {
               <button
                 style={{
                   padding: "8px 16px",
-                  backgroundColor: "#606cbc",
+                  backgroundColor: "#BA1C73",
                   color: "white",
                   border: "none",
                   borderRadius: "4px",

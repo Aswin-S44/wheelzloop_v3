@@ -116,9 +116,9 @@ function MultiStepForm() {
     setCurrentStep(currentStep + 1);
   };
   const prev = () => setCurrentStep(currentStep - 1);
-
+ 
   return (
-    <div className="mt-5">
+    <div className="mt-5 screen">
       <Provider
         value={{
           basicDetails,

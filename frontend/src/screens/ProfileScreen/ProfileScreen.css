@@ -88,12 +88,12 @@
 
 .react-tabs__tab--selected {
   color: #101c3a;
-  border-bottom: 3px solid #606cbc;
+  border-bottom: 3px solid var(--primary-color);
   font-size: 20px;
 }
 
 .react-tabs__tab:hover {
-  color: #606cbc;
+  color: var(--primary-color);
 }
 
 .react-tabs__tab-panel {
@@ -183,7 +183,7 @@
 }
 
 .add-car-btn:hover {
-  background-color: #606cbc;
+  background-color: var(--primary-color);
   transform: translateY(-2px);
 }
 

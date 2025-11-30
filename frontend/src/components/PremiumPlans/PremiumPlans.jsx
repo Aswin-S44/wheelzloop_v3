@@ -23,7 +23,7 @@ const PremiumPlans = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="premium-plans-container mt-2">
+    <div className="premium-plans-container mt-5">
       <div className="premium-plans-header">
         <h2>Upgrade Your Experience</h2>
         <p>

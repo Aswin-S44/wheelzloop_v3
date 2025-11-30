@@ -51,7 +51,7 @@ function Layout() {
   //     setLoggedIn(true);
   //   }
   // }, [user]);
-
+ 
   return ( 
     <UserProvider>
       <div>

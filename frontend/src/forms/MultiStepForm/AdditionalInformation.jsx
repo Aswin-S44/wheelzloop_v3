@@ -1,19 +1,24 @@
 import React, { useContext, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-// import { Button, Input, Tag, Upload } from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Button from "antd/es/button";
 import Input from "antd/es/input";
-import Tag from "antd/es/tag";
+import Button from "antd/es/button";
+import Row from "antd/es/row";
+import Col from "antd/es/col";
+import Typography from "antd/es/typography";
 import Upload from "antd/es/upload";
+import Tag from "antd/es/tag";
+import {
+  FileTextOutlined,
+  EnvironmentOutlined,
+  UploadOutlined,
+  PlusOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 
-// import 'antd/es/button/style/css';
-// import 'antd/es/input/style/css';
-// import 'antd/es/tag/style/css';
-// import 'antd/es/upload/style/css';
+const { Title } = Typography;
+const { TextArea } = Input;
 
 function AdditionalInformation() {
   const { additionalInformations, setAdditionalInformations, next, prev } =
@@ -34,7 +39,7 @@ function AdditionalInformation() {
   const removeFeature = (feature) => {
     setFeatures(features.filter((f) => f !== feature));
   };
- 
+
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -46,7 +51,7 @@ function AdditionalInformation() {
 
   const handleImageUpload = async ({ fileList }) => {
     const base64Images = await Promise.all(fileList.map(convertToBase64));
-    setImages(base64Images); // Store Base64 images for preview or further processing
+    setImages(base64Images);
   };
 
   const removeImage = (index) => {
@@ -54,123 +59,272 @@ function AdditionalInformation() {
   };
 
   return (
-    <Formik
-      initialValues={{
-        description: additionalInformations.description || "",
-        place: additionalInformations.place || "",
-      }}
-      validationSchema={Yup.object({
-        description: Yup.string().required("Description is required"),
-        place: Yup.string().required("Location is required"),
-      })}
-      onSubmit={(values) => {
-        setAdditionalInformations({ ...values, features, images });
-        next();
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form className="details__wrapper">
-          <div className="form__item">
-            <label>Description</label>
-            <Field name="description" as={Input} />
-            <ErrorMessage
-              name="description"
-              component="p"
-              className="error__feedback"
-            />
-          </div>
-          <div className="form__item mt-4">
-            <label>Location</label>
-            <Field name="place" as={Input} />
-            <ErrorMessage
-              name="place"
-              component="p"
-              className="error__feedback"
-            />
-          </div>
-          <div className="form__item mt-4">
-            <label>Upload Images</label>
-            <Upload
-              listType="picture"
-              multiple
-              beforeUpload={() => false}
-              onChange={handleImageUpload}
-              showUploadList={false}
-            >
-              <Button icon={<UploadOutlined />}>Select Images</Button>
-            </Upload>
-            <div className="image-preview">
-              {images.map((image, index) => (
-                <div key={index} className="image-container">
-                  <img
-                    src={image}
-                    alt={`upload-${index}`}
-                    className="additional-image"
-                    title="addional-inf-user-img"
-                  />
-                  <DeleteOutlineIcon
-                    className="delete-icon"
-                    onClick={() => removeImage(index)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="form__item">
-            <label>Features</label>
-            <div style={{ display: "flex", gap: "8px" }}>
-              <Input
-                value={featureInput}
-                onChange={(e) => setFeatureInput(e.target.value)}
-                onPressEnter={addFeature}
-              />
-              <Button icon={<PlusOutlined />} onClick={addFeature} />
-            </div>
-            <div style={{ marginTop: "8px" }}>
-              {features.map((feature) => (
-                <Tag
-                  key={feature}
-                  closable
-                  onClose={() => removeFeature(feature)}
-                  style={{
-                    backgroundColor: "#30bfa1",
-                    padding: "7px",
-                    color: "#fff",
-                    borderRadius: "20px",
-                  }}
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
+      <Title
+        level={3}
+        style={{ textAlign: "left", marginBottom: 32, color: "#BA1C73" }}
+      >
+        Additional Information
+      </Title>
+
+      <Formik
+        initialValues={{
+          description: additionalInformations.description || "",
+          place: additionalInformations.place || "",
+        }}
+        validationSchema={Yup.object({
+          description: Yup.string().required("Description is required"),
+          place: Yup.string().required("Location is required"),
+        })}
+        onSubmit={(values) => {
+          setAdditionalInformations({ ...values, features, images });
+          next();
+        }}
+      >
+        {({ handleSubmit, handleChange, values, errors, touched }) => (
+          <form
+            onSubmit={handleSubmit}
+            style={{ background: "#fff", padding: 24, borderRadius: 12 }}
+          >
+            <Row gutter={[24, 24]}>
+              <Col xs={24} md={24}>
+                <div
+                  className={`form__item ${
+                    errors.description && touched.description && "input__error"
+                  }`}
                 >
-                  {feature}
-                </Tag>
-              ))}
+                  <label style={{ fontWeight: 500, color: "#333" }}>
+                    Description*
+                  </label>
+                  <TextArea
+                    name="description"
+                    placeholder="Enter detailed description"
+                    value={values.description}
+                    onChange={handleChange}
+                    rows={4}
+                    style={{ borderRadius: 8, padding: "16px" }}
+                  />
+                  {errors.description && touched.description && (
+                    <p
+                      className="error__feedback"
+                      style={{ color: "#ff4d4f", marginTop: 8 }}
+                    >
+                      {errors.description}
+                    </p>
+                  )}
+                </div>
+              </Col>
+
+              <Col xs={24} md={24}>
+                <div
+                  className={`form__item ${
+                    errors.place && touched.place && "input__error"
+                  }`}
+                >
+                  <label style={{ fontWeight: 500, color: "#333" }}>
+                    Location*
+                  </label>
+                  <Input
+                    name="place"
+                    placeholder="Example: New York, USA"
+                    value={values.place}
+                    onChange={handleChange}
+                    prefix={<EnvironmentOutlined style={{ color: "#888" }} />}
+                    size="large"
+                    style={{ borderRadius: 8, padding: "16px" }}
+                  />
+                  {errors.place && touched.place && (
+                    <p
+                      className="error__feedback"
+                      style={{ color: "#ff4d4f", marginTop: 8 }}
+                    >
+                      {errors.place}
+                    </p>
+                  )}
+                </div>
+              </Col>
+
+              <Col xs={24} md={24}>
+                <div className="form__item">
+                  <label style={{ fontWeight: 500, color: "#333" }}>
+                    Features
+                  </label>
+                  <div
+                    style={{ display: "flex", gap: "10px", marginBottom: 16 }}
+                  >
+                    <Input
+                      placeholder="Add a feature (e.g. GPS, Sunroof)"
+                      value={featureInput}
+                      onChange={(e) => setFeatureInput(e.target.value)}
+                      onPressEnter={addFeature}
+                      size="large"
+                      style={{ borderRadius: 8, padding: "16px" }}
+                    />
+                    <Button
+                      icon={<PlusOutlined />}
+                      onClick={addFeature}
+                      size="large"
+                      style={{
+                        height: "auto",
+                        borderRadius: 8,
+                        background: "#BA1C73",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      Add
+                    </Button>
+                  </div>
+                  <div
+                    style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}
+                  >
+                    {features.map((feature) => (
+                      <Tag
+                        key={feature}
+                        closable
+                        onClose={() => removeFeature(feature)}
+                        style={{
+                          backgroundColor: "#E6F7FF",
+                          border: "1px solid #91D5FF",
+                          color: "#0050B3",
+                          padding: "8px 16px",
+                          borderRadius: "20px",
+                          fontSize: "14px",
+                          display: "flex",
+                          alignItems: "center",
+                          margin: 0,
+                        }}
+                      >
+                        {feature}
+                      </Tag>
+                    ))}
+                  </div>
+                </div>
+              </Col>
+
+              <Col xs={24} md={24}>
+                <div className="form__item">
+                  <label
+                    style={{
+                      fontWeight: 500,
+                      color: "#333",
+                      display: "block",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Upload Images
+                  </label>
+                  <Upload
+                    listType="picture"
+                    multiple
+                    beforeUpload={() => false}
+                    onChange={handleImageUpload}
+                    showUploadList={false}
+                  >
+                    <Button
+                      icon={<UploadOutlined />}
+                      size="large"
+                      style={{
+                        borderRadius: 8,
+                        padding: "0 32px",
+                        height: "50px",
+                      }}
+                    >
+                      Select Images
+                    </Button>
+                  </Upload>
+
+                  <div
+                    style={{
+                      marginTop: 24,
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fill, minmax(100px, 1fr))",
+                      gap: 16,
+                    }}
+                  >
+                    {images.map((image, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          position: "relative",
+                          borderRadius: 8,
+                          overflow: "hidden",
+                          height: 100,
+                          border: "1px solid #d9d9d9",
+                        }}
+                      >
+                        <img
+                          src={image}
+                          alt={`upload-${index}`}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 4,
+                            right: 4,
+                            background: "rgba(255, 255, 255, 0.8)",
+                            borderRadius: "50%",
+                            padding: 4,
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                          onClick={() => removeImage(index)}
+                        >
+                          <DeleteOutlined style={{ color: "#ff4d4f" }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 48,
+              }}
+            >
+              <Button
+                size="large"
+                onClick={prev}
+                style={{
+                  borderRadius: 8,
+                  padding: "10px 48px",
+                  height: "auto",
+                }}
+              >
+                Back
+              </Button>
+              <button
+                type="submit"
+                style={{
+                  borderRadius: 8,
+                  background: "#BA1C73",
+                  border: "none",
+                  padding: "14px 48px",
+                  color: "#fff",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  transition: "all 0.3s",
+                }}
+              >
+                Next
+              </button>
             </div>
-          </div>
-          <div className="form__item button__items d-flex justify-content-between mt-4">
-            <Button
-              type="default"
-              onClick={prev}
-              style={{
-                borderRadius: 8,
-                padding: "20px 32px",
-              }}
-            >
-              Back
-            </Button>
-            <Button
-              type="primary"
-              onClick={handleSubmit}
-              style={{
-                borderRadius: 8,
-                background: "rgb(96, 108, 188)",
-                color: "#fff",
-                padding: "20px 32px",
-              }}
-            >
-              Next
-            </Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+          </form>
+        )}
+      </Formik>
+    </div>
   );
 }
 

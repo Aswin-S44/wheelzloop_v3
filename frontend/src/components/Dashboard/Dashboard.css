@@ -27,7 +27,7 @@
   align-items: center;
   min-height: 120px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 4px solid #606cbc;
+  border-left: 4px solid var(--primary-color);
 }
 
 .dashboard-card:hover {
@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #606cbc;
+  color: var(--primary-color);
 }
 
 .card-content h3 {
@@ -96,7 +96,7 @@
   border: 1px solid #e0e0e0;
   background: white;
   font-size: 1rem;
-  color: #606cbc;
+  color: var(--primary-color);
   font-weight: 500;
   cursor: pointer;
   outline: none;
@@ -104,7 +104,7 @@
 }
 
 .period-selector:focus {
-  border-color: #606cbc;
+  border-color: var(--primary-color);
 }
 
 .chart-wrapper {

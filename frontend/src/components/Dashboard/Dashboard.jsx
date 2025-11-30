@@ -117,7 +117,7 @@ function Dashboard({ dealerId }) {
         {
           label: "Car Views",
           data: graphData,
-          borderColor: "#606cbc",
+          borderColor: "#BA1C73",
           backgroundColor: "#606cbc30",
           tension: 0.4,
           fill: true,

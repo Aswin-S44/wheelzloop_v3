@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #606cbc 0%, #ADB2D4 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #ADB2D4 100%);
   padding: 40px;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .highlighted {
-  color: #606cbc;
+  color: var(--primary-color);
 }
 
 .login-subtitle {
@@ -85,14 +85,14 @@
 }
 
 .form-input:focus {
-  border-color: #606cbc;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(96, 108, 188, 0.2);
 }
 
 .login-button {
   width: 100%;
   padding: 15px;
-  background: #606cbc;
+  background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 10px;
@@ -128,7 +128,7 @@
 }
 
 .login-link span {
-  color: #606cbc;
+  color: var(--primary-color);
   font-weight: 500;
 }
 

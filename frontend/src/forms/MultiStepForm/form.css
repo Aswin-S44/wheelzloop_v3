@@ -1,148 +1,105 @@
-.basic-info-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+.form-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.form-title {
+  text-align: left;
+  margin-bottom: 32px;
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.form-card {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
   }
   
-  .form-title {
-    text-align: center;
-    margin-bottom: 2.5rem !important;
-    color: #2c3e50 !important;
-    font-weight: 600 !important;
+  .full-width {
+    grid-column: span 2;
   }
-  
-  .title-icon {
-    color: #30bfa1;
-    margin-right: 12px;
-  }
-  
-  .car-details-form {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-  
-  .form-row {
-    margin-top: 1.5rem !important;
-  }
-  
-  .form-item {
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-item label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #34495e;
-    font-size: 0.95rem;
-  }
-  
-  .form-input {
-    width: 100%;
-    border-radius: 8px !important;
-    padding: 12px 16px !important;
-    border: 1px solid #e0e0e0 !important;
-    transition: all 0.3s ease;
-  }
-  
-  .form-input:hover {
-    border-color: #30bfa1 !important;
-  }
-  
-  .form-input:focus {
-    box-shadow: 0 0 0 2px rgba(48, 191, 161, 0.2) !important;
-    border-color: #30bfa1 !important;
-  }
-  
-  .form-select {
-    width: 100% !important;
-    border-radius: 8px !important;
-  }
-  
-  .form-select .ant-select-selector {
-    height: 46px !important;
-    padding: 8px 16px !important;
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 8px !important;
-    display: flex;
-    align-items: center;
-  }
-  
-  .form-select .ant-select-selector:hover {
-    border-color: #30bfa1 !important;
-  }
-  
-  .form-select .ant-select-focused .ant-select-selector {
-    box-shadow: 0 0 0 2px rgba(48, 191, 161, 0.2) !important;
-    border-color: #30bfa1 !important;
-  }
-  
-  .input-icon {
-    color: #95a5a6 !important;
-    margin-right: 8px;
-  }
-  
-  .select-icon {
-    color: #95a5a6 !important;
-  }
-  
-  .input-error .form-input,
-  .input-error .ant-select-selector {
-    border-color: #ff4d4f !important;
-  }
-  
-  .input-error .form-input:focus,
-  .input-error .ant-select-focused .ant-select-selector {
-    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
-  }
-  
-  .error-feedback {
-    color: #ff4d4f;
-    margin-top: 8px;
-    font-size: 0.85rem;
-  }
-  
-  .form-actions {
-    text-align: right;
-    margin-top: 2.5rem;
-  }
-  
-  .submit-button {
-    background: #30bfa1;
-    border: none;
-    border-radius: 8px;
-    padding: 0 2rem;
-    height: 42px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background: #27ae8f !important;
-    transform: translateY(-2px);
-  }
-  
-  .submit-button:active {
-    transform: translateY(0);
-  }
-  
-  @media (max-width: 768px) {
-    .basic-info-container {
-      padding: 1rem;
-    }
-    
-    .car-details-form {
-      padding: 1.5rem;
-    }
-    
-    .form-row .ant-col {
-      width: 100%;
-      max-width: 100%;
-    }
-    
-    .form-row .ant-col:first-child {
-      margin-bottom: 1.5rem;
-    }
-  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(96, 108, 188, 0.25);
+}
+
+.input-error {
+  border-color: #ff4d4f;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.25);
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.button-container {
+  text-align: right;
+  margin-top: 32px;
+}
+
+.btn-next {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 12px 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-next:hover {
+  background-color: #4c5696;
+}

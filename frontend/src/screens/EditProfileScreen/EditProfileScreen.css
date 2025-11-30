@@ -24,7 +24,7 @@
 .profile-header {
   padding: 2.5rem 2.5rem 1.5rem;
   border-bottom: 1px solid #f1f5f9;
-  background: linear-gradient(135deg, #606cbc 0%, #3f4c9b 100%);
+  background: linear-gradient(135deg,#BA1C73 0%, #a33f76 100%);
   color: white;
 }
 
@@ -79,7 +79,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #606cbc;
+  background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 8px;
@@ -118,7 +118,7 @@
 }
 
 .account-type {
-  color: #606cbc;
+  color: var(--primary-color);
   font-weight: 500;
   font-size: 0.95rem;
   background: #f0f2ff;
@@ -147,7 +147,7 @@
   left: 0;
   width: 50px;
   height: 4px;
-  background: #606cbc;
+  background: var(--primary-color);
   border-radius: 2px;
 }
 
@@ -187,7 +187,7 @@
 .input-group input:focus,
 .input-group textarea:focus {
   outline: none;
-  border-color: #606cbc;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(96, 108, 188, 0.2);
   background: white;
 }
@@ -206,7 +206,7 @@
 .checkbox-container input {
   width: auto;
   margin-right: 0.75rem;
-  accent-color: #606cbc;
+  accent-color: var(--primary-color);
   transform: scale(1.2);
 }
 
@@ -234,7 +234,7 @@
   transition: all 0.2s;
   border: 1px solid #e2e8f0;
   background: white;
-  color: #606cbc;
+  color: var(--primary-color);
 }
 
 .discard-btn:hover {
@@ -256,7 +256,7 @@
   cursor: pointer;
   transition: all 0.2s;
   border: none;
-  background: #606cbc;
+  background: var(--primary-color);
   color: white;
 }
 

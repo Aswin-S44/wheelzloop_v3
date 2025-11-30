@@ -16,7 +16,7 @@
 
 .avatar-container {
   padding: 24px;
-  background: #606cbc;
+  background: var(--primary-color);
   display: flex;
   justify-content: center;
 }
@@ -55,7 +55,7 @@
 
 .detail-icon {
   margin-right: 10px;
-  color: #606cbc;
+  color: var(--primary-color);
   font-size: 1.1rem;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .edit-button {
-  background-color: #606cbc;
+  background-color: var(--primary-color);
   color: white;
 }
 
