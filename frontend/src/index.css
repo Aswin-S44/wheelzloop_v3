@@ -11,7 +11,9 @@ body {
 }
 
 :root {
-  --primary-color: #1D6170;
+  --primary-color: #BA1C73
+
+  ;
   --secondary-color: #f60;
   --border-radius: 20px;
   --main-bg-color: #30bfa1
@@ -162,4 +164,8 @@ button.medium {
 :where(.css-dev-only-do-not-override-1a3rktk).ant-steps .ant-steps-item-process .ant-steps-item-icon {
   background-color: #606cbc !important;
   border-color: #606cbc;
+}
+
+.screen{
+  margin-top: 120px;
 }

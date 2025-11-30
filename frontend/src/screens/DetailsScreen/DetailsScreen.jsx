@@ -5,7 +5,6 @@ import axios from "axios";
 import { ADD_CHAT_USER, CAR_DETAILS_API, GET_ALL_CARS } from "../../config/api";
 import { ToastContainer, toast } from "react-toastify";
 import { Helmet } from "react-helmet";
-
 import Loader from "../../components/Loader/Loader";
 import {
   FaCar,
@@ -14,28 +13,29 @@ import {
   FaPalette,
   FaDoorOpen,
   FaChair,
-  FaCarSide,
   FaHeart,
   FaShareAlt,
   FaPhone,
   FaMapMarkerAlt,
-  FaCalendarAlt,
 } from "react-icons/fa";
-import { BsFillGearFill } from "react-icons/bs";
+import { BsFillGearFill, BsCalendarCheck } from "react-icons/bs";
 import { GiCarWheel } from "react-icons/gi";
 import { UserContext } from "../../hooks/UserContext";
 import { Box, Modal } from "@mui/material";
+import { DEFAULT_AVATAR } from "../../constants/urls";
 
-const style = {
+const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "90%",
+  maxWidth: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: "12px",
   boxShadow: 24,
   p: 4,
+  outline: "none",
 };
 
 function DetailsScreen() {
@@ -48,8 +48,8 @@ function DetailsScreen() {
   const [saved, setSaved] = useState(false);
   const [similarCars, setSimilarCars] = useState([]);
   const [isFavourite, setIsFavourite] = useState(false);
-
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -58,23 +58,27 @@ function DetailsScreen() {
     if (!user) {
       handleOpen();
     } else {
-      const res = await axios.post(
-        `${ADD_CHAT_USER}`,
-        {
-          receiverId: car?.dealer_id?._id,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
+      try {
+        await axios.post(
+          `${ADD_CHAT_USER}`,
+          {
+            receiverId: car?.dealer_id?._id,
           },
-        }
-      );
-      window.location.href = "/chats";
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        window.location.href = "/chats";
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
-  const notify = () => toast.success("Link copied");
+  const notify = () => toast.success("Link copied to clipboard");
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -102,11 +106,15 @@ function DetailsScreen() {
   useEffect(() => {
     const fetchSimilarCars = async () => {
       if (car) {
-        const similar_cars = await axios.get(
-          `${GET_ALL_CARS}?brand=${car?.brand}&dealer_id=${car?.dealer_id?._id}`
-        );
-        if (similar_cars) {
-          setSimilarCars(similar_cars.data.data);
+        try {
+          const similar_cars = await axios.get(
+            `${GET_ALL_CARS}?brand=${car?.brand}&dealer_id=${car?.dealer_id?._id}`
+          );
+          if (similar_cars) {
+            setSimilarCars(similar_cars.data.data);
+          }
+        } catch (error) {
+          console.error(error);
         }
       }
     };
@@ -114,7 +122,7 @@ function DetailsScreen() {
   }, [car]);
 
   if (loading) return <Loader />;
-  if (!car) return <div className="error-message">Car not found</div>;
+  if (!car) return <div className="error-screen">Car not found</div>;
 
   const handleShareClick = () => {
     const currentUrl = window.location.href;
@@ -139,384 +147,374 @@ function DetailsScreen() {
       setIsFavourite(true);
     } else {
       favCars = favCars.filter((favId) => favId !== id);
-
       localStorage.setItem("fav-cars", JSON.stringify(favCars));
-      toast.error("Removed from favourites");
+      toast.info("Removed from favourites");
       setIsFavourite(false);
     }
   };
 
   return (
-    <div className="details-container">
-      <Helmet>
-        <title>{car?.title || car?.brand + " " + car?.model} - CarAuras</title>
-        <meta
-          name="description"
-          content={`Buy ${car?.brand} ${car?.model} in ${car?.location}. ${car?.kilometers_driven} driven, ${car?.fuel_type} car in good condition. Check price & details now.`}
-        />
-        <meta
-          name="keywords"
-          content={`${car?.brand}, ${car?.model}, used cars in ${car?.location}, second hand ${car?.brand}, pre-owned ${car?.model}, buy used car Kerala`}
-        />
-        <meta
-          property="og:title"
-          content={`${car?.brand} ${car?.model} - CarAuras`}
-        />
-        <meta
-          property="og:description"
-          content={`Buy this ${car?.fuel_type} ${car?.brand} ${car?.model} car in ${car?.location}. Explore details now.`}
-        />
-        <meta property="og:image" content={car?.images?.[0]} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://carauras.com/cars/${id}`} />
-        <link rel="canonical" href={`https://carauras.com/cars/${id}`} />
-      </Helmet>
-      <div className="breadcrumb">
-        <a href="/">Home</a>
-        <span className="separator">/</span>
+    <div className="screen">
+      <div className="details-wrapper">
+        <Helmet>
+          <title>
+            {car?.title || car?.brand + " " + car?.model} - CarAuras
+          </title>
+          <meta
+            name="description"
+            content={`Buy ${car?.brand} ${car?.model} in ${car?.location}. ${car?.kilometers_driven} driven, ${car?.fuel_type} car.`}
+          />
+        </Helmet>
 
-        <span>{car.model}</span>
-      </div>
+        <div className="breadcrumb-nav">
+          <a href="/">Home</a>
+          <span className="sep">/</span>
+          <a href="/cars">Used Cars</a>
+          <span className="sep">/</span>
+          <span className="current">
+            {car.year} {car.make} {car.model}
+          </span>
+        </div>
 
-      <div className="details-content">
-        <div className="image-section">
-          <div className="main-image-container">
-            <img
-              src={mainImage}
-              alt="Main Car"
-              className="main-image"
-              onError={(e) =>
-                (e.target.src =
-                  "https://via.placeholder.com/800x600?text=Image+Not+Available")
-              }
-              title="car details image"
-            />
-            <div className="image-actions">
-              <button className="save-btn" onClick={addToFav}>
-                <FaHeart className={isFavourite ? "saved" : ""} />
-              </button>
-              <button className="share-btn" onClick={handleShareClick}>
-                <FaShareAlt />
-              </button>
-            </div>
-            <div className="image-badge">
-              {car.views?.toLocaleString()} views
-            </div>
-          </div>
-          <div className="thumbnail-container">
-            {car.images.map((image, index) => (
-              <div
-                key={index}
-                className={`thumbnail ${mainImage === image ? "active" : ""}`}
-                onClick={() => setMainImage(image)}
-              >
+        <div className="main-grid">
+          <div className="left-column">
+            <div className="gallery-section">
+              <div className="main-view">
                 <img
-                  src={image}
-                  alt={`Car ${index + 1}`}
+                  src={mainImage}
+                  alt={`${car.make} ${car.model}`}
+                  className="hero-image"
                   onError={(e) =>
                     (e.target.src =
-                      "https://via.placeholder.com/100x75?text=Image+Not+Available")
+                      "https://via.placeholder.com/800x600?text=No+Image")
                   }
-                  title="car more images"
                 />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="car-info-section">
-          <div className="car-header">
-            <h1 className="car-title">
-              {car.year} {car.make} {car.model}
-            </h1>
-
-            <div className="price-container">
-              <span className="current-price">
-                ${car.price?.toLocaleString()}
-              </span>
-              {car.originalPrice && (
-                <span className="original-price">
-                  ${car.originalPrice?.toLocaleString()}
-                </span>
-              )}
-            </div>
-
-            <div className="location-badge">
-              <FaMapMarkerAlt className="location-icon" />
-              <span>{car.location || "Location not specified"}</span>
-            </div>
-          </div>
-
-          <div className="specs-grid">
-            <div className="spec-card">
-              <FaTachometerAlt className="spec-icon" />
-              <div>
-                <p className="spec-label">Mileage</p>
-                <p className="spec-value">{car.mileage?.toLocaleString()} mi</p>
-              </div>
-            </div>
-            <div className="spec-card">
-              <FaGasPump className="spec-icon" />
-              <div>
-                <p className="spec-label">Fuel</p>
-                <p className="spec-value">{car.fuel_type}</p>
-              </div>
-            </div>
-            <div className="spec-card">
-              <BsFillGearFill className="spec-icon" />
-              <div>
-                <p className="spec-label">Transmission</p>
-                <p className="spec-value">{car.transmission}</p>
-              </div>
-            </div>
-            <div className="spec-card">
-              <GiCarWheel className="spec-icon" />
-              <div>
-                <p className="spec-label">Drivetrain</p>
-                <p className="spec-value">{car.drivetrain}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="action-buttons">
-            <a
-              href={`tel:${car?.dealer_id?.phone}`}
-              className="contact-seller-btn"
-            >
-              <FaPhone /> Contact Seller
-            </a>
-            {car?.dealer_id?._id !== user?._id && (
-              <button className="btn-secondary" onClick={handleNavigatetoChat}>
-                Chat with Dealer
-              </button>
-            )}
-          </div>
-
-          <div className="seller-card">
-            <h3 className="seller-title">Seller Information</h3>
-            <div className="seller-profile">
-              <img
-                src={car?.dealer_id?.profile_picture || "/default-avatar.jpg"}
-                alt="Dealer"
-                className="seller-avatar"
-              />
-              <div className="seller-info">
-                <p className="seller-name">
-                  {car?.dealer_id?.first_name || "Dealer"}
-                </p>
-                <p className="seller-location">
-                  {car?.dealer_id?.location || "Location not specified"}
-                </p>
-              </div>
-            </div>
-            <button
-              className="btn-outline"
-              onClick={() =>
-                (window.location.href = `/profile/${car?.dealer_id._id}`)
-              }
-            >
-              View Full Profile
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="details-tabs">
-        <button
-          className={`tab-btn ${activeTab === "details" ? "active" : ""}`}
-          onClick={() => setActiveTab("details")}
-        >
-          Overview
-        </button>
-        <button
-          className={`tab-btn ${activeTab === "specs" ? "active" : ""}`}
-          onClick={() => setActiveTab("specs")}
-        >
-          Specifications
-        </button>
-        <button
-          className={`tab-btn ${activeTab === "features" ? "active" : ""}`}
-          onClick={() => setActiveTab("features")}
-        >
-          Features
-        </button>
-      </div>
-
-      <div className="tab-content">
-        {activeTab === "details" && (
-          <div className="overview-section">
-            <h2>Vehicle Description</h2>
-            <p>{car.description || "No description available."}</p>
-            <h3
-              style={{
-                fontSize: "20px",
-                color: car?.status === "Available" ? "green" : "red",
-              }}
-            >
-              {car?.status}
-            </h3>
-          </div>
-        )}
-
-        {activeTab === "specs" && (
-          <div className="specs-section">
-            <div className="specs-grid">
-              <div className="spec-group">
-                <h3>
-                  <FaCar /> Vehicle
-                </h3>
-                <SpecItem label="Make" value={car.make} />
-                <SpecItem label="Model" value={car.model} />
-                <SpecItem label="Year" value={car.year} />
-                <SpecItem label="Condition" value={car.condition} />
-              </div>
-
-              <div className="spec-group">
-                <h3>
-                  <GiCarWheel /> Mechanical
-                </h3>
-                <SpecItem label="Engine" value={car.engine_size} />
-                {/* <SpecItem label="Drivetrain" value={car.drivetrain} /> */}
-                <SpecItem label="Transmission" value={car.transmission} />
-                <SpecItem label="Fuel Type" value={car.fuel_type} />
-              </div>
-
-              <div className="spec-group">
-                <h3>
-                  <FaPalette /> Exterior
-                </h3>
-                <SpecItem label="Body Type" value={car.body_type} />
-                <SpecItem label="Color" value={car.color} />
-                <SpecItem label="Doors" value={car.doors} />
-              </div>
-
-              <div className="spec-group">
-                <h3>
-                  <FaChair /> Interior
-                </h3>
-                <SpecItem label="Seats" value={car.seats} />
-                <SpecItem label="VIN" value={car.vin} />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "features" && (
-          <div className="features-section">
-            <h2>Features & Options</h2>
-            <div className="features-grid">
-              {car.features?.length > 0 ? (
-                car.features.map((feature, index) => (
-                  <div key={index} className="feature-item">
-                    <span>✓</span> {feature}
-                  </div>
-                ))
-              ) : (
-                <p>No features listed.</p>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="similar-section">
-        <h2>Similar Vehicles</h2>
-
-        <div className="similar-cars">
-          {similarCars?.map((item) => (
-            <div
-              key={item}
-              className="similar-card"
-              onClick={() => {
-                window.location.href = `/car/${car?._id}`;
-              }}
-            >
-              <div className="similar-image">
-                <img
-                  src={item?.images?.[0]}
-                  alt="no-image"
-                  title="similar car images"
-                />
-              </div>
-              <div className="similar-info">
-                <h4>
-                  {item?.year ?? ""} {item?.car_name ?? ""} {item?.model ?? ""}
-                </h4>
-                <p>${(item?.price ?? "").toLocaleString()}</p>
-                <div className="similar-specs">
-                  <span>{item?.mileage ?? ""} mi</span>
-                  <span>{item?.fuel_type ?? ""}</span>
-                  <span>{item?.transmission ?? ""}</span>
+                <div className="overlay-actions">
+                  <button
+                    className={`action-icon-btn ${isFavourite ? "liked" : ""}`}
+                    onClick={addToFav}
+                  >
+                    <FaHeart />
+                  </button>
+                  <button
+                    className="action-icon-btn"
+                    onClick={handleShareClick}
+                  >
+                    <FaShareAlt />
+                  </button>
+                </div>
+                <div className="view-badge">
+                  {car.views?.toLocaleString()} views
                 </div>
               </div>
+              <div className="thumb-strip">
+                {car.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`thumb-item ${
+                      mainImage === image ? "selected" : ""
+                    }`}
+                    onClick={() => setMainImage(image)}
+                  >
+                    <img src={image} alt="thumbnail" />
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+
+            <div className="mobile-only-header">
+              <h1 className="vehicle-title">
+                {car.year} {car.make} {car.model}
+              </h1>
+              <p className="vehicle-price">${car.price?.toLocaleString()}</p>
+            </div>
+
+            <div className="tabs-container">
+              <div className="tabs-header">
+                <button
+                  className={activeTab === "details" ? "active" : ""}
+                  onClick={() => setActiveTab("details")}
+                >
+                  Overview
+                </button>
+                <button
+                  className={activeTab === "specs" ? "active" : ""}
+                  onClick={() => setActiveTab("specs")}
+                >
+                  Specs
+                </button>
+                <button
+                  className={activeTab === "features" ? "active" : ""}
+                  onClick={() => setActiveTab("features")}
+                >
+                  Features
+                </button>
+              </div>
+
+              <div className="tabs-body">
+                {activeTab === "details" && (
+                  <div className="tab-pane fade-in">
+                    <div className="quick-stats">
+                      <div className="stat-box">
+                        <FaTachometerAlt />
+                        <div>
+                          <span>Mileage</span>
+                          <strong>{car.mileage?.toLocaleString()} mi</strong>
+                        </div>
+                      </div>
+                      <div className="stat-box">
+                        <FaGasPump />
+                        <div>
+                          <span>Fuel</span>
+                          <strong>{car.fuel_type}</strong>
+                        </div>
+                      </div>
+                      <div className="stat-box">
+                        <BsFillGearFill />
+                        <div>
+                          <span>Trans</span>
+                          <strong>{car.transmission}</strong>
+                        </div>
+                      </div>
+                      <div className="stat-box">
+                        <GiCarWheel />
+                        <div>
+                          <span>Drivetrain</span>
+                          <strong>{car.drivetrain}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="section-heading">Description</h3>
+                    <p className="description-text">
+                      {car.description ||
+                        "No detailed description provided by the seller."}
+                    </p>
+                    <div
+                      className={`status-tag ${
+                        car?.status === "Available" ? "green" : "red"
+                      }`}
+                    >
+                      Status: {car?.status}
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "specs" && (
+                  <div className="tab-pane fade-in">
+                    <div className="specs-table">
+                      <SpecRow icon={<FaCar />} label="Make" value={car.make} />
+                      <SpecRow
+                        icon={<FaCar />}
+                        label="Model"
+                        value={car.model}
+                      />
+                      <SpecRow
+                        icon={<BsCalendarCheck />}
+                        label="Year"
+                        value={car.year}
+                      />
+                      <SpecRow
+                        icon={<BsFillGearFill />}
+                        label="Condition"
+                        value={car.condition}
+                      />
+                      <SpecRow
+                        icon={<GiCarWheel />}
+                        label="Engine"
+                        value={car.engine_size}
+                      />
+                      <SpecRow
+                        icon={<BsFillGearFill />}
+                        label="Transmission"
+                        value={car.transmission}
+                      />
+                      <SpecRow
+                        icon={<FaGasPump />}
+                        label="Fuel Type"
+                        value={car.fuel_type}
+                      />
+                      <SpecRow
+                        icon={<FaCar />}
+                        label="Body Type"
+                        value={car.body_type}
+                      />
+                      <SpecRow
+                        icon={<FaPalette />}
+                        label="Color"
+                        value={car.color}
+                      />
+                      <SpecRow
+                        icon={<FaDoorOpen />}
+                        label="Doors"
+                        value={car.doors}
+                      />
+                      <SpecRow
+                        icon={<FaChair />}
+                        label="Seats"
+                        value={car.seats}
+                      />
+                      <SpecRow icon={<FaCar />} label="VIN" value={car.vin} />
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "features" && (
+                  <div className="tab-pane fade-in">
+                    <div className="features-list">
+                      {car.features?.length > 0 ? (
+                        car.features.map((feature, index) => (
+                          <div key={index} className="feature-chip">
+                            {feature}
+                          </div>
+                        ))
+                      ) : (
+                        <p>No specific features listed.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="right-column">
+            <div className="sticky-sidebar">
+              <div className="info-card">
+                <div className="desktop-header">
+                  <h1 className="vehicle-title">
+                    {car.year} {car.make} {car.model}
+                  </h1>
+                  <div className="location-row">
+                    <FaMapMarkerAlt />{" "}
+                    {car.location || "Location not available"}
+                  </div>
+                </div>
+
+                <div className="price-block">
+                  <span className="price-main">
+                    ${car.price?.toLocaleString()}
+                  </span>
+                  {car.originalPrice && (
+                    <span className="price-strike">
+                      ${car.originalPrice?.toLocaleString()}
+                    </span>
+                  )}
+                </div>
+
+                <div className="action-stack">
+                  <a
+                    href={`tel:${car?.dealer_id?.phone}`}
+                    className="btn-primary"
+                  >
+                    <FaPhone /> Call Seller
+                  </a>
+                  {car?.dealer_id?._id !== user?._id && (
+                    <button
+                      className="btn-secondary"
+                      onClick={handleNavigatetoChat}
+                    >
+                      Chat with Dealer
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="seller-widget">
+                <h4>Seller Information</h4>
+                <div className="seller-row">
+                  <img
+                    src={car?.dealer_id?.profile_picture || DEFAULT_AVATAR}
+                    alt="Seller"
+                    onError={(e) => (e.target.src = DEFAULT_AVATAR)}
+                  />
+                  <div className="seller-details">
+                    <span className="seller-name">
+                      {car?.dealer_id?.first_name || "Dealer"}
+                    </span>
+                    <span className="seller-loc">
+                      {car?.dealer_id?.location}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  className="btn-outline-sm"
+                  onClick={() =>
+                    (window.location.href = `/profile/${car?.dealer_id._id}`)
+                  }
+                >
+                  View Profile
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <ToastContainer />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "16px",
-                padding: "24px",
-                backgroundColor: "#f5f5f5",
-                borderRadius: "8px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                maxWidth: "400px",
-                margin: "0 auto",
-                textAlign: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "16px",
-                  color: "#333",
-                }}
-              >
-                You need to create account to chat with dealer
-              </span>
+
+        {similarCars.length > 0 && (
+          <div className="similar-section">
+            <h2 className="section-title">Similar Vehicles</h2>
+            <div className="similar-grid">
+              {similarCars.map((item) => (
+                <div
+                  key={item._id}
+                  className="car-card"
+                  onClick={() => (window.location.href = `/cars/${item._id}`)}
+                >
+                  <div className="card-img">
+                    <img
+                      src={item.images?.[0]}
+                      alt="car"
+                      onError={(e) =>
+                        (e.target.src = "https://via.placeholder.com/300x200")
+                      }
+                    />
+                  </div>
+                  <div className="card-body">
+                    <h5>
+                      {item.year} {item.make} {item.model}
+                    </h5>
+                    <p className="card-price">
+                      ${item.price?.toLocaleString()}
+                    </p>
+                    <div className="card-meta">
+                      <span>{item.mileage} mi</span>
+                      <span>•</span>
+                      <span>{item.transmission}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <ToastContainer position="bottom-right" />
+
+        <Modal open={open} onClose={handleClose}>
+          <Box sx={modalStyle}>
+            <div className="auth-modal-content">
+              <h3>Login Required</h3>
+              <p>Please sign in to start a chat with the dealer.</p>
               <button
-                style={{
-                  padding: "8px 16px",
-                  backgroundColor: "#30bfa1",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  transition: "background-color 0.2s",
-                  ":hover": {
-                    backgroundColor: "#30bfa1",
-                  },
-                }}
+                className="btn-primary"
                 onClick={() => (window.location.href = "/signin")}
               >
-                Go to login
+                Go to Login
               </button>
             </div>
-          </>
-        </Box>
-      </Modal>
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 }
 
-const SpecItem = ({ label, value }) => (
-  <div className="spec-row">
-    <span>{label}</span>
-    <span>{value}</span>
+const SpecRow = ({ icon, label, value }) => (
+  <div className="spec-item">
+    <div className="spec-label-grp">
+      <span className="spec-icon">{icon}</span>
+      <span>{label}</span>
+    </div>
+    <span className="spec-val">{value || "Not available"}</span>
   </div>
 );
 

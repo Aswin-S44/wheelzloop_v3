@@ -1,17 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
 .banner-container {
-    background-color: #809d99;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    min-height: 500px;
+    transition: background-color 0.6s ease-in-out;
+}
+
+.carousel-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .banner-image {
     aspect-ratio: 2 / 1;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    min-height: 500px;
+    transition: transform 0.5s ease;
+    animation: fadeInImage 0.8s ease-in-out;
+}
+
+@keyframes fadeInImage {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.slide-text-animation {
+    animation: slideUpFade 0.8s ease-out forwards;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .banner-image:hover {
@@ -22,101 +47,173 @@
     border-radius: 10px;
     transition: all 0.3s ease;
     padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background-color: #FFD700;
+    color: #000;
+    border-color: #FFD700;
 }
 
-.banner-subtitle{
+.banner-subtitle {
     color: #51533f;
     font-family: "Kaushan Script", cursive;
     font-size: 29px !important;
     font-weight: 400 !important;
 }
 
-.banner-subtitle-2{
+.banner-subtitle-2 {
     font-family: "Kaushan Script", cursive;
     font-size: 1.7rem !important;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
 }
 
-.banner-subtitle span{
+.banner-subtitle span {
     color: #101c3a;
     font-size: 35px;
-
 }
 
 .quality-text {
     position: relative;
     display: inline-block;
-  }
-  
-  .curved-line {
+    color: #2a4256;
+    font-weight: bold;
+}
+
+.curved-line {
     position: absolute;
     bottom: -8px;
     left: 0;
     width: 100%;
-    color: #cfcf00;
-  }
+}
 
-  .banner-title{
-    color: #111;
-  }
+.banner-title {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
 
-/* Mobile Responsive Styles */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #FFD700;
+    width: 30px;
+    border-radius: 6px;
+}
+
 @media (max-width: 768px) {
     .banner-container {
         border-radius: 15px;
         margin: 0 10px;
+        min-height: auto;
     }
 
+    .banner-subtitle, .banner-tagline {
+        font-size: 18px !important;
+    }
 
-.banner-subtitle, .banner-tagline {
-    font-size: 18px !important;
-}
-
-    .banner-image{
+    .banner-image {
         width: 100%;
+        min-height: 300px;
+        aspect-ratio: 16/9;
     }
     
     .banner-title {
-        font-size: 1rem !important;
+        font-size: 1.8rem !important;
         text-align: left;
     }
     
-    .banner-subtitle {
-        font-size: 1rem;
+    .banner-subtitle-2 {
+        font-size: 1.2rem !important;
         text-align: left;
     }
     
     .banner-button {
         display: flex;
-        /* margin: 0 auto; */
-        /* width: 80%; */
         justify-content: flex-start;
-       
+        width: fit-content;
     }
     
     .p-md-5 {
         padding: 2rem !important;
     }
 
-    .banner-image{
-        margin-top: 0 !important;
+    .nav-btn {
+        width: 35px;
+        height: 35px;
     }
+    
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
 }
 
 @media (max-width: 576px) {
     .banner-title {
-        font-size: 1.5rem;
+        font-size: 1.5rem !important;
     }
     
-    .banner-subtitle {
-        font-size: 0.9rem;
+    .banner-subtitle-2 {
+        font-size: 1rem !important;
     }
     
     .p-md-5 {
         padding: 1.5rem !important;
+    }
+
+    .curved-line {
+        display: none;
     }
 }

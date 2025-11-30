@@ -7,32 +7,50 @@ import {
   SupportAgent,
 } from "@mui/icons-material";
 
+const features = [
+  {
+    id: 1,
+    icon: <VerifiedUser fontSize="inherit" />,
+    title: "Verified Dealers",
+    desc: "Trusted and verified sellers ensuring a safe and transparent buying experience.",
+  },
+  {
+    id: 2,
+    icon: <Payment fontSize="inherit" />,
+    title: "Variety of Cars",
+    desc: "Browse through diverse car options from trusted sources and private sellers.",
+  },
+  {
+    id: 3,
+    icon: <LocalShipping fontSize="inherit" />,
+    title: "Easy Listing",
+    desc: "Quickly post your car details and connect with potential buyers in minutes.",
+  },
+  {
+    id: 4,
+    icon: <SupportAgent fontSize="inherit" />,
+    title: "24/7 Support",
+    desc: "Round-the-clock dedicated customer support to resolve all your queries.",
+  },
+];
+
 function FeaturesSection() {
   return (
-    <div className="features-section">
-      <div className="features-container">
-        <div className="feature-card">
-          <VerifiedUser className="feature-icon" />
-          <h3>Verified Dealers</h3>
-          <p>Trusted and verified sellers for a safe buying experience.</p>
-        </div>
-        <div className="feature-card">
-          <Payment className="feature-icon" />
-          <h3>Variety of Cars</h3>
-          <p>Browse through diverse car options from our verified dealers.</p>
-        </div>
-        <div className="feature-card">
-          <LocalShipping className="feature-icon" />
-          <h3>Easy Listing</h3>
-          <p>Quickly post your cars and connect with potential buyers.</p>
-        </div>
-        <div className="feature-card">
-          <SupportAgent className="feature-icon" />
-          <h3>24/7 Support</h3>
-          <p>Round-the-clock customer support for all your queries.</p>
-        </div>
+    <section className="features-section">
+      <div className="features-header">
+        <h2>Why Choose Us</h2>
+        <p>We provide the best experience for buying and selling cars.</p>
       </div>
-    </div>
+      <div className="features-grid">
+        {features.map((feature) => (
+          <div className="feature-card" key={feature.id}>
+            <div className="icon-box">{feature.icon}</div>
+            <h3 className="feature-title">{feature.title}</h3>
+            <p className="feature-desc">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

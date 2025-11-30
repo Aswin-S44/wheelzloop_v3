@@ -1,68 +1,52 @@
 import React, { useState } from "react";
 import {
-  FaPhone,
+  FaPhoneAlt,
   FaEnvelope,
   FaMapMarkerAlt,
-  FaCar,
-  FaUser,
-  FaFacebook,
+  FaFacebookF,
   FaTwitter,
   FaInstagram,
-  FaLinkedin,
-  FaYoutube,
+  FaLinkedinIn,
+  FaPaperPlane,
 } from "react-icons/fa";
-import { GiCarWheel } from "react-icons/gi";
+import { BiSupport, BiCar } from "react-icons/bi";
 import "./ContactScreen.css";
 import axios from "axios";
-import {
-  FACEBOOK,
-  INSTAGRAM,
-  LINKEDIN,
-  X,
-  YOUTUBE,
-} from "../../constants/social-urls";
+import { FACEBOOK, INSTAGRAM, LINKEDIN, X } from "../../constants/social-urls";
 import { SEND_FEEDBACK_API } from "../../config/api";
 
 function ContactScreen() {
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    subject: "General Inquiry",
+    subject: "",
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    setSubmitted(true);
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "General Inquiry",
-      message: "",
-    });
-
     try {
       const res = await axios.post(`${SEND_FEEDBACK_API}`, formData);
-      if (res && res.status == 200) {
+      if (res && res.status === 200) {
         setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
       }
     } catch (error) {
-      return error;
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -70,163 +54,165 @@ function ContactScreen() {
 
   return (
     <div className="contact-container">
-      {/* Hero Section */}
-      <section className="contact-hero">
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <GiCarWheel className="hero-icon" />
-          <h1>Contact CarAuras</h1>
-          <p>We're here to help with all your used car needs</p>
-        </div>
-      </section>
+      <div className="contact-wrapper">
+        {/* Left Side: Contact Info */}
+        <div className="contact-sidebar">
+          <div className="sidebar-header">
+            <h3>Get in Touch</h3>
+            <p>
+              Have questions about a car or want to sell yours? We're here to
+              help you every step of the way.
+            </p>
+          </div>
 
-      {/* Contact Content */}
-      <div className="contact-content">
-        {/* Contact Info */}
-        <div className="contact-info">
-          <h2>Get in Touch</h2>
-          <p>
-            Have questions about our services or a specific vehicle? Reach out
-            to our team.
-          </p>
+          <div className="contact-details">
+            <div className="detail-item">
+              <div className="icon-circle">
+                <FaPhoneAlt />
+              </div>
+              <div>
+                <span>Call Us</span>
+                <p>+1 (555) 123-4567</p>
+              </div>
+            </div>
 
-          <div className="info-cards">
-            <div className="info-card">
-              <div className="info-icon">
+            <div className="detail-item">
+              <div className="icon-circle">
                 <FaEnvelope />
               </div>
-              <h3>Email Us</h3>
-              <p>infoatcarauras@gmail.com</p>
-              <p>Response within 24 hours</p>
+              <div>
+                <span>Email Us</span>
+                <p>hello@carauras.com</p>
+              </div>
+            </div>
+
+            <div className="detail-item">
+              <div className="icon-circle">
+                <FaMapMarkerAlt />
+              </div>
+              <div>
+                <span>Visit Us</span>
+                <p>123 Auto Blvd, Car City, CA</p>
+              </div>
             </div>
           </div>
 
-          {/* New Follow Us Section */}
-          <div className="follow-us-section">
-            <h2>Follow Us</h2>
-            <p>Stay connected for the latest updates and offers</p>
-            <div className="social-icons">
-              <a
-                href={FACEBOOK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
-              >
-                <FaFacebook />
+          <div className="sidebar-footer">
+            <span>Follow our socials</span>
+            <div className="social-row">
+              <a href={FACEBOOK} target="_blank" rel="noreferrer">
+                <FaFacebookF />
               </a>
-              <a
-                href={X}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
-              >
+              <a href={X} target="_blank" rel="noreferrer">
                 <FaTwitter />
               </a>
-              <a
-                href={INSTAGRAM}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
-              >
+              <a href={INSTAGRAM} target="_blank" rel="noreferrer">
                 <FaInstagram />
               </a>
-              <a
-                href={LINKEDIN}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href={YOUTUBE}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
-              >
-                <FaYoutube />
+              <a href={LINKEDIN} target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
               </a>
             </div>
           </div>
+
+          {/* Abstract Decor */}
+          <div className="circle-decor-1"></div>
+          <div className="circle-decor-2"></div>
         </div>
 
-        {/* Contact Form */}
-        <div className="contact-form-container">
-          <h2>Send Us a Message</h2>
+        {/* Right Side: Form */}
+        <div className="contact-form-area">
           {submitted ? (
-            <div className="success-message">
-              <h3>Thank you for contacting us!</h3>
-              <p>We've received your message and will get back to you soon.</p>
+            <div className="success-view">
+              <div className="success-icon">
+                <FaPaperPlane />
+              </div>
+              <h2>Message Sent!</h2>
+              <p>
+                Thank you for reaching out. We will get back to you shortly.
+              </p>
+              <button onClick={() => setSubmitted(false)} className="btn-reset">
+                Send Another
+              </button>
             </div>
           ) : (
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">
-                  <FaUser className="input-icon" /> Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
+            <form onSubmit={handleSubmit}>
+              <div className="form-header">
+                <h2>Send a Message</h2>
+                <p>Fill out the form below and we'll get back to you.</p>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
+              <div className="input-row">
+                <div className="input-group">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your full name"
+                    required
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="phone">Phone (Optional)</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
+              <div className="input-row">
+                <div className="input-group">
+                  <label>Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="(000) 000-0000"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Topic</label>
+                  <div className="select-wrapper">
+                    <select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select a topic
+                      </option>
+                      <option value="Buy a Car">I want to buy a car</option>
+                      <option value="Sell a Car">I want to sell my car</option>
+                      <option value="Support">Support Inquiry</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="subject">Subject</label>
-                <select
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                >
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="Vehicle Question">Vehicle Question</option>
-                  <option value="Dealer Inquiry">Dealer Inquiry</option>
-                  <option value="Technical Support">Technical Support</option>
-                  <option value="Feedback">Feedback</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
+              <div className="input-group">
+                <label>Message</label>
                 <textarea
-                  id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows="5"
+                  placeholder="How can we help you?"
+                  rows="4"
                   required
                 ></textarea>
               </div>
 
-              <button type="submit" className="submit-btn" disabled={loading}>
-                {loading ? <> Please wait....</> : <> Send Message</>}
+              <button type="submit" className="btn-submit" disabled={loading}>
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
           )}

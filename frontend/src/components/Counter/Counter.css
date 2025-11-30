@@ -1,237 +1,227 @@
-/* Enhanced CSS */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-
-:root {
-  /* --primary-color: #00796b; */
-  --primary-dark: #148a84;
-  --secondary-color: #f8fafc;
-  --text-dark: #1e293b;
-  --text-light: #64748b;
+/* --- 1. The Container (Dark Premium Mode) --- */
+.hud-stats-section {
+  position: relative;
+  padding: 80px 20px;
+  background-color: #0b0f19; /* Deep space dark */
+  overflow: hidden;
+  font-family: 'Exo 2', 'Poppins', sans-serif; /* Recommended tech font */
+  color: white;
 }
 
-.counter-section {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 5rem 1rem;
+/* --- 2. Background Animation (Grid + Glows) --- */
+.hud-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+  perspective: 500px;
+}
+
+.hud-glow-spot {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.spot-1 {
+  background: #06b6d4; /* Cyan glow */
+  top: -100px;
+  left: -50px;
+  animation: float-glow 8s infinite alternate;
+}
+
+.spot-2 {
+  background: #8b5cf6; /* Purple glow */
+  bottom: -100px;
+  right: -50px;
+  animation: float-glow 10s infinite alternate-reverse;
+}
+
+@keyframes float-glow {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 30px); }
+}
+
+/* --- 3. Layout --- */
+.hud-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hud-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.hud-title {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.neon-text {
+  color: transparent;
+  -webkit-text-stroke: 1px #06b6d4;
+  position: relative;
+}
+
+.neon-text::before {
+  content: 'DOMINANCE';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #06b6d4;
+  opacity: 0.5;
+  filter: blur(5px);
+}
+
+.hud-line {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+  margin: 20px auto 0;
+}
+
+.hud-cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* --- 4. The HUD Cards (Glass + Neon Borders) --- */
+.hud-card {
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Hover Effect: Glow border based on color */
+.card-cyan:hover { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6, 182, 212, 0.2); }
+.card-purple:hover { border-color: #8b5cf6; box-shadow: 0 0 20px rgba(139, 92, 246, 0.2); }
+.card-amber:hover { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
+
+.hud-card:hover {
+  transform: translateY(-5px);
+}
+
+.hud-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.hud-icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.card-cyan .hud-icon { color: #22d3ee; }
+.card-purple .hud-icon { color: #a78bfa; }
+.card-amber .hud-icon { color: #fbbf24; }
+
+.hud-data {
+  flex: 1;
+}
+
+.hud-number {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+  color: white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.hud-suffix {
+  font-size: 1.5rem;
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+.hud-label {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* --- 5. Progress Bar Decoration --- */
+.hud-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hud-fill {
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 0 10px currentColor;
   position: relative;
   overflow: hidden;
 }
 
-.counter-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  position: relative;
-}
-
-.counter-header::after {
+.hud-fill::after {
   content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-color), var(--primary-color));
-  margin: 1rem auto 0;
-  border-radius: 2px;
-}
-
-.counter-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.counter-subtitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  color: var(--text-light);
-  font-weight: 400;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.counter-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.counter-item {
-  text-align: center;
-  flex: 1;
-  min-width: 220px;
-  max-width: 280px;
-  padding: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.counter-item:hover {
-  transform: translateY(-10px);
-}
-
-.counter-circle {
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 1.5rem;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.counter-circle-bg {
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  transform: rotate(-90deg);
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
 }
 
-.counter-circle-bg circle {
-  fill: none;
-  stroke-width: 8;
-  stroke-linecap: round;
+.fill-cyan { background: #06b6d4; }
+.fill-purple { background: #8b5cf6; }
+.fill-amber { background: #f59e0b; }
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
 }
 
-.counter-circle-bg circle:first-child {
-  stroke: rgba(20, 138, 132, 0.2);
-}
-
-.counter-circle-bg circle:last-child {
-  stroke: url(#counter-gradient);
-  stroke-dasharray: 283;
-  transition: stroke-dashoffset 0.5s ease-out;
-}
-
-.counter-value {
-  font-family: 'Inter', sans-serif;
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: var(--primary-dark);
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-}
-
-.counter-plus {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-left: 0.2rem;
-  color: var(--primary-color);
-}
-
-.counter-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--primary-color);
-  margin-top: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Gradient for the circle */
-.counter-gradient {
-  --color-stop-1: var(--primary-color);
-  --color-stop-2: var(--primary-color);
-}
-
-@media (max-width: 1024px) {
-  .counter-item {
-    min-width: 200px;
-  }
-  
-  .counter-circle {
-    width: 160px;
-    height: 160px;
-  }
-  
-  .counter-value {
-    font-size: 3rem;
-  }
-}
-
+/* --- Responsive --- */
 @media (max-width: 768px) {
-  .counter-section {
-    padding: 4rem 1rem;
-  }
-  
-  .counter-title {
+  .hud-title {
     font-size: 2rem;
   }
   
-  .counter-container {
-    gap: 1.5rem;
+  .hud-cards-wrapper {
+    grid-template-columns: 1fr;
   }
   
-  .counter-item {
-    min-width: 160px;
-    padding: 1rem;
-  }
-  
-  .counter-circle {
-    width: 140px;
-    height: 140px;
-  }
-  
-  .counter-value {
-    font-size: 2.5rem;
-  }
-  
-  .counter-label {
-    font-size: 1.1rem;
+  .hud-card {
+    padding: 20px;
   }
 }
-
-@media (max-width: 480px) {
-  .counter-section {
-    padding: 3rem 1rem;
-  }
-  
-  .counter-title {
-    font-size: 1.75rem;
-  }
-  
-  .counter-subtitle {
-    font-size: 1rem;
-  }
-  
-  .counter-container {
-    gap: 1rem;
-  }
-  
-  .counter-item {
-    min-width: 120px;
-  }
-  
-  .counter-circle {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .counter-value {
-    font-size: 2rem;
-  }
-  
-  .counter-label {
-    font-size: 1rem;
-  }
-}
-
-/* Add this to your HTML or create a React component for the SVG gradient */
-/*
-<svg width="0" height="0">
-  <defs>
-    <linearGradient id="counter-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="var(--primary-color)" />
-      <stop offset="100%" stop-color="var(--primary-dark)" />
-    </linearGradient>
-  </defs>
-</svg>
-*/

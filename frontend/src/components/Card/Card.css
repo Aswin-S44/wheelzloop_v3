@@ -1,56 +1,73 @@
-.card {
-  background: white;
+/* --- DESKTOP / DEFAULT STYLES (The clean UI you liked) --- */
+
+.pro-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   width: 100%;
-  max-width: 300px;
+  max-width: 290px;
+  margin: 15px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  margin: 12px;
-  font-family: 'Poppins', sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-.card:hover {
+.pro-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-color: transparent;
 }
 
-.card-image-container {
+.pro-card-image-wrap {
   position: relative;
   width: 100%;
-  max-height: 180px;
+  height: 180px;
+  background-color: #f1f5f9;
   overflow: hidden;
 }
 
-.card-image {
+.pro-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.card:hover .card-image {
-  transform: scale(1.05);
+.pro-card:hover .pro-card-img {
+  transform: scale(1.08);
 }
 
-.category-badge {
+.pro-card-badges {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.badge.category-badge {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
   color: white;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.favorite-btn {
+.pro-card-actions {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.fav-icon-btn {
   background: rgba(255, 255, 255, 0.9);
   border: none;
   width: 32px;
@@ -60,106 +77,89 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  color: #64748b;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* .favorite-btn:hover {
-  background: #ff4757;
-  color: white;
-} */
+.fav-icon-btn.active {
+  color: #ef4444;
+  background: #fff;
+}
 
-.card-details {
+.pro-card-content {
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.car-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2f3542;
-  margin: 0 0 8px 0;
+.pro-card-header {
+  margin-bottom: 12px;
+}
+
+.car-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.car-specs-container {
+.car-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary-color, #2563eb);
+}
+
+/* Desktop Specs: Pills */
+.desktop-specs {
   display: flex;
-  justify-content: space-between;
-  margin: 12px 0;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
 }
 
-.spec-item {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: #555;
-  gap: 4px;
-}
-
-.price-section {
-  margin: 16px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.current-price {
-  font-size: 20px;
-  font-weight: 700;
-  color: #2f3542;
-}
-
-.original-price {
-  font-size: 14px;
-  color: #878787;
-  text-decoration: line-through;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
-}
-
-.location {
-  font-size: 14px;
-  color: #555;
-  margin: 0;
-}
-
-.visitors {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: #555;
-}
-
-.view-details-btn {
-  width: 100%;
-  padding: 10px;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: white;
-  border: none;
-  border-radius: 6px;
+.spec-pill {
+  font-size: 11px;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 4px;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 8px;
 }
 
-.view-details-btn:hover {
-  background: linear-gradient(135deg, #5a7df4, #9666d8);
-  transform: translateY(-2px);
+/* Mobile text row (hidden on desktop) */
+.mobile-specs-row {
+  display: none;
 }
 
-@media (max-width: 768px) {
-  .card {
-    max-width: 100%;
-    margin: 10px 0;
-  }
-  
-  .card-image-container {
-    max-height: 200px;
-  }
+.pro-card-divider {
+  height: 1px;
+  background-color: #f1f5f9;
+  width: 100%;
+  margin-bottom: 12px;
 }
+
+.pro-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* --- MOBILE SPECIFIC STYLES (THE FIX) --- */
+/* Makes it look like an App List Item */
+

@@ -25,6 +25,7 @@ import CarCategoriesSection from "../../components/CarCategoriesSection/CarCateg
 import AdvSection from "../../sections/AdvSection/AdvSection";
 import { LOCAL_STORAGE_KEY } from "../../store/useAuthStore";
 import PopularBrandsSection from "../../sections/PopularBrandsSection/PopularBrandsSection";
+import Carousel2 from "../../components/Carousel2/Carousel";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -129,7 +130,8 @@ function HomeScreen() {
       <div className="">
         {/* <Carousel images={images} /> */}
         {/* <Banner /> */}
-        <Banner2 />
+        {/* <Banner2 /> */}
+        <Carousel2 />
       </div>
       <div className="mt-5">
         <h3 className="text-center fw-bold">

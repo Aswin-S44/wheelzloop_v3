@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./SavedCarsScreen.css";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import { GET_SAVED_CARS_URL } from "../../config/api";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  FaTrash,
+  FaShareAlt,
+  FaMapMarkerAlt,
+  FaTachometerAlt,
+  FaHeartBroken,
+  FaGasPump,
+} from "react-icons/fa";
+import { BsFuelPumpFill } from "react-icons/bs";
 
 function SavedCarsScreen() {
   const [savedCars, setSavedCars] = useState([]);
@@ -20,6 +26,7 @@ function SavedCarsScreen() {
       "fav-cars",
       JSON.stringify(updatedCars.map((car) => car._id))
     );
+    toast.info("Vehicle removed from saved list");
   };
 
   useEffect(() => {
@@ -31,12 +38,11 @@ function SavedCarsScreen() {
           savedIds: favCars,
         });
 
-        if (data && data.cars && data.cars.length > 0) {
-          setLoading(false);
+        if (data && data.cars) {
           setSavedCars(data.cars);
         }
       } catch (error) {
-        setLoading(false);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -47,82 +53,106 @@ function SavedCarsScreen() {
   const handleShare = (carId) => {
     const carUrl = `${window.location.origin}/car/${carId}`;
     navigator.clipboard.writeText(carUrl);
-
     toast.success("Link copied to clipboard!");
   };
 
   return (
-    <div className="saved-cars-container">
-      <div className="saved-cars-header">
-        <h1 className="saved-cars-title">Your Saved Vehicles</h1>
-        <p className="saved-cars-subtitle">
-          {savedCars.length} {savedCars.length === 1 ? "vehicle" : "vehicles"}{" "}
-          saved
-        </p>
-      </div>
-
-      {loading ? (
-        <Loader />
-      ) : savedCars?.length === 0 ? (
-        <div className="empty-state">
-          <FavoriteIcon className="empty-icon" />
-          <h3>No saved vehicles yet</h3>
-          <p>Start saving your favorite vehicles to see them here</p>
-          <button
-            className="browse-button"
-            onClick={() => (window.location.href = "/cars")}
-          >
-            Browse Vehicles
-          </button>
+    <div className="screen">
+      <div className="saved-cars-wrapper">
+        <div className="saved-header mt-4">
+          <h1 className="page-title">Saved Cars</h1>
+          <p className="page-subtitle">
+            You have {savedCars.length} saved{" "}
+            {savedCars.length === 1 ? "vehicle" : "vehicles"}
+          </p>
         </div>
-      ) : (
-        <div className="saved-cars-grid">
-          {savedCars.map((car) => (
-            <div key={car._id} className="saved-car-card">
-              {car.featured && <div className="featured-tag">Featured</div>}
-              <div
-                className="car-image"
-                onClick={() => (window.location.href = `/car/${car._id}`)}
-              >
-                <img src={car?.images[0]} alt={car.car_name} />
-              </div>
-              <div className="car-details">
-                <div className="car-info">
-                  <h3 className="car-name">{car?.car_name ?? "_"}</h3>
-                  <p className="car-price">${car.price.toLocaleString()}</p>
-                  <div className="car-meta">
-                    <span className="meta-item">
-                      <img src="/mileage-icon.svg" alt="Mileage" />
-                      {car.mileage.toLocaleString()} mi
-                    </span>
-                    <span className="meta-item">
-                      <img src="/location-icon.svg" alt="Location" />
-                      {car?.place ?? ""}
-                    </span>
+
+        {loading ? (
+          <Loader />
+        ) : savedCars?.length === 0 ? (
+          <div className="empty-state-container">
+            <div className="empty-icon-circle">
+              <FaHeartBroken />
+            </div>
+            <h3>Your garage is empty</h3>
+            <p>Save vehicles you're interested in to track them here.</p>
+            <button
+              className="btn-browse"
+              onClick={() => (window.location.href = "/cars")}
+            >
+              Explore Vehicles
+            </button>
+          </div>
+        ) : (
+          <div className="cars-grid">
+            {savedCars.map((car) => (
+              <div key={car._id} className="vehicle-card">
+                <div
+                  className="card-image-box"
+                  onClick={() => (window.location.href = `/car/${car._id}`)}
+                >
+                  <img
+                    src={car?.images[0]}
+                    alt={car.car_name}
+                    onError={(e) =>
+                      (e.target.src =
+                        "https://via.placeholder.com/400x300?text=Car+Image")
+                    }
+                  />
+                  <div className="price-badge">
+                    ${car.price?.toLocaleString()}
+                  </div>
+                  {car.featured && (
+                    <span className="featured-label">Featured</span>
+                  )}
+                </div>
+
+                <div className="card-content">
+                  <div className="card-header">
+                    <h3 className="vehicle-name" title={car?.car_name}>
+                      {car?.year} {car?.car_name ?? "Unknown Model"}
+                    </h3>
+                    <p className="vehicle-trim">{car?.model}</p>
+                  </div>
+
+                  <div className="specs-row">
+                    <div className="spec-item">
+                      <FaTachometerAlt className="spec-icon" />
+                      <span>{car.mileage?.toLocaleString()} mi</span>
+                    </div>
+                    <div className="spec-item">
+                      <BsFuelPumpFill className="spec-icon" />
+                      <span>{car.fuel_type || "Petrol"}</span>
+                    </div>
+                    <div className="spec-item">
+                      <FaMapMarkerAlt className="spec-icon" />
+                      <span>{car?.location || car?.place || "N/A"}</span>
+                    </div>
+                  </div>
+
+                  <div className="card-actions">
+                    <button
+                      className="btn-action btn-delete"
+                      onClick={() => removeFromFavorites(car?._id)}
+                      title="Remove from saved"
+                    >
+                      <FaTrash /> Remove
+                    </button>
+                    <button
+                      className="btn-action btn-share"
+                      onClick={() => handleShare(car._id)}
+                      title="Share vehicle"
+                    >
+                      <FaShareAlt /> Share
+                    </button>
                   </div>
                 </div>
-                <div className="car-actions">
-                  <button
-                    className="action-btn delete-btn"
-                    onClick={() => removeFromFavorites(car?._id)}
-                  >
-                    <DeleteIcon />
-                    <span>Remove</span>
-                  </button>
-                  <button
-                    className="action-btn share-btn"
-                    onClick={() => handleShare(car._id)}
-                  >
-                    <ShareIcon />
-                    <span>Share</span>
-                  </button>
-                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
-      <ToastContainer />
+            ))}
+          </div>
+        )}
+        <ToastContainer position="bottom-right" theme="colored" />
+      </div>
     </div>
   );
 }

@@ -4,13 +4,15 @@ import ActionMenu from "../ActionMenu/ActionMenu";
 import axios from "axios";
 import { ADD_CAR_VIEWS_COUNT } from "../../config/api";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
-import SettingsIcon from "@mui/icons-material/Settings";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { formatViews } from "../../utils/utils";
 import { ToastContainer, toast } from "react-toastify";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+
+// Icons for the "Smart Specs"
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function Card({ car, editable = false, category }) {
   const [favCars, setFavCars] = useState([]);
@@ -27,7 +29,8 @@ function Card({ car, editable = false, category }) {
     await axios.post(`${ADD_CAR_VIEWS_COUNT}/${car._id}`);
   };
 
-  const addToFav = () => {
+  const addToFav = (e) => {
+    e.stopPropagation();
     let updatedFavCars;
 
     if (isFavourite) {
@@ -43,69 +46,78 @@ function Card({ car, editable = false, category }) {
   };
 
   return (
-    <div className="card">
-      <div className="card-image-container">
+    <div className="pro-card" onClick={handleNavigateToCar}>
+      {/* Image Side */}
+      <div className="pro-card-image-wrap">
         <img
           src={car?.images[0]}
-          alt="Car"
-          className="card-image"
-          title={car?.car_name || "car image"}
-          onClick={handleNavigateToCar}
+          alt={car?.car_name}
+          className="pro-card-img"
+          loading="lazy"
         />
 
-        {category && <span className="category-badge">{category}</span>}
+        <div className="pro-card-badges">
+          {category && <span className="badge category-badge">{category}</span>}
+        </div>
 
-        <button className="favorite-btn">
-          {editable && <ActionMenu id={car._id} />}
-          {!editable && (
-            <FaHeart
-              style={{ fontSize: "20px" }}
+        <div className="pro-card-actions" onClick={(e) => e.stopPropagation()}>
+          {editable ? (
+            <ActionMenu id={car._id} />
+          ) : (
+            <button
+              className={`fav-icon-btn ${isFavourite ? "active" : ""}`}
               onClick={addToFav}
-              className={isFavourite ? "saved" : ""}
-            />
+            >
+              {isFavourite ? <FaHeart /> : <FaRegHeart />}
+            </button>
           )}
-        </button>
+        </div>
       </div>
-      <div className="card-details">
-        <h3 className="car-name">{car?.car_name ?? "_"}</h3>
-        <div className="car-specs-container">
-          <div className="spec-item">
-            <DirectionsCarIcon style={{ fontSize: "16px", color: "#555" }} />
-            <span>{car?.year ?? "_"}</span>
-          </div>
-          <div className="spec-item">
-            <LocalGasStationIcon style={{ fontSize: "16px", color: "#555" }} />
-            <span>{car?.fuel_type ?? "_"}</span>
-          </div>
-          <div className="spec-item">
-            <SettingsIcon style={{ fontSize: "16px", color: "#555" }} />
-            <span>{car?.transmission ?? "_"}</span>
+
+      {/* Content Side */}
+      <div className="pro-card-content">
+        <div className="pro-card-header">
+          <h3 className="car-title">{car?.car_name || "N/A"}</h3>
+          <div className="car-price">
+            ₹{car?.price?.toLocaleString() || "0"}
           </div>
         </div>
-        <div className="price-section">
-          <span className="current-price">
-            ₹{car?.price?.toLocaleString() ?? "_"}
-          </span>
-          {car?.original_price && (
-            <span className="original-price">
-              ₹{car.original_price.toLocaleString()}
-            </span>
-          )}
+
+        {/* Desktop Specs (Pills) */}
+        <div className="pro-card-specs desktop-specs">
+          <div className="spec-pill">{car?.year}</div>
+          <div className="spec-pill">{car?.fuel_type}</div>
+          <div className="spec-pill">{car?.transmission}</div>
         </div>
-        <div className="card-footer">
-          <p className="location">📍 {car?.place ?? "_"}</p>
-          <div className="visitors">
-            <RemoveRedEyeIcon
-              style={{ fontSize: "16px", marginRight: "4px" }}
-            />
+
+        {/* Mobile Specs (Text Row) */}
+        <div className="mobile-specs-row">
+          <span>{car?.year}</span>
+          <span className="dot">•</span>
+          <span>{car?.fuel_type}</span>
+          <span className="dot">•</span>
+          <span>{car?.transmission}</span>
+        </div>
+
+        <div className="pro-card-divider"></div>
+
+        <div className="pro-card-footer">
+          <div className="footer-item location">
+            <LocationOnIcon fontSize="inherit" />
+            <span>{car?.place || "N/A"}</span>
+          </div>
+          <div className="footer-item views">
+            <RemoveRedEyeIcon fontSize="inherit" />
             <span>{formatViews(car?.views?.toLocaleString())}</span>
           </div>
         </div>
-        <button className="view-details-btn" onClick={handleNavigateToCar}>
-          View Details
-        </button>
       </div>
-      <ToastContainer />
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1500}
+        hideProgressBar
+      />
     </div>
   );
 }

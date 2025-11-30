@@ -1,18 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { PersonAddAlt1, DirectionsCar, Handshake } from "@mui/icons-material";
 import "./HowItWorks.css";
 import { UserContext } from "../../hooks/UserContext";
-import SpringModal from "../../components/SpringModal/SpringModal";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import RecentActorsIcon from "@mui/icons-material/RecentActors";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import {
+  PersonAddOutlined,
+  DirectionsCarFilledOutlined,
+  HandshakeOutlined,
+  ArrowForward,
+  CheckCircle,
+} from "@mui/icons-material";
 
 function HowItWorks() {
   const { user } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [btnClicked, setBtnClicked] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -28,198 +27,148 @@ function HowItWorks() {
     }
   };
 
-  const handleOpen = (car) => {
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
-
   return (
-    <div className="how-it-works-section" id="Works">
-      <div className="container">
-        <h3 className="text-center fw-bold">
-          <span className="quality-text">
-            HOW CARAURAS WORKS
-            <svg
-              width="120"
-              height="12"
-              viewBox="0 0 120 12"
-              className="curved-line"
-            >
-              <path
-                d="M0,6 Q60,12 120,6"
-                stroke="#FFD700"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
-          </span>{" "}
-        </h3>
-        <div className="section-header mt-4">
-          <div className="news-header">
-            <p>Sell your car in just 3 simple steps</p>
+    <section className="hiw-modern-section" id="Works">
+      <div className="ambient-glow glow-1"></div>
+      <div className="ambient-glow glow-2"></div>
+
+      <div className="hiw-content-wrapper">
+        <div className="hiw-header-modern">
+          <span className="pill-badge">Simple Process</span>
+          <h2 className="hiw-title-modern">
+            From Driveway to <span className="text-gradient">Sold</span>
+          </h2>
+          <p className="hiw-desc-modern">
+            We've streamlined the car selling process into three powerful steps.
+          </p>
+        </div>
+
+        <div className="cards-perspective-container">
+          <div className="glass-step-card step-1">
+            <div className="step-bg-number">01</div>
+            <div className="card-icon-wrapper color-1">
+              <PersonAddOutlined className="step-icon-m" />
+            </div>
+            <div className="card-text-content">
+              <h3>Create Account</h3>
+              <p>
+                Join the elite marketplace. Verify your identity in seconds to
+                unlock full access.
+              </p>
+            </div>
+            <div className="card-shine"></div>
+          </div>
+
+          <div className="arrow-connector">
+            <ArrowForward />
+          </div>
+
+          <div className="glass-step-card step-2">
+            <div className="step-bg-number">02</div>
+            <div className="card-icon-wrapper color-2">
+              <DirectionsCarFilledOutlined className="step-icon-m" />
+            </div>
+            <div className="card-text-content">
+              <h3>List Your Car</h3>
+              <p>
+                AI-powered listing tool. Upload photos and let us generate the
+                perfect description.
+              </p>
+            </div>
+            <div className="card-shine"></div>
+          </div>
+
+          <div className="arrow-connector">
+            <ArrowForward />
+          </div>
+
+          <div className="glass-step-card step-3">
+            <div className="step-bg-number">03</div>
+            <div className="card-icon-wrapper color-3">
+              <HandshakeOutlined className="step-icon-m" />
+            </div>
+            <div className="card-text-content">
+              <h3>Get Paid</h3>
+              <p>
+                Connect with verified buyers, negotiate securely, and close the
+                deal instantly.
+              </p>
+            </div>
+            <div className="card-shine"></div>
           </div>
         </div>
 
-        <div className="steps-wrapper">
-          <div className="step">
-            <div className="step-number">1</div>
-            <div className="step-icon">
-              <PersonAddAlt1 className="icon" style={{ color: "#ADB2D4" }} />
-            </div>
-            <h3 className="step-title">Create an Account</h3>
-            <p className="step-description">
-              Sign up in 30 seconds to join our trusted community of car sellers
-              and buyers.
-            </p>
-          </div>
-
-          <div className="step-connector"></div>
-
-          <div className="step">
-            <div className="step-number">2</div>
-            <div className="step-icon">
-              <DirectionsCar className="icon" style={{ color: "#ADB2D4" }} />
-            </div>
-            <h3 className="step-title">List Your Vehicle</h3>
-            <p className="step-description">
-              Upload photos and details - we'll help you create the perfect
-              listing.
-            </p>
-          </div>
-
-          <div className="step-connector"></div>
-
-          <div className="step">
-            <div className="step-number">3</div>
-            <div className="step-icon">
-              <Handshake className="icon" style={{ color: "#ADB2D4" }} />
-            </div>
-            <h3 className="step-title">Connect With Buyers</h3>
-            <p className="step-description">
-              Get offers and negotiate directly with verified buyers in our
-              secure platform.
-            </p>
-          </div>
-        </div>
         {!loggedIn && (
-          <a href="/signin">
+          <div className="action-area">
             <button
-              className="cta-button d-block mx-auto"
+              className="pulse-btn"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
-              style={{
-                background: "#1D6170",
-                padding: "15px 40px",
-                color: "#fff",
-                border: "none",
-                borderRadius: "50px",
-              }}
             >
-              Get Started Now
+              Start Selling Now
             </button>
-          </a>
+          </div>
         )}
       </div>
+
       <div
-        class="modal fade"
+        className="modal fade"
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
+        tabIndex="-1"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-centered car-selling-steps-modal">
-          <div class="modal-content">
-            <div class="modal-header car-steps-header">
-              <h2 class="modal-title car-steps-title">How to Sell Your Car</h2>
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content glass-modal">
+            <div className="modal-header border-0">
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close btn-close-white"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body car-steps-body">
-              <div class="car-steps-container">
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <PersonAddIcon />
-                    </span>
+            <div className="modal-body p-0">
+              <div className="modal-modern-layout">
+                <div className="modal-visual-side">
+                  <div className="visual-overlay">
+                    <h3>Ready to Sell?</h3>
+                    <p>Join 50,000+ happy sellers</p>
                   </div>
-                  <div class="car-step-details">
-                    <h3>Create Your Account</h3>
-                    <p>
-                      Sign up using your email or social media accounts to get
-                      started.
-                    </p>
-                  </div>
+                  <img
+                    src="/images/login.png"
+                    alt=""
+                    className="modal-bg-img"
+                    onError={(e) => (e.target.style.display = "none")}
+                  />
                 </div>
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <RecentActorsIcon />
-                    </span>
+                <div className="modal-action-side">
+                  <h2>Let's Get Started</h2>
+                  <div className="checklist-modern">
+                    <div className="check-row">
+                      <CheckCircle className="check-icon-m" />
+                      <span>Free Listing</span>
+                    </div>
+                    <div className="check-row">
+                      <CheckCircle className="check-icon-m" />
+                      <span>Instant Offers</span>
+                    </div>
+                    <div className="check-row">
+                      <CheckCircle className="check-icon-m" />
+                      <span>Secure Payment</span>
+                    </div>
                   </div>
-                  <div class="car-step-details">
-                    <h3>Complete Your Profile</h3>
-                    <p>
-                      Fill in your details and verify your identity for trust
-                      and security.
-                    </p>
-                  </div>
-                </div>
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <DirectionsCarIcon />
-                    </span>
-                  </div>
-                  <div class="car-step-details">
-                    <h3>Add Your Car Details</h3>
-                    <p>
-                      Enter your car's specifications, upload photos, and set
-                      your price.
-                    </p>
-                  </div>
-                </div>
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <WatchLaterIcon />
-                    </span>
-                  </div>
-                  <div class="car-step-details">
-                    <h3>Publish & Wait for Offers</h3>
-                    <p>
-                      Review and publish your listing. Interested buyers will
-                      contact you.
-                    </p>
-                  </div>
+                  <button className="modal-main-btn" onClick={handleClick}>
+                    Create My Listing
+                  </button>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer car-steps-footer">
-              <button
-                type="button"
-                class="btn btn-outline-secondary car-steps-close-btn"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn car-steps-primary-btn"
-                onClick={handleClick}
-              >
-                Get Started
-              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

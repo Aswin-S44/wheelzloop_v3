@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./Counter.css";
 import axios from "axios";
 import { STATS_COUNT } from "../../config/api";
+import SpeedIcon from "@mui/icons-material/Speed";
+import GroupsIcon from "@mui/icons-material/Groups";
+import DiamondIcon from "@mui/icons-material/Diamond";
 
 function Counter() {
   const [counts, setCounts] = useState({
@@ -10,30 +13,6 @@ function Counter() {
     brands: 0,
   });
 
-  const [data, setData] = useState({});
-
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(`${STATS_COUNT}`);
-
-        if (res && res.data) {
-          setData(res.data);
-          // setCounts(res.data);
-          setTargetCounts(res.data);
-        }
-      } catch (error) {
-        return error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
   const [targetCounts, setTargetCounts] = useState({
     cars: 1250,
     customers: 850,
@@ -41,77 +20,129 @@ function Counter() {
   });
 
   useEffect(() => {
-    const updateCounts = (key, step, limit) => {
-      return setInterval(() => {
-        setCounts((prev) => ({
-          ...prev,
-          [key]: prev[key] < limit ? Math.min(prev[key] + step, limit) : limit,
-        }));
-      }, 20);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${STATS_COUNT}`);
+        if (res && res.data) {
+          setTargetCounts(res.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     };
+    fetchData();
+  }, []);
 
-    const intervals = [
-      updateCounts("cars", 25, targetCounts.cars),
-      updateCounts("customers", 15, targetCounts.customers),
-      updateCounts("brands", 2, targetCounts.brands),
-    ];
+  useEffect(() => {
+    // Custom easing function for smooth counter
+    const easeOutQuad = (t) => t * (2 - t);
+    const duration = 2000; // 2 seconds
+    const frameDuration = 1000 / 60; // 60fps
+    const totalFrames = Math.round(duration / frameDuration);
+    let frame = 0;
 
-    return () => intervals.forEach(clearInterval);
+    const timer = setInterval(() => {
+      frame++;
+      const progress = easeOutQuad(frame / totalFrames);
+
+      setCounts((prev) => {
+        if (frame >= totalFrames) {
+          clearInterval(timer);
+          return targetCounts;
+        }
+        return {
+          cars: Math.floor(targetCounts.cars * progress),
+          customers: Math.floor(targetCounts.customers * progress),
+          brands: Math.floor(targetCounts.brands * progress),
+        };
+      });
+    }, frameDuration);
+
+    return () => clearInterval(timer);
   }, [targetCounts]);
 
   return (
-    <section className="counter-section" id="Our Achievements">
-      <div className="">
-        <h3 className="text-center fw-bold">
-          <span className="quality-text">
-            Our Achievements
-            <svg
-              width="120"
-              height="12"
-              viewBox="0 0 120 12"
-              className="curved-line"
-            >
-              <path
-                d="M0,6 Q60,12 120,6"
-                stroke="#FFD700"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
-          </span>{" "}
-        </h3>
+    <section className="hud-stats-section" id="Achievements">
+      {/* Background Effects */}
+      <div className="hud-grid-bg"></div>
+      <div className="hud-glow-spot spot-1"></div>
+      <div className="hud-glow-spot spot-2"></div>
 
-        <p className="counter-subtitle text-center">
-          Driving excellence in every number
-        </p>
-      </div>
-      <div className="counter-container">
-        {Object.entries(counts).map(([key, value]) => (
-          <div key={key} className="counter-item">
-            <div className="counter-circle">
-              <div className="counter-value">
-                {value}
-                <span className="counter-plus">+</span>
+      <div className="hud-container">
+        <div className="hud-header">
+          <h2 className="hud-title">
+            MARKET <span className="neon-text">DOMINANCE</span>
+          </h2>
+          <div className="hud-line"></div>
+        </div>
+
+        <div className="hud-cards-wrapper">
+          {/* Card 1: Cars */}
+          <div className="hud-card card-cyan">
+            <div className="hud-card-inner">
+              <div className="hud-icon-box">
+                <SpeedIcon className="hud-icon" />
               </div>
-              <svg className="counter-circle-bg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  style={{
-                    strokeDashoffset: 283 - 283 * (value / targetCounts[key]),
-                  }}
-                />
-              </svg>
+              <div className="hud-data">
+                <h3 className="hud-number">
+                  {counts.cars}
+                  <span className="hud-suffix">+</span>
+                </h3>
+                <p className="hud-label">Premium Vehicles</p>
+              </div>
             </div>
-            <p className="counter-label">
-              {key === "cars" && "Cars Available"}
-              {key === "customers" && "Happy Customers"}
-              {key === "brands" && "Top Brands"}
-            </p>
+            <div className="hud-progress-bar">
+              <div
+                className="hud-fill fill-cyan"
+                style={{ width: "85%" }}
+              ></div>
+            </div>
           </div>
-        ))}
+
+          {/* Card 2: Customers */}
+          <div className="hud-card card-purple">
+            <div className="hud-card-inner">
+              <div className="hud-icon-box">
+                <GroupsIcon className="hud-icon" />
+              </div>
+              <div className="hud-data">
+                <h3 className="hud-number">
+                  {counts.customers}
+                  <span className="hud-suffix">K</span>
+                </h3>
+                <p className="hud-label">Happy Clients</p>
+              </div>
+            </div>
+            <div className="hud-progress-bar">
+              <div
+                className="hud-fill fill-purple"
+                style={{ width: "70%" }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Card 3: Brands */}
+          <div className="hud-card card-amber">
+            <div className="hud-card-inner">
+              <div className="hud-icon-box">
+                <DiamondIcon className="hud-icon" />
+              </div>
+              <div className="hud-data">
+                <h3 className="hud-number">
+                  {counts.brands}
+                  <span className="hud-suffix">+</span>
+                </h3>
+                <p className="hud-label">Global Brands</p>
+              </div>
+            </div>
+            <div className="hud-progress-bar">
+              <div
+                className="hud-fill fill-amber"
+                style={{ width: "90%" }}
+              ></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
