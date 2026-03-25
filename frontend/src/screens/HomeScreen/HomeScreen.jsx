@@ -132,24 +132,6 @@ function HomeScreen() {
         <Banner2 />
       </div>
       <div className="mt-5">
-        <h3 className="text-center fw-bold">
-          <span className="quality-text">
-            Choose by Category
-            <svg
-              width="120"
-              height="12"
-              viewBox="0 0 120 12"
-              className="curved-line"
-            >
-              <path
-                d="M0,6 Q60,12 120,6"
-                stroke="#FFD700"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
-          </span>{" "}
-        </h3>
         <CarCategoriesSection />
       </div>
       <div className="container">
@@ -279,9 +261,9 @@ function HomeScreen() {
         {/* <div className="mt-0">
           <NewsAndResources />
         </div> */}
-        <div className="mt-0">
+        {/* <div className="mt-0">
           <Counter />
-        </div>
+        </div> */}
         {/* <div>
           <PopularBrandsSection />
         </div> */}

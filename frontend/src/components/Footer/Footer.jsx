@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import "./Footer.css";
-import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  LinkedIn,
+  YouTube,
+  Email,
+  LocationOn,
+  Phone,
+  Send,
+  ArrowUpward,
+} from "@mui/icons-material";
 import XIcon from "@mui/icons-material/X";
-import EmailIcon from "@mui/icons-material/Email";
 import { FACEBOOK, INSTAGRAM, LINKEDIN, X } from "../../constants/social-urls";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -14,320 +24,220 @@ import Swal from "sweetalert2";
 
 function Footer() {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState(null);
+  const [email, setEmail] = useState("");
+
   const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      Swal.fire({
+        title: "Error",
+        text: "Please enter your email address",
+        icon: "error",
+        confirmButtonColor: "#667eea",
+      });
+      return;
+    }
+
     try {
-      e.preventDefault();
       setLoading(true);
-      if (email) {
-        const res = await axios.post(ADD_SUBSCRIPTION_URL, { email });
-        setLoading(false);
-        if (res && res.status === 200) {
-          Swal.fire({
-            title: "Subscription added!",
-            text: "Thank you for subscribing with us!",
-            icon: "success",
-          });
-        } else {
-          Swal.fire({
-            title: "You are already subscribed",
-            icon: "success",
-            draggable: true,
-          });
-        }
+      const res = await axios.post(ADD_SUBSCRIPTION_URL, { email });
+      setLoading(false);
+      if (res && res.status === 200) {
+        Swal.fire({
+          title: "Subscription added!",
+          text: "Thank you for subscribing with us!",
+          icon: "success",
+          confirmButtonColor: "#667eea",
+          timer: 2000,
+        });
         setEmail("");
       }
     } catch (error) {
       console.error("Subscription error:", error);
       Swal.fire({
-        title: "You are already subscribed",
-        icon: "success",
-        draggable: true,
+        title: "Already Subscribed",
+        text: "This email is already subscribed to our newsletter",
+        icon: "info",
+        confirmButtonColor: "#667eea",
       });
       setLoading(false);
       setEmail("");
     }
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const footerLinks = {
+    company: {
+      title: "Company",
+      links: [
+        { name: "Home", path: "/" },
+        { name: "About Us", path: "/about-us" },
+        { name: "Contact Us", path: "/contact-us" },
+        { name: "Careers", path: "/careers" },
+        { name: "Blog", path: "/blogs" },
+      ],
+    },
+    services: {
+      title: "Services",
+      links: [
+        { name: "Find Cars", path: "/used-cars" },
+        { name: "Sell Your Car", path: "/sell-car" },
+        { name: "Car Valuation", path: "/valuation" },
+        { name: "Favorites", path: "/favourites" },
+        { name: "Reviews", path: "/reviews" },
+      ],
+    },
+    support: {
+      title: "Support",
+      links: [
+        { name: "Help Center", path: "/help" },
+        { name: "FAQs", path: "/faq" },
+        { name: "How It Works", path: "/how-it-works" },
+        { name: "Safety Tips", path: "/safety-tips" },
+        { name: "Report an Issue", path: "/report" },
+      ],
+    },
+    legal: {
+      title: "Legal",
+      links: [
+        { name: "Terms & Conditions", path: "/terms" },
+        { name: "Privacy Policy", path: "/privacy" },
+        { name: "Cookie Policy", path: "/cookies" },
+        { name: "Disclaimer", path: "/disclaimer" },
+      ],
+    },
+  };
+
+  const socialLinks = [
+    { icon: FacebookIcon, url: FACEBOOK, color: "#1877f2", name: "Facebook" },
+    {
+      icon: InstagramIcon,
+      url: INSTAGRAM,
+      color: "#e4405f",
+      name: "Instagram",
+    },
+    { icon: XIcon, url: X, color: "#000000", name: "X" },
+    { icon: LinkedInIcon, url: LINKEDIN, color: "#0a66c2", name: "LinkedIn" },
+    {
+      icon: YouTubeIcon,
+      url: "https://www.youtube.com/@carauras",
+      color: "#ff0000",
+      name: "YouTube",
+    },
+  ];
+
   return (
-    <>
-      {/* <footer className="footer">
-       
-        <div className="footer-extra-box">
-          <h3 style={{ fontWeight: "bold" }}>
-            STAY UPTODATE WITH OUR LATEST UPDATES
-          </h3>
-          <p>Follow us on social media</p>
-         
-        </div>
-        <div className="footer-container">
-          <div className="footer-section footer-logo">
-            <h3 style={{ color: "#606cbc", fontWeight: "bold" }}>WheelzLoop</h3>
-            <p>Your trusted partner for buying and selling used cars.</p>
-          </div>
-          <div className="footer-section footer-links">
-            <h3>Quick Links</h3>
-            <ul>
-              <li>
-                <a href="/used-cars" title="Find used cars">
-                  Find cars
-                </a>
-              </li>
-              <li>
-                <a href="/favourites" title="View saved cars">
-                  Favourites
-                </a>
-              </li>
-              <li>
-                <a href="/chats" title="my chats">
-                  Chats
-                </a>
-              </li>
-              <li>
-                <a href="/about-us" title="about us">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="/reviews" title="reviews">
-                  Reviews
-                </a>
-              </li>
-              <li>
-                <a href="/blogs" title="blogs">
-                  Blogs
-                </a>
-              </li>
-              <li>
-                <a href="/signin" title="login">
-                  Login to account?
-                </a>
-              </li>
-              <li>
-                <a href="/signup" title="signup">
-                  Create new account?
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="footer-section footer-resources">
-            <h3>Resources</h3>
-            <ul>
-              <li>
-                <a href="/blogs" title="blogs">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="#guides" title="guides">
-                  Guides
-                </a>
-              </li>
-              <li>
-                <a href="#support" title="support">
-                  Support
-                </a>
-              </li>
-              <li>
-                <a href="#terms" title="terms and conditions">
-                  Terms & Conditions
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="footer-section footer-contact">
-            <h3>Contact Us</h3>
- 
+    <footer className="modern-footer">
+      {/* Newsletter Section */}
+      {/* <div className="newsletter-section">
+        <div className="newsletter-content">
+          <div className="newsletter-text">
+            <h3>Subscribe to Our Newsletter</h3>
             <p>
-              <EmailIcon style={{ color: "#606cbc" }} /> wheelzloop@gmail.com
+              Get the latest updates on new arrivals, special offers, and car
+              care tips
             </p>
+          </div>
+          <form onSubmit={handleSubscribe} className="newsletter-form">
+            <div className="input-group">
+              <Email className="input-icon" />
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <button type="submit" disabled={loading}>
+                {loading ? "Subscribing..." : "Subscribe"}
+                <Send className="button-icon" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </div> */}
 
-          </div>
-          <div className="footer-section footer-social">
-            <h3>Follow Us</h3>
-            <div className="social-icons">
-              <a
-                href={FACEBOOK}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook page"
-                title="facebook page"
-              >
-                <Facebook style={{ color: "#606cbc" }} fontSize="large" />
-              </a>
-              <a
-                href={X}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="X page"
-                title="x page"
-              >
-                <XIcon style={{ color: "#606cbc" }} fontSize="large" />
-              </a>
-              <a
-                href={INSTAGRAM}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram page"
-                title="instagram"
-              >
-                <Instagram style={{ color: "#606cbc" }} fontSize="large" />
-              </a>
-              <a
-                href={LINKEDIN}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Linkedin page"
-                title="linkedin"
-              >
-                <LinkedIn style={{ color: "#606cbc" }} fontSize="large" />
-              </a>
+      {/* Main Footer Content */}
+      <div className="footer-main">
+        <div className="footer-grid">
+          {/* Brand Section */}
+          <div className="footer-brand">
+            <div className="brand-logo">
+              <span className="logo-icon">🚗</span>
+              <h2>
+                Car<span>Auras</span>
+              </h2>
+            </div>
+            <p className="brand-description">
+              India's most trusted platform for buying and selling used cars. We
+              connect car enthusiasts with their dream vehicles.
+            </p>
+            <div className="contact-info">
+              <div className="contact-item">
+                <Email className="contact-icon" />
+                <span>support@carauras.com</span>
+              </div>
+              <div className="contact-item">
+                <Phone className="contact-icon" />
+                <span>+91 98765 43210</span>
+              </div>
+              <div className="contact-item">
+                <LocationOn className="contact-icon" />
+                <span>Mumbai, India</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="footer-bottom">
-          <p>
-            &copy; {new Date().getFullYear()} WheelzLoop. All rights reserved.
-          </p>
-        </div>
-      </footer> */}
 
-      <footer className="footer">
-        <div class="content">
-          <div class="top">
-            <div class="logo-details">
-              <div>CarAuras</div>
+          {/* Links Sections */}
+          {Object.entries(footerLinks).map(([key, section]) => (
+            <div key={key} className="footer-links">
+              <h4>{section.title}</h4>
+              <ul>
+                {section.links.map((link, index) => (
+                  <li key={index}>
+                    <a href={link.path}>{link.name}</a>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div class="media-icons">
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="footer-bottom">
+        <div className="bottom-content">
+          <div className="copyright">
+            <p>
+              &copy; {new Date().getFullYear()} CarAuras. All rights reserved.
+            </p>
+          </div>
+
+          <div className="social-links">
+            {socialLinks.map((social, index) => (
               <a
+                key={index}
+                href={social.url}
                 target="_blank"
-                href="https://www.facebook.com/profile.php?id=61581912191717"
+                rel="noopener noreferrer"
+                className="social-link"
+                aria-label={social.name}
+                style={{ "--hover-color": social.color }}
               >
-                {" "}
-                <FacebookIcon
-                  className="icon font-size-footer"
-                  style={{ color: "#fff" }}
-                />
+                <social.icon />
               </a>
-              <a target="_blank" href="https://www.instagram.com/carsauraa/">
-                <InstagramIcon
-                  className="icon font-size-footer"
-                  style={{ color: "#fff" }}
-                />
-              </a>
-              {/* <a
-                target="_blank"
-                href="https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/?originalSubdomain=in"
-              >
-                <LinkedInIcon
-                  className="icon font-size-footer"
-                  style={{ color: "#fff" }}
-                />
-              </a> */}
-              <a target="_blank" href="https://www.youtube.com/@carauras">
-                <YouTubeIcon
-                  className="icon font-size-footer"
-                  style={{ color: "#fff" }}
-                />
-              </a>
-            </div>
+            ))}
           </div>
-          <div class="link-boxes">
-            <ul class="box">
-              <li class="link_name">Company</li>
-              <li>
-                <a href="/">Home</a>
-              </li>
-              <li>
-                <a href="/contact-us">Contact us</a>
-              </li>
-              <li>
-                <a href="/about-us">About us</a>
-              </li>
-              <li>
-                <a href="/signin">Get started</a>
-              </li>
-            </ul>
-            <ul class="box">
-              <li class="link_name">Services</li>
-              <li>
-                <a href="/used-cars">Find-Cars</a>
-              </li>
-              <li>
-                <a href="/favourites">Favourites</a>
-              </li>
-              <li>
-                <a href="/reviews">Reviews</a>
-              </li>
-              <li>
-                <a href="/blogs">Blogs</a>
-              </li>
-            </ul>
-            <ul class="box">
-              <li class="link_name">Account</li>
-              <li>
-                <a href="/signin">Profile</a>
-              </li>
-              <li>
-                <a href="/signin">Sign In</a>
-              </li>
-              <li>
-                <a href="/signup">Create New Account</a>
-              </li>
-            </ul>
-            <ul class="box">
-              <li class="link_name">Useful Links</li>
-              <li>
-                <a href="#faq">Faq</a>
-              </li>
-              <li>
-                <a href="#Works">How It Works</a>
-              </li>
-              <li>
-                <a href="#Our Achievements">Our Achievements</a>
-              </li>
-              <li>
-                <a href="#Choose by Category">Choose by Category</a>
-              </li>
-            </ul>
-            <ul class="box input-box">
-              <form onSubmit={handleSubscribe}>
-                <li class="link_name">Subscribe</li>
-                <li>
-                  <input
-                    type="text"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </li>
-                <li>
-                  {/* <input type="button" value="Subscribe" /> */}
-                  <button
-                    type="submit"
-                    className="subsri-btn"
-                    disabled={loading}
-                  >
-                    {loading ? "Please wait" : "Subscribe"}
-                  </button>
-                </li>
-              </form>
-            </ul>
-          </div>
+
+          <button className="scroll-top" onClick={scrollToTop}>
+            <ArrowUpward />
+          </button>
         </div>
-        <div class="bottom-details">
-          <div class="bottom_text">
-            <span class="copyright_text">
-              Copyright © 2021 <a href="https://carauras.com/">CarAuras.</a>
-              All rights reserved
-            </span>
-            <span class="policy_terms">
-              <a href="#">Privacy policy</a>
-              <a href="#">Terms & condition</a>
-            </span>
-          </div>
-        </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
 

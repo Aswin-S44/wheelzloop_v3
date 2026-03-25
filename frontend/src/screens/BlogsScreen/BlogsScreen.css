@@ -1,18 +1,4 @@
-:root {
-  --primary: #606cbc;
-  --primary-dark: #4a5699;
-  --secondary: #ADB2D4;
-  --dark: #2c3e50;
-  --light: #ffffff;
-  --gray: #6c757d;
-  --light-gray: #f8f9fa;
-  --border: #e9ecef;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-}
+
 
 .blogs-container {
   max-width: 1200px;

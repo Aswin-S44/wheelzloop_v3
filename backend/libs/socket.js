@@ -1,5 +1,7 @@
 const { Server } = require("socket.io");
 const http = require("http");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const express = require("express");
 
@@ -11,8 +13,8 @@ const server = http.createServer(app);
 
 const socketOrigin = [];
 
-const productionSiteUrl = "https://carauras.com";
-const localSiteUrl = "http://localhost:3000";
+const productionSiteUrl = process.env.WEBSITE_LIVE_URL;
+const localSiteUrl = process.env.WEBSITE_LOCAL_URL;
 
 process.env.NODE_ENV == "production"
   ? socketOrigin.push(productionSiteUrl)

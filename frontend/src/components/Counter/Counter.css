@@ -1,13 +1,7 @@
 /* Enhanced CSS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
-:root {
-  /* --primary-color: #00796b; */
-  --primary-dark: #148a84;
-  --secondary-color: #f8fafc;
-  --text-dark: #1e293b;
-  --text-light: #64748b;
-}
+
 
 .counter-section {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);

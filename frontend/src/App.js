@@ -75,7 +75,7 @@ function Layout() {
             <Route path="/reviews" element={<ReviewScreen />} />
             <Route path="/profile/:id" element={<DealerProfileScreen />} />
             <Route path="/premium-plans" element={<PremiumPlans />} />
-            <Route path="/subscribe/:plan" element={<PaymentScreen />} />
+            {/* <Route path="/subscribe/:plan" element={<PaymentScreen />} /> */}
             <Route
               path="/chats"
               element={authUser ? <ChatScreen /> : <ChatScreen />}

@@ -3,7 +3,12 @@ const crypto = require("crypto");
 const { sendEmail } = require("../../utils/utils");
 const { emailSubjects } = require("../../../constants/templates");
 require("dotenv").config();
-const applicationUrl = process.env.APPLICATION_URL || "http://localhost:3000";
+
+const productionSiteUrl = process.env.WEBSITE_LIVE_URL;
+const localSiteUrl = process.env.WEBSITE_LOCAL_URL;
+
+const applicationUrl =
+  process.env.NODE_ENV == "production" ? productionSiteUrl : localSiteUrl;
 
 module.exports.forgotPassword = async (req, res) => {
   const { email } = req.body;

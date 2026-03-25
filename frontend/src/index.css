@@ -10,13 +10,28 @@ body {
   background: #f8fafc;
 }
 
-:root {
-  --primary-color: #1D6170;
-  --secondary-color: #f60;
-  --border-radius: 20px;
-  --main-bg-color: #30bfa1
-}
 
+:root {
+  --primary: #144F4E;
+  --primary-dark: #EB217F;
+  --primary-light: #ff6b6b;
+  --secondary: #1e3799;
+  --secondary-dark: #EB217F;
+  --accent: #f39c12;
+  --dark: #7141a0;
+  --dark-light: #34495e;
+  --gray: #7f8c8d;
+  --gray-light: #bdc3c7;
+  --light: #f5f6fa;
+  --white: #ffffff;
+  --success: #27ae60;
+  --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --primary-color: #144F4E;
+}
 a {
   text-decoration: none
 }

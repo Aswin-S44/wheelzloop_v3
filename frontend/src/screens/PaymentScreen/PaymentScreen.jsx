@@ -15,7 +15,7 @@ import { CREATE_PAYMENT_INTENT, UPDATE_PROFILE_URL } from "../../config/api";
 import { UserContext } from "../../hooks/UserContext";
 import axios from "axios";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ({ plan, planDetails }) => {
   const stripe = useStripe();
@@ -264,13 +264,13 @@ const PaymentScreen = () => {
             <p className="price">{planDetails[plan].price}</p>
           </div>
 
-          <ul className="features-list">
+          {/* <ul className="features-list">
             {planDetails[plan].features.map((feature, index) => (
               <li key={index}>
                 <FaCheckCircle className="check-icon" /> {feature}
               </li>
             ))}
-          </ul>
+          </ul> */}
 
           <div className="security-badge">
             <FaLock className="lock-icon" />
@@ -278,11 +278,11 @@ const PaymentScreen = () => {
           </div>
         </div>
 
-        <div className="payment-form-container">
+        {/* <div className="payment-form-container">
           <Elements stripe={stripePromise}>
             <PaymentForm plan={plan} planDetails={planDetails} />
           </Elements>
-        </div>
+        </div> */}
       </div>
     </div>
   );

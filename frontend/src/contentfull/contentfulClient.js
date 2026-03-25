@@ -2,8 +2,8 @@ import { createClient } from "contentful";
 const contentful = require("contentful");
 
 const client = createClient({
-  space: process.env.REACT_APP_CONTENTFULL_SPACEID,
-  accessToken: process.env.REACT_APP_CONTENTFULL_ACCESS_TOKEN,
+  space: process.env.REACT_APP_CONTENTFULL_SPACEID || "1234",
+  accessToken: process.env.REACT_APP_CONTENTFULL_ACCESS_TOKEN || "1234",
 });
 
 export default client;
