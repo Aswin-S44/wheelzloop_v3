@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: #f8fafc;
+}
+
+
+:root {
+  --primary: #253D2C;
+  --primary-dark: #111827;
+  --primary-light: #111827;
+  --secondary: #1e3799;
+  --secondary-dark: #EB217F;
+  --accent: #f39c12;
+  --dark: #7141a0;
+  --dark-light: #34495e;
+  --gray: #7f8c8d;
+  --gray-light: #bdc3c7;
+  --light: #f5f6fa;
+  --white: #ffffff;
+  --success: #27ae60;
+  --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --primary-color: #144F4E;
+}
+
+::placeholder{
+  color: #111;
+}
+
+a {
+  text-decoration: none
+}
+
+.mt-4 {
+  margin-top: 10px
+}
+
+.w-90 {
+  width: 90%
+}
+
+/* .screens {
+  margin-left: 20px;
+  margin-right: 20px
+} */
+
+.space-btn {
+  display: flex;
+  justify-content: space-between
+}
+
+.font-md {
+  color: #111;
+  font-size: 30px;
+  font-weight: 600
+}
+
+.font-sm {
+  color: #111;
+  font-size: 18px;
+  font-weight: 400
+}
+
+.span {
+  color: var(--primary-color)
+}
+
+button.medium {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 19px;
+  color: #fff;
+  outline: none;
+  padding: 10px
+}
+
+.button-transparent {
+  background: #0000;
+  border: 1px solid gray;
+  border-radius: 19px;
+  color: #111;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 9px;
+  width: auto
+}
+
+.input__error input {
+  border-color: red
+}
+
+.error__feedback {
+  color: red
+}
+
+.additional-image {
+  height: auto;
+  width: 200px
+}
+
+.scrollable-div {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.pt-70 {
+  padding-top: 80px;
+}
+
+.scroll-container {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.mw-90 {
+  max-width: 90%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* main{
+  margin-top: 110px;
+}
+
+@media (max-width: 768px) {
+  main {
+    margin-top: 80px;
+  }
+} */
+
+.saved {
+  color: red;
+}
+
+
+@media (max-width: 768px) {
+
+  h3.font-md {
+    font-size: calc(1.3rem + .6vw);
+  }
+
+  .latst-cars-section .container {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+}
+
+
+@media (max-width: 400px) {
+  h3.font-md {
+    font-size: 18px;
+  }
+
+
+  .font-sm {
+    display: flex;
+    font-size: 12px;
+  }
+
+  .font-sm svg {
+    font-size: 12px !important;
+    margin-top: 3px;
+  }
+
+}
+
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-steps .ant-steps-item-process .ant-steps-item-icon {
+  background-color: #606cbc !important;
+  border-color: #606cbc;
+}
