@@ -10,8 +10,20 @@ import {
   FaInstagram,
   FaLinkedin,
   FaYoutube,
+  FaClock,
+  FaPaperPlane,
+  FaCheckCircle,
+  FaHeadset,
+  FaShieldAlt,
+  FaStar,
 } from "react-icons/fa";
 import { GiCarWheel } from "react-icons/gi";
+import {
+  HiOutlineMail,
+  HiOutlinePhone,
+  HiOutlineLocationMarker,
+} from "react-icons/hi";
+import { BiMap, BiTime, BiSupport } from "react-icons/bi";
 import "./ContactScreen.css";
 import axios from "axios";
 import {
@@ -47,70 +59,152 @@ function ContactScreen() {
     e.preventDefault();
     setLoading(true);
 
-    setSubmitted(true);
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "General Inquiry",
-      message: "",
-    });
-
     try {
       const res = await axios.post(`${SEND_FEEDBACK_API}`, formData);
       if (res && res.status == 200) {
         setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "General Inquiry",
+          message: "",
+        });
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
       }
     } catch (error) {
-      return error;
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
+  const contactInfo = [
+    {
+      icon: <HiOutlineMail />,
+      title: "Email Us",
+      details: ["infoatcarauras@gmail.com", "support@carauras.com"],
+      response: "Response within 24 hours",
+      color: "#3b82f6",
+    },
+    {
+      icon: <HiOutlinePhone />,
+      title: "Call Us",
+      details: ["+1 (555) 123-4567", "+1 (555) 987-6543"],
+      response: "Mon-Fri 9AM-6PM EST",
+      color: "#10b981",
+    },
+    {
+      icon: <HiOutlineLocationMarker />,
+      title: "Visit Us",
+      details: ["123 Auto Plaza Drive", "Los Angeles, CA 90001"],
+      response: "Showroom open daily",
+      color: "#f59e0b",
+    },
+  ];
+
+  const features = [
+    {
+      icon: <FaHeadset />,
+      title: "24/7 Support",
+      desc: "Round-the-clock assistance",
+    },
+    {
+      icon: <FaShieldAlt />,
+      title: "Secure Transactions",
+      desc: "100% protected",
+    },
+    { icon: <FaStar />, title: "5-Star Service", desc: "Top rated dealers" },
+  ];
+
   return (
     <div className="contact-container">
       {/* Hero Section */}
       <section className="contact-hero">
-        <div className="hero-overlay"></div>
+        <div className="hero-particles"></div>
         <div className="hero-content">
-          <GiCarWheel className="hero-icon" />
-          <h1>Contact CarAuras</h1>
-          <p>We're here to help with all your used car needs</p>
+          <div className="hero-icon-wrapper">
+            <GiCarWheel className="hero-icon" />
+          </div>
+          <h1>Let's Drive Together</h1>
+          <p>Your journey to the perfect car starts with a conversation</p>
+          <div className="hero-stats">
+            <div className="stat">
+              <span className="stat-number">5000+</span>
+              <span className="stat-label">Happy Customers</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">98%</span>
+              <span className="stat-label">Satisfaction Rate</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">24/7</span>
+              <span className="stat-label">Support</span>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Contact Content */}
       <div className="contact-content">
-        {/* Contact Info */}
-        <div className="contact-info">
-          <h2>Get in Touch</h2>
-          <p>
-            Have questions about our services or a specific vehicle? Reach out
-            to our team.
-          </p>
+        {/* Left Section - Contact Info */}
+        <div className="contact-info-wrapper">
+          <div className="section-header">
+            <span className="section-badge">Get in Touch</span>
+            <h2>We'd Love to Hear From You</h2>
+            <p>
+              Whether you have a question about a vehicle or just want to say
+              hello, we're all ears.
+            </p>
+          </div>
 
-          <div className="info-cards">
-            <div className="info-card">
-              <div className="info-icon">
-                <FaEnvelope />
+          <div className="info-cards-grid">
+            {contactInfo.map((info, index) => (
+              <div key={index} className="info-card-modern">
+                <div
+                  className="card-icon"
+                  style={{ background: `${info.color}15`, color: info.color }}
+                >
+                  {info.icon}
+                </div>
+                <h3>{info.title}</h3>
+                {info.details.map((detail, i) => (
+                  <p key={i} className="card-detail">
+                    {detail}
+                  </p>
+                ))}
+                <span className="card-response">{info.response}</span>
               </div>
-              <h3>Email Us</h3>
-              <p>infoatcarauras@gmail.com</p>
-              <p>Response within 24 hours</p>
+            ))}
+          </div>
+
+          {/* Features */}
+          <div className="features-section">
+            <div className="features-grid">
+              {features.map((feature, index) => (
+                <div key={index} className="feature-item">
+                  <div className="feature-icon">{feature.icon}</div>
+                  <div className="feature-content">
+                    <h4>{feature.title}</h4>
+                    <p>{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* New Follow Us Section */}
-          <div className="follow-us-section">
-            <h2>Follow Us</h2>
-            <p>Stay connected for the latest updates and offers</p>
-            <div className="social-icons">
+          {/* Social Connect */}
+          <div className="social-connect">
+            <h3>Connect With Us</h3>
+            <p>Follow us on social media for updates and exclusive offers</p>
+            <div className="social-links">
               <a
                 href={FACEBOOK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="social-link facebook"
               >
                 <FaFacebook />
               </a>
@@ -118,7 +212,7 @@ function ContactScreen() {
                 href={X}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="social-link twitter"
               >
                 <FaTwitter />
               </a>
@@ -126,7 +220,7 @@ function ContactScreen() {
                 href={INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="social-link instagram"
               >
                 <FaInstagram />
               </a>
@@ -134,7 +228,7 @@ function ContactScreen() {
                 href={LINKEDIN}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="social-link linkedin"
               >
                 <FaLinkedin />
               </a>
@@ -142,7 +236,7 @@ function ContactScreen() {
                 href={YOUTUBE}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="social-link youtube"
               >
                 <FaYoutube />
               </a>
@@ -150,86 +244,125 @@ function ContactScreen() {
           </div>
         </div>
 
-        {/* Contact Form */}
-        <div className="contact-form-container">
-          <h2>Send Us a Message</h2>
-          {submitted ? (
-            <div className="success-message">
-              <h3>Thank you for contacting us!</h3>
-              <p>We've received your message and will get back to you soon.</p>
+        {/* Right Section - Contact Form */}
+        <div className="contact-form-wrapper">
+          <div className="form-card">
+            <div className="form-header">
+              <FaPaperPlane className="form-header-icon" />
+              <h2>Send Us a Message</h2>
+              <p>Fill out the form and we'll get back to you within 24 hours</p>
             </div>
-          ) : (
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">
-                  <FaUser className="input-icon" /> Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
+            {submitted ? (
+              <div className="success-animation">
+                <FaCheckCircle className="success-icon" />
+                <h3>Message Sent Successfully!</h3>
+                <p>
+                  Thank you for reaching out. Our team will respond shortly.
+                </p>
               </div>
+            ) : (
+              <form className="modern-form" onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>
+                      <FaUser className="label-icon" />
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="John Doe"
+                      required
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label htmlFor="phone">Phone (Optional)</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </div>
+                  <div className="form-group">
+                    <label>
+                      <FaEnvelope className="label-icon" />
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="john@example.com"
+                      required
+                    />
+                  </div>
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="subject">Subject</label>
-                <select
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>
+                      <FaPhone className="label-icon" />
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+1 (555) 123-4567"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>
+                      <FaCar className="label-icon" />
+                      Subject
+                    </label>
+                    <select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                    >
+                      <option value="General Inquiry">General Inquiry</option>
+                      <option value="Vehicle Question">Vehicle Question</option>
+                      <option value="Dealer Inquiry">Dealer Inquiry</option>
+                      <option value="Technical Support">
+                        Technical Support
+                      </option>
+                      <option value="Feedback">Feedback</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group full-width">
+                  <label>Your Message</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows="5"
+                    placeholder="Tell us how we can help you..."
+                    required
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  className="submit-button"
+                  disabled={loading}
                 >
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="Vehicle Question">Vehicle Question</option>
-                  <option value="Dealer Inquiry">Dealer Inquiry</option>
-                  <option value="Technical Support">Technical Support</option>
-                  <option value="Feedback">Feedback</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="5"
-                  required
-                ></textarea>
-              </div>
-
-              <button type="submit" className="submit-btn" disabled={loading}>
-                {loading ? <> Please wait....</> : <> Send Message</>}
-              </button>
-            </form>
-          )}
+                  {loading ? (
+                    <>
+                      <span className="spinner"></span>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <FaPaperPlane className="button-icon" />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </div>

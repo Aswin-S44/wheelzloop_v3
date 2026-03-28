@@ -30,7 +30,7 @@ function CategoryCars({ category }) {
 
   return (
     <div>
-      {/* <div className="cars-grid">
+      <div className="cars-grid">
         {loading ? (
           <Loader />
         ) : cars?.length === 0 ? (
@@ -40,7 +40,7 @@ function CategoryCars({ category }) {
             <Card key={index} car={car} editable={false} category={"Latest"} />
           ))
         )}
-      </div> */}
+      </div>
     </div>
   );
 }

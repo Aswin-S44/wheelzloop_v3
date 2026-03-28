@@ -12,9 +12,9 @@ body {
 
 
 :root {
-  --primary: #144F4E;
-  --primary-dark: #EB217F;
-  --primary-light: #ff6b6b;
+  --primary: #253D2C;
+  --primary-dark: #111827;
+  --primary-light: #111827;
   --secondary: #1e3799;
   --secondary-dark: #EB217F;
   --accent: #f39c12;
@@ -32,6 +32,11 @@ body {
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --primary-color: #144F4E;
 }
+
+::placeholder{
+  color: #111;
+}
+
 a {
   text-decoration: none
 }
@@ -44,10 +49,10 @@ a {
   width: 90%
 }
 
-.screens {
+/* .screens {
   margin-left: 20px;
   margin-right: 20px
-}
+} */
 
 .space-btn {
   display: flex;

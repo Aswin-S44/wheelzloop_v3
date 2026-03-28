@@ -32,7 +32,7 @@
   }
   
   .title-accent {
-    color: #606cbc;
+    color: var(--primary);
     position: relative;
     display: inline-block;
   }

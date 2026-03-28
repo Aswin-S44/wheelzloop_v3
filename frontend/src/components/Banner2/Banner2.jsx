@@ -8,6 +8,11 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import SecurityIcon from "@mui/icons-material/Security";
+import SpeedIcon from "@mui/icons-material/Speed";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import axios from "axios";
 import { SEARCH_URL } from "../../config/api";
 import { useNavigate } from "react-router-dom";
@@ -57,151 +62,182 @@ function Banner2() {
   };
 
   return (
-    <div className="banner-main-wrapper">
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-6 banner-left">
-            <div className="collection-tag">
-              <span className="tag-dot"></span>
-              PREMIUM COLLECTION
+    <div className="banner-modern">
+      <div className="banner-container">
+        <div className="banner-grid">
+          {/* LEFT COLUMN - CONTENT */}
+          <div className="banner-content">
+            <div className="feature-tag">
+              <span className="tag-indicator"></span>
+              CERTIFIED PREMIUM COLLECTION
             </div>
-            <h1 className="main-headline">
+
+            <h1 className="banner-2-title">
               Building <br />a better{" "}
-              <span className="highlight-text">
+              <span className="title-highlight">
                 drive
-                <span className="heart-badge">
+                <span className="love-badge">
                   <FavoriteIcon />
                 </span>
               </span>
             </h1>
-            <p className="description-text">
+
+            <p className="banner-description">
               Anyone can sell you a car, but no one can beat our hand-picked
-              luxury collections. Discover the drive you deserve.
+              certified pre-owned luxury collection. Discover the drive you
+              deserve with CarAuras.
             </p>
 
-            <div className="cta-group">
+            <div className="action-buttons">
               <button
-                className="shop-btn"
+                className="btn-primary-banner"
                 onClick={() => navigate("/used-cars")}
               >
-                Start shopping <ArrowRightAltIcon className="ms-2" />
+                Start shopping <ArrowRightAltIcon />
               </button>
               <button
-                className="search-trigger-btn"
+                className="btn-search"
                 onClick={() => setShowSearchModal(true)}
               >
-                <div className="search-circ">
+                <div className="search-icon-circle">
                   <SearchIcon />
                 </div>
                 <span>Quick Search</span>
               </button>
-              <button className="play-btn">
-                <div className="play-circ">
+              <button className="btn-play">
+                <div className="play-icon-circle">
                   <PlayArrowIcon />
                 </div>
-                <span>Play video</span>
+                <span>Watch review</span>
               </button>
             </div>
 
-            <div className="stats-row">
-              <div className="stat-item">
-                <div className="stat-number">500+</div>
-                <div className="stat-label">Luxury Cars</div>
+            <div className="stats-grid-banner">
+              <div className="stat-item-banner">
+                <div className="stat-number-banner">500+</div>
+                <div className="stat-label-banner">Premium Cars</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-number">50k+</div>
-                <div className="stat-label">Happy Customers</div>
+              <div className="stat-item-banner">
+                <div className="stat-number-banner">50k+</div>
+                <div className="stat-label-banner">Happy Customers</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-number">24/7</div>
-                <div className="stat-label">Support</div>
+              <div className="stat-item-banner">
+                <div className="stat-number-banner">24/7</div>
+                <div className="stat-label-banner">Expert Support</div>
               </div>
             </div>
 
-            <div className="testimonial-box d-none d-lg-block">
-              <div className="quote-icon">“</div>
+            {/* TESTIMONIAL CARD - Inspired by screenshot */}
+            <div className="testimonial-card">
+              <div className="quote-mark">“</div>
               <p>
-                I just love WheelzLoop! Their cars are so premium. I can't think
-                of buying from anyone else but them.
+                I just love CarAuras! Their cars are so premium and
+                well-maintained. I can't think of buying from anyone else but
+                them.
               </p>
-              <div className="rating-row">
-                <div className="stars-gold">
+              <div className="rating-wrapper">
+                <div className="star-rating">
                   <StarIcon />
                   <StarIcon />
                   <StarIcon />
                   <StarIcon />
                   <StarIcon />
                 </div>
-                <span>4.9 Overall rating</span>
+                <span>4.9 ★ Overall rating</span>
+              </div>
+              <div className="reviewer-info">
+                <img src="https://i.pravatar.cc/150?img=7" alt="reviewer" />
+                <div>
+                  <h6>Sarah Johnson</h6>
+                  <p>Car Enthusiast</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="col-lg-6 banner-right">
-            <div className="visual-container">
-              <div className="circle-bg circle-orange"></div>
-              <div className="circle-bg circle-blue"></div>
-              <div className="circle-bg circle-pink"></div>
-              <div className="circle-bg circle-purple"></div>
+          {/* RIGHT COLUMN - VISUAL */}
+          <div className="banner-visual">
+            <div className="visual-background">
+              <div className="bg-blob blob-1"></div>
+              <div className="bg-blob blob-2"></div>
+              <div className="bg-blob blob-3"></div>
+              <div className="bg-blob blob-4"></div>
+            </div>
 
-              <img
-                src="/images/wheelzloop-main-img.webp"
-                alt="Car"
-                className="hero-car-image"
-              />
+            <img
+              src="/images/wheelzloop-main-img.webp"
+              alt="Luxury Car"
+              className="hero-image"
+              onError={(e) => {
+                e.target.src =
+                  "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1000";
+              }}
+            />
 
-              <div className="floating-info-card">
-                <div className="card-thumb">
-                  <img
-                    src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=150"
-                    alt="Health"
-                  />
-                </div>
-                <div className="card-details">
-                  <h6>Certified Health</h6>
-                  <p>Blog | Article</p>
-                </div>
-                <div className="card-heart">
-                  <FavoriteIcon />
-                </div>
+            {/* FLOATING CARD 1 - Similar to screenshot's "Natural Health" */}
+            <div className="floating-card info-card">
+              <div className="card-thumbnail">
+                <img
+                  src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=150"
+                  alt="Certified"
+                />
               </div>
-
-              <div className="floating-social-pill">
-                <div className="social-icon">
-                  <ThumbUpIcon />
-                </div>
-                <div className="avatar-stack">
-                  <img src="https://i.pravatar.cc/100?u=a" alt="u" />
-                  <img src="https://i.pravatar.cc/100?u=b" alt="u" />
-                  <img src="https://i.pravatar.cc/100?u=c" alt="u" />
-                </div>
+              <div className="card-details-banner">
+                <h6>Certified Quality</h6>
+                <p>Inspection | Warranty</p>
               </div>
-              <div className="sunflower-decor">🌻</div>
+              <div className="card-love">
+                <VerifiedIcon />
+              </div>
+            </div>
+
+            {/* FLOATING CARD 2 - Social proof card */}
+            <div className="floating-card social-card">
+              <div className="social-icon-wrapper">
+                <ThumbUpIcon />
+              </div>
+              <div className="avatar-group">
+                <img src="https://i.pravatar.cc/100?img=1" alt="user" />
+                <img src="https://i.pravatar.cc/100?img=2" alt="user" />
+                <img src="https://i.pravatar.cc/100?img=3" alt="user" />
+                <img src="https://i.pravatar.cc/100?img=4" alt="user" />
+              </div>
+              <span className="social-count">1.2k+</span>
+            </div>
+
+            {/* FLOATING CARD 3 - Rating badge */}
+            <div className="floating-card rating-card">
+              <div className="rating-badge">
+                <StarIcon />
+                <span>4.9</span>
+              </div>
+              <div className="rating-text">
+                <p>Trustpilot</p>
+                <span>Excellent</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      {/* SEARCH MODAL */}
       {showSearchModal && (
         <div
-          className="search-modal-overlay"
+          className="search-overlay"
           onClick={() => setShowSearchModal(false)}
         >
-          <div
-            className="search-modal-container"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="search-modal" onClick={(e) => e.stopPropagation()}>
             <div className="search-modal-header">
               <h3>Find Your Dream Car</h3>
               <button
-                className="close-modal-btn"
+                className="modal-close"
                 onClick={() => setShowSearchModal(false)}
               >
                 <CloseIcon />
               </button>
             </div>
-            <div className="search-modal-input-wrapper">
-              <SearchIcon className="search-modal-icon" />
+            <div className="search-input-wrapper">
+              <SearchIcon className="input-icon" />
               <input
                 type="text"
                 placeholder="Search by make, model, or location..."
@@ -209,25 +245,25 @@ function Banner2() {
                 onChange={(e) => setSearchKey(e.target.value)}
                 autoFocus
               />
-              {isSearching && <div className="search-spinner"></div>}
+              {isSearching && <div className="search-loader"></div>}
             </div>
-            <div className="search-modal-results">
+            <div className="search-results">
               {searchResults.length > 0 ? (
                 searchResults.map((car) => (
                   <div
                     key={car._id}
-                    className="search-result-card"
+                    className="result-item"
                     onClick={() => handleResultClick(car._id)}
                   >
-                    <div className="result-card-image">
+                    <div className="result-image">
                       <img src={car.images?.[0]} alt={car.car_name} />
                     </div>
-                    <div className="result-card-info">
+                    <div className="result-info">
                       <h4>{car.car_name}</h4>
                       <p>
                         {car.brand} • {car.model} • {car.year}
                       </p>
-                      <div className="result-card-meta">
+                      <div className="result-meta">
                         <span className="result-price">
                           ${car.price?.toLocaleString()}
                         </span>
@@ -240,7 +276,7 @@ function Banner2() {
                   </div>
                 ))
               ) : searchKey.trim() && !isSearching ? (
-                <div className="no-results-found">
+                <div className="empty-state">
                   <SearchIcon />
                   <p>No cars found for "{searchKey}"</p>
                   <button onClick={() => navigate("/used-cars")}>
@@ -248,7 +284,7 @@ function Banner2() {
                   </button>
                 </div>
               ) : searchKey.trim() === "" ? (
-                <div className="search-suggestions">
+                <div className="suggestions">
                   <h4>Popular Searches</h4>
                   <div className="suggestion-tags">
                     <span onClick={() => setSearchKey("BMW")}>BMW</span>
@@ -258,6 +294,7 @@ function Banner2() {
                     <span onClick={() => setSearchKey("Audi")}>Audi</span>
                     <span onClick={() => setSearchKey("Tesla")}>Tesla</span>
                     <span onClick={() => setSearchKey("Luxury")}>Luxury</span>
+                    <span onClick={() => setSearchKey("SUV")}>SUV</span>
                   </div>
                 </div>
               ) : null}

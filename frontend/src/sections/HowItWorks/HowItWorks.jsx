@@ -1,217 +1,254 @@
-import React, { useContext, useEffect, useState } from "react";
-import { PersonAddAlt1, DirectionsCar, Handshake } from "@mui/icons-material";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import "./HowItWorks.css";
 import { UserContext } from "../../hooks/UserContext";
-import SpringModal from "../../components/SpringModal/SpringModal";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import RecentActorsIcon from "@mui/icons-material/RecentActors";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import {
+  FiUserPlus,
+  FiCamera,
+  FiArrowRight,
+  FiZap,
+  FiStar,
+  FiSmile,
+  FiCheckCircle,
+  FiGift,
+  FiTrendingUp,
+  FiShield,
+  FiThumbsUp,
+} from "react-icons/fi";
+import {
+  MdOutlineVerified,
+  MdOutlineSpeed,
+  MdRocketLaunch,
+  MdOutlineSecurity,
+} from "react-icons/md";
+import { BiHappy, BiMoney, BiTime, BiCar } from "react-icons/bi";
+import { GiMoneyStack, GiReceiveMoney } from "react-icons/gi";
+import { FaCar, FaHandshake, FaRegClock, FaChartLine } from "react-icons/fa";
 
 function HowItWorks() {
   const { user } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [btnClicked, setBtnClicked] = useState(false);
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setLoggedIn(true);
-    }
+    if (user) setLoggedIn(true);
   }, [user]);
 
-  const handleClick = async () => {
-    if (loggedIn) {
-      window.location.href = "/profile";
-    } else {
-      window.location.href = "/signin";
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
+  const steps = [
+    {
+      id: "01",
+      title: "Create Account",
+      description: "Sign up in 30 seconds — completely free and secure.",
+      icon: <FiUserPlus />,
+      benefits: ["No Credit Card", "Instant Access"],
+    },
+    {
+      id: "02",
+      title: "List Your Car",
+      description: "Snap photos & get an AI-powered valuation in minutes.",
+      icon: <FiCamera />,
+      benefits: ["AI Valuation", "Smart Specs"],
+    },
+    {
+      id: "03",
+      title: "Get Paid",
+      description: "Connect with verified buyers and receive instant payment.",
+      icon: <GiMoneyStack />,
+      benefits: ["Secure Escrow", "Fast Payout"],
+    },
+  ];
+
+  const features = [
+    { icon: <MdOutlineSpeed />, text: "Lightning Fast" },
+    { icon: <MdOutlineVerified />, text: "100% Verified" },
+    { icon: <BiMoney />, text: "Best Price" },
+    { icon: <FaRegClock />, text: "24/7 Support" },
+  ];
+
+  const stats = [
+    { value: "50k+", label: "Sellers", icon: <BiHappy /> },
+    { value: "10k+", label: "Cars Sold", icon: <FaCar /> },
+    { value: "98%", label: "Success Rate", icon: <FiSmile /> },
+    { value: "24h", label: "Avg. Sale", icon: <MdOutlineSpeed /> },
+  ];
+
+  const handleGetStarted = () => {
+    window.location.href = loggedIn ? "/profile" : "/signin";
+  };
+
+  const handleOpenModal = () => {
+    const modal = document.getElementById("elegantModal");
+    if (modal) {
+      const bsModal = new window.bootstrap.Modal(modal);
+      bsModal.show();
     }
   };
 
-  const handleOpen = (car) => {
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
-
   return (
-    <div className="how-it-works-section" id="Works">
-      <div className="container">
-        <h3 className="text-center fw-bold">
-          <span className="quality-text">
-            HOW CARAURAS WORKS
-            <svg
-              width="120"
-              height="12"
-              viewBox="0 0 120 12"
-              className="curved-line"
-            >
-              <path
-                d="M0,6 Q60,12 120,6"
-                stroke="#FFD700"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
-          </span>{" "}
-        </h3>
-        <div className="section-header mt-4">
-          <div className="news-header">
-            <p>Sell your car in just 3 simple steps</p>
+    <div className="how-it-works-elegant" ref={sectionRef}>
+      <div className="container-elegant">
+        {/* Header */}
+        <div className={`header-elegant ${isVisible ? "reveal" : ""}`}>
+          <div className="badge-elegant">
+            <span className="badge-dot"></span>
+            <span>Simple. Fast. Trusted.</span>
           </div>
+          <h1 className="title-elegant">
+            Sell Your Car in
+            <span className="title-accent"> Three Steps</span>
+          </h1>
+          <p className="subtitle-elegant">
+            Join thousands of sellers who got the best value for their cars
+          </p>
         </div>
 
-        <div className="steps-wrapper">
-          <div className="step">
-            <div className="step-number">1</div>
-            <div className="step-icon">
-              <PersonAddAlt1 className="icon" style={{ color: "#ADB2D4" }} />
+        {/* Features Bar */}
+        <div className={`features-bar-elegant ${isVisible ? "reveal" : ""}`}>
+          {features.map((f, i) => (
+            <div key={i} className="feature-item-elegant">
+              {f.icon}
+              <span>{f.text}</span>
             </div>
-            <h3 className="step-title">Create an Account</h3>
-            <p className="step-description">
-              Sign up in 30 seconds to join our trusted community of car sellers
-              and buyers.
-            </p>
-          </div>
-
-          <div className="step-connector"></div>
-
-          <div className="step">
-            <div className="step-number">2</div>
-            <div className="step-icon">
-              <DirectionsCar className="icon" style={{ color: "#ADB2D4" }} />
-            </div>
-            <h3 className="step-title">List Your Vehicle</h3>
-            <p className="step-description">
-              Upload photos and details - we'll help you create the perfect
-              listing.
-            </p>
-          </div>
-
-          <div className="step-connector"></div>
-
-          <div className="step">
-            <div className="step-number">3</div>
-            <div className="step-icon">
-              <Handshake className="icon" style={{ color: "#ADB2D4" }} />
-            </div>
-            <h3 className="step-title">Connect With Buyers</h3>
-            <p className="step-description">
-              Get offers and negotiate directly with verified buyers in our
-              secure platform.
-            </p>
-          </div>
+          ))}
         </div>
-        {!loggedIn && (
-          <a href="/signin">
-            <button
-              className="cta-button d-block mx-auto"
-              data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
-              style={{
-                background: "#1D6170",
-                padding: "15px 40px",
-                color: "#fff",
-                border: "none",
-                borderRadius: "50px",
-              }}
+
+        {/* Steps */}
+        <div className="steps-grid-elegant">
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              className={`step-card-elegant ${isVisible ? "reveal" : ""}`}
+              style={{ transitionDelay: `${index * 0.15}s` }}
             >
-              Get Started Now
-            </button>
-          </a>
-        )}
-      </div>
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered car-selling-steps-modal">
-          <div class="modal-content">
-            <div class="modal-header car-steps-header">
-              <h2 class="modal-title car-steps-title">How to Sell Your Car</h2>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body car-steps-body">
-              <div class="car-steps-container">
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <PersonAddIcon />
-                    </span>
-                  </div>
-                  <div class="car-step-details">
-                    <h3>Create Your Account</h3>
-                    <p>
-                      Sign up using your email or social media accounts to get
-                      started.
-                    </p>
-                  </div>
-                </div>
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <RecentActorsIcon />
-                    </span>
-                  </div>
-                  <div class="car-step-details">
-                    <h3>Complete Your Profile</h3>
-                    <p>
-                      Fill in your details and verify your identity for trust
-                      and security.
-                    </p>
-                  </div>
-                </div>
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <DirectionsCarIcon />
-                    </span>
-                  </div>
-                  <div class="car-step-details">
-                    <h3>Add Your Car Details</h3>
-                    <p>
-                      Enter your car's specifications, upload photos, and set
-                      your price.
-                    </p>
-                  </div>
-                </div>
-                <div class="car-step-item">
-                  <div class="car-step-icon">
-                    <span class="material-icons">
-                      <WatchLaterIcon />
-                    </span>
-                  </div>
-                  <div class="car-step-details">
-                    <h3>Publish & Wait for Offers</h3>
-                    <p>
-                      Review and publish your listing. Interested buyers will
-                      contact you.
-                    </p>
-                  </div>
-                </div>
+              <div className="step-number-elegant">{step.id}</div>
+              <div className="step-icon-elegant">{step.icon}</div>
+              <h3 className="step-title-elegant">{step.title}</h3>
+              <p className="step-description-elegant">{step.description}</p>
+              <div className="step-benefits-elegant">
+                {step.benefits.map((b, idx) => (
+                  <span key={idx}>
+                    <FiCheckCircle />
+                    {b}
+                  </span>
+                ))}
               </div>
             </div>
-            <div class="modal-footer car-steps-footer">
+          ))}
+        </div>
+
+        {/* Stats */}
+        <div className={`stats-grid-elegant ${isVisible ? "reveal" : ""}`}>
+          {stats.map((stat, i) => (
+            <div key={i} className="stat-card-elegant">
+              <div className="stat-icon-elegant">{stat.icon}</div>
+              <div className="stat-content-elegant">
+                <h4 className="stat-value-elegant">{stat.value}</h4>
+                <p className="stat-label-elegant">{stat.label}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        {/* <div className={`cta-section-elegant ${isVisible ? "reveal" : ""}`}>
+          <div className="cta-card-elegant">
+            <div className="cta-content-elegant">
+              <h2>Ready to sell your car?</h2>
+              <p>Get a free valuation in under 2 minutes</p>
+              <div className="cta-buttons-elegant">
+                <button
+                  className="btn-primary-elegant"
+                  onClick={handleOpenModal}
+                >
+                  Start Selling
+                  <FiArrowRight />
+                </button>
+                <button
+                  className="btn-secondary-elegant"
+                  onClick={handleGetStarted}
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div> */}
+
+        {/* Trust Footer */}
+        {/* <div className="trust-footer-elegant">
+          <div className="rating-elegant">
+            <div className="stars-elegant">
+              {[...Array(5)].map((_, i) => (
+                <FiStar key={i} />
+              ))}
+            </div>
+            <span className="rating-score-elegant">4.9/5</span>
+            <span className="rating-count-elegant">(2,847 reviews)</span>
+          </div>
+          <p>© 2025 CarAuras — Premium Car Marketplace</p>
+        </div> */}
+      </div>
+
+      {/* Modal */}
+      <div
+        className="modal fade modal-elegant"
+        id="elegantModal"
+        tabIndex="-1"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content-elegant">
+            <div className="modal-header-elegant">
+              <h3>Start Your Journey</h3>
               <button
                 type="button"
-                class="btn btn-outline-secondary car-steps-close-btn"
+                className="modal-close-elegant"
                 data-bs-dismiss="modal"
               >
-                Close
+                ×
+              </button>
+            </div>
+            <div className="modal-body-elegant">
+              <div className="timeline-elegant">
+                {[
+                  { step: "Create Account", time: "30 sec" },
+                  { step: "List Your Car", time: "5 min" },
+                  { step: "Get Offers", time: "24h" },
+                  { step: "Receive Payment", time: "Instant" },
+                ].map((item, i) => (
+                  <div key={i} className="timeline-item-elegant">
+                    <div className="timeline-dot-elegant"></div>
+                    <div className="timeline-content-elegant">
+                      <strong>{item.step}</strong>
+                      <span>{item.time}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="modal-footer-elegant">
+              <button
+                className="btn-modal-secondary-elegant"
+                data-bs-dismiss="modal"
+              >
+                Cancel
               </button>
               <button
-                type="button"
-                class="btn car-steps-primary-btn"
-                onClick={handleClick}
+                className="btn-modal-primary-elegant"
+                onClick={handleGetStarted}
               >
                 Get Started
               </button>

@@ -25,6 +25,7 @@ import CarCategoriesSection from "../../components/CarCategoriesSection/CarCateg
 import AdvSection from "../../sections/AdvSection/AdvSection";
 import { LOCAL_STORAGE_KEY } from "../../store/useAuthStore";
 import PopularBrandsSection from "../../sections/PopularBrandsSection/PopularBrandsSection";
+import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 
 const images = [
   "https://t3.ftcdn.net/jpg/07/48/59/38/360_F_748593837_mWVU6MyzgP9yeAdDJW6UkReK7GGGTSbH.jpg",
@@ -127,20 +128,13 @@ function HomeScreen() {
   return (
     <div className="screens" id="Choose by Category">
       <div className="">
-        {/* <Carousel images={images} /> */}
-        {/* <Banner /> */}
         <Banner2 />
-      </div>
-      <div className="mt-5">
-        <CarCategoriesSection />
-      </div>
-      <div className="container">
-        <FeaturesSection />
       </div>
 
       <div>
         <div className="mt-4">
           <div className="latst-cars-section">
+            <CategoryGrid />
             <div className="container">
               <h3 className="text-center fw-bold">
                 <span className="quality-text">
@@ -182,7 +176,9 @@ function HomeScreen() {
           </div>
         </div>
       </div>
-      <div className="mt-4">{/* <AdvSection /> */}</div>
+      <div className="mt-5"> 
+        <CarCategoriesSection />
+      </div>
       <div className="container mt-5">
         <div className="profile-content">
           <TitleHeader
@@ -192,21 +188,6 @@ function HomeScreen() {
             optionLink={`/used-cars?.category=sedan`}
           />
 
-          {/* <Tabs>
-            <div>
-              <TabList>
-                {carBodyTypes?.slice(0, 4).map((type, index) => (
-                  <Tab key={index}>{type.text}</Tab>
-                ))}
-              </TabList>
-            </div>
-
-            {carBodyTypes?.slice(0, 4).map((type, index) => (
-              <TabPanel key={index}>
-                <CategoryCars category={type.value} />
-              </TabPanel>
-            ))}
-          </Tabs> */}
           <div className="tabs-container">
             <Tabs>
               <div className="tab-scroll-wrapper">
@@ -256,6 +237,12 @@ function HomeScreen() {
           </div>
         </div>
       </div>
+      {/* <div className="">
+        <FeaturesSection />
+      </div> */}
+
+      <div className="mt-4">{/* <AdvSection /> */}</div>
+
       <div className="mt-0">
         <HowItWorks />
         {/* <div className="mt-0">

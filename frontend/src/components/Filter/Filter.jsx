@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Filter.css";
 import { brands } from "../../dummyData/brands";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { years } from "../../dummyData/year";
 import { fuelTypes } from "../../dummyData/fuelTypes";
 import { ownerShip } from "../../dummyData/ownerShip";
 import { carFeatures } from "../../dummyData/carFeatures";
 import { carBodyTypes } from "../../dummyData/bodyTypes";
 import { transmissionTypes } from "../../dummyData/transmissionTypes";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import SearchIcon from "@mui/icons-material/Search";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SettingsIcon from "@mui/icons-material/Settings";
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
 
-function Filter({ onFilterChange }) {
+function Filter({ onFilterChange, isOpen, onClose }) {
   const [search, setSearch] = useState("");
   const [selectedCars, setSelectedCars] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
@@ -23,6 +33,21 @@ function Filter({ onFilterChange }) {
     []
   );
   const [activeIndex, setActiveIndex] = useState(null);
+  const [activeSection, setActiveSection] = useState("brands");
+  const [animateIn, setAnimateIn] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setAnimateIn(true);
+      document.body.style.overflow = "hidden";
+    } else {
+      setAnimateIn(false);
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   const handleSearch = (e) => setSearch(e.target.value);
 
@@ -63,6 +88,7 @@ function Filter({ onFilterChange }) {
       Object.entries(filters).filter(([_, value]) => value !== undefined)
     );
     onFilterChange(validFilters);
+    onClose();
   };
 
   const clearFilters = () => {
@@ -83,228 +109,413 @@ function Filter({ onFilterChange }) {
     );
   });
 
+  const getActiveFiltersCount = () => {
+    let count = 0;
+    if (selectedCars.length) count++;
+    if (selectedYear) count++;
+    if (selectedFuelTypes.length) count++;
+    if (selectedOwnership.length) count++;
+    if (selectedFeatures.length) count++;
+    if (selectedBodyTypes.length) count++;
+    if (selectedTransmissionTypes.length) count++;
+    return count;
+  };
+
+  const sections = [
+    { id: "brands", label: "Brands & Models", icon: <DirectionsCarIcon /> },
+    { id: "body", label: "Body Type", icon: <DashboardIcon /> },
+    { id: "year", label: "Year", icon: <CalendarTodayIcon /> },
+    { id: "fuel", label: "Fuel Type", icon: <LocalGasStationIcon /> },
+    { id: "ownership", label: "Ownership", icon: <SettingsIcon /> },
+    { id: "features", label: "Features", icon: <SettingsIcon /> },
+  ];
+
+  if (!isOpen) return null;
+
   return (
-    <div className="filter-container">
-      <div className="filter-header">
-        <p className="filter-title">Filters</p>
-        <div className="filter-actions">
-          <button className="clear-btn" onClick={clearFilters}>
-            Clear All
-          </button>
-          <button className="apply-btn" onClick={applyFilters}>
-            Apply
-          </button>
-        </div>
-      </div>
+    <>
+      {/* Backdrop */}
+      <div
+        className={`filter-backdrop ${animateIn ? "active" : ""}`}
+        onClick={onClose}
+      ></div>
 
-      <div className="search-section">
-        <div className="search-input-container">
-          <input
-            type="text"
-            placeholder="Search brand or car..."
-            value={search}
-            onChange={handleSearch}
-            className="search-input"
-          />
+      {/* Bottom Sheet */}
+      <div className={`filter-bottom-sheet ${animateIn ? "active" : ""}`}>
+        {/* Header */}
+        <div className="filter-sheet-header">
+          <div className="filter-sheet-drag-bar"></div>
+          <div className="filter-sheet-title-section">
+            <button className="sheet-close-btn" onClick={onClose}>
+              <CloseIcon />
+            </button>
+            <div className="filter-title-content">
+              <FilterAltIcon className="filter-icon-sheet" />
+              <h2>Filter Cars</h2>
+              {getActiveFiltersCount() > 0 && (
+                <span className="filter-badge-sheet">
+                  {getActiveFiltersCount()}
+                </span>
+              )}
+            </div>
+            <button className="sheet-clear-btn" onClick={clearFilters}>
+              <ClearAllIcon />
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="filter-sections">
-        <div className="filter-section">
-          <p className="section-title">Top Brands</p>
-          <div className="brands-list">
-            {filteredBrands.length > 0 ? (
-              filteredBrands.map((brandItem, index) => (
-                <div key={index} className="brand-accordion ">
-                  <div
-                    className="brand-header"
-                    onClick={() => handleAccordionToggle(index)}
-                  >
-                    <span>{brandItem.brand}</span>
-                    {activeIndex === index ? (
-                      <RemoveCircleOutlineIcon className="accordion-icon" />
+        {/* Content */}
+        <div className="filter-sheet-content">
+          {/* Search Section */}
+          <div className="search-sheet">
+            <div className="search-input-sheet">
+              <SearchIcon className="search-icon-sheet" />
+              <input
+                type="text"
+                placeholder="Search brand or model..."
+                value={search}
+                onChange={handleSearch}
+              />
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="quick-stats-sheet">
+            <div className="stat-card-sheet">
+              <span className="stat-number-sheet">{filteredBrands.length}</span>
+              <span className="stat-label-sheet">Brands</span>
+            </div>
+            <div className="stat-card-sheet">
+              <span className="stat-number-sheet">{years.length}</span>
+              <span className="stat-label-sheet">Years</span>
+            </div>
+            <div className="stat-card-sheet">
+              <span className="stat-number-sheet">{carBodyTypes.length}</span>
+              <span className="stat-label-sheet">Body Types</span>
+            </div>
+          </div>
+
+          {/* Filter Sections */}
+          <div className="filter-sections-sheet">
+            {/* Brands Section */}
+            <div className="filter-section-sheet">
+              <div
+                className="section-header-sheet"
+                onClick={() =>
+                  setActiveSection(activeSection === "brands" ? null : "brands")
+                }
+              >
+                <div className="section-title-sheet">
+                  <DirectionsCarIcon className="section-icon-sheet" />
+                  <span>Brands & Models</span>
+                </div>
+                {activeSection === "brands" ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+
+              {activeSection === "brands" && (
+                <div className="section-content-sheet">
+                  <div className="brands-list-sheet">
+                    {filteredBrands.length > 0 ? (
+                      filteredBrands.map((brandItem, index) => (
+                        <div key={index} className="brand-item-sheet">
+                          <div
+                            className="brand-header-sheet"
+                            onClick={() => handleAccordionToggle(index)}
+                          >
+                            <div className="brand-name-sheet">
+                              <span className="brand-dot-sheet"></span>
+                              {brandItem.brand}
+                            </div>
+                            {activeIndex === index ? (
+                              <KeyboardArrowUpIcon className="accordion-icon-sheet" />
+                            ) : (
+                              <KeyboardArrowDownIcon className="accordion-icon-sheet" />
+                            )}
+                          </div>
+                          {activeIndex === index && (
+                            <div className="brand-models-sheet">
+                              {brandItem.cars.map((car, idx) => (
+                                <label
+                                  key={idx}
+                                  className="model-checkbox-sheet"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedCars.some(
+                                      (item) =>
+                                        item.brand === brandItem.brand &&
+                                        item.car === car
+                                    )}
+                                    onChange={() =>
+                                      handleCheckboxChange(
+                                        selectedCars,
+                                        setSelectedCars,
+                                        {
+                                          brand: brandItem.brand,
+                                          car,
+                                        }
+                                      )
+                                    }
+                                  />
+                                  <span className="checkbox-custom-sheet"></span>
+                                  <span className="model-name-sheet">
+                                    {car}
+                                  </span>
+                                </label>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))
                     ) : (
-                      <KeyboardArrowDownIcon className="accordion-icon" />
+                      <div className="empty-state-sheet">
+                        <SearchIcon />
+                        <p>No brands found</p>
+                      </div>
                     )}
                   </div>
-                  {activeIndex === index && (
-                    <div className="brand-models">
-                      {brandItem.cars.map((car, idx) => (
-                        <label key={idx} className="model-checkbox">
-                          <input
-                            type="checkbox"
-                            checked={selectedCars.some(
-                              (item) =>
-                                item.brand === brandItem.brand &&
-                                item.car === car
-                            )}
-                            onChange={() =>
-                              handleCheckboxChange(
-                                selectedCars,
-                                setSelectedCars,
-                                {
-                                  brand: brandItem.brand,
-                                  car,
-                                }
-                              )
-                            }
-                          />
-                          {car}
-                        </label>
-                      ))}
-                    </div>
-                  )}
                 </div>
-              ))
-            ) : (
-              <span className="spec-item">No brands available</span>
-            )}
+              )}
+            </div>
+
+            {/* Body Type Section */}
+            <div className="filter-section-sheet">
+              <div
+                className="section-header-sheet"
+                onClick={() =>
+                  setActiveSection(activeSection === "body" ? null : "body")
+                }
+              >
+                <div className="section-title-sheet">
+                  <DashboardIcon className="section-icon-sheet" />
+                  <span>Body Type</span>
+                </div>
+                {activeSection === "body" ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+
+              {activeSection === "body" && (
+                <div className="section-content-sheet">
+                  <div className="options-grid-sheet">
+                    {carBodyTypes.map((bodyType, index) => (
+                      <label key={index} className="checkbox-sheet">
+                        <input
+                          type="checkbox"
+                          checked={selectedBodyTypes.includes(bodyType.text)}
+                          onChange={() =>
+                            handleCheckboxChange(
+                              selectedBodyTypes,
+                              setSelectedBodyTypes,
+                              bodyType.text
+                            )
+                          }
+                        />
+                        <span className="checkbox-custom-sheet"></span>
+                        <span>{bodyType.text}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Year Section */}
+            <div className="filter-section-sheet">
+              <div
+                className="section-header-sheet"
+                onClick={() =>
+                  setActiveSection(activeSection === "year" ? null : "year")
+                }
+              >
+                <div className="section-title-sheet">
+                  <CalendarTodayIcon className="section-icon-sheet" />
+                  <span>Year</span>
+                </div>
+                {activeSection === "year" ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+
+              {activeSection === "year" && (
+                <div className="section-content-sheet">
+                  <div className="years-grid-sheet">
+                    {years.map((year, index) => (
+                      <button
+                        key={index}
+                        className={`year-chip-sheet ${
+                          selectedYear === year.value ? "active" : ""
+                        }`}
+                        onClick={() => setSelectedYear(year.value)}
+                      >
+                        {year.text}
+                        {selectedYear === year.value && <CheckCircleIcon />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Fuel Type Section */}
+            <div className="filter-section-sheet">
+              <div
+                className="section-header-sheet"
+                onClick={() =>
+                  setActiveSection(activeSection === "fuel" ? null : "fuel")
+                }
+              >
+                <div className="section-title-sheet">
+                  <LocalGasStationIcon className="section-icon-sheet" />
+                  <span>Fuel Type</span>
+                </div>
+                {activeSection === "fuel" ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+
+              {activeSection === "fuel" && (
+                <div className="section-content-sheet">
+                  <div className="options-grid-sheet">
+                    {fuelTypes.map((fuel, index) => (
+                      <label key={index} className="checkbox-sheet">
+                        <input
+                          type="checkbox"
+                          checked={selectedFuelTypes.includes(fuel.text)}
+                          onChange={() =>
+                            handleCheckboxChange(
+                              selectedFuelTypes,
+                              setSelectedFuelTypes,
+                              fuel.text
+                            )
+                          }
+                        />
+                        <span className="checkbox-custom-sheet"></span>
+                        <span>{fuel.text}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Ownership Section */}
+            <div className="filter-section-sheet">
+              <div
+                className="section-header-sheet"
+                onClick={() =>
+                  setActiveSection(
+                    activeSection === "ownership" ? null : "ownership"
+                  )
+                }
+              >
+                <div className="section-title-sheet">
+                  <SettingsIcon className="section-icon-sheet" />
+                  <span>Ownership</span>
+                </div>
+                {activeSection === "ownership" ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+
+              {activeSection === "ownership" && (
+                <div className="section-content-sheet">
+                  <div className="options-grid-sheet">
+                    {ownerShip.map((ownership, index) => (
+                      <label key={index} className="checkbox-sheet">
+                        <input
+                          type="checkbox"
+                          checked={selectedOwnership.includes(ownership.text)}
+                          onChange={() =>
+                            handleCheckboxChange(
+                              selectedOwnership,
+                              setSelectedOwnership,
+                              ownership.text
+                            )
+                          }
+                        />
+                        <span className="checkbox-custom-sheet"></span>
+                        <span>{ownership.text}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Features Section */}
+            <div className="filter-section-sheet">
+              <div
+                className="section-header-sheet"
+                onClick={() =>
+                  setActiveSection(
+                    activeSection === "features" ? null : "features"
+                  )
+                }
+              >
+                <div className="section-title-sheet">
+                  <SettingsIcon className="section-icon-sheet" />
+                  <span>Features</span>
+                </div>
+                {activeSection === "features" ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+
+              {activeSection === "features" && (
+                <div className="section-content-sheet">
+                  <div className="features-grid-sheet">
+                    {carFeatures.map((feature, index) => (
+                      <label key={index} className="checkbox-sheet">
+                        <input
+                          type="checkbox"
+                          checked={selectedFeatures.includes(feature.text)}
+                          onChange={() =>
+                            handleCheckboxChange(
+                              selectedFeatures,
+                              setSelectedFeatures,
+                              feature.text
+                            )
+                          }
+                        />
+                        <span className="checkbox-custom-sheet"></span>
+                        <span>{feature.text}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="filter-section">
-          <p className="section-title">Body Type</p>
-          <div className="options-grid">
-            {carBodyTypes.map((bodyType, index) => (
-              <label key={index}>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  checked={selectedBodyTypes.includes(bodyType.text)}
-                  onChange={() =>
-                    handleCheckboxChange(
-                      selectedBodyTypes,
-                      setSelectedBodyTypes,
-                      bodyType.text
-                    )
-                  }
-                />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {bodyType.text}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="filter-section">
-          <p className="section-title">Year</p>
-          <div className="options-grid">
-            {years.map((year, index) => (
-              <label key={index} className="radio-option">
-                <input
-                  type="radio"
-                  name="year"
-                  checked={selectedYear === year.value}
-                  onChange={() => setSelectedYear(year.value)}
-                />
-                <span className="radiomark"></span>
-                {year.text}
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="filter-section">
-          <p className="section-title">Fuel Type</p>
-          <div className="options-grid">
-            {fuelTypes.map((fuel, index) => (
-              <label key={index}>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  checked={selectedFuelTypes.includes(fuel.text)}
-                  onChange={() =>
-                    handleCheckboxChange(
-                      selectedFuelTypes,
-                      setSelectedFuelTypes,
-                      fuel.text
-                    )
-                  }
-                />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {fuel.text}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="filter-section">
-          <p className="section-title">Ownership</p>
-          <div className="options-grid">
-            {ownerShip.map((ownership, index) => (
-              <label key={index}>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  checked={selectedOwnership.includes(ownership.text)}
-                  onChange={() =>
-                    handleCheckboxChange(
-                      selectedOwnership,
-                      setSelectedOwnership,
-                      ownership.text
-                    )
-                  }
-                />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {ownership.text}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="filter-section">
-          <p className="section-title">Features</p>
-          <div className="options-grid scrollable-div scroll-container">
-            {carFeatures.map((feature, index) => (
-              <label key={index} className="">
-                <input
-                  className="checkbox"
-                  type="checkbox"
-                  checked={selectedFeatures.includes(feature.text)}
-                  onChange={() =>
-                    handleCheckboxChange(
-                      selectedFeatures,
-                      setSelectedFeatures,
-                      feature.text
-                    )
-                  }
-                />
-                <span
-                  style={{
-                    marginLeft: "10px",
-                    color: "#555",
-                    fontSize: "14px",
-                  }}
-                >
-                  {feature.text}
-                </span>
-              </label>
-            ))}
-          </div>
+        {/* Bottom Actions */}
+        <div className="filter-sheet-actions">
+          <button className="reset-btn-sheet" onClick={clearFilters}>
+            Reset All
+          </button>
+          <button className="apply-btn-sheet" onClick={applyFilters}>
+            <DoneIcon />
+            Apply{" "}
+            {getActiveFiltersCount() > 0 && `(${getActiveFiltersCount()})`}
+          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

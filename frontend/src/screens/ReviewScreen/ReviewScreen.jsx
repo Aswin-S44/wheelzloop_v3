@@ -14,13 +14,15 @@ import {
   ThumbUp,
   Comment,
   Share,
+  Close as CloseIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import "./ReviewScreen.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Rating, TextField } from "@mui/material";
+import { Rating, TextField, IconButton } from "@mui/material";
 import { UserContext } from "../../hooks/UserContext";
 import axios from "axios";
 import { ADD_REVIEWS_URL, GET_REVIEWS_URL } from "../../config/api";
@@ -35,15 +37,15 @@ const style = {
   width: "90%",
   maxWidth: 500,
   bgcolor: "background.paper",
-  borderRadius: "12px",
-  boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.1)",
+  borderRadius: "20px",
+  boxShadow: "var(--shadow-lg)",
   p: 4,
 };
 
 const ReviewScreen = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [rating, setRating] = useState(0);
@@ -60,6 +62,7 @@ const ReviewScreen = () => {
     4: 4,
     5: 5,
   });
+  const [likedReviews, setLikedReviews] = useState({});
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -82,7 +85,7 @@ const ReviewScreen = () => {
       ? reviews
       : reviews.filter((review) => review.rating === parseInt(activeTab));
 
-  const reviewsPerPage = 3;
+  const reviewsPerPage = 4;
   const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
   const paginatedReviews = filteredReviews.slice(
     (currentPage - 1) * reviewsPerPage,
@@ -119,56 +122,88 @@ const ReviewScreen = () => {
       setLoading(false);
       if (res && res.status == 200) {
         handleClose();
-        Swal.fire("Thank you for your Rating!");
+        Swal.fire({
+          title: "Thank you!",
+          text: "Your review has been submitted successfully",
+          icon: "success",
+          confirmButtonColor: "var(--primary)",
+          background: "var(--white)",
+        });
       }
       setRating(0);
       setReviewText("");
     }
   };
 
+  const handleLike = (reviewId) => {
+    setLikedReviews((prev) => ({
+      ...prev,
+      [reviewId]: !prev[reviewId],
+    }));
+  };
+
+  const getRatingPercentage = (ratingValue) => {
+    const count = reviews.filter((r) => r.rating === ratingValue).length;
+    return (count / reviews.length) * 100;
+  };
+
   return (
     <div className="review-screen">
       <div className="review-header">
+        <div className="header-badge">
+          <span className="badge-text">Real Reviews</span>
+        </div>
         <h1>
-          Customer <span className="highlight">Reviews</span>
+          What Our Customers <span className="highlight">Say</span>
         </h1>
-        <p>See what our community says about their CarAuras experience</p>
+        <p>
+          Join thousands of satisfied customers who found their perfect car with
+          CarAuras
+        </p>
       </div>
 
       <div className="review-stats-container">
         <div className="average-rating-card">
-          <div className="rating-display">
-            <span className="rating-value">{avg.toFixed(1)}</span>
-            <div className="stars">
-              <Ratings rating={Math.round(avg)} />
+          <div className="rating-summary">
+            <div className="rating-score">
+              <div className="score-circle">
+                <span className="score-value">{avg.toFixed(1)}</span>
+                <span className="score-max">/5</span>
+              </div>
+              <div className="stars-large">
+                <Ratings rating={Math.round(avg)} />
+              </div>
+              <span className="total-reviews">
+                {reviews.length} verified reviews
+              </span>
             </div>
-            <span className="rating-count">{reviews.length} reviews</span>
-          </div>
-          <div className="rating-distribution">
-            {[5, 4, 3, 2, 1].map((rating) => {
-              const count = reviews.filter((r) => r.rating === rating).length;
-              const percentage = (count / reviews.length) * 100;
-
-              return (
-                <div key={rating} className="rating-bar">
-                  <span className="rating-label">{rating} Star</span>
-                  <div className="bar-container">
-                    <div
-                      className="bar-fill"
-                      style={{ width: `${percentage}%` }}
-                    ></div>
+            <div className="rating-bars">
+              {[5, 4, 3, 2, 1].map((ratingValue) => {
+                const percentage = getRatingPercentage(ratingValue);
+                return (
+                  <div key={ratingValue} className="rating-bar-item">
+                    <span className="rating-star-label">{ratingValue} ★</span>
+                    <div className="bar-track">
+                      <div
+                        className="bar-progress"
+                        style={{ width: `${percentage}%` }}
+                      ></div>
+                    </div>
+                    <span className="rating-percentage">
+                      {Math.round(percentage)}%
+                    </span>
                   </div>
-                  <span className="rating-count">{count}</span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="review-actions-container">
         <button className="add-review-btn" onClick={handleOpen}>
-          Add Your Review
+          <EditIcon className="btn-icon" />
+          Write a Review
         </button>
 
         <Modal
@@ -179,23 +214,28 @@ const ReviewScreen = () => {
         >
           <Box sx={style}>
             <>
+              <div className="modal-header">
+                <Typography variant="h6" component="h2" className="modal-title">
+                  Share Your Experience
+                </Typography>
+                <IconButton onClick={handleClose} className="modal-close">
+                  <CloseIcon />
+                </IconButton>
+              </div>
               {!user ? (
                 <div className="auth-required-message">
-                  <span>You need to create account to add review</span>
+                  <span>You need to create an account to add a review</span>
                   <button
                     className="login-redirect-btn"
                     onClick={() => (window.location.href = "/signin")}
                   >
-                    Go to login
+                    Sign In Now
                   </button>
                 </div>
               ) : (
                 <>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    Add Your Review
-                  </Typography>
                   <form onSubmit={handleSubmit}>
-                    <Box mb={2}>
+                    <Box mb={3} className="rating-input">
                       <Rating
                         name="review-rating"
                         value={rating}
@@ -203,10 +243,10 @@ const ReviewScreen = () => {
                         size="large"
                         sx={{
                           "& .MuiRating-iconFilled": {
-                            color: "#30bfa1",
+                            color: "#FFB800",
                           },
                           "& .MuiRating-iconHover": {
-                            color: "#30bfa1",
+                            color: "#FFB800",
                           },
                         }}
                       />
@@ -216,26 +256,18 @@ const ReviewScreen = () => {
                       multiline
                       rows={4}
                       variant="outlined"
-                      placeholder="Write your review here..."
+                      placeholder="Tell us about your experience with the car..."
                       value={reviewText}
                       onChange={(e) => setReviewText(e.target.value)}
-                      sx={{ mb: 2 }}
+                      className="review-textarea"
+                      sx={{ mb: 3 }}
                     />
                     <Button
                       type="submit"
                       variant="contained"
                       fullWidth
                       disabled={!rating || !reviewText || loading}
-                      sx={{
-                        backgroundColor: "#30bfa1",
-                        "&:hover": {
-                          backgroundColor: "#259c82",
-                        },
-                        padding: "12px",
-                        fontSize: "16px",
-                        fontWeight: "600",
-                        borderRadius: "8px",
-                      }}
+                      className="submit-review-btn"
                     >
                       {loading ? "Submitting..." : "Submit Review"}
                     </Button>
@@ -255,21 +287,21 @@ const ReviewScreen = () => {
             }}
           >
             <FilterIcon className="tab-icon" />
-            All Reviews
+            All
           </button>
-          {[5, 4, 3, 2, 1].map((rating) => (
+          {[5, 4, 3, 2, 1].map((ratingValue) => (
             <button
-              key={rating}
+              key={ratingValue}
               className={`filter-tab ${
-                activeTab === rating.toString() ? "active" : ""
+                activeTab === ratingValue.toString() ? "active" : ""
               }`}
               onClick={() => {
-                setActiveTab(rating.toString());
+                setActiveTab(ratingValue.toString());
                 setCurrentPage(1);
               }}
             >
-              {getSentimentIcon(rating)}
-              {rating} Star
+              {getSentimentIcon(ratingValue)}
+              {ratingValue}
             </button>
           ))}
         </div>
@@ -281,45 +313,76 @@ const ReviewScreen = () => {
             <div key={review.id} className="review-card">
               <div className="review-card-header">
                 <div className="reviewer-info">
-                  <div
-                    className="avatar"
-                    style={{
-                      backgroundColor: `hsl(${Math.random() * 360}, 70%, 60%)`,
-                    }}
-                  >
-                    {review.name.charAt(0)}
+                  <div className="avatar-wrapper">
+                    <div className="avatar">{review.name.charAt(0)}</div>
+                    {review.verified && (
+                      <div className="verified-dot">
+                        <VerifiedIcon className="verified-icon-small" />
+                      </div>
+                    )}
                   </div>
                   <div className="reviewer-details">
-                    <h2>{review.name}</h2>
-                    <p>{new Date(review.date).toLocaleDateString()}</p>
+                    <h3>{review.name}</h3>
+                    <div className="review-meta">
+                      <span className="review-date">
+                        {new Date(review.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                      {review.car && (
+                        <>
+                          <span className="meta-separator">•</span>
+                          <span className="car-model">{review.car}</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
-                {review.verified && (
-                  <div className="verified-badge">
-                    <VerifiedIcon className="verified-icon" />
-                    Verified Purchase
+                <div className="rating-badge">
+                  <div className="stars-small">
+                    <Ratings rating={review.rating} />
                   </div>
-                )}
+                  <span className="rating-number">{review.rating}.0</span>
+                </div>
               </div>
 
               <div className="review-content">
-                <div className="rating-display">
-                  {getSentimentIcon(review.rating)}
-                  <div className="stars">
-                    <Ratings rating={review.rating} />
-                  </div>
-                  {review.car && (
-                    <span className="car-model">{review.car}</span>
-                  )}
-                </div>
-
                 <p className="review-text">{review.reviewText}</p>
+              </div>
+
+              <div className="review-footer">
+                <button
+                  className={`action-button like-button ${
+                    likedReviews[review.id] ? "liked" : ""
+                  }`}
+                  onClick={() => handleLike(review.id)}
+                >
+                  <ThumbUp className="action-icon" />
+                  <span>{likedReviews[review.id] ? "Liked" : "Like"}</span>
+                </button>
+                <button className="action-button">
+                  <Comment className="action-icon" />
+                  <span>Reply</span>
+                </button>
+                <button className="action-button">
+                  <Share className="action-icon" />
+                  <span>Share</span>
+                </button>
               </div>
             </div>
           ))
         ) : (
           <div className="no-reviews-message">
-            <p>No reviews found for the selected filter.</p>
+            <div className="empty-state">
+              <SentimentNeutral className="empty-icon" />
+              <h3>No reviews yet</h3>
+              <p>Be the first to share your experience</p>
+              <button className="write-first-btn" onClick={handleOpen}>
+                Write a Review
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -327,27 +390,29 @@ const ReviewScreen = () => {
       {totalPages > 1 && (
         <div className="pagination-container">
           <button
-            className="pagination-button"
+            className="pagination-button prev-next"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
           >
             <ChevronLeft className="pagination-icon" />
           </button>
 
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              className={`pagination-button ${
-                currentPage === i + 1 ? "active" : ""
-              }`}
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
+          <div className="page-numbers">
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                className={`pagination-button page-number ${
+                  currentPage === i + 1 ? "active" : ""
+                }`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
 
           <button
-            className="pagination-button"
+            className="pagination-button prev-next"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }

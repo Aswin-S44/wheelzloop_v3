@@ -131,39 +131,8 @@ function Footer() {
 
   return (
     <footer className="modern-footer">
-      {/* Newsletter Section */}
-      {/* <div className="newsletter-section">
-        <div className="newsletter-content">
-          <div className="newsletter-text">
-            <h3>Subscribe to Our Newsletter</h3>
-            <p>
-              Get the latest updates on new arrivals, special offers, and car
-              care tips
-            </p>
-          </div>
-          <form onSubmit={handleSubscribe} className="newsletter-form">
-            <div className="input-group">
-              <Email className="input-icon" />
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <button type="submit" disabled={loading}>
-                {loading ? "Subscribing..." : "Subscribe"}
-                <Send className="button-icon" />
-              </button>
-            </div>
-          </form>
-        </div>
-      </div> */}
-
-      {/* Main Footer Content */}
       <div className="footer-main">
         <div className="footer-grid">
-          {/* Brand Section */}
           <div className="footer-brand">
             <div className="brand-logo">
               <span className="logo-icon">🚗</span>
@@ -191,7 +160,6 @@ function Footer() {
             </div>
           </div>
 
-          {/* Links Sections */}
           {Object.entries(footerLinks).map(([key, section]) => (
             <div key={key} className="footer-links">
               <h4>{section.title}</h4>
@@ -207,7 +175,6 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="footer-bottom">
         <div className="bottom-content">
           <div className="copyright">

@@ -43,65 +43,78 @@ function Card({ car, editable = false, category }) {
   };
 
   return (
-    <div className="card">
-      <div className="card-image-container">
+    <div className="car-card">
+      <div className="car-card__image-wrapper">
         <img
           src={car?.images[0]}
-          alt="Car"
-          className="card-image"
-          title={car?.car_name || "car image"}
+          alt={car?.car_name}
+          className="car-card__image"
           onClick={handleNavigateToCar}
         />
 
-        {category && <span className="category-badge">{category}</span>}
+        {category && <span className="car-card__badge">{category}</span>}
 
-        <button className="favorite-btn">
-          {editable && <ActionMenu id={car._id} />}
+        <button className="car-card__favorite" onClick={addToFav}>
           {!editable && (
             <FaHeart
-              style={{ fontSize: "20px" }}
-              onClick={addToFav}
-              className={isFavourite ? "saved" : ""}
+              className={
+                isFavourite
+                  ? "car-card__favorite-icon--active"
+                  : "car-card__favorite-icon"
+              }
             />
           )}
+          {editable && <ActionMenu id={car._id} />}
         </button>
       </div>
-      <div className="card-details">
-        <h3 className="car-name">{car?.car_name ?? "_"}</h3>
-        <div className="car-specs-container">
-          <div className="spec-item">
-            <DirectionsCarIcon style={{ fontSize: "16px", color: "#555" }} />
+
+      <div className="car-card__content">
+        <div className="car-card__header">
+          <h3 className="car-card__title">{car?.car_name ?? "_"}</h3>
+          <div className="car-card__price">
+            <span className="car-card__price-current">
+              ₹{car?.price?.toLocaleString() ?? "_"}
+            </span>
+            {car?.original_price && (
+              <span className="car-card__price-original">
+                ₹{car.original_price.toLocaleString()}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="car-card__specs">
+          <div className="car-card__spec">
+            <DirectionsCarIcon />
             <span>{car?.year ?? "_"}</span>
           </div>
-          <div className="spec-item">
-            <LocalGasStationIcon style={{ fontSize: "16px", color: "#555" }} />
+          <div className="car-card__spec">
+            <LocalGasStationIcon />
             <span>{car?.fuel_type ?? "_"}</span>
           </div>
-          <div className="spec-item">
-            <SettingsIcon style={{ fontSize: "16px", color: "#555" }} />
+          <div className="car-card__spec">
+            <SettingsIcon />
             <span>{car?.transmission ?? "_"}</span>
           </div>
         </div>
-        <div className="price-section">
-          <span className="current-price">
-            ₹{car?.price?.toLocaleString() ?? "_"}
-          </span>
-          {car?.original_price && (
-            <span className="original-price">
-              ₹{car.original_price.toLocaleString()}
-            </span>
-          )}
-        </div>
-        <div className="card-footer">
-          <p className="location">📍 {car?.place ?? "_"}</p>
-          <div className="visitors">
-            <RemoveRedEyeIcon
-              style={{ fontSize: "16px", marginRight: "4px" }}
-            />
+
+        <div className="car-card__footer">
+          <div className="car-card__location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>{car?.place ?? "_"}</span>
+          </div>
+          <div className="car-card__views">
+            <RemoveRedEyeIcon />
             <span>{formatViews(car?.views?.toLocaleString())}</span>
           </div>
         </div>
-        <button className="view-details-btn" onClick={handleNavigateToCar}>
+
+        <button className="car-card__button" onClick={handleNavigateToCar}>
           View Details
         </button>
       </div>

@@ -16,6 +16,11 @@ import {
   WorkspacePremium,
   AutoAwesome,
   Diamond,
+  Storefront,
+  Star,
+  FlashOn,
+  ThumbUp,
+  Assessment,
 } from "@mui/icons-material";
 
 function FeaturesSection() {
@@ -28,57 +33,78 @@ function FeaturesSection() {
       icon: <VerifiedUser />,
       title: "Verified Dealers",
       description:
-        "Every dealer is thoroughly vetted to ensure trust and reliability.",
+        "Every dealer undergoes rigorous verification for maximum trust and reliability.",
       stat: "500+",
       statLabel: "Certified Dealers",
-      color: "#3b82f6",
-      lightColor: "#eff6ff",
-      gradient: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+      color: "var(--primary)",
+      gradient: "linear-gradient(135deg, #111827 0%, #1f2937 100%)",
       delay: 0,
     },
     {
       id: 2,
       icon: <Diamond />,
       title: "Premium Selection",
-      description: "Curated collection of luxury and premium vehicles.",
+      description:
+        "Curated collection of luxury and premium vehicles with verified history.",
       stat: "10k+",
       statLabel: "Quality Cars",
-      color: "#8b5cf6",
-      lightColor: "#f5f3ff",
-      gradient: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)",
+      color: "var(--primary)",
+      gradient: "linear-gradient(135deg, #111827 0%, #2d3748 100%)",
       delay: 0.1,
     },
     {
       id: 3,
-      icon: <RocketLaunch />,
-      title: "Fast Listing",
-      description: "Sell your car in minutes with our streamlined process.",
+      icon: <FlashOn />,
+      title: "Instant Listing",
+      description:
+        "Sell your car in minutes with our AI-powered streamlined process.",
       stat: "24h",
       statLabel: "Quick Sale",
-      color: "#10b981",
-      lightColor: "#ecfdf5",
-      gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+      color: "var(--primary)",
+      gradient: "linear-gradient(135deg, #111827 0%, #374151 100%)",
       delay: 0.2,
     },
     {
       id: 4,
       icon: <HeadsetMic />,
-      title: "24/7 Support",
-      description: "Round-the-clock assistance for all your queries.",
+      title: "24/7 Concierge",
+      description: "Round-the-clock expert assistance for all your queries.",
       stat: "100%",
       statLabel: "Satisfaction",
-      color: "#ef4444",
-      lightColor: "#fef2f2",
-      gradient: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+      color: "var(--primary)",
+      gradient: "linear-gradient(135deg, #111827 0%, #4b5563 100%)",
       delay: 0.3,
     },
   ];
 
-  const additionalFeatures = [
-    { icon: <Security />, text: "Secure Payments" },
-    { icon: <Speed />, text: "Fast Delivery" },
-    { icon: <AutoAwesome />, text: "Best Prices" },
-    { icon: <EmojiEvents />, text: "Award Winning" },
+  const stats = [
+    { value: "50k+", label: "Happy Customers", icon: <ThumbUp /> },
+    { value: "98%", label: "Satisfaction Rate", icon: <Star /> },
+    { value: "24/7", label: "Support Available", icon: <SupportAgent /> },
+    { value: "15min", label: "Avg Response Time", icon: <Speed /> },
+  ];
+
+  const benefits = [
+    {
+      icon: <Security />,
+      text: "Secure Payments",
+      desc: "SSL encrypted transactions",
+    },
+    {
+      icon: <Speed />,
+      text: "Fast Delivery",
+      desc: "Within 3-5 business days",
+    },
+    {
+      icon: <Assessment />,
+      text: "Price Transparency",
+      desc: "No hidden fees",
+    },
+    {
+      icon: <WorkspacePremium />,
+      text: "Warranty Included",
+      desc: "6-month warranty",
+    },
   ];
 
   useEffect(() => {
@@ -104,20 +130,24 @@ function FeaturesSection() {
 
   return (
     <div className="features-section-modern" ref={sectionRef}>
-      <div className="features-pattern"></div>
+      <div className="features-bg-elements">
+        <div className="bg-blur-1"></div>
+        <div className="bg-blur-2"></div>
+        <div className="bg-grid"></div>
+      </div>
 
       <div className="features-header-modern">
         <div className="header-badge-modern">
           <AutoAwesome />
-          <span>Why Customers Love Us</span>
+          <span>Trust & Excellence</span>
         </div>
         <h2 className="features-title-modern">
-          More Than Just a{" "}
-          <span className="gradient-modern">Car Marketplace</span>
+          Your Journey to <span className="gradient-modern">Perfect Car</span>
+          <br />
+          Starts Here
         </h2>
         <p className="features-subtitle-modern">
-          We've built a platform that puts you first - whether you're buying or
-          selling
+          Join 50,000+ satisfied customers who found their dream car with us
         </p>
       </div>
 
@@ -128,42 +158,29 @@ function FeaturesSection() {
             className={`feature-card-modern ${isVisible ? "animate" : ""}`}
             style={{ animationDelay: `${feature.delay}s` }}
           >
-            <div
-              className="card-decoration"
-              style={{ background: feature.lightColor }}
-            ></div>
+            <div className="card-number">
+              {String(index + 1).padStart(2, "0")}
+            </div>
 
             <div className="card-header-modern">
-              <div
-                className="icon-wrapper"
-                style={{ background: feature.lightColor }}
-              >
-                <div
-                  className="icon-inner"
-                  style={{ background: feature.gradient }}
-                >
-                  {feature.icon}
-                </div>
-              </div>
-              <div
-                className="stat-bubble"
-                style={{ background: feature.gradient }}
-              >
-                <span className="stat-bubble-number">{feature.stat}</span>
-                <span className="stat-bubble-label">{feature.statLabel}</span>
-              </div>
+              <div className="icon-wrapper-modern">{feature.icon}</div>
             </div>
 
             <h3 className="feature-title-modern">{feature.title}</h3>
             <p className="feature-description-modern">{feature.description}</p>
 
-            <div className="feature-link" style={{ color: feature.color }}>
-              <span>Discover more</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <div className="feature-stats">
+              <div className="stat-value">{feature.stat}</div>
+              <div className="stat-label">{feature.statLabel}</div>
+            </div>
+
+            <div className="feature-link">
+              <span>Learn more</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M5 12H19M19 12L12 5M19 12L12 19"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="1.5"
                   strokeLinecap="round"
                 />
               </svg>
@@ -172,35 +189,41 @@ function FeaturesSection() {
         ))}
       </div>
 
-      <div className="features-ticker">
-        <div className="ticker-content">
-          {additionalFeatures.map((item, idx) => (
-            <div key={idx} className="ticker-item">
-              {item.icon}
-              <span>{item.text}</span>
-            </div>
-          ))}
-          {additionalFeatures.map((item, idx) => (
-            <div key={`dup-${idx}`} className="ticker-item">
-              {item.icon}
-              <span>{item.text}</span>
+      <div className="stats-showcase">
+        {stats.map((stat, idx) => (
+          <div key={idx} className="stat-item">
+            <div className="stat-icon">{stat.icon}</div>
+            <div className="stat-number">{stat.value}</div>
+            <div className="stat-text">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* <div className="benefits-section">
+        <h3 className="benefits-title">Why Choose Us?</h3>
+        <div className="benefits-grid">
+          {benefits.map((benefit, idx) => (
+            <div key={idx} className="benefit-card">
+              <div className="benefit-icon">{benefit.icon}</div>
+              <div className="benefit-content">
+                <h4>{benefit.text}</h4>
+                <p>{benefit.desc}</p>
+              </div>
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      <div className="trust-badge">
-        <div className="trust-content">
+      <div className="trust-badge-modern">
+        <div className="trust-content-modern">
           <Shield />
-          <span>Trusted by over 50,000 happy customers</span>
-          <div className="rating-stars">
+          <span>Trusted by 50,000+ customers</span>
+          <div className="rating-stars-modern">
             {[...Array(5)].map((_, i) => (
-              <svg key={i} viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z" />
-              </svg>
+              <Star key={i} />
             ))}
           </div>
-          <span className="rating-text">4.9/5</span>
+          <span className="rating-value">4.9</span>
         </div>
       </div>
     </div>

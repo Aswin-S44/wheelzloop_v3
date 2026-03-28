@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   Search,
   Menu,
@@ -16,6 +16,11 @@ import {
   Info,
   DirectionsCar,
   ChevronRight,
+  KeyboardArrowDown,
+  TrendingUp,
+  LocalOffer,
+  Verified,
+  FlashOn,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -48,6 +53,8 @@ function Header() {
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const searchRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,6 +93,17 @@ function Header() {
     }
   }, [user]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowResults(false);
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const fetchFavouriteCount = async () => {
     try {
       setFavouriteCount(0);
@@ -120,7 +138,7 @@ function Header() {
     width: 400,
     bgcolor: "background.paper",
     border: "none",
-    borderRadius: "28px",
+    borderRadius: "32px",
     boxShadow: "0 25px 70px rgba(0,0,0,0.25)",
     p: 4,
   };
@@ -151,7 +169,6 @@ function Header() {
     const debounceTimer = setTimeout(() => {
       searchCar(searchKey);
     }, 300);
-
     return () => clearTimeout(debounceTimer);
   }, [searchKey]);
 
@@ -189,7 +206,7 @@ function Header() {
         const filteredSearches = prevSearches.filter(
           (search) => search !== currentSearchValue
         );
-        return [...filteredSearches, currentSearchValue];
+        return [...filteredSearches, currentSearchValue].slice(-5);
       });
     }
   };
@@ -243,6 +260,13 @@ function Header() {
     { path: "/contact-us", label: "Contact Us", icon: ContactPhone },
   ];
 
+  const trendingSearches = [
+    "BMW M4",
+    "Tesla Model 3",
+    "Toyota Camry",
+    "Honda Civic",
+  ];
+
   return (
     <div className="header-container">
       <header
@@ -255,7 +279,9 @@ function Header() {
             <div className="header-content">
               <div className="logo">
                 <a href="/">
-                  <DirectionsCar className="logo-icon" />
+                  <div className="logo-icon-wrapper">
+                    <DirectionsCar className="logo-icon" />
+                  </div>
                   <span>
                     Car<span>Auras</span>
                   </span>
@@ -266,8 +292,9 @@ function Header() {
                 className={`search-wrapper ${
                   showSearch ? "mobile-search-active" : ""
                 }`}
+                ref={searchRef}
               >
-                <div className="search-bar">
+                <div className={`search-bar ${searchFocused ? "focused" : ""}`}>
                   <Search className="search-icon" />
                   <input
                     type="text"
@@ -275,7 +302,22 @@ function Header() {
                     onChange={handleSearch}
                     value={searchKey}
                     autoFocus={showSearch}
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() =>
+                      setTimeout(() => setSearchFocused(false), 200)
+                    }
                   />
+                  {searchKey && (
+                    <button
+                      className="clear-search"
+                      onClick={() => {
+                        setSearchKey("");
+                        setShowResults(false);
+                      }}
+                    >
+                      <Close />
+                    </button>
+                  )}
                   <button
                     className={`voice-btn ${isListening ? "listening" : ""}`}
                     onClick={startListening}
@@ -285,60 +327,72 @@ function Header() {
                 </div>
 
                 {showResults && searchKey.trim() !== "" && (
-                  <>
-                    <div
-                      className="search-overlay"
-                      onClick={() => setShowResults(false)}
-                    ></div>
-                    <div className="search-results">
-                      <div className="search-results-header">
-                        <h4>Search Results</h4>
-                        <button onClick={() => setShowResults(false)}>
-                          <Close />
-                        </button>
-                      </div>
-                      <div className="search-results-list">
-                        {searchResults.length > 0 ? (
-                          searchResults.map((result, index) => (
-                            <a
-                              href={`/car/${result._id}`}
-                              key={index}
-                              className="result-item"
-                              onClick={handleResultClick}
-                            >
-                              <div className="result-image">
-                                <img
-                                  src={result.images[0]}
-                                  alt={result.car_name}
-                                />
-                              </div>
-                              <div className="result-info">
-                                <h5>{result.car_name}</h5>
-                                <p>
-                                  {result.brand} • {result.model} •{" "}
-                                  {result.year}
-                                </p>
-                                <div className="result-meta">
-                                  <span className="price">
-                                    ${result?.price?.toLocaleString()}
-                                  </span>
-                                  <span className="location">
-                                    <LocationOn />
-                                    {result.place}
-                                  </span>
-                                </div>
-                              </div>
-                            </a>
-                          ))
-                        ) : (
-                          <div className="no-results">
-                            <Search />
-                            <p>No cars found for "{searchKey}"</p>
-                          </div>
-                        )}
-                      </div>
+                  <div className="search-results">
+                    <div className="search-results-header">
+                      <h4>
+                        <TrendingUp className="trend-icon" />
+                        Results for "{searchKey}"
+                      </h4>
+                      <button onClick={() => setShowResults(false)}>
+                        <Close />
+                      </button>
                     </div>
-                  </>
+                    <div className="search-results-list">
+                      {searchResults.length > 0 ? (
+                        searchResults.map((result, index) => (
+                          <a
+                            href={`/car/${result._id}`}
+                            key={index}
+                            className="result-item"
+                            onClick={handleResultClick}
+                          >
+                            <div className="result-image">
+                              <img
+                                src={result.images[0]}
+                                alt={result.car_name}
+                              />
+                              {result.is_featured && (
+                                <span className="featured-badge">
+                                  <FlashOn />
+                                </span>
+                              )}
+                            </div>
+                            <div className="result-info">
+                              <h5>{result.car_name}</h5>
+                              <p>
+                                {result.brand} • {result.model} • {result.year}
+                              </p>
+                              <div className="result-meta">
+                                <span className="price">
+                                  ${result?.price?.toLocaleString()}
+                                </span>
+                                <span className="location">
+                                  <LocationOn />
+                                  {result.place}
+                                </span>
+                              </div>
+                            </div>
+                          </a>
+                        ))
+                      ) : (
+                        <div className="no-results">
+                          <Search />
+                          <p>No cars found for "{searchKey}"</p>
+                          <div className="trending-suggestions">
+                            <span>Try:</span>
+                            {trendingSearches.map((term, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => setSearchKey(term)}
+                              >
+                                {term}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 )}
               </div>
 
